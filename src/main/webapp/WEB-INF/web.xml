@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
+
+	<!-- DispatcherServlet가 root WebApplocationContext를 생성할 때 사용할 String 설정 파일의 위치 지정 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- <param-value>/WEB-INF/spring/root/*.xml</param-value> -->
+		<param-value>classpath:spring/root/*.xml</param-value>
+	</context-param>
+	
+	<!-- 웹 애플리케이션이 시작(deployment)될 때와 종료(undeployment)될때 Root WebApplicationContext를 생성하고 제거하기 위해 ContextLoaderListener 설정 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!--  클라이언트의 요청을 처리하는 DispatcherServlet 설정 -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- DispatcherServlet이 WebApplocationContext를 생성할 때 사용할 String 설정 파일의 위치 지정 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!-- <param-value>/WEB-INF/spring/appServlet/*.xml</param-value> -->
+			<param-value>classpath:spring/dispatcher/*.xml</param-value>
+		</init-param>
+		<!-- 배치할 때, DispatcherServlet 객체를 미리 생성하도록 설명 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<!-- 클라이언트가 http://localhost:8080/webapp/... 이런 url로 요청할 경우 servlet name이 appServlet인 애로 처리하겠다! -->
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 클라이언트가 POST 방식으로 한글을 보냈을 때 한글을 복원시키는 Filter 추가 -->
+	<!-- 이건 Cookie에도 적용된다! -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<!-- 클라이언트가 http://localhost:8080/webapp/* 이렇게 요청한 경우 CharacterEncodingFilter 처리하겠다! -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>
+
