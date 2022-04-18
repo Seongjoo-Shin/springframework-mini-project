@@ -26,10 +26,13 @@
               <img src="resources/images/logo.png" width="250px"/>
             </a>
                 <a class="text-dark h3 font-weight-bold">개원</a>
-                <a class="h3 font-weight-bold" style="color: rgb(242, 101, 45);">인수</a>
-                <a class="text-dark h3">인테리어</a>
-                <a class="text-dark h3">커뮤니티</a>
+                <a class="text-dark h3 font-weight-bold">인수</a>
+                <a class="text-dark h3 font-weight-bold">인테리어</a>
+                <a class="text-dark h3 font-weight-bold">커뮤니티</a>
             <div class="myinfo">
+            <span class="logout pr-3 font-weight-bold">
+                    로그인
+                </span>
                 <span class="logout pr-3 font-weight-bold">
                     로그아웃
                 </span>
