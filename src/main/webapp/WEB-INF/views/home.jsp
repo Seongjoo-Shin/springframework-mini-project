@@ -2,6 +2,10 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<p>Home</p>
+<div class="card m-2">
+	<div class="card-header">
+		Home
+	</div>
+</div>
                				
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
