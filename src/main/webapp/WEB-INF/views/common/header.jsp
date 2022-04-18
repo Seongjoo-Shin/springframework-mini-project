@@ -14,10 +14,13 @@
             src : url("resources/font/EliceDigitalBaeum_TTF/EliceDigitalBaeum_Regular.ttf"); 
             font-family: "elice";
         }
-         *{
+        *{
              font-family: "elice";
          }
-    </style>    
+        .dropdown:hover>.dropdown-menu {
+	        display: block;
+	    }
+    </style>   
 </head>
 <body>
     <header>
@@ -28,7 +31,14 @@
                 <a class="text-dark h3 font-weight-bold">개원</a>
                 <a class="text-dark h3 font-weight-bold">인수</a>
                 <a class="text-dark h3 font-weight-bold">인테리어</a>
-                <a class="text-dark h3 font-weight-bold">커뮤니티</a>
+                <div class="dropdown">
+                <a class="text-dark h3 dropdown font-weight-bold" data-toggle="dropdown">커뮤니티</a>
+                <div class="dropdown-menu mr-5">
+                    <a class="dropdown-item">공지사항</a>
+                    <a class="dropdown-item">자유게시판</a>
+                    <a class="dropdown-item">거래게시판</a>
+                </div>
+                </div>
             <div class="myinfo">
             <span class="logout pr-3 font-weight-bold">
                     로그인
