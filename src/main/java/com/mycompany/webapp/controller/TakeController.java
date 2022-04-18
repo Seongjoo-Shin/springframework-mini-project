@@ -9,5 +9,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/take")
 public class TakeController {
-
+   @RequestMapping("/list")
+   public String list() {
+      return "take/list";
+   }
 }

@@ -4,7 +4,7 @@
 
 <div class="card m-2">
 	<div class="card-header">
-		Home
+		List
 	</div>
 </div>
                				
