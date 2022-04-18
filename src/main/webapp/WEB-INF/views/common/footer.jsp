@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<footer class="footer" style="background-color: rgb(231, 231, 236); bottom: 0px;">    
+	<footer class="footer" style="background-color: rgb(231, 231, 236); bottom: 0px;">    
         <div class="d-flex" style="height: 200px;">
             <div class="flex-grow-1 mt-auto p-3">
                 Developer | 백수민 신성주 신현주 양승현
