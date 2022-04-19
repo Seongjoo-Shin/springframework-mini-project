@@ -26,7 +26,7 @@
 	    }
 	    
 	    #panorama {
-        height: 300px;
+        height: 400px;
         z-index: 1000;
         -moz-transform-origin: top left;
         -webkit-transform-origin: top left;
@@ -43,7 +43,7 @@
             </a>
                 <a class="text-dark h3 font-weight-bold">개원</a>
                 <a href="${pageContext.request.contextPath}/take/list" class="text-dark h3 font-weight-bold">인수</a>
-                <a class="text-dark h3 font-weight-bold">인테리어</a>
+                <a href="${pageContext.request.contextPath}/interior/example" class="text-dark h3 font-weight-bold">인테리어</a>
                 <div class="dropdown">
                 <a class="text-dark h3 dropdown font-weight-bold" data-toggle="dropdown">커뮤니티</a>
                 <div class="dropdown-menu mr-5">

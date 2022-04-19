@@ -13,16 +13,16 @@
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div id = "div" class="carousel-inner">
                 <div class="carousel-item active" >
-                  <img src="${pageContext.request.contextPath}/resources/images/interior1_1.jpg" class="d-block w-100" style = "height: 300px; border-radius: 5px;">
+                  <img src="${pageContext.request.contextPath}/resources/images/interior1_1.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
                 </div>
                 <div class="carousel-item">
-                  <img src="${pageContext.request.contextPath}/resources/images/interior1_2.jpg" class="d-block w-100" style = "height: 300px; border-radius: 5px;">
+                  <img src="${pageContext.request.contextPath}/resources/images/interior1_2.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
                 </div>
                 <div class="carousel-item">
-                  <img src="${pageContext.request.contextPath}/resources/images/interior1_3.jpg" class="d-block w-100" style = "height: 300px; border-radius: 5px;">
+                  <img src="${pageContext.request.contextPath}/resources/images/interior1_3.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
                 </div>
                 <div class="carousel-item">
-                  <img src="${pageContext.request.contextPath}/resources/images/interior1_4.jpg" class="d-block w-100" style = "height: 300px; border-radius: 5px;">
+                  <img src="${pageContext.request.contextPath}/resources/images/interior1_4.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
