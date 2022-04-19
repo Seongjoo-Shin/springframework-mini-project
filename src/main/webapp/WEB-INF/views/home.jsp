@@ -19,7 +19,7 @@
                         <span style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
                     </div>
                 </div>
-                <img src="resources/images/main1_img.png" class="img-responsive centor-block ml-5" style="height: 400px;"/>
+                <img src="resources/images/main1_img.png" class="img-responsive centor-block m-3" style="height: 400px;"/>
             </div>
             <div class="d-flex flex-row justify-content-center align-items-center"  style="background-color: rgb(239,242,249);">
                 <img src = "resources/images/main2_img.png" style="width:700px; height: 400px;"/>
