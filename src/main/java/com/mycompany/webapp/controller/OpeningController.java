@@ -9,5 +9,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/opening")
 public class OpeningController {
-
+	
+	@RequestMapping("/opening")
+	public String opening() {
+		return "opening/opening";
+	}
 }

@@ -76,12 +76,12 @@
                             
                                 <div class="mr-5">
                                     <span class="text-dark pr-2 float-left ml-5">* 중복 선택이 가능합니다.</span>
-                                    <a href="#" class="float-right"><img src="/images/reset.png" width="40px" onclick="resetKeyword();"/> </a>
-                                    <a href="#" class=" pr-4 float-right"><img src="/images/search.png" class="" width="40px" onclick="searchKeyword();"/></a>
+                                    <a href="#" class="float-right"><img src="/resources/images/reset.png" width="40px" onclick="resetKeyword();"/> </a>
+                                    <a href="#" class=" pr-4 float-right"><img src="/resources/images/search.png" class="" width="40px" onclick="searchKeyword();"/></a>
                                 </div>
                             </div>
                             <div class="row d-flex mt-5 ml-4">
-                                <img src="/images/mascot.png" width="70px" height="70px" style="z-index: auto; margin-top: auto;"/>
+                                <img src="/resources/images/mascot.png" width="70px" height="70px" style="z-index: auto; margin-top: auto;"/>
                                 <div class="ml-3 mr-3 bg-light" style="width:450px; height:300px; border-radius: 15px;">
                                     <ul class="mt-3" id="msgBox" style="position: absolute;">
                                     </ul>
