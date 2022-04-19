@@ -56,13 +56,13 @@
             <span class="logout pr-3 font-weight-bold">
                     로그인
                 </span>
-                <span class="logout pr-3 font-weight-bold">
+                <span class="logout pr-3 font-weight-bold" style="display:none;">
                     로그아웃
                 </span>
-                <span class="mypage pr-3 font-weight-bold">
-                    <a  href="${pageContext.request.contextPath}/mypage/modify">마이페이지</a>
+                <span class="mypage pr-3 font-weight-bold" style="display:none;">
+                    <a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark">마이페이지</a>
                 </span>
-                <img class="pb-1" src="${pageContext.request.contextPath}/resources/images/alarmUse.png" width="35px" />
+                <span style="display:none;"><img class="pb-1" src="${pageContext.request.contextPath}/resources/images/alarmUse.png" width="35px" /></span>
             </div>
           </nav>
     </header>
