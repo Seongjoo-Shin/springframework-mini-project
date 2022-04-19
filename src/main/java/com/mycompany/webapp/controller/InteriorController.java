@@ -9,5 +9,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/interior")
 public class InteriorController {
-
+	@RequestMapping("/example")
+	public String home() {
+		log.info("실행");
+		return "/interior/example";
+	}
 }

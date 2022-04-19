@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>START:DEN</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/board.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
@@ -21,6 +23,15 @@
         .dropdown:hover>.dropdown-menu {
 	        display: block;
 	    }
+	    
+	    #panorama {
+        height: 300px;
+        z-index: 1000;
+        -moz-transform-origin: top left;
+        -webkit-transform-origin: top left;
+        -ms-transform-origin: top left;
+        transform-origin: top left;
+      	}
     </style>   
 </head>
 <body>
