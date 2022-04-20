@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <script>
-        function selectAll(selectAll)  {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            
-            checkboxes.forEach((checkbox) => {
-                checkbox.checked = selectAll.checked
-            })
-        }
+    function selectAll(selectAll)  {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked
+        })
+    }
 
-        function openMsgForm(){
-            var url = "messageForm.html";
-            var option = "top=10, left=10, width=320px, height=220px, status=no, menubar=no, toolbar=no, resizable=no";
-            window.open(url, option);
+        function openMsgForm(url, name){
+        	var option = "width = 400, height = 500, top = 100, left = 200, resizable = no";
+            window.open(url, name, option);
         }
     </script>
    
@@ -58,7 +57,7 @@
                                     <td>요약된 내용이 들어갑니다......</td>
                                     <td>2022-04-10</td>
                                     <td>보낸 사람 아이디</td>
-                                    <td><a href="#" class="btn btn-outline-dark" onclick="openMsgForm()">답장</a></td>
+                                    <td><a href="javascript:openMsgForm('/mypage/message/messageForm','message');" class="btn btn-outline-dark">답장</a></td>
                                     <td><input type="checkbox" class="delete"/></td>
                                 </tr>
                                 <tr class="text-center">
@@ -138,7 +137,7 @@
                     </div>
                     <div class="row float-right">
                         <div class="mr-2">
-                            <input type="button" value="삭제" class="float-right"/>
+                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-dark"/>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center">

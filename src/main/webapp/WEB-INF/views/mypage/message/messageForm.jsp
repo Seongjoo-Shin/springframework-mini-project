@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    </script>
     <style>
         @font-face {
             src : url("/EliceDigitalBaeum_TTF/EliceDigitalBaeum_Regular.ttf"); 
@@ -20,7 +18,6 @@
              font-family: "elice";
          }
     </style> 
-    
 </head>
 <body>
     <div style="width:300px; height:200px;" class="bg-light p-2">

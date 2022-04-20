@@ -1,44 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+    
     <script>
-        function addActive1(){
-            var btn1 = document.querySelector("#btn1");
-            btn1.classList.toggle("active");
-        }
-        function addActive2(){
-            var btn2 = document.querySelector("#btn2");
-            btn2.classList.toggle("active");
-        }
-        function addActive3(){
-            var btn3 = document.querySelector("#btn3");
-            btn3.classList.toggle("active");
-        }
-        function addActive4(){
-            var btn4 = document.querySelector("#btn4");
-            btn4.classList.toggle("active");
-        }
-        function addActive5(){
-            var btn5 = document.querySelector("#btn5");
-            btn5.classList.toggle("active");
-        }
-        function addActive6(){
-            var btn6 = document.querySelector("#btn6");
-            btn6.classList.toggle("active");
-        }
-        function addActive7(){
-            var btn7 = document.querySelector("#btn7");
-            btn7.classList.toggle("active");
-        }
-        function addActive8(){
-            var btn8 = document.querySelector("#btn8");
-            btn8.classList.toggle("active");
-        }
+	    function addActive(id){
+	        var btn = document.getElementById(id);
+	        btn.classList.toggle("active");
+	    }
 
         function searchKeyword(){
             var elements = document.querySelectorAll("td > .active");
             document.querySelector("#msgBox").innerHTML = "";
             for(let element of elements){ 
-                document.querySelector("#msgBox").innerHTML += "<li>" + element.innerHTML +"</li>";
+                document.querySelector("#msgBox").innerHTML += "<li class='ml-5'>" + element.innerHTML +"</li>";
             }
         }
 
@@ -51,7 +24,7 @@
     </script>
     <section>
         <div class="container-fluid h-100 mt-5">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-2">
                 </div>
                 <div class="col-8">
@@ -61,16 +34,16 @@
                             <div class="row d-flex justify-content-between flex-column" style="margin: 0 auto;">
                                 <table style="margin:0 auto;">
                                     <tr>
-                                        <td class="p-2"><div id="btn1" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive1();">임플란트</div></td>
-                                        <td class="p-2"><div id="btn2" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive2();">역세권</div></td>
-                                        <td class="p-2"><div id="btn3" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive3();">소아치료전문</d></td>
-                                        <td class="p-2"><div id="btn4" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive4();">노인치료전문</div></td>
+                                        <td class="p-2"><div id="btn1" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">임플란트</div></td>
+                                        <td class="p-2"><div id="btn2" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">역세권</div></td>
+                                        <td class="p-2"><div id="btn3" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">소아치료전문</d></td>
+                                        <td class="p-2"><div id="btn4" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">노인치료전문</div></td>
                                     </tr>
                                     <tr>
-                                        <td class="p-2"><div id="btn5" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive5();">교정전문</div></td>
-                                        <td class="p-2"><div id="btn6" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive6();">턱관절교정</d></td>
-                                        <td class="p-2"><div id="btn7" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive7();">사랑니발치</div></td>
-                                        <td class="p-2"><div id="btn8" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive8();">편의시설</div></td>
+                                        <td class="p-2"><div id="btn5" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">교정전문</div></td>
+                                        <td class="p-2"><div id="btn6" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">턱관절교정</d></td>
+                                        <td class="p-2"><div id="btn7" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">사랑니발치</div></td>
+                                        <td class="p-2"><div id="btn8" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">편의시설</div></td>
                                     </tr>
                                 </table>
                             
@@ -81,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="row d-flex mt-5 ml-4">
-                                <img src="/resources/images/mascot.png" width="70px" height="70px" style="z-index: auto; margin-top: auto;"/>
+                                <img src="/resources/images/mascot.png" width="70px" height="70px" style="margin-top: auto;"/>
                                 <div class="ml-3 mr-3 bg-light" style="width:450px; height:300px; border-radius: 15px;">
                                     <ul class="mt-3" id="msgBox" style="position: absolute;">
                                     </ul>
@@ -115,13 +88,14 @@
                                         title: positions[i].location,
                                         position: new naver.maps.LatLng(positions[i].lat, positions[i].lng),
                                         icon: {
-                                            url: '../images/markerw.png',
+                                        	content: '<img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;">',
                                             size: new naver.maps.Size(20, 27),
-                                            origin: new naver.maps.Point(0, 0)
+                                            origin: new naver.maps.Point(0, 0),
+                                            anchor: new naver.maps.Point(16, 32)
                                         } 
                                     });
                                     var infoWindow = new naver.maps.InfoWindow({
-                                        content: '<div class="p-2" style="width:200px;"><span >' + positions[i].location + '</span><br><div class="text-center w-100"><button class="btn btn-sm btn-outline-dark w-100 mt-2">주변매물 보러가기 -></button></div></div>'
+                                        content: '<div class="p-2" style="width:200px;"><span >' + positions[i].location + '</span><br><div class="text-center w-100"><a class="btn btn-sm btn-outline-dark w-100 mt-2" href="/take/list?">주변매물 보러가기 -></a></div></div>'
                                     });
 
                                     markers.push(marker);
