@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                     <c:forEach var="i" begin="1" end="10">
-                     	<tr>
+                     	<tr onclick="location.href='noticeDetail'" style="cursor: pointer">
 	                        <td><button class="noticeBtn">공지</button></td>
 	                        <td>New admin Design</td>
 	                        <td>닉네임</td>

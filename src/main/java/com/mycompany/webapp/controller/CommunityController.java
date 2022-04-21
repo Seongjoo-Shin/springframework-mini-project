@@ -1,6 +1,7 @@
 package com.mycompany.webapp.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,12 @@ public class CommunityController {
 		return "redirect:/community/board/list";
 	}
 	
+	//게시판 상세 페이지
+	@GetMapping("/board/boardDetail")
+	public String boardDetail() {
+		return "/community/board/view";
+	}
+	
 	@RequestMapping("/board/view")
 	public String boardView() {
 		return "/community/board/view";
@@ -58,6 +65,12 @@ public class CommunityController {
 		return "/community/market/list";
 	}
 	
+	//게시판 상세 페이지
+	@GetMapping("/market/marketDetail")
+	public String marketDetail() {
+		return "/community/market/view";
+	}
+	
 	@RequestMapping("/market/insert")
 	public String marketInsert() {
 		return "/community/market/insert";
@@ -71,6 +84,11 @@ public class CommunityController {
 	@RequestMapping("/market/view")
 	public String marketView() {
 		return "/community/market/view";
+	}
+	
+	@GetMapping("/market/marketViewtoList")
+	public String marketViewToList() {
+		return "redirect:/community/market/list";
 	}
 	
 	//글쓰기 등록 버튼
@@ -89,6 +107,12 @@ public class CommunityController {
 	@RequestMapping("/notice/list")
 	public String noticeList() {
 		return "/community/notice/list";
+	}
+	
+	//공지 상세 페이지
+	@GetMapping("/notice/noticeDetail")
+	public String noticeDetail() {
+		return "/community/notice/view";
 	}
 	
 	@RequestMapping("/notice/insert")

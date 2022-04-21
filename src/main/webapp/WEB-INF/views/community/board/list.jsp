@@ -28,13 +28,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr onclick="location.href='boardDetail'" style="cursor: pointer">
                         <th scope="row">100</th>
-                        <td>New admin Design </td>
+                        <td><a style="color:black;">제목입니다.</a></td>
                         <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
+                        <td>냥냥</td>
+                        <td style="text-align: center;">2022.04.12</td>
+                        <td>10</td>
                       </tr>
                       <tr>
                         <th scope="row">99</th>

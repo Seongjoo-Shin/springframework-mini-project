@@ -27,8 +27,8 @@
             </div>
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
             <c:forEach var="i" begin="1" end="4">
-              <div class="col-3">
-                <div class="card">
+              <div class="col-3 marketCard">
+                <div class="card marketCard" onclick="location.href='marketDetail'" style="cursor: pointer">
                   <div class="embed-responsive embed-responsive-4by3">
                     <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
                   </div>
@@ -45,8 +45,8 @@
             </div>
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
             <c:forEach var="i" begin="1" end="4">
-              <div class="col-3">
-                <div class="card">
+              <div class="col-3 marketCard">
+                <div class="card" style="cursor: pointer">
                   <div class="embed-responsive embed-responsive-4by3">
                     <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
                   </div>

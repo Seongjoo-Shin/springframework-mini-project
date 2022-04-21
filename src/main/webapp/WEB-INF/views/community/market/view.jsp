@@ -73,8 +73,8 @@
                         </div>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
-                        <a class="btn btn-outline-dark mr-3" style="width:100px; height:50px;">목록</a>
-                        <button class="btn btn-outline-dark ml-3" style="width:100px;" onclick="changeImg(this);"><img id="interImg" class="mr-2" src="/resources/images/interestBefore.png" width="30px;" "/><span id="interCnt">12</span></button>
+                        <a class="btn btn-outline-dark mr-3" style="width:100px; height:50px;" href="marketViewtoList">목록</a>
+                        <button class="btn btn-outline-dark ml-3" style="width:100px;" onclick="changeImg(this);"><img id="interImg" class="mr-2" src="/resources/images/interestBefore.png" width="30px;"/><span id="interCnt">12</span></button>
                     </div>
                 </div>
                 <div class="col-2">

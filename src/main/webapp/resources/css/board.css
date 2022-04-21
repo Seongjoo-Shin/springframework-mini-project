@@ -38,7 +38,20 @@ a.bg-light:focus, a.bg-light:hover, button.bg-light:focus, button.bg-light:hover
 }
 
 /* market_list */
-/* notice_list */
+/* 카드 위에 클릭하고 있을 때 */
+.marketCard:hover{
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+.marketCard{
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  padding: 14px 80px 18px 36px;
+  cursor: pointer;
+}
+
+/* notice_list & market_list */
 select {
 	height: 38;
 }
