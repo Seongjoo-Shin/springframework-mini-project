@@ -259,13 +259,13 @@
                             <div class="d-flex m-2">
                                 <div class="m-2">공급 면적</div>
                                 <span><input class="ml-2 p-2 border" style="width: 80px; border-color: transparent;"/>&nbsp;&nbsp;&nbsp;평</span>
-                                <span><input class="ml-2 p-2 border" style="width: 80px; border-color: transparent;"/>&nbsp;&nbsp;&nbsp;m^2</span>
+                                <span style="font-size:18px;"><input class="ml-2 p-2 border" style="width: 80px; border-color: transparent;"/>&nbsp;&nbsp;&nbsp;㎡</span>
                             </div>
                             <div class="border-bottom"></div>
                             <div class="d-flex m-2">
                                 <div class="m-2">전용 면적</div>
                                 <span><input class="ml-2 p-2 border" style="width: 80px; border-color: transparent;"/>&nbsp;&nbsp;&nbsp;평</span>
-                                <span><input class="ml-2 p-2 border" style="width: 80px; border-color: transparent;"/>&nbsp;&nbsp;&nbsp;m^2</span>
+                                <span style="font-size:18px;"><input class="ml-2 p-2 border" style="width: 80px; border-color: transparent;"/>&nbsp;&nbsp;&nbsp;㎡</span>
                             </div>
                         </div>
                         <div class="text-center p-4 d-flex flex-column justify-content-center" style="background-color: rgb(231, 231, 236);">
@@ -330,7 +330,7 @@
                 </div>
                 <div>
                     <h4 class="mt-5">상세 설명</h4>
-                    <textarea class="border rounded w-100" style="height: 300px; font-size: 20px;" maxlength="500" placeholder=' [상세 설명 작성 주의 사항]&#13;&#10;&#13;&#10; - 매물 정보와 관련이 없는 홍보성 정보는 입력할 수 없습니다.&#13;&#10; - 비속어를 입력할 수 없습니다.&#13;&#10;&#13;&#10; ** 위 주의 사항을 위반할 경우, 해당 매물이 삭제될 수 있습니다.'></textarea>
+                    <textarea class="border rounded w-100" style="resize:none; height: 300px; font-size: 20px;" maxlength="500" placeholder=' [상세 설명 작성 주의 사항]&#13;&#10;&#13;&#10; - 매물 정보와 관련이 없는 홍보성 정보는 입력할 수 없습니다.&#13;&#10; - 비속어를 입력할 수 없습니다.&#13;&#10;&#13;&#10; ** 위 주의 사항을 위반할 경우, 해당 매물이 삭제될 수 있습니다.'></textarea>
                 </div>
                 <div>
                     <h4 class="mt-5">사진 등록</h4>

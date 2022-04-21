@@ -38,11 +38,189 @@
                             <span><a class="border rounded p-2" name="allImg" style="text-decoration: none; color:black; cursor: pointer;" onclick="showPopUp(this)">모든 사진 보기 →</a></span>
                             <span><a class="border rounded p-2" name="360Img" style="text-decoration: none; color:black; cursor: pointer;" onclick="showPopUp(this)">360도 사진 보기 →</a></span>
                     </div>
-                    <div class="mt-3 flo">
-	                	<div>뉴욕플란트 치과</div>
-	                </div>
                 </div>
-                
+                <div class="ml-2" style="margin-top: 100px;">
+                    <div class="mt-5">
+                        <span class="mt-5" style="font-size: 30px;">뉴욕플란트 치과</span>
+                        <span class="mr-4 mt-2 float-right" style="font-size: 20px;">건물 번호 : 000001</span>
+                    </div>
+                    <div class="mt-1">
+                        <span style="font-size: 23px;">작성자 : 냥냥</span>
+                        <span class="mr-4 float-right" style="font-size: 20px;">작성 일자 : 2022.04.19</span>
+                    </div>
+                </div>
+
+                <div class="mt-5 container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3 font-weight-bold" style="font-size: 23px;">
+                                상세 정보
+                            </div>
+                            <hr/>
+                            <div class="container-fluid p-0">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="font-weight-bold">인수</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="font-weight-bold">월세</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="font-weight-bold">관리비</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="font-weight-bold">주차</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="font-weight-bold">해당층</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="font-weight-bold">전용/공급 면적</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="font-weight-bold">엘리베이터</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="font-weight-bold">입주 가능일</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="ml-5">5400만원</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="ml-5">5400만원</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="ml-5">5400만원</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="ml-5">가능 (무료)</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="ml-5">6층/9층</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="ml-5">24.88/35.14</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="ml-5">있음</span>
+                                        </div>
+                                        <div class="mb-5" style="font-size: 20px;">
+                                            <span class="ml-5">2022.04.24</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4 font-weight-bold" style="font-size: 23px;">
+                                옵션
+                            </div>
+                            <div class="d-flex mb-2">
+                                <span>
+                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
+                                        <img src="${pageContext.request.contextPath}/resources/images/carImg.png" width="50px"/>
+                                        <div class="mt-2">주차 가능</div>
+                                    </div>
+                                </span>
+                                <span>
+                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
+                                        <img src="${pageContext.request.contextPath}/resources/images/equipImg.png" width="42px"/>
+                                        <div class="mt-2">장비 있음</div>
+                                    </div>
+                                </span>
+                                <span>
+                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
+                                        <img src="${pageContext.request.contextPath}/resources/images/elevatorImg.png" width="40px"/>
+                                        <div class="mt-2">엘리베이터</div>
+                                    </div>
+                                </span>
+                                <span>
+                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
+                                        <img src="${pageContext.request.contextPath}/resources/images/restroomImg.png" width="47px"/>
+                                        <div class="mt-2">화장실</div>
+                                    </div>
+                                </span>
+                                <span>
+                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
+                                        <img src="${pageContext.request.contextPath}/resources/images/cctvImg.png" width="52px"/>
+                                        <div class="mt-2">엘리베이터</div>
+                                    </div>
+                                </span>
+                            </div>
+                            
+                            <div class="mb-4 mt-5 font-weight-bold" style="font-size: 23px;">
+                                상세 설명
+                            </div>
+                            <div class="border p-2 w-100 mb-5" style="border-radius: 10px; font-size: 20px; color: rgb(97, 97, 100);">안녕하세요. 매물 정보입니다.</div>
+                            <div class="p-2 m-5">
+                                <span class="border p-2 m-5" style="">수정</span>
+                                <span>삭제</span>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div id="box" class="border shadow w-75 float-right">
+                                <div class="border text-center p-1 m-2 mb-5" style="width: 130px;">
+                                    건물번호 0001
+                                </div>
+                                <div class="ml-3">
+                                    <div class="p-1 m-2">
+                                        <h3>뉴욕플란트 치과</h3>
+                                    </div>
+                                    <div class="p-1 m-2">
+                                        서울특별시 송파구 가락동 78
+                                    </div>
+                                    <div class="p-1 m-2">
+                                        <span style="font-size: 23px;">인수</span>
+                                        <span class="ml-5" style="font-size: 23px;"><span>5400만원</span></span>
+                                    </div>
+                                    <div class="p-1 m-2">
+                                        <span style="font-size: 23px;">월세</span>
+                                        <span class="ml-5" style="font-size: 23px;"><span>5400만원</span></span>
+                                    </div>
+                                    <div>
+
+                                    </div>
+                                    <div class="container-fluid mt-2">
+                                        <div class="row">
+                                            <div class="col-4 p-1 m-2 d-flex">
+                                                <span><img src="${pageContext.request.contextPath}/resources/images/elevatorImg.png" width="37px" /></span>
+                                                <span style="font-size: 23px; margin-top: 8px; margin-left: 15px;">6층</span>
+                                            </div>
+                                            <div class="col-5 p-1 m-2 d-flex">
+                                                <span><img src="${pageContext.request.contextPath}/resources/images/areaImg.png" width="37px" /></span>
+                                                <span style="font-size: 23px; margin-top: 8px; margin-left: 15px;">24.88㎡</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid mt-2 mb-2">
+                                        <div class="row">
+                                            <div class="col-4 p-1 m-2 d-flex">
+                                                <span><img src="${pageContext.request.contextPath}/resources/images/carImg1.png" width="37px" /></span>
+                                                <span style="font-size: 23px; margin-left: 15px;">6층</span>
+                                            </div>
+                                            <div class="col-5 p-1 m-2 d-flex">
+                                                <span><img src="${pageContext.request.contextPath}/resources/images/equipImg.png" width="35px" /></span>
+                                                <span style="font-size: 23px; margin-left: 15px;">장비O</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid mt-4 mb-4">
+                                        <div class="row">
+                                            <div class="col-7 p-1 m-2">
+                                                <div onclick="" class="border p-3" style="background-color: rgb(242, 101, 45); color: white; font-size: 30px; border-radius: 8px; cursor: pointer;">문의 하기</div>
+                                            </div>
+                                            <div class="col-4 p-1 m-2">
+                                                <div onclick="interestBtnClick()" class="border p-3" style="font-size: 30px; color: black; cursor: pointer; border-radius: 8px;"><img src="${pageContext.request.contextPath}/resources/images/interestBtn2.png" width="30px" class="mr-2"/>4</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-2"></div>
         </div>

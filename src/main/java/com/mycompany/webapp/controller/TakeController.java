@@ -30,6 +30,7 @@ public class TakeController {
    
    @RequestMapping("/popUpImg")
    public String popUpImg() {
+	  log.info("실행");
       return "take/popUpImg";
    }
    
