@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="row" style="padding: 15px;">
-          <button class="btn btn-sm" style="height: 50px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;">내 인테리어 만들어보기 -></button>
+          <a href="simulator" class="btn btn-sm" style="height: 50px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;">내 인테리어 만들어보기 -></a>
         </div>
       </div>
       
