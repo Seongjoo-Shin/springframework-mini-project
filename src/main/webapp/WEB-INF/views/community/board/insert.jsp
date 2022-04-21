@@ -28,8 +28,7 @@
 	      $(location).attr("href", "insertCancle")
 	    }
 	    function goSubmit(){
-	    	console.log("타니?")
-	      $("#insertForm").submit();
+	      $("#insertForm").submit(); //form태그의 action="insertContent"탐
 	    }
   	</script>
     

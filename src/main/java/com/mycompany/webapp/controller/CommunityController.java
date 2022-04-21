@@ -73,15 +73,22 @@ public class CommunityController {
 		return "/community/market/view";
 	}
 	
+	//글쓰기 등록 버튼
+	@PostMapping("/market/insertMarketContent")
+	public String insertMarketContent() {
+		return "redirect:/community/market/list";
+	}
+	
+	//글쓰기 취소 버튼
+	@RequestMapping("/market/insertMarketCancle")
+	public String insertMarketCancle() {
+		return "redirect:/community/market/list";
+	}
+	
 	//공지게시판 - list
 	@RequestMapping("/notice/list")
 	public String noticeList() {
 		return "/community/notice/list";
-	}
-	
-	@RequestMapping("/notice/list2")
-	public String noticeList2() {
-		return "/community/notice/list2";
 	}
 	
 	@RequestMapping("/notice/insert")

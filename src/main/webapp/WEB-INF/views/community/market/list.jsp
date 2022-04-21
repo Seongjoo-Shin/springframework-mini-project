@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <section>
@@ -26,216 +26,87 @@
               </div>
             </div>
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
+            <c:forEach var="i" begin="1" end="4">
               <div class="col-3">
                 <div class="card">
                   <div class="embed-responsive embed-responsive-4by3">
                     <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
                   </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
+                  <div class="card-body" style="padding: 1rem;">
+                    <p style="margin-bottom: 0px;">제목입니다.</p>
+                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
                     <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/fullheart.png" width="16px">13</button>
-                    <p>900,000원</p>
+                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
+                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
                   </div>
                 </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                      <div class="embed-responsive embed-responsive-4by3">
-                        <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                      </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
+              </div>       
+            </c:forEach>
             </div>
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
+            <c:forEach var="i" begin="1" end="4">
               <div class="col-3">
                 <div class="card">
                   <div class="embed-responsive embed-responsive-4by3">
                     <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
                   </div>
-                  <div class="card-body">
-                    <div>
-                      <p>제목입니다.</p>
-                      <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                      <p>900,000원</p>
-                    </div>
+                  <div class="card-body" style="padding: 1rem;">
+                    <p style="margin-bottom: 0px;">제목입니다.</p>
+                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
+                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">13</button>
+                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
+                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
                   </div>
                 </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
+              </div>       
+            </c:forEach>
             </div>
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
+            <c:forEach var="i" begin="1" end="4">
               <div class="col-3">
                 <div class="card">
                   <div class="embed-responsive embed-responsive-4by3">
                     <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
                   </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
+                  <div class="card-body" style="padding: 1rem;">
+                    <p style="margin-bottom: 0px;">제목입니다.</p>
+                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
+                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">13</button>
+                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
+                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
                   </div>
                 </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
+              </div>       
+            </c:forEach>
             </div>
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
+            <c:forEach var="i" begin="1" end="4">
               <div class="col-3">
                 <div class="card">
                   <div class="embed-responsive embed-responsive-4by3">
                     <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
                   </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
+                  <div class="card-body" style="padding: 1rem;">
+                    <p style="margin-bottom: 0px;">제목입니다.</p>
+                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
+                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/fullheart.png" width="16px">13</button>
+                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
+                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
                   </div>
                 </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body">
-                    <p>제목입니다.</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">12</button>
-                    <p>900,000원</p>
-                  </div>
-                </div>
-              </div>
+              </div>       
+            </c:forEach>
             </div>
+            
             <!-- 글쓰기 버튼 -->
-            <div class="col-12 d-flex justify-content-right">
-               <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
+            <div class="col-12 d-flex align-content-end justify-content-end">
+              <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
             </div>
             
             <!-- 페이지 처리 -->
             <div class="col-12 d-flex flex-column align-content-center justify-content-center">
-              <div class="pt-3 mt-3">
-                <ul class="pagination justify-content-center mb-0">
+              <div>
+                <ul class="pagination justify-content-center mb-3">
                   <li class="page-item disabled">
                     <a
                       class="page-link"

@@ -3,6 +3,9 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <section>
+      <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
+        <h1 class="">공 지&nbsp;&nbsp;&nbsp;사 항</h1>
+      </div>
       <div class="container-fluid h-100">
         <div class="row">
           <div class="col-2"></div>
@@ -16,101 +19,33 @@
                   >
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
                         <th scope="col">공지</th>
                         <th scope="col" style="text-align: center;">제목</th>
                         <th scope="col">작성자</th>
-                        <th scope="col">작성일</th>
+                        <th scope="col" style="text-align: center;">작성일</th>
                         <th scope="col">조회</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">100</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">99</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">98</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">97</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">96</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">95</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">94</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">93</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">92</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">91</th>
-                        <td><button class="noticeBtn">공지</button></td>
-                        <td>New admin Design</td>
-                        <td>닉네임</td>
-                        <td>02/5/2019</td>
-                        <td>13</td>
-                      </tr>
+                    <c:forEach var="i" begin="1" end="10">
+                     	<tr>
+	                        <td><button class="noticeBtn">공지</button></td>
+	                        <td>New admin Design</td>
+	                        <td>닉네임</td>
+	                        <td style="text-align: center;">2022.02.12</td>
+	                        <td>13</td>
+                     	</tr>
+                    </c:forEach>
                     </tbody>
                   </table>
                 </div>
                 <!-- end project-list -->
-
-                <!-- 페이지 처리 -->
+                
+                <div class="float-right">
+                    <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
+                </div>
+                
+				<!-- 페이징처리 -->
                 <div class="pt-3 my-3">
                   <ul class="pagination justify-content-center mb-0">
                     <li class="page-item disabled">
@@ -121,36 +56,11 @@
                         aria-disabled="true"
                         >Previous</a>
                     </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">11</a>
-                    </li>
-                    <li class="page-item active">
-                      <a class="page-link" href="#">12</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">13</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">14</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">15</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">16</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">17</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">18</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">19</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">20</a>
-                    </li>
+                    <c:forEach var="i" begin="11" end="20">
+                    	<li class="page-item">
+                      		<a class="page-link" href="#"><p><c:out value="${i}"/></p></a>
+                    	</li>
+                    </c:forEach>
                     <li class="page-item">
                       <a class="page-link" href="#">Next</a>
                     </li>
