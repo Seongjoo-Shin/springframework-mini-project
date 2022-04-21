@@ -38,7 +38,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="float-left"><button class="btn btn-outline-dark mr-2">보내기</button></div>
-                <div class="float-left"><button class="btn btn-outline-dark ml-2">취소</button></div>
+                <div class="float-left"><button class="btn btn-outline-dark ml-2" onclick="window.close();">취소</button></div>
             </div>
         </div>
     </div>
