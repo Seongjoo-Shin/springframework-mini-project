@@ -21,4 +21,5 @@ public class HomeController {
 		logger.info("실행");
 		return "home";
 	}
+	
 }

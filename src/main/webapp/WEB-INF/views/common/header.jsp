@@ -56,7 +56,7 @@
                 </div>
             <div class="myinfo">
             <span class="logout pr-3 font-weight-bold">
-                    로그인
+                   <a href = "${pageContext.request.contextPath}/index/login" class ="text-dark">로그인</a> 
                 </span>
                 <span class="logout pr-3 font-weight-bold" style="display:none;">
                     로그아웃
