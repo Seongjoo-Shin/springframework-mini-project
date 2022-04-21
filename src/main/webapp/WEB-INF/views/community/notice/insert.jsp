@@ -4,7 +4,7 @@
 
     <section>
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
-        <h1 class="">거래 게시판</h1>
+        <h1>공 지&nbsp;&nbsp;&nbsp;사 항</h1>
       </div>
       <div class="container-fluid h-100 my-5">
         <div class="row">

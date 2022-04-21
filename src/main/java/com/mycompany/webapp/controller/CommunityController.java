@@ -124,4 +124,16 @@ public class CommunityController {
 	public String noticeUpdate() {
 		return "/community/board/update";
 	}
+	
+	//글쓰기 등록 버튼
+	@PostMapping("/notice/insertNoticeContent")
+	public String insertNoticeContent() {
+		return "redirect:/community/notice/list";
+	}
+	
+	//글쓰기 취소 버튼
+	@RequestMapping("/notice/insertNoticeCancle")
+	public String insertNoticeCancle() {
+		return "redirect:/community/notice/list";
+	}
 }
