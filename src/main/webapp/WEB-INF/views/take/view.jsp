@@ -16,6 +16,11 @@
             var option = "width = 900, height = 900, top = 100, left = 200, location = no"
             window.open(url, name, option);
         }
+        
+        $( document ).ready(function() {
+        	hospitalLocation();
+       	});
+
     </script>
     
     <section class="container-fluid">
@@ -52,7 +57,7 @@
 
                 <div class="mt-5 container-fluid">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-7">
                             <div class="mb-3 font-weight-bold" style="font-size: 23px;">
                                 상세 정보
                             </div>
@@ -152,15 +157,16 @@
                             <div class="mb-4 mt-5 font-weight-bold" style="font-size: 23px;">
                                 상세 설명
                             </div>
-                            <div class="border p-2 w-100 mb-5" style="border-radius: 10px; font-size: 20px; color: rgb(97, 97, 100);">안녕하세요. 매물 정보입니다.</div>
-                            <div class="p-2 m-5">
-                                <span class="border p-2 m-5" style="">수정</span>
-                                <span>삭제</span>
+                           	<textarea class="p-2 mb-5" style="border-radius: 10px; resize:none; width:100%; height: 300px; font-size: 20px;" maxlength="500" color: rgb(97, 97, 100); disabled="disabled">상세 설명칸 입니다!</textarea>
+                            <div class="mb-4 font-weight-bold" style="font-size: 23px;">
+                                지도 위치
                             </div>
-
+                            <div>
+                            	<div id="map" class="mr-4 mt-3" style="width:100%;height:400px; border: 1px solid rgb(192, 191, 191); padding: 50px;" onchange="getMarkers()"></div>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <div id="box" class="border shadow w-75 float-right">
+                        <div class="col-5">
+                            <div id="box" class="border shadow w-100 float-right">
                                 <div class="border text-center p-1 m-2 mb-5" style="width: 130px;">
                                     건물번호 0001
                                 </div>
@@ -209,10 +215,15 @@
                                     <div class="container-fluid mt-4 mb-4">
                                         <div class="row">
                                             <div class="col-7 p-1 m-2">
-                                                <div onclick="" class="border p-3" style="background-color: rgb(242, 101, 45); color: white; font-size: 30px; border-radius: 8px; cursor: pointer;">문의 하기</div>
+                                                <div onclick="openMsgForm()" class="border p-3 text-center" style="background-color: rgb(242, 101, 45); color: white; font-size: 30px; border-radius: 8px; cursor: pointer;">문의 하기</div>
                                             </div>
                                             <div class="col-4 p-1 m-2">
-                                                <div onclick="interestBtnClick()" class="border p-3" style="font-size: 30px; color: black; cursor: pointer; border-radius: 8px;"><img src="${pageContext.request.contextPath}/resources/images/interestBtn2.png" width="30px" class="mr-2"/>4</div>
+                                                <div class="d-flex border justify-content-center" style="cursor: pointer; border-radius: 8px;">
+                                                	<div class="d-flex flex-column justify-content-center">
+                                                		<img id="interestImg" src="${pageContext.request.contextPath}/resources/images/interestBtn2.png" width="30px" height="30px" class="mr-1"/>
+                                                	</div>
+                                                	<div id="interestText" onclick="interestBtnClick(this)" name="off" class="p-3" style="font-size: 30px; color: black;">4</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -221,9 +232,66 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center mt-5 mb-4">
+                    <button class="border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
+                    <button class="border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+                </div>
             </div>
             <div class="col-2"></div>
         </div>
     </section>
+    <script>
+    
+    	function hospitalLocation(){
+    		var lat = '37.494802';
+    		var lon = '127.122287';
+    		
+    		var p = new naver.maps.LatLng(lat, lon);
+            var mapOptions = {
+                center: p,
+                scaleControl: false,
+                mapDataContorol:false,
+                zoom: 17
+            };
+            map = new naver.maps.Map('map', mapOptions); // id와 option
+            
+            var markerOptions = {
+                position: p.destinationPoint(90, 15),
+                map: map,
+                icon: {
+                    content: '<img src="<c:url value="/resources/images/ballMascot.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 60px; height: 65px; left: 0px; top: 0px;">',
+                     size: new naver.maps.Size(35, 30),
+                     origin: new naver.maps.Point(0, 0),
+                     anchor: new naver.maps.Point(16, 32)
+                 }
+            };
+            
+            marker = new naver.maps.Marker(markerOptions);
+    	}
+    	
+	    function openMsgForm(){
+	        var url = "<%=request.getContextPath() %>/message";
+	        var option = "width = 300, height = 350, top = 100, left = 200, location = no";
+	        window.open(url, "message", option);
+	    }
+	    
+	    function interestBtnClick(m) {
+	    	var state = $(m).attr("name");
+	    	if(state == "off"){
+	    		var temp = $("#interestText").text();
+		    	temp++;
+	    		$("#interestText").html(temp);
+	    		$("#interestText").attr("name", "on");
+	    		$("#interestImg").attr("src", "${pageContext.request.contextPath}/resources/images/interestBtn1.png");
+	    	}else{
+	    		var temp = $("#interestText").text();
+		    	temp--;
+	    		$("#interestText").html(temp);
+	    		$("#interestText").attr("name", "off");
+	    		$("#interestImg").attr("src", "${pageContext.request.contextPath}/resources/images/interestBtn2.png");
+	    	}
+		}
+    </script>
+
                				
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

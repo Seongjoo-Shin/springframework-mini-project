@@ -107,7 +107,7 @@
             <div class="col-8">
                 <div class="text-center">
                     <h3 class="m-2">매물 등록</h3>
-                    <h4 class="border rounded m-1 p-3 w-100" style="color: gray; background-color: rgb(238, 238, 241);">등록된 매물은 목록에 30일간 나타납니다.</h4>
+                    <h4 class="border rounded mt-4 p-3 w-100" style="color: gray; background-color: rgb(238, 238, 241);">등록된 매물은 목록에 30일간 나타납니다.</h4>
                 </div>
                 <div>
                     <h4 class="mt-5">이름</h4>
@@ -520,10 +520,10 @@
                         </script>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center mt-5">
-                    <button class="border rounded m-2 p-2" style="font-size: 25px; width: 130px;">등록</button>
+                <div class="d-flex justify-content-center mt-5 mb-4">
+                    <button class="border rounded m-2 p-2 btn-info" style="font-size: 25px; width: 130px;">등록</button>
                     <button class="border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
-                    <button class="border rounded m-2 p-2" style="font-size: 25px; width: 130px;">삭제</button>
+                    <button class="border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
                 </div>
             </div>
             <div class="col-2"></div>
