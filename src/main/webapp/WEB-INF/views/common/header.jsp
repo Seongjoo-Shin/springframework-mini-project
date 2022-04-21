@@ -49,9 +49,9 @@
                 <div class="dropdown">
                 <a class="text-dark h3 dropdown font-weight-bold" data-toggle="dropdown">커뮤니티</a>
                 <div class="dropdown-menu mr-5" style="z-index: 1001;">
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/board/list">공지사항</a>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/market/list">자유게시판</a>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/notice/list">거래게시판</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/notice/list">공지사항</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/board/list">자유게시판</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/market/list">거래게시판</a>
                 </div>
                 </div>
             <div class="myinfo">
