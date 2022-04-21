@@ -2,12 +2,12 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<section class="container-fluid">
+	<section>
+	<div class="container-fluid h-100 mt-5 mb-5">
+	<div class="row">
       <div class="col-2"></div>
       <div class="col-8" style="margin:0 auto;">
-        <div class="row" style="padding: 15px;">
-          <h3>인테리어</h3>
-        </div>
+        <h3 class="mb-5">인테리어</h3>
         <div class="row">
           <div class="col-6">
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -46,11 +46,13 @@
           </div>
         </div>
         <div class="row" style="padding: 15px;">
-          <a href="simulator" class="btn btn-sm" style="height: 50px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;">내 인테리어 만들어보기 -></a>
+          <a href="simulator" class="btn btn-sm mt-3" style="height: 50px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;">내 인테리어 만들어보기 -></a>
         </div>
       </div>
       
       <div class="col-2"></div>
+      </div>
+      </div>
     </section>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

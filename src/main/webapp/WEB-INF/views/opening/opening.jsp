@@ -25,8 +25,7 @@
     <section>
         <div class="container-fluid h-100 mt-5">
             <div class="row mb-5">
-                <div class="col-2">
-                </div>
+                <div class="col-2"></div>
                 <div class="col-8">
                     <h4>개원 장소 키워드 추천</h4>
                     <div class="row">
@@ -122,22 +121,11 @@
                                     naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
                                 }
 
-                                // var markerOptions = new naver.maps.Marker({
-                                //     position: position.destinationPoint(90, 15),
-                                //     map: map,
-                                //     icon: {
-                                //         url: '../images/markerw.png',
-                                //         size: new naver.maps.Size(45, 60),
-                                //         origin: new naver.maps.Point(0, 0)
-                                //     } 
-                                // });
                             </script>
                         </div>
                     </div>
                 </div>
-                <div class="col-2">
-
-                </div>
+                <div class="col-2"></div>
             </div>
         </div>
     </section>

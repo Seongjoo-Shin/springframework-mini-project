@@ -119,7 +119,7 @@
                     </div>
                     <div class="row float-right">
                         <div class="mr-4">
-                            <input type="button" value="삭제" class="float-right"/>
+                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-danger"/>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center">
