@@ -22,8 +22,8 @@
                 </div>
             </div>
             <div class = "d-flex flex-row justify-content-center align-content-center">
-                <a href="./findAccount.html">아이디/비밀번호 찾기</a>
-                <a href="./signUp.html" class="pl-5">회원가입</a>
+                <a href="findAccount">아이디/비밀번호 찾기</a>
+                <a href="signUp" class="pl-5">회원가입</a>
             </div>
         </div>
     </div>

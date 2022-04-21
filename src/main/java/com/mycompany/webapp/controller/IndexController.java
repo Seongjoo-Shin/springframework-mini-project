@@ -14,4 +14,16 @@ public class IndexController {
 		log.info("실행");
 		return "/index/login";
 	}
+	
+	@RequestMapping("/findAccount")
+	public String findAccount() {
+		log.info("실행");
+		return "/index/findIDPW";
+	}
+	
+	@RequestMapping("/signUp")
+	public String signUp() {
+		log.info("실행");
+		return "/index/signup";
+	}
 }
