@@ -112,7 +112,12 @@
                   </table>
                 </div>
                 <!-- end project-list -->
-
+                
+                <div class="float-right">
+                    <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
+                </div>
+                
+				<!-- 페이지 처리 -->
                 <div class="pt-3 my-3">
                   <ul class="pagination justify-content-center mb-0">
                     <li class="page-item disabled">

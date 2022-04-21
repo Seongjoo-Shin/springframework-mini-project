@@ -227,7 +227,12 @@
                 </div>
               </div>
             </div>
+            <!-- 글쓰기 버튼 -->
+            <div class="col-12 d-flex justify-content-right">
+               <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
+            </div>
             
+            <!-- 페이지 처리 -->
             <div class="col-12 d-flex flex-column align-content-center justify-content-center">
               <div class="pt-3 mt-3">
                 <ul class="pagination justify-content-center mb-0">

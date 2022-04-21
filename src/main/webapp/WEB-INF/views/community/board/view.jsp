@@ -25,7 +25,7 @@
                     <li class="list-group-item">
                       <div class="row" style="display: flex;">
                         <div style="flex: 8; padding: 4px 13px;">
-                          <a href="#" style="font-weight: bold;">만식's 주인</a>
+                          <p style="font-weight: bold;">만식's 주인</p>
                           <div class="comment-text">
                             Google Style Login Page Design Using Bootstrap
                           </div>
@@ -40,8 +40,8 @@
                     <li class="list-group-item">
                       <div class="row" style="display: flex;">
                         <div style="flex: 8; padding: 4px 13px;">
-                          <a href="#" style="font-weight: bold;">만식's 주인</a>
-                          <input type="text" style="display: block; width: 100%; height: 60px;">
+                          <p style="font-weight: bold;">만식's 주인</p>
+                          <textarea placeholder="댓글을 입력해 주세요." style="display: block; width: 100%; height: 60px; resize: none; maxlength="150"></textarea>
                         </div>
                         <div class="d-flex flex-column justify-content-end mb-3" style="margin-right: 13px;">
                           <button class="commentBtn" >등록</button>

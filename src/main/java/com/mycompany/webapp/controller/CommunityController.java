@@ -1,6 +1,8 @@
 package com.mycompany.webapp.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j2;
@@ -9,10 +11,30 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/community")
 public class CommunityController {
-	//자유게시판 - board
+	//****자유게시판 - board****
 	@RequestMapping("/board/list")
 	public String boardList() {
+		log.info("실행");
 		return "/community/board/list";
+	}
+	
+	//board/list에서 글쓰기 버튼 눌렀을 때
+	@GetMapping("/board/insert")
+	public String boardInsertBtn() {
+		log.info("실행");
+		return "/community/board/insert";
+	}
+	
+	//글쓰기 등록 버튼
+	@PostMapping("/board/insertContent")
+	public String insertContent() {
+		return "redirect:/community/board/list";
+	}
+	
+	//글쓰기 취소 버튼
+	@RequestMapping("/board/insertCancle")
+	public String insertCancle() {
+		return "redirect:/community/board/list";
 	}
 	
 	@RequestMapping("/board/view")
@@ -21,7 +43,7 @@ public class CommunityController {
 	}
 	
 	@RequestMapping("/board/insert")
-	public String boardInsert() {
+	public String boardInsert1() {
 		return "/community/board/insert";
 	}
 	
@@ -50,6 +72,11 @@ public class CommunityController {
 	@RequestMapping("/notice/list")
 	public String noticeList() {
 		return "/community/notice/list";
+	}
+	
+	@RequestMapping("/notice/list2")
+	public String noticeList2() {
+		return "/community/notice/list2";
 	}
 	
 	@RequestMapping("/notice/insert")

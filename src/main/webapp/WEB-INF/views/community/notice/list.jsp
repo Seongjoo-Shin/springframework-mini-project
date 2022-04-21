@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <section>
@@ -110,6 +110,7 @@
                 </div>
                 <!-- end project-list -->
 
+                <!-- 페이지 처리 -->
                 <div class="pt-3 my-3">
                   <ul class="pagination justify-content-center mb-0">
                     <li class="page-item disabled">

@@ -9,11 +9,13 @@
           <div class="col-8">
             <div class="h3 border-bottom mb-3"><img src="${pageContext.request.contextPath}/resources/images/writing.png">글쓰기</div>
             <div class="mb-5">
-              <form>
-                <input type="text" class="form-control my-3" placeholder="제목을 입력하세요"></input>
-                <textarea class="form-control" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow-y:scroll"></textarea>
-                <button type="submit" class="btn bg-light mt-3 float-right" style="border: solid 1px rgb(224, 216, 216);">취  소</button>
-                <button type="submit" class="btn bg-light mt-3 float-right" style="border: solid 1px rgb(224, 216, 216);">저  장</button>                
+              <form method="post" action="insertContent" id="insertForm">
+                <input type="text" class="form-control my-3" maxlength="100" placeholder="제목을 입력하세요"></input>
+                <textarea class="form-control" placeholder="게시물 내용을 작성해 주세요." maxlength="1000" style="height: 300px; overflow-y:scroll; resize:none;"></textarea>
+                <div class="pagination justify-content-center mb-0">
+                    <button type="button" onclick="goSubmit()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">등&nbsp;&nbsp;&nbsp;록</button>
+                    <button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>
+                </div>
               </form>              
             </div>            
             <div class="col-2"></div>
@@ -21,5 +23,14 @@
         </div>
       </div>
     </section>
+    <script>
+	    function cancle(){
+	      $(location).attr("href", "insertCancle")
+	    }
+	    function goSubmit(){
+	    	console.log("타니?")
+	      $("#insertForm").submit();
+	    }
+  	</script>
     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
