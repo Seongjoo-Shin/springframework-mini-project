@@ -65,7 +65,12 @@ public class CommunityController {
 	
 	@RequestMapping("/market/update")
 	public String marketUpdate() {
-		return "/community/board/update";
+		return "/community/market/update";
+	}
+	
+	@RequestMapping("/market/view")
+	public String marketView() {
+		return "/community/market/view";
 	}
 	
 	//공지게시판 - list

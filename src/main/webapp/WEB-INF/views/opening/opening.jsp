@@ -55,7 +55,9 @@
                             </div>
                             <div class="row d-flex mt-5 ml-4">
                                 <img src="/resources/images/mascot.png" width="70px" height="70px" style="margin-top: auto;"/>
-                                <div class="ml-3 mr-3 bg-light" style="width:450px; height:300px; border-radius: 15px;">
+                                <div class="ml-3 mr-3" style="width:450px; height:300px; border-radius: 15px;">
+                                <img src="/resources/images/messageBox.png" width="480px" height="300px" class="float-right" style="z-index: -100000"/>
+                                
                                     <ul class="mt-3" id="msgBox" style="position: absolute;">
                                     </ul>
                                 </div>
