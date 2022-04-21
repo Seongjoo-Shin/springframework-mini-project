@@ -9,12 +9,10 @@
 	        })
 	    }
 
-        function openMsgForm(test){
-        	console.log(test);
-        	var url = "/mypage/message/message";
-        	var name = "message";
-        	var option = "width = 400, height = 500, top = 100, left = 200, resizable = no, location = no";
-            window.open(url, name, option);
+	    function openMsgForm(){
+            var url = "<%=request.getContextPath() %>/message";
+            var option = "width = 300, height = 350, top = 100, left = 200, location = no";
+            window.open(url, "message", option);
         }
 
     </script>

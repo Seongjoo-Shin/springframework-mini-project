@@ -25,9 +25,17 @@
         }
 
         function openMsgForm(){
-            var url = "messageForm.html";
-            var option = "top=10, left=10, width=320px, height=220px, status=no, menubar=no, toolbar=no, resizable=no";
-            window.open(url, option);
+            var url = "<%=request.getContextPath() %>/message";
+            var option = "width = 300, height = 350, top = 100, left = 200, location = no";
+            window.open(url, "message", option);
+        }
+        
+        function showPopUp(a){
+            var url = "<%=request.getContextPath() %>/take/popUpImg";
+            var name = "test";
+            console.log(url);
+            var option = "width = 900, height = 900, top = 100, left = 200, location = no"
+            window.open(url, name, option);
         }
     </script>
     <section>
@@ -52,7 +60,7 @@
                             <div class="image">
                                 <img src="https://via.placeholder.com/450x300" width="450px" height="300px"/>
                                 <img src="https://via.placeholder.com/450x300" width="450px" height="300px"/>
-                                <a id="moreImg" href="#" class="btn btn-primary p-3" style="vertical-align: middle;"><span>+</span></a>
+                                <a id="moreImg" class="btn btn-primary p-3" style="vertical-align: middle;" onclick="showPopUp(this)"><span>+</span></a>
                             </div>
                             <div class="price h5 mt-4">
                                 <span>500,000,000원</span>
