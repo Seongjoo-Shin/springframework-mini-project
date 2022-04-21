@@ -15,10 +15,10 @@
             var cntInter = document.getElementById("interCnt").innerHTML;
 
             if(path.includes("Before")){
-                $("#interImg").attr("src", "/images/interestAfter.png");
+                $("#interImg").attr("src", "/resources/images/interestAfter.png");
                 document.getElementById("interCnt").innerHTML = Number(cntInter) + 1;
             } else {
-                $("#interImg").attr("src", "/images/interestBefore.png");
+                $("#interImg").attr("src", "/resources/images/interestBefore.png");
                 document.getElementById("interCnt").innerHTML = Number(cntInter) - 1;
             }
             
@@ -31,7 +31,7 @@
         }
     </script>
     <section>
-        <div class="container-fluid h-100">
+        <div class="container-fluid h-100 mb-5">
             <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
                 <h1 class="">거래 게시판</h1>
             </div>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
                         <a class="btn btn-outline-dark mr-3" style="width:100px; height:50px;">목록</a>
-                        <button class="btn btn-outline-dark ml-3" style="width:100px;" onclick="changeImg(this);"><img id="interImg" class="mr-2" src="/images/interestBefore.png" width="30px;" "/><span id="interCnt">12</span></button>
+                        <button class="btn btn-outline-dark ml-3" style="width:100px;" onclick="changeImg(this);"><img id="interImg" class="mr-2" src="/resources/images/interestBefore.png" width="30px;" "/><span id="interCnt">12</span></button>
                     </div>
                 </div>
                 <div class="col-2">

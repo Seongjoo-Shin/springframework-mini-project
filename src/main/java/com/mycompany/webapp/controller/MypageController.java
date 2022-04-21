@@ -3,10 +3,14 @@ package com.mycompany.webapp.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.log4j.Log4j2;
 
 @Controller
 @RequestMapping("/mypage")
+@Log4j2
 public class MypageController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -59,10 +63,9 @@ public class MypageController {
 		return "/mypage/message/send";
 	}
 	
-	@RequestMapping("/message/messageForm")
-	public String messageForm() {
-		logger.info("실행");
-		return "/mypage/message/messageForm";
+	@GetMapping("/messageForm")
+	public void messageForm() {
+		logger.info("실행messageForm");
 	}
 	
 }
