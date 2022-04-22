@@ -17,6 +17,19 @@
                 </div>
             </div>
         </div>
+        <div class="btn-top on">
+		    <a href="#">Top
+		        <div class="progress1">
+		        <img src="/resources/images/totop.png"/>
+		            <span class="left">
+		                <em class="progress-bar1" style="transform: rotate(360deg) scaleX(-1);"></em>
+		            </span>
+		            <span class="right">
+		                <em class="progress-bar1" style="transform: rotate(180deg);"></em>
+		            </span>
+		        </div>
+		    </a>
+		</div>
     </footer>
 </body>
 </html>

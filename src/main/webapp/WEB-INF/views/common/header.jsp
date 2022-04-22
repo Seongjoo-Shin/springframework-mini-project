@@ -35,7 +35,69 @@
         -ms-transform-origin: top left;
         transform-origin: top left;
       	}
-    </style>   
+      	.btn-top {position: fixed; right: 15px; bottom: 100px; border-radius: 50%; overflow: hidden; z-index: 10;transition: all 0.5s; display: none;}
+		.btn-top.on {display: block;}
+		.btn-top.active {bottom: 235px;}
+		.btn-top>a {display: block; width: 50px; height: 50px; text-indent: -9999px; background: url("${pageContext.request.contextPath}/resources/images/totop.png") 50% no-repeat;}
+		.btn-top .progress1 {
+		    width: 100%;
+		    height: 100%;
+		    position: absolute;
+		    left: 0;
+		    top: 0;
+		    /*box-shadow: inset 0 0 0 2px #eee;*/
+		    border-radius: 50%;
+		}
+		
+		.btn-top .progress1>span {
+		    width: 50%;
+		    height: 100%;
+		    overflow: hidden;
+		    position: absolute;
+		    top: 0;
+		    z-index: 1;
+		}
+		
+		.btn-top .progress1 .left {
+		    left: 0;
+		}
+		
+		.btn-top .progress1 .progress-bar1 {
+		    width: 100%;
+		    height: 100%;
+		    border: 2px solid #F58345;
+		    position: absolute;
+		    top: 0;
+		    box-sizing: border-box;
+		}
+		
+		.btn-top .progress1 .left .progress-bar1 {
+		    left: 100%;
+		    border-top-right-radius: 40px;
+		    border-bottom-right-radius: 40px;
+		    border-left: 0;
+		    -webkit-transform-origin: center left;
+		    transform-origin: center left;
+		}
+		
+		.btn-top .progress1 .right {
+		    right: 0;
+		}
+		
+		.btn-top .progress1 .right .progress-bar1 {
+		    left: -100%;
+		    border-top-left-radius: 40px;
+		    border-bottom-left-radius: 40px;
+		    border-right: 0;
+		}
+		
+		.btn-top .progress1 .right .progress-bar1 {
+		    -webkit-transform-origin: center right;
+		    transform-origin: center right;
+		}
+		      	
+    </style> 
+   
 </head>
 <body>
     <header>
