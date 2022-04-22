@@ -28,9 +28,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr onclick="location.href='boardDetail'" style="cursor: pointer">
+                      <tr style="cursor: pointer">
                         <th scope="row">100</th>
-                        <td><a style="color:black;">제목입니다.</a></td>
+                        <td><a class="text-dark" href="boardDetail">제목입니다.</a></td>
                         <td>3</td>
                         <td>냥냥</td>
                         <td style="text-align: center;">2022.04.12</td>

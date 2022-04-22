@@ -33,7 +33,7 @@
               <div class="col-3">
                 <div class="card">
                   <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
+                    <a href="marketDetail"><img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" class="card-img-top row-cols-1 embed-responsive-item"/></a>
                   </div>
                   <div class="card-body" style="padding: 1rem;">
                     <p style="margin-bottom: 0px;">제목입니다.</p>
