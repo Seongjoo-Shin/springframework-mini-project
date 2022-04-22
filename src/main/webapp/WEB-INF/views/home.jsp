@@ -46,17 +46,63 @@
                     <span style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
                 </div>
             </div>
-            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; background-color: rgb(239,242,249);">
-                <div>
-                	<a href="${pageContext.request.contextPath}/community/board/list" ><img src = "resources/images/main5_1.png" width="420px" height="230px"/></a>
-                	<a href="${pageContext.request.contextPath}/community/market/list"><img src = "resources/images/main5_2.png" width="420px" height="230px"/></a>
-                	<a href="${pageContext.request.contextPath}/community/notice/list"><img src = "resources/images/main5_3.png" width="420px" height="230px"/></a>
-                </div>
-                
-                <div style="font-size: 30px;">
-                    <span>여러사람들과 소통하고 즐기세요</span>
-                    <span style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
-                </div>
-            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; background-color: rgb(239, 242, 249)">
+			  <div class="container row">
+			    <div class="col-1"></div>
+			    <div class="col-10 row">
+			      <div class="col-4 p-3">
+			        <div class="border p-3 bg-light rounded">
+			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
+			            <span class="h3">&nbsp;자유 게시판</span>
+			            <a class="h3 float-right text-dark" href="homeToBoard">+</a>
+			          </div>
+			          <table>
+			            <tr><td><a href="homeToBoardView" class="text-dark">자유 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
+			          </table>
+			        </div>
+			      </div>
+			      <div class="col-4 p-3">
+			        <div class="border p-3 bg-light rounded">
+			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
+			            <span class="h3">&nbsp;거래 게시판</span>
+			            <a class="h3 float-right text-dark" href="homeToMarket">+</a>
+			          </div>
+			          <table>
+			            <tr><td><a href="homeToMarketView" class="text-dark">거래 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
+			          </table>
+			        </div>
+			      </div>
+			      <div class="col-4 p-3">
+			        <div class="border p-3 bg-light rounded">
+			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
+			            <span class="h3">&nbsp;공지사항</span>
+			            <a class="h3 float-right text-dark" href="homeToNotice">+</a>
+			          </div>
+			          <table>
+			            <tr><td><a href="homeToNoticeView" class="text-dark">공지 사항 제목입니다.</a></td></tr>
+			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
+			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
+			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
+			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
+			          </table>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="col-1"></div>
+			  <div style="font-size: 30px">
+			    <span>여러사람들과 소통하고 즐기세요</span>
+			    <span style="font-weight: bold; color: rgb(242, 101, 45)">:D</span>
+			  </div>
+			</div>
+
     </div>        				
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
