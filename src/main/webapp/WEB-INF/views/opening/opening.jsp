@@ -48,8 +48,8 @@
                             
                                 <div class="mr-5">
                                     <span class="text-dark pr-2 float-left ml-5">* 중복 선택이 가능합니다.</span>
-                                    <a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" height="40px" onclick="resetKeyword();"/> </a>
-                                    <a href="#" class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px" height="40px" onclick="searchKeyword();"/></a>
+                                    <a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" onclick="resetKeyword();"/> </a>
+                                    <a href="#" class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px" onclick="searchKeyword();"/></a>
                                 </div>
                             </div>
                             <div class="row d-flex mt-5 ml-4">

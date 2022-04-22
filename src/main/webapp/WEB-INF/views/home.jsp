@@ -54,10 +54,10 @@
 			        <div class="border p-3 bg-light rounded">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
 			            <span class="h3">&nbsp;자유 게시판</span>
-			            <a class="h3 float-right text-dark" href="homeToBoard">+</a>
+			            <a class="h3 float-right text-dark" href="/community/board/list">+</a>
 			          </div>
 			          <table>
-			            <tr><td><a href="homeToBoardView" class="text-dark">자유 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a href="/community/board/view" class="text-dark">자유 게시판 제목입니다.</a></td></tr>
 			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
 			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
 			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
@@ -69,10 +69,10 @@
 			        <div class="border p-3 bg-light rounded">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
 			            <span class="h3">&nbsp;거래 게시판</span>
-			            <a class="h3 float-right text-dark" href="homeToMarket">+</a>
+			            <a class="h3 float-right text-dark" href="/community/market/list">+</a>
 			          </div>
 			          <table>
-			            <tr><td><a href="homeToMarketView" class="text-dark">거래 게시판 제목입니다.</a></td></tr>
+			            <tr><td><a href="/community/market/view" class="text-dark">거래 게시판 제목입니다.</a></td></tr>
 			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
 			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
 			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
@@ -84,10 +84,10 @@
 			        <div class="border p-3 bg-light rounded">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
 			            <span class="h3">&nbsp;공지사항</span>
-			            <a class="h3 float-right text-dark" href="homeToNotice">+</a>
+			            <a class="h3 float-right text-dark" href="/community/notice/list">+</a>
 			          </div>
 			          <table>
-			            <tr><td><a href="homeToNoticeView" class="text-dark">공지 사항 제목입니다.</a></td></tr>
+			            <tr><td><a href="/community/notice/noticeDetail" class="text-dark">공지 사항 제목입니다.</a></td></tr>
 			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
 			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
 			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
