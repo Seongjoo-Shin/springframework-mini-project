@@ -19,6 +19,9 @@
               </div>
               <div id="free-board-title" class="h4 p-3" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">제목입니다.</div>
               <div id="free-board-content" class="px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">내용입니다.</div>
+              <div class="text-center mt-3">
+              	<a href="/community/board/list" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+              </div>
               <div id="free-board-coment" class="my-5">
                   <div class="h6" style="font-weight: bold;">댓글</div>
                   <ul class="list-group">

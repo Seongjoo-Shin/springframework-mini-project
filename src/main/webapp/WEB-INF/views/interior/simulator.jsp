@@ -5,6 +5,7 @@
       <section class="container-fluid mb-5">
           <div class="col-2"></div>
           <div class="col-8" style="margin:0 auto">
+          <h4 class="p-3 mt-3">나만의 인테리어 만들기</h4>  
               <div class="row m-3">
                 <button class="btn btn-sm text-dark ml-2" onclick="addPic('troom1.jpg','div1')" style="border: 1px solid;">진료실A</button>
                 <button class="btn btn-sm text-dark ml-2" onclick="addPic('troom2.jpg','div2')" style="border: 1px solid;">진료실B</button>
@@ -31,7 +32,8 @@
                 <div id = content1 class="col-8">
                      <img src = "${pageContext.request.contextPath}/resources/images/troom1.jpg" width="100%" height="500px" style = "border-radius:5px"/>
                 </div>
-                <div id="div1" class="col-4" style="border: 1px solid black; border-radius: 5px; display: block;" >  
+                <div id="div1" class="col-4" style="border: 1px solid black; border-radius: 5px; display: block;" >
+                
                     <ul class="ml-3">
                         벽지
                         <li>

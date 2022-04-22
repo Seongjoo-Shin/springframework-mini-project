@@ -4,7 +4,7 @@
 
     <section>
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
-        <h1 class="">자유 게시판</h1>
+        <h1 class="">공지사항</h1>
       </div>
       <div class="container-fluid h-100 mt-5">
         <div class="row">

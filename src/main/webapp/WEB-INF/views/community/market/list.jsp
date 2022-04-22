@@ -30,8 +30,8 @@
             </div>
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
             <c:forEach var="i" begin="1" end="4">
-              <div class="col-3 marketCard">
-                <div class="card marketCard" onclick="location.href='marketDetail'" style="cursor: pointer">
+              <div class="col-3">
+                <div class="card">
                   <div class="embed-responsive embed-responsive-4by3">
                     <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
                   </div>
@@ -39,24 +39,6 @@
                     <p style="margin-bottom: 0px;">제목입니다.</p>
                     <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
                     <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/fullheart.png" width="16px">13</button>
-                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
-                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
-                  </div>
-                </div>
-              </div>       
-            </c:forEach>
-            </div>
-            <div class="cardrow mb-4 col-12 d-flex justify-content-center">
-            <c:forEach var="i" begin="1" end="4">
-              <div class="col-3 marketCard">
-                <div class="card" style="cursor: pointer">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body" style="padding: 1rem;">
-                    <p style="margin-bottom: 0px;">제목입니다.</p>
-                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">13</button>
                     <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
                     <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
                   </div>
@@ -74,7 +56,7 @@
                   <div class="card-body" style="padding: 1rem;">
                     <p style="margin-bottom: 0px;">제목입니다.</p>
                     <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
-                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/emptyheart.png" width="16px">13</button>
+                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/fullheart.png" width="16px">13</button>
                     <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
                     <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
                   </div>
@@ -82,6 +64,26 @@
               </div>       
             </c:forEach>
             </div>
+            <div class="cardrow mb-4 col-12 d-flex justify-content-center">
+            <c:forEach var="i" begin="1" end="4">
+              <div class="col-3">
+                <div class="card">
+                  <div class="embed-responsive embed-responsive-4by3">
+                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
+                  </div>
+                  <div class="card-body" style="padding: 1rem;">
+                    <p style="margin-bottom: 0px;">제목입니다.</p>
+                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
+                    <button class="float-right recommentCount"><img src="${pageContext.request.contextPath}/resources/images/fullheart.png" width="16px">13</button>
+                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
+                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
+                  </div>
+                </div>
+              </div>       
+            </c:forEach>
+            </div>
+           
+            
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
             <c:forEach var="i" begin="1" end="4">
               <div class="col-3">
