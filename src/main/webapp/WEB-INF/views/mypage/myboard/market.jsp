@@ -36,7 +36,7 @@
 				</div>
 				<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
 					<div class="card-body">
-						<img src="https://via.placeholder.com/150" />
+						<a href="/community/market/marketDetail"><img src="https://via.placeholder.com/150" /></a>
 						<div class="button float-right">
 							<div>
 								<button class="btn btn-outline-dark ml-3 mb-2">수정</button>

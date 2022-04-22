@@ -21,4 +21,9 @@ public class HomeController {
 		return "common/message";
 	}
 	
+	@RequestMapping("/messageView")
+	public String messageView() {
+		return "common/messageView";
+	}
+	
 }

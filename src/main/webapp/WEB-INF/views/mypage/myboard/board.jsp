@@ -47,7 +47,7 @@
                             </tr>
                             <tr>
                                 <td class="text-center bg-light"><span>10</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
+                                <td><a href="/community/board/boardDetail" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
                                 <td class="text-center">날짜</td>
                                 <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
                                 <td class="text-center"><input type="checkbox" class="delete"></td>

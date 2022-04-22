@@ -97,7 +97,46 @@
 		}
 		      	
     </style> 
-   
+    <script>
+	    function btntopNone () {
+	        if($(window).height() >= $(document).height()){
+	
+	            $('.btn-top').css('display','none');
+	        }
+	    }
+	    btntopNone();
+	    console.log($(window).height());
+	    console.log($(document).height());
+	
+	    var $prLeft = $('.progress .left .progress-bar'),
+	        $prRight = $('.progress .right .progress-bar');
+	
+	    $(window).on('scroll', function(){
+	        var currentPercentage = ($(window).scrollTop() / ($(document).outerHeight() - $(window).height())) * 100;
+	        var RightDeg = Math.floor(currentPercentage*3.6);
+	        var LeftDeg = Math.floor(currentPercentage*3.6);
+	        if(RightDeg<=180){
+	            $prRight.css('transform','rotate('+RightDeg+'deg)');
+	        } else {
+	            $prRight.css('transform','rotate(180deg)');
+	        }
+	        if(currentPercentage > 50){
+	            if(LeftDeg>=180){
+	                $prLeft.css('transform','rotate('+RightDeg+'deg) scaleX(-1)');
+	            }
+	        } else {
+	            $prLeft.css('transform','rotate(180deg) scaleX(-1)');
+	        }
+	
+	        if($(window).scrollTop() > 1) {
+	            $('.btn-top').addClass('on');
+	        }
+	        else {
+	            $('.btn-top').removeClass('on');
+	        }
+	    });
+
+    </script>
 </head>
 <body>
     <header>

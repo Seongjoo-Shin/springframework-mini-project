@@ -14,7 +14,12 @@
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);
         }
-
+		
+	    function receiveMsg(){
+            var url = "<%=request.getContextPath() %>/messageView";
+            var option = "width = 300, height = 350, top = 100, left = 200, location = no";
+            window.open(url, "message", option);
+        }
     </script>
    
     <section>
@@ -55,7 +60,7 @@
                             </thead>
                             <tbody>
                                 <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
+                                    <td><a onclick="javascript:receiveMsg();" class="text-dark">제목이 들어갑니다</a></td>
                                     <td>요약된 내용이 들어갑니다......</td>
                                     <td>2022-04-21</td>
                                     <td>보낸 사람 아이디</td>

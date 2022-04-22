@@ -52,7 +52,7 @@
                             <tbody>
                             <tr>
                                 <td class="text-center bg-light"><span>10</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
+                                <td><a href="/take/view" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
                                 <td class="text-center">임대</td>
                                 <td class="text-center">60평</td>
                                 <td class="text-center">2022-04-10</td>
