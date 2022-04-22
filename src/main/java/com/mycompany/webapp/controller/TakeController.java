@@ -23,9 +23,20 @@ public class TakeController {
       return "take/view";
    }
    
+   @GetMapping("/viewCancle")
+   public String viewCancle() {
+	  log.info("실행");
+      return "take/list";
+   }
+   
    @RequestMapping("/enroll")
    public String enroll() {
       return "take/enroll";
+   }
+   
+   @RequestMapping("/enrollCancle")
+   public String enrollCancle() {
+      return "redirect:/take/list";
    }
    
    @RequestMapping("/popUpImg")

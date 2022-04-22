@@ -18,11 +18,15 @@
             console.log(url);
             window.open(url, name, option);
         }
-        
+/*         
         $( document ).ready(function() {
         	hospitalLocation();
+        	var currentPosition = parseInt($("#quickmenu").css("top")); 
+        	$(window).scroll(function() { 
+        		var position = $(window).scrollTop(); 
+        		$("#quickmenu").stop().animate({"top":position+currentPosition+"px"},1000); });
        	});
-
+ */
     </script>
     
     <section class="container-fluid">
@@ -42,8 +46,8 @@
                         </div>
                     </div>
                     <div class="mt-1 mr-4 p-2 float-right">
-                            <span><a class="border rounded p-2" name="allImg" style="text-decoration: none; color:black; cursor: pointer;" onclick="showPopUp(this)">모든 사진 보기 →</a></span>
-                            <span><a class="border rounded p-2" name="360Img" style="text-decoration: none; color:black; cursor: pointer;" onclick="showPopUp(this)">360도 사진 보기 →</a></span>
+                            <span><a class="btn border rounded p-2" name="allImg" style="text-decoration: none; color:black;" onclick="showPopUp(this)">모든 사진 보기 →</a></span>
+                            <span><a class="btn border rounded p-2" name="360Img" style="text-decoration: none; color:black;" onclick="showPopUp(this)">360도 사진 보기 →</a></span>
                     </div>
                 </div>
                 <div class="ml-2" style="margin-top: 100px;">
@@ -167,7 +171,7 @@
                             	<div id="map" class="mr-4 mt-3" style="width:100%;height:400px; border: 1px solid rgb(192, 191, 191); padding: 50px;" onchange="getMarkers()"></div>
                             </div>
                         </div>
-                        <div class="col-5">
+                        <div  id="quickmenu" class="col-5">
                             <div id="box" class="border shadow w-100 float-right">
                                 <div class="border text-center p-1 m-2 mb-5" style="width: 130px;">
                                     건물번호 0001
@@ -224,7 +228,7 @@
                                                 	<div class="d-flex flex-column justify-content-center">
                                                 		<img id="interestImg" src="${pageContext.request.contextPath}/resources/images/interestBtn2.png" width="30px" height="30px" class="mr-1"/>
                                                 	</div>
-                                                	<div id="interestText" onclick="interestBtnClick(this)" name="off" class="p-3" style="font-size: 30px; color: black;">4</div>
+                                                	<div id="interestText" onclick="interestBtnClick(this)" name="off" class="p-3" style="font-size: 30px; color: rgb(105,105,105);">4</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -235,8 +239,9 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-5 mb-4">
-                    <button class="border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
-                    <button class="border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+                    <button class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
+                    <button onclick="viewCancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</button>
+                    <button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -292,6 +297,10 @@
 	    		$("#interestText").attr("name", "off");
 	    		$("#interestImg").attr("src", "${pageContext.request.contextPath}/resources/images/interestBtn2.png");
 	    	}
+		}
+	    
+	    function viewCancle() {
+	    	$(location).attr("href", "viewCancle");
 		}
     </script>
 

@@ -521,10 +521,10 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-5 mb-4">
-                    <button class="border rounded m-2 p-2 btn-info" style="font-size: 25px; width: 130px;">등록</button>
-                    <button class="border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
-                    <button class="border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
-                    <button class="border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+                    <button class="btn border rounded m-2 p-2 btn-info" style="font-size: 25px; width: 130px;">등록</button>
+                    <button onclick="cancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
+                    <button class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
+                    <button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -544,6 +544,10 @@
             $("#aroundImageText").css("display", "none");
             $("#nomalImageText").css("display", "block");
         }
+        
+        function cancle() {
+        	$(location).attr("href", "enrollCancle");
+		}
     </script>
                				
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
