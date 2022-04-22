@@ -6,14 +6,16 @@
         function showPopUp(a){
             var url;
             var name = "test";
+            var option;
             console.log(a);
             if(a.name === 'allImg'){
                 url = "<%=request.getContextPath() %>/take/popUpImg";
+                option = "width = 900, height = 900, top = 100, left = 200, location = no";
             }else{
                 url = "<%=request.getContextPath() %>/take/popUp360Img";
+                option = "width = 900, height = 550, top = 100, left = 200, location = no"
             }
             console.log(url);
-            var option = "width = 900, height = 900, top = 100, left = 200, location = no"
             window.open(url, name, option);
         }
         
