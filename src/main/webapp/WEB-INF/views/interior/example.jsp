@@ -5,7 +5,24 @@
 	<section>
 	<div class="container-fluid h-100 mt-5 mb-5">
 	<div class="row">
-      <div class="col-2"></div>
+      <div class="col-2">
+       <ul style="list-style-type: none; width: 80%;">
+            예시모델
+            <hr/>
+            <li >
+              <img src="${pageContext.request.contextPath}/resources/images/list_style_img.png">
+              40평형
+            </li>
+            <li >
+              <img src="${pageContext.request.contextPath}/resources/images/list_style_img.png">
+              50평형
+            </li>
+            <li >
+              <img src="${pageContext.request.contextPath}/resources/images/list_style_img.png">
+              60평형
+            </li>
+       </ul>
+      </div>
       <div class="col-8" style="margin:0 auto;">
         <h3 class="mb-5">인테리어</h3>
         <div class="row">
