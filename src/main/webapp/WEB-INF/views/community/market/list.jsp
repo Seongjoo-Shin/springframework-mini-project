@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-2"></div>
           <div class="col-8 row">
-            <div class="minimenu col-12 mb-4" style="border-bottom: solid;">
+            <div class="minimenu col-12 mb-4 pb-3" style="border-bottom: solid 2px;">
               <div class="dropdown">
                 <button id="dropbtn" class="btn dropbtn" style="height:37.62px"><img src="${pageContext.request.contextPath}/resources/images/stick.png" style="height: 15px; width: 15px;" class="mr-2">카테고리</button><!--눌렀을때 효과-->
                 <div class="dropdown-content">
@@ -31,7 +31,7 @@
             <div class="cardrow mb-4 col-12 d-flex justify-content-center">
             <c:forEach var="i" begin="1" end="4">
               <div class="col-3">
-                <div class="card">
+                <div class="card shadow">
                   <div class="embed-responsive embed-responsive-4by3">
                     <a href="marketDetail"><img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" class="card-img-top row-cols-1 embed-responsive-item"/></a>
                   </div>
