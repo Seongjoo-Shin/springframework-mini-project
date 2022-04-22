@@ -136,4 +136,10 @@ public class CommunityController {
 	public String insertNoticeCancle() {
 		return "redirect:/community/notice/list";
 	}
+	
+	//목록 버튼
+	@GetMapping("/notice/noticeViewtoList")
+	public String noticeViewToList() {
+		return "redirect:/community/notice/list";
+	}
 }

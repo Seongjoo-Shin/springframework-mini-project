@@ -30,7 +30,10 @@
 				<p>기간 : 4월 21일 - 5월 16일</p>
 				<p>문의 : startDen@mycompany.com</p>
               </div>
-            </div>           
+            </div>
+            <div class="buttons my-5 d-flex justify-content-center">
+                <a class="btn btn-outline-dark mr-3" style="width:100px; height:40px;" href="noticeViewtoList">목록</a>
+            </div>       
           <div class="col-2"></div>
         </div>
       </div>
