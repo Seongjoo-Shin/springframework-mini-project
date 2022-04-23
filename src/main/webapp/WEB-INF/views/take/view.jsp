@@ -18,15 +18,21 @@
             console.log(url);
             window.open(url, name, option);
         }
-/*         
+        
         $( document ).ready(function() {
         	hospitalLocation();
         	var currentPosition = parseInt($("#quickmenu").css("top")); 
         	$(window).scroll(function() { 
+        		var nVScroll = document.documentElement.scrollTop || document.body.scrollTop;
         		var position = $(window).scrollTop(); 
-        		$("#quickmenu").stop().animate({"top":position+currentPosition+"px"},1000); });
-       	});
- */
+        		if(nVScroll > 1000){
+        			$("#quickmenu").stop().animate({"top":nVScroll+currentPosition+"px"},600);
+        		}else {
+        			$("#quickmenu").stop().animate({"top":position+"px"},600);
+        		}
+        		
+       		});
+        });
     </script>
     
     <section class="container-fluid">
@@ -190,9 +196,6 @@
                                     <div class="p-1 m-2">
                                         <span style="font-size: 23px;">월세</span>
                                         <span class="ml-5" style="font-size: 23px;"><span>5400만원</span></span>
-                                    </div>
-                                    <div>
-
                                     </div>
                                     <div class="container-fluid mt-2">
                                         <div class="row">
