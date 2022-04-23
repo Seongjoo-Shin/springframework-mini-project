@@ -21,17 +21,6 @@
         
         $( document ).ready(function() {
         	hospitalLocation();
-        	var currentPosition = parseInt($("#quickmenu").css("top")); 
-        	$(window).scroll(function() { 
-        		var nVScroll = document.documentElement.scrollTop || document.body.scrollTop;
-        		var position = $(window).scrollTop(); 
-        		if(nVScroll > 1000){
-        			$("#quickmenu").stop().animate({"top":nVScroll+currentPosition+"px"},600);
-        		}else {
-        			$("#quickmenu").stop().animate({"top":position+"px"},600);
-        		}
-        		
-       		});
         });
     </script>
     
@@ -177,7 +166,7 @@
                             	<div id="map" class="mr-4 mt-3" style="width:100%;height:400px; border: 1px solid rgb(192, 191, 191); padding: 50px;" onchange="getMarkers()"></div>
                             </div>
                         </div>
-                        <div  id="quickmenu" class="col-5">
+                        <span id="quickmenu" class="col-5">
                             <div id="box" class="border shadow w-100 float-right">
                                 <div class="border text-center p-1 m-2 mb-5" style="width: 130px;">
                                     건물번호 0001
@@ -238,7 +227,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </span>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-5 mb-4">
@@ -305,6 +294,20 @@
 	    function viewCancle() {
 	    	$(location).attr("href", "viewCancle");
 		}
+	    
+	    $(window).scroll(function() { 
+    		var currentPosition = parseInt($("#quickmenu").css("top")); 
+    		var position = $(window).scrollTop(); 
+    		var halfPos = position/3;
+    		
+    		console.log("position : " + position);
+    		console.log("halfPos : " + halfPos);
+
+    		if(position < 2086){
+   				$("#quickmenu").stop().animate({"top":halfPos+"px"},600);
+    		}
+    		
+   		});
     </script>
 
                				
