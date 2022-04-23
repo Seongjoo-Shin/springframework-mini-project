@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <a href="${pageContext.request.contextPath}/opening/opening">
-                	<img src="resources/images/main1_img.png" class="img-responsive centor-block m-3" style="height: 400px;"/>
+                	<img src="resources/images/main1_1.png" class="img-responsive centor-block m-3" style="height: 400px;"/>
                 </a>
             </div>
             <div class="d-flex flex-row justify-content-center align-items-center"  style="background-color: rgb(239,242,249);">

@@ -11,7 +11,7 @@
             <hr/>
             <li >
               <img src="${pageContext.request.contextPath}/resources/images/list_style_img.png">
-              <a href="example50" class="text-dark">50평형</a>
+              <a href="example50" style="color: rgb(242, 101, 45);">50평형</a>
             </li>
             <li >
               <img src="${pageContext.request.contextPath}/resources/images/list_style_img.png">
@@ -30,16 +30,16 @@
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div id = "div" class="carousel-inner">
                 <div class="carousel-item active" >
-                  <img src="${pageContext.request.contextPath}/resources/images/interior1_1.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
+                  <img src="${pageContext.request.contextPath}/resources/images/interior/exampleRoom/interior50_1.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
                 </div>
                 <div class="carousel-item">
-                  <img src="${pageContext.request.contextPath}/resources/images/interior1_2.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
+                  <img src="${pageContext.request.contextPath}/resources/images/interior/exampleRoom/interior50_2.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
                 </div>
                 <div class="carousel-item">
-                  <img src="${pageContext.request.contextPath}/resources/images/interior1_3.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
+                  <img src="${pageContext.request.contextPath}/resources/images/interior/exampleRoom/interior50_3.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
                 </div>
                 <div class="carousel-item">
-                  <img src="${pageContext.request.contextPath}/resources/images/interior1_4.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
+                  <img src="${pageContext.request.contextPath}/resources/images/interior/exampleRoom/interior50_4.jpg" class="d-block w-100" style = "height: 400px; border-radius: 5px;">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">

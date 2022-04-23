@@ -15,6 +15,24 @@ public class InteriorController {
 		return "/interior/example";
 	}
 	
+	@RequestMapping("/example50")
+	public String example50() {
+		log.info("실행");
+		return "/interior/example50";
+	}
+	
+	@RequestMapping("/example65")
+	public String example65() {
+		log.info("실행");
+		return "/interior/example65";
+	}
+	
+	@RequestMapping("/example100")
+	public String example100() {
+		log.info("실행");
+		return "/interior/example100";
+	}
+	
 	@RequestMapping("/simulator")
 	public String simulator() {
 		log.info("실행");

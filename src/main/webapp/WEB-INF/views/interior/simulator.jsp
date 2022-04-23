@@ -141,7 +141,7 @@
                     </ul>
                 </div>
                 <div class="row" style="padding: 15px;">
-		          <a href="simulator" class="btn btn-sm ml-3" style="height: 50px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;">내 인테리어 만들어보기 -></a>
+		          <a href="simulator" class="btn btn-sm ml-3" style="height: 50px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;">다운로드</a>
 		        </div>
           </div>
           <div class="col-2"></div>
