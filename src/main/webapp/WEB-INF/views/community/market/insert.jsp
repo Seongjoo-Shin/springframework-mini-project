@@ -11,8 +11,8 @@
           <div class="col-2"></div>
           <div class="col-8">
             <div class="h3 border-bottom mb-3"><img src="${pageContext.request.contextPath}/resources/images/writing.png">글쓰기</div>
-	            <div class="mb-5">
-	              <form method="post" action="insertMarketContent" id="insertForm">
+	            <div class="mb-5"><!-- action="insertMarketContent"  -->
+	              <form method="post" id="marketInsertForm">
 					<select class="form-select-lg" aria-label=".form-select-lg example">
 					  <option selected>카테고리 선택</option>
 					  <option value="1">장비</option>
@@ -32,11 +32,12 @@
                            <div id="imagePreview1" class="w-100" style="align-items: center; display: inline;"></div>
                         </div>
 	                </div>
-	                <input type="text" class="form-control my-3" placeholder="₩가격"></input>
-	                <textarea class="form-control" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow-y:scroll; resize:none"></textarea>
+	                <input id="price" type="text" class="form-control mt-3" placeholder="₩가격 (숫자만 입력해주세요)"></input>
+	                <small id="priceHelp" class="form-text text-danger" style="display:none;">&nbsp;&nbsp;&nbsp;*가격란엔 숫자만 입력해주세요!</small>
+	                <textarea class="form-control mt-3" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow-y:scroll; resize:none"></textarea>
 	                <div class="pagination justify-content-center mb-0">
-                    <button type="button" onclick="goSubmit()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">등&nbsp;&nbsp;&nbsp;록</button>
-                    <button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>
+                    	<input type="submit" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);" value="등   록"/>
+                    	<button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>
 	                </div>
                
 	              </form>              
@@ -144,12 +145,70 @@
 	    }
 	
 	    function cancle(){
+	    		console.log("이건??");
 		      $(location).attr("href", "insertMarketCancle")
 		    }
-		    function goSubmit(){
+	    
+	    //등록버튼 함수였느데 잠시 주석처리
+		/* function goSubmit(){
 		      $("#insertForm").submit();	//form태그의 action="insertContent"탐
-		}
-
+		} */
+    
+		var input = document.getElementById("price");
+		
+		//유효성 검사
+		input.oninput = function(){
+			console.log("가격이 입력되었습니다.");
+			let resultCheckData = true;
+			
+			//가격에는 숫자만 들어가게
+			var pricePattern = /^[0-9]+$/;
+			var price = $("#price").val();
+			var pricePatternTest = pricePattern.test(price); //유효성 검사 만족하는지 결과 true,false
+			console.log(pricePatternTest);
+			
+			if(pricePatternTest){
+				$("#priceHelp").css("display","none");
+			}else{
+				$("#priceHelp").css("display","block");
+				resultCheckData = false;
+			}	
+			
+			console.log(resultCheckData)
+			//유효성 검사를 통과했다면
+			if(resultCheckData){
+				console.log("유효성 검사 통과 ")
+				//document.querySelector("#marketInsertForm").submit();
+			}else{
+				
+			}
+		};
+		
+		//form태그에 onsubmit="handleCheckData" 해준 경우
+/* 		function handleCheckData(){
+			console.log("타니?");
+			event.priventDefault(); //이벤트 실행 잠깐 막음
+			let resultCheckData = true;
+			
+			//가격에는 숫자만 들어가게
+			var pricePattern = '/^[0-9]+$/';
+			var price = $("#price").val();
+			var pricePatternTest = pricePattern.test(price); //유효성 검사 만족하는지 결과 true,false
+			console.log(pricePatternTest);
+			
+			if(pricePatternTest){
+				$("#price").removeClass("bg-danger");
+			}else{
+				$("#price").addClass("bg-danger");
+				resultCheckData = false;
+			}	
+			
+			console.log(resultCheckData)
+			//유효성 검사를 통과했다면
+			if(resultCheckData){
+				console.log("유효성 검사 통과 ")
+				//document.querySelector("#marketInsertForm").submit();
+			}} */
     </script>
     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
