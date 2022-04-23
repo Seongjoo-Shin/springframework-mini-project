@@ -144,19 +144,19 @@
             <a class="navbar-brand" href="/">
               <img src="${pageContext.request.contextPath}/resources/images/logo.png" width="250px"/>
             </a>
-                <a href="${pageContext.request.contextPath}/opening/opening" class="text-dark h3 font-weight-bold">개원</a>
-                <a href="${pageContext.request.contextPath}/take/list" class="text-dark h3 font-weight-bold">인수</a>
-                <a href="${pageContext.request.contextPath}/interior/example" class="text-dark h3 font-weight-bold">인테리어</a>
-                <div class="dropdown">
-                <a class="text-dark h3 dropdown font-weight-bold" data-toggle="dropdown">커뮤니티</a>
-                <div class="dropdown-menu mr-5" style="z-index: 1001;">
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/notice/list">공지사항</a>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/board/list">자유게시판</a>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/community/market/list">거래게시판</a>
-                </div>
-                </div>
+            <a href="${pageContext.request.contextPath}/opening/opening" class="text-dark h3 font-weight-bold">개원</a>
+            <a href="${pageContext.request.contextPath}/take/list" class="text-dark h3 font-weight-bold">인수</a>
+            <a href="${pageContext.request.contextPath}/interior/example" class="text-dark h3 font-weight-bold">인테리어</a>
+            <div class="dropdown">
+	             <a class="text-dark h3 dropdown font-weight-bold" data-toggle="dropdown">커뮤니티</a>
+	             <div class="dropdown-menu mr-5" style="z-index: 1001;">
+	                 <a class="dropdown-item" href="${pageContext.request.contextPath}/community/notice/list">공지사항</a>
+	                 <a class="dropdown-item" href="${pageContext.request.contextPath}/community/board/list">자유게시판</a>
+	                 <a class="dropdown-item" href="${pageContext.request.contextPath}/community/market/list">거래게시판</a>
+	             </div>
+            </div>
             <div class="myinfo">
-            <span class="logout pr-3 font-weight-bold">
+            	<span class="logout pr-3 font-weight-bold">
                    <a href = "${pageContext.request.contextPath}/index/login" class ="text-dark">로그인</a> 
                 </span>
                 <span class="logout pr-3 font-weight-bold" style="display:none;">
@@ -165,7 +165,31 @@
                 <span class="mypage pr-3 font-weight-bold">
                     <a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark">마이페이지</a>
                 </span>
-                <span style="display:none;"><img class="pb-1" src="${pageContext.request.contextPath}/resources/images/alarmUse.png" width="35px" /></span>
+                <span id="alarm" class="btn area" onclick="visibleAlarmContent()">
+                	<img id="alarmImg" class="pb-1 area" src="${pageContext.request.contextPath}/resources/images/alarmUse.png" width="35px"/>
+                </span>
             </div>
+            <div id="alarmContent" class="position-absolute" style="right:10px; top:70px; visibility:hidden;" onclick="visibleAlarmContent()">
+            	<img src="${pageContext.request.contextPath}/resources/images/alramContent.png" width="300px"/>
+            	<div class="d-flex flex-column position-relative" style="bottom:150px; left:10px;">
+	            	<a href="#">💌 쪽지가 5통 도착하였습니다.</a>
+	            	<a href="#">🧡 '장갑 팔아..'게시물에 하트가 달렸어요</a>
+	            	<a href="#">💬 '요즘 장사가..'게시물에 댓글이 달렸어요</a>
+            	</div>
+          	</div>
           </nav>
     </header>
+<script>
+	//이미지 보이기
+	function visibleAlarmContent(){
+		$("#alarmContent").css("visibility","visible");
+	}
+
+	//이미지 사라지기
+  	$('body').click(function(e){
+		if(!$(e.target).hasClass("area")){
+			$("#alarmContent").css("visibility","hidden");
+			$("#alarmImg").attr("src","${pageContext.request.contextPath}/resources/images/alarmNo.png");
+		}
+	});
+</script>
