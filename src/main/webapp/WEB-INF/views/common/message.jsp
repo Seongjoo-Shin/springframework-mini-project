@@ -10,16 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        @font-face {
-            src : url("/EliceDigitalBaeum_TTF/EliceDigitalBaeum_Regular.ttf"); 
-            font-family: "elice";
-        }
-         *{
-             font-family: "elice";
-         }
-    </style> 
+		@font-face {
+			src: url("/EliceDigitalBaeum_TTF/EliceDigitalBaeum_Regular.ttf");
+			font-family: "elice";
+		}
+		
+		* {
+			font-family: "elice";
+			resize: none;
+		}
+		
+</style> 
 </head>
-<body>
+<body class="bg-light">
     <div style="width:300px; height:200px;" class="bg-light p-2">
         <div class="container text-center">
             <div class="row justify-content-center">
