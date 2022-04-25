@@ -19,26 +19,26 @@
          }
     </style> 
 </head>
-<body>
-    <div style="width:300px; height:200px;" class="bg-light p-2">
+<body class="bg-light">
+    <div style="width:300px; height:200px;" class="p-2">
         <div class="container text-center">
             <div class="row justify-content-center">
                 <p>받은 쪽지</p>
             </div>
-            <div class="row justify-content-center  mb-2 bg-light">
+            <div class="row justify-content-center  mb-2">
                 <div class="float-left mr-3">보낸사람</div>
                 <div class="float-left"><p>홍길동</p></div>
             </div>
-            <div class="row justify-content-center mb-2 bg-light">
+            <div class="row justify-content-center mb-2">
                 <div class="float-left mr-5"><span>제목</span></div>
                 <div class="float-left"><p>제목이 들어갑니다.</p></div>
             </div>
-            <div class="row justify-content-center mb-2 bg-light">
+            <div class="row justify-content-center mb-2">
                 <p>
                 	내용이 들어갑니다.내용이 들어갑니다.내용이 들어갑니다.내용이 들어갑니다.내용이 들어갑니다.
                 </p>
             </div>
-            <div class="row justify-content-center bg-light">
+            <div class="row justify-content-center">
                 <div class="float-left"><button class="btn btn-outline-dark mr-2">답장하기</button></div>
                 <div class="float-left"><button class="btn btn-outline-dark ml-2" onclick="window.close();">취소</button></div>
             </div>

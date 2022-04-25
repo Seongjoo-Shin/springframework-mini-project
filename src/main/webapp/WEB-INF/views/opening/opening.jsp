@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
-    
-    <script>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+
+<script>
 	    $(function(){
 	        getLocation();
 	    });
@@ -26,53 +26,53 @@
             }
         }
     </script>
-    <section>
-        <div class="container-fluid h-100 mt-5">
-            <div class="row mb-5">
-                <div class="col-2"></div>
-                <div class="col-8">
-                    <h4>개원 장소 키워드 추천</h4>
-                    <div class="row">
-                        <div class="col-6 mt-3">
-                            <div class="row d-flex justify-content-between flex-column" style="margin: 0 auto;">
-                                <table style="margin:0 auto;">
-                                    <tr>
-                                        <td class="p-2"><div id="btn1" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">임플란트</div></td>
-                                        <td class="p-2"><div id="btn2" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">역세권</div></td>
-                                        <td class="p-2"><div id="btn3" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">소아치료전문</d></td>
-                                        <td class="p-2"><div id="btn4" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">노인치료전문</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-2"><div id="btn5" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">교정전문</div></td>
-                                        <td class="p-2"><div id="btn6" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">턱관절교정</d></td>
-                                        <td class="p-2"><div id="btn7" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">사랑니발치</div></td>
-                                        <td class="p-2"><div id="btn8" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">편의시설</div></td>
-                                    </tr>
-                                </table>
-                            
-                                <div class="mr-5">
-                                    <span class="text-dark pr-2 float-left ml-5">* 중복 선택이 가능합니다.</span>
-                                    <a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" onclick="resetKeyword();"/> </a>
-                                    <a href="#" class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px" onclick="searchKeyword();"/></a>
-                                </div>
-                            </div>
-                            <div class="row d-flex mt-5 ml-4">
-                                <img src="/resources/images/mascot.png" width="70px" height="70px" style="margin-top: auto;"/>
-                                <div class="ml-3 mr-3" style="width:450px; height:300px; border-radius: 15px;">
-                                <img src="/resources/images/messageBox.png" width="480px" height="300px" class="float-right" style="z-index: -100000"/>
-                                
-                                    <ul class="mt-3" id="msgBox" style="position: absolute;">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 d-flex flex-column">
-                            <div id="map" style="width:100%;height: 490px; border-radius: 15px;" class="mt-4">
-                            	<a title="현재위치" onclick="moveMapCurrentLoc(event)" class="border rounded p-1 m-1 shadow" style="z-index:10;position:absolute; top:0; left:0; background-color: white; cursor: pointer; ">
-	                            	<img src="${pageContext.request.contextPath}/resources/images/location.png" width="40px" />
-                            	</a>
-                            </div>    
-                            <script>
+<section>
+	<div class="container-fluid h-100 mt-5">
+		<div class="row mb-5">
+			<div class="col-2"></div>
+			<div class="col-8">
+				<h4>개원 장소 키워드 추천</h4>
+				<div class="row">
+					<div class="col-6 mt-3">
+						<div class="row d-flex justify-content-between flex-column"
+							style="margin: 0 auto;">
+							<table style="margin: 0 auto;">
+								<tr>
+									<td class="p-2"><div id="btn1" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">임플란트</div></td>
+									<td class="p-2"><div id="btn2" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">역세권</div></td>
+									<td class="p-2"><div id="btn3" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">소아치료전문</div></td>
+									<td class="p-2"><div id="btn4" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">노인치료전문</div></td>
+								</tr>
+								<tr>
+									<td class="p-2"><div id="btn5" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">교정전문</div></td>
+									<td class="p-2"><div id="btn6" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">턱관절교정</div></td>
+									<td class="p-2"><div id="btn7" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">사랑니발치</div></td>
+									<td class="p-2"><div id="btn8" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">편의시설</div></td>
+								</tr>
+							</table>
+
+							<div class="mr-5">
+								<span class="text-dark pr-2 float-left ml-5">* 중복 선택이가능합니다.</span>
+								<a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" onclick="resetKeyword();" /> </a>
+								<a href="#"class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px" onclick="searchKeyword();" /></a>
+							</div>
+						</div>
+						<div class="row d-flex mt-5 ml-4">
+							<img src="/resources/images/mascot.png" width="70px" height="70px" style="margin-top: auto;" />
+							<div class="ml-3 mr-3" style="width: 450px; height: 300px; border-radius: 15px;">
+								<img src="/resources/images/messageBox.png" width="480px" height="300px" class="float-right" style="z-index: -100000" />
+								<ul class="mt-3" id="msgBox" style="position: absolute;">
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 d-flex flex-column">
+						<div id="map" style="width: 100%; height: 490px; border-radius: 15px;" class="mt-4">
+							<a title="현재위치" onclick="moveMapCurrentLoc(event)" class="border rounded p-1 m-1 shadow" style="z-index: 10; position: absolute; top: 0; left: 0; background-color: white; cursor: pointer;">
+								<img src="${pageContext.request.contextPath}/resources/images/location.png" width="40px" />
+							</a>
+						</div>
+						<script>
                                
                                 let markers = new Array();
                                 let infoWindows = new Array();
@@ -91,7 +91,6 @@
                                 function showPosition(position){
                                 	lat = position.coords.latitude;
                                 	lng = position.coords.longitude;
-                                	console.log(lat, lng);
                                 	
                                 	var curPos = new naver.maps.LatLng(lat, lng);
                                 	var mapOptions = {
@@ -141,33 +140,15 @@
                                 			 }
                                 		 });
                                 		 var infoWindow = new naver.maps.InfoWindow({
-                                             content: '<div class="p-2" style="width:200px;"><span >' + positions[i].location + '</span><br><div class="text-center w-100"><a class="btn btn-sm btn-outline-dark w-100 mt-2" href="/take/list?">주변매물 보러가기 -></a></div></div>'
+                                             content: '<div class="p-2 gotoTake" style="width:200px;"><span>' + positions[i].location + '</span><br><div class="text-center w-100"><a class="btn btn-sm btn-outline-dark w-100 mt-2" href="/take/list?">주변매물 보러가기 -></a></div></div>',
                                          });
                                 		 
                                 		 markers.push(marker);
                                          infoWindows.push(infoWindow);
                                 	 }
-                                }
-                                
-                                function resetMap(){
-                                	navigator.geolocation.getCurrentPosition(resetPosition);
-                                }
-                                
-                                function resetPosition(position) {
-                                	resetLat = position.coords.latitude; 
-                                    resetLlon = position.coords.longitude;
-                                	
-                                	var resetPosition = new naver.maps.Point(resetLlon, resetLat);
-                                	
-                                	cmarker.setPosition(resetPosition);
-                                	
-                                	console.log("resetPosition : " + resetPosition);
-
-                                	var resetLocation = new naver.maps.LatLng(resetPosition);
-                                    map.panTo(resetLocation);
-                                    
-                                	console.log(carker);
-                                	console.log(resetLocation);
+                                	 for (var i = 0, ii = markers.length; i < ii; i++) {
+                                         naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
+                                     }
                                 }
                                 
                                 function moveMapCurrentLoc(e){
@@ -195,20 +176,19 @@
                                     map.panTo(currentLoc);
                                 }
 
-                                function getClickHandler(seq) {
-                                    return function (e) {
-                                    
-                                    var marker = markers[seq], 
-                                        infoWindow = infoWindows[seq];
-
-                                    if (infoWindow.getMap()) {
-                                        infoWindow.close();
-                                    } else {
-                                        infoWindow.open(map, marker); // 표출
-                                    }
-                                    };
+                                function getClickHandler(seq){
+                                	console.log(seq);
+                                	return function(e){
+                                		var marker = markers[seq],
+                                			infoWindow = infoWindows[seq];
+                                		if(infoWindow.getMap()){
+                                			infoWindow.close();
+                                		}else {
+                                            infoWindow.open(map, marker); // 표출
+                                        }
+                                	}
                                 }
-                                
+
                                 function searchMap(){
                                 	var addr = $("#searchInput").val();
                                 	naver.maps.Service.geocode({address: addr}, function(status, response) {
@@ -228,16 +208,14 @@
                                     });
                                 }
 
-                                for (var i = 0, ii = markers.length; i < ii; i++) {
-                                    naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
-                                }
+                                
 
                             </script>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2"></div>
-            </div>
-        </div>
-    </section>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+					</div>
+				</div>
+			</div>
+			<div class="col-2"></div>
+		</div>
+	</div>
+</section>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

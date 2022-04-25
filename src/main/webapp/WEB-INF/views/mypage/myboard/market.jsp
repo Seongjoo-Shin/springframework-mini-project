@@ -18,7 +18,7 @@
 							class="btn btn-outline-dark w-100 p-2">쪽지함</a>
 					</div>
 					<div class="mt-2">
-						<a href="/mypage/prefer" class="btn btn-outline-dark w-100 p-2">찜목록</a>
+						<a href="/mypage/prefer/buildingprefer" class="btn btn-outline-dark w-100 p-2">찜목록</a>
 					</div>
 					<div class="mt-2">
 						<a href="/mypage/withdrawl" class="btn btn-outline-dark w-100 p-2">회원탈퇴</a>

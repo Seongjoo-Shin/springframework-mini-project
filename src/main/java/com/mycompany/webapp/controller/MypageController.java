@@ -51,6 +51,19 @@ public class MypageController {
 		return "/mypage/myboard/market";
 	}
 	
+	@RequestMapping("/prefer/buildingprefer")
+	public String buildingprefer() {
+		logger.info("실행");
+		return "/mypage/prefer/buildingprefer";
+	}
+	
+	@RequestMapping("/prefer/marketprefer")
+	public String marketprefer() {
+		logger.info("실행");
+		return "/mypage/prefer/marketprefer";
+	}
+	
+	
 	@RequestMapping("/message/receive")
 	public String messageReceive() {
 		logger.info("실행");

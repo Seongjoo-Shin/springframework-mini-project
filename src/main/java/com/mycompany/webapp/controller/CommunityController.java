@@ -1,7 +1,6 @@
 package com.mycompany.webapp.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -143,33 +142,4 @@ public class CommunityController {
 		return "redirect:/community/notice/list";
 	}
 	
-	//홈에서 게시판으로 이동하는 컨트롤러
-	
-	//게시판 플러스 기호 링크
-	@GetMapping("/homeToBoard")
-	public String homeToBoard() {
-		return "/community/board/list";
-	}
-	@GetMapping("/homeToMarket")
-	public String homeToMarket() {
-		return "/community/market/list";
-	}
-	@GetMapping("/homeToNotice")
-	public String homeToNotice() {
-		return "/community/notice/list";
-	}
-	
-	//게시판 view페이지 이동
-	@GetMapping("/homeToBoardView")
-	public String homeToBoardView() {
-		return "/community/board/view";
-	}
-	@GetMapping("/homeToMarketView")
-	public String homeToMarketView() {
-		return "/community/market/view";
-	}
-	@GetMapping("/homeToNoticeView")
-	public String homeToNoticeView() {
-		return "/community/notice/view";
-	}
 }

@@ -23,7 +23,7 @@
 </style> 
 </head>
 <body class="bg-light">
-    <div style="width:300px; height:200px;" class="bg-light p-2">
+    <div style="width:300px; height:200px;" class="p-2">
         <div class="container text-center">
             <div class="row justify-content-center">
                 <p>메세지 보내기</p>
