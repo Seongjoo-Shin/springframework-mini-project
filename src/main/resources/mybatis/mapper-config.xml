@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!-- 이 태그는 항상 첫번째 줄에 작성한다, xml 선언부 -->
+
+<!-- 문서 유형(타입) 선언, 루트 엘리먼트에 대한 설명 -->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd"> <!-- 루트태그에서 작성될 태그들이 여기에 작성되어 있음을 알려줌 -->
+
+<configuration> <!-- 루트 태그, 루트 엘리먼트, 루트 태그는 항상 1개만 있어야함 -->
+	<typeAliases>
+   </typeAliases>
+</configuration>
