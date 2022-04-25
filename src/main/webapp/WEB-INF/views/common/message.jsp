@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
 		@font-face {
-			src: url("/EliceDigitalBaeum_TTF/EliceDigitalBaeum_Regular.ttf");
+			src: url("/resources/font/EliceDigitalBaeum_TTF/EliceDigitalBaeum_Regular.ttf");
 			font-family: "elice";
 		}
 		
@@ -25,18 +25,18 @@
 <body class="bg-light">
     <div style="width:300px; height:200px;" class="p-2">
         <div class="container text-center">
-            <div class="row justify-content-center">
-                <p>메세지 보내기</p>
+            <div class="row justify-content-center p-2">
+                <h3>메세지 보내기</h3>
             </div>
-            <div class="row justify-content-center  mb-2">
+            <div class="row justify-content-around  mb-2">
                 <div class="float-left mr-3">보낸사람</div>
                 <div class="float-left"><input type="text" value="홍길동"/></div>
             </div>
-            <div class="row justify-content-center mb-2">
+            <div class="row justify-content-around mb-2">
                 <div class="float-left mr-5"><span>제목</span></div>
                 <div class="float-left"><input type="text" value="" placeholder="제목을 입력하세요"/></div>
             </div>
-            <div class="row justify-content-center mb-2">
+            <div class="row justify-content-around mb-2">
                 <textarea style="resize: none; height: 150px;" class="w-100" ></textarea>
             </div>
             <div class="row justify-content-center">
