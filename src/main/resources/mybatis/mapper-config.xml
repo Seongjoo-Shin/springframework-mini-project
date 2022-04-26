@@ -7,5 +7,19 @@
 
 <configuration> <!-- 루트 태그, 루트 엘리먼트, 루트 태그는 항상 1개만 있어야함 -->
 	<typeAliases>
+		<typeAlias type="com.mycompany.webapp.dto.BuildingDto" alias="building" />
+		<typeAlias type="com.mycompany.webapp.dto.BuildingFileDto" alias="buildingfile" />
+		<typeAlias type="com.mycompany.webapp.dto.CommentDto" alias="comment" />
+		<typeAlias type="com.mycompany.webapp.dto.EquipmentDto" alias="equipment" />
+		<typeAlias type="com.mycompany.webapp.dto.FreeBoardDto" alias="freeboard" />
+		<typeAlias type="com.mycompany.webapp.dto.KeyWordDto" alias="keyword" />
+		<typeAlias type="com.mycompany.webapp.dto.LikeListDto" alias="likelist" />
+		<typeAlias type="com.mycompany.webapp.dto.MarketBoardDto" alias="marketboard" />
+		<typeAlias type="com.mycompany.webapp.dto.MarketFileDto" alias="marketfile" />
+		<typeAlias type="com.mycompany.webapp.dto.MessageDto" alias="message" />
+		<typeAlias type="com.mycompany.webapp.dto.NoticeBoardDto" alias="noticeboard" />
+		<typeAlias type="com.mycompany.webapp.dto.NoticeFileDto" alias="noticefile" />
+		<typeAlias type="com.mycompany.webapp.dto.PagerDto" alias="pager" />
+		<typeAlias type="com.mycompany.webapp.dto.UserDto" alias="user" />
    </typeAliases>
 </configuration>

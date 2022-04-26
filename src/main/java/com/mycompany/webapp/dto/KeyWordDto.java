@@ -3,7 +3,7 @@ package com.mycompany.webapp.dto;
 import lombok.Data;
 
 @Data
-public class KeyWordsDto {
+public class KeyWordDto {
 	private int keywordNo;
 	private String keyWord1;
 	private String keyWord3;
