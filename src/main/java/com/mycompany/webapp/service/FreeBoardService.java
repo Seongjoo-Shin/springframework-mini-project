@@ -30,4 +30,8 @@ public class FreeBoardService {
 	public FreeBoardDto getFreeBoard(int bno) {
 		return freeBoardDao.selectByBno(bno);
 	}
+	
+	public FreeBoardDto getFreeBoardsContent(int freeNo) {
+		return freeBoardDao.selectByFreeNo(freeNo);
+	}
 }

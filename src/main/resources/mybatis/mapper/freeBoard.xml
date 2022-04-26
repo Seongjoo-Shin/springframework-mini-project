@@ -3,15 +3,18 @@
                  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.FreeBoardDao">
- 	<resultMap id="freeBoardWithUserResultMap" type="freeboard">
+ 	<resultMap id="freeBoardResultMap" type="freeboard">
 		<result column="free_no" property="freeNo"/>
 		<result column="free_title" property="freeTitle"/>
+		<result column="free_content" property="freeContent"/>
 		<result column="free_writer" property="freeWriter"/>
 		<result column="free_regist_date" property="freeRegistDate"/>
+		<result column="free_modify_date" property="freeModifyDate"/>
+		<result column="free_use_yn" property="freeUseYN"/>
 		<result column="free_hit_count" property="freeHitCount"/>
  	</resultMap>	
 	
-	<select id="selectByPage" parameterType="pager" resultMap="freeBoardWithUserResultMap">
+	<select id="selectByPage" parameterType="pager" resultMap="freeBoardResultMap">
 		SELECT rnum, free_no, free_title, free_writer, free_regist_date
 		FROM (
 		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date
@@ -27,6 +30,12 @@
 	
 	<select id="count" resultType="int">
 		SELECT count(*) FROM freeboards
+	</select>
+	
+	<select id="selectByFreeNo" parameterType="int" resultMap="freeBoardResultMap">
+		select free_no, free_title, free_content, free_writer, free_regist_date, free_modify_date, free_use_yn, free_hit_count
+		from freeboards
+		where free_no = #{freeNo}
 	</select>
 	
 	<insert id="insert" parameterType="freeboard">

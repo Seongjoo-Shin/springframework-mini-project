@@ -31,7 +31,7 @@
 						<c:forEach var="freeboard" items="${freeboards}">
 		                    <tr>
 		                      <th scope="row">${freeboard.freeNo}</th>
-		                      <td><a href="boardDetail?bno=${freeboard.freeNo}">${freeboard.freeTitle}</a></td>
+		                      <td><a href="view?freeNo=${freeboard.freeNo}">${freeboard.freeTitle}</a></td>
 		                      <td style="text-align: center;">닉네임</td>
 		                      <td  style="text-align: center;"><fmt:formatDate value="${freeboard.freeRegistDate}" pattern="yyyy-MM-dd"/></td>
 		                      <td>${freeboard.freeHitCount}</td>

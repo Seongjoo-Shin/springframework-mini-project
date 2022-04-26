@@ -61,9 +61,6 @@ public class CommunityController {
 		model.addAttribute("freeboards", freeboards);
 		log.info(freeboards.toString());
 		log.info("boardList페이지");
-
-		//댓글 수
-		
 		
 		return "/community/board/list";
 	}
@@ -91,8 +88,9 @@ public class CommunityController {
 	@GetMapping("/board/boardDetail")
 	public String boardDetail(int freeNo, Model model) {
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
-		model.addAttribute(freeBoardDto);
-		return "/board/boardDetail";
+		model.addAttribute("freeBoardDto", freeBoardDto);
+		log.info("boardDetail 실행");
+		return "/board/boardDetail/view";
 	}
 	
 	@RequestMapping("/board/view")

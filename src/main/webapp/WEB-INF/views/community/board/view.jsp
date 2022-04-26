@@ -13,12 +13,12 @@
             <div class="mb-5">
               <div>
                 <p class="d-inline-block h6 mx-2">글쓴이 <span class="ml-1">냥냥</span></p>
-                <p class="d-inline-block h6 float-right mx-2">조회수: <span>10</span></p>
+                <p class="d-inline-block h6 float-right mx-2">조회수: <span>${freeBoardDto.freeHitCount}</span></p>
                 <p class="d-inline-block h6  float-right mx-2">23:02</p>
                 <p class="d-inline-block h6 float-right mx-2">2022-04-12</p>            
               </div>
-              <div id="free-board-title" class="h4 p-3" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">제목입니다.</div>
-              <div id="free-board-content" class="px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">내용입니다.</div>
+              <div id="free-board-title" class="h4 p-3" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeTitle}</div>
+              <div id="free-board-content" class="px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeContent}</div>
               <div class="text-center mt-3">
               	<a href="/community/board/list" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
               </div>

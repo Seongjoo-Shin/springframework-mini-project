@@ -17,4 +17,7 @@ public interface FreeBoardDao {
 	
 	//댓글 수 -> 게시물에 해당하는 댓글 개수
 	public int countCommnet(int freeNo);
+	
+	//view에서 활용
+	public FreeBoardDto selectByFreeNo(int freeNo);
 }
