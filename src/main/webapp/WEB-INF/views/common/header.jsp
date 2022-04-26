@@ -157,16 +157,25 @@
             </div>
             <div class="myinfo">
             	<span class="logout pr-3 font-weight-bold">
-                   <a href = "${pageContext.request.contextPath}/index/login" class ="text-dark">로그인</a> 
+            		<c:if test="${sessionUserId == null}">
+            			<a href = "${pageContext.request.contextPath}/index/loginForm" class ="text-dark">로그인</a> 
+            		</c:if>
                 </span>
-                <span class="logout pr-3 font-weight-bold" style="display:none;">
-                    로그아웃
+                <span class="logout pr-3 font-weight-bold">
+                	<c:if test="${sessionUserId != null}">
+            			<a href = "${pageContext.request.contextPath}/index/logout" class ="text-dark">로그아웃</a> 
+            		</c:if>
+                    
                 </span>
                 <span class="mypage pr-3 font-weight-bold">
-                    <a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark">마이페이지</a>
+                	<c:if test="${sessionUserId != null}">
+            			<a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark">마이페이지</a>
+            		</c:if>
                 </span>
                 <span id="alarm" class="btn area" onclick="visibleAlarmContent()">
-                	<img id="alarmImg" class="pb-1 area" src="${pageContext.request.contextPath}/resources/images/alarmUse.png" width="35px"/>
+                	<c:if test="${sessionUserId != null}">
+            			<img id="alarmImg" class="pb-1 area" src="${pageContext.request.contextPath}/resources/images/alarmUse.png" width="35px"/>
+            		</c:if>
                 </span>
             </div>
             <div id="alarmContent" class="position-absolute" style="right:10px; top:70px; visibility:hidden;" onclick="visibleAlarmContent()">

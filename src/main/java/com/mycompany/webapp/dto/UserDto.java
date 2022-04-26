@@ -15,5 +15,4 @@ public class UserDto {
 	private String userRole;
 	private int userEnabled;
 	private Date userJoinDate;
-	private Date userWithdrawalDate;
 }
