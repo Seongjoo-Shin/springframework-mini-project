@@ -5,19 +5,10 @@
 	    $(function(){
 	        getLocation();
 	    });
-	    
 	    function addActive(id){
 	        var btn = document.getElementById(id);
 	        btn.classList.toggle("active");
 	    }
-
-        function searchKeyword(){
-            var elements = document.querySelectorAll("td > .active");
-            document.querySelector("#msgBox").innerHTML = "";
-            for(let element of elements){ 
-                document.querySelector("#msgBox").innerHTML += "<li class='ml-5'>" + element.innerHTML +"</li>";
-            }
-        }
 
         function resetKeyword(){
             if(document.querySelectorAll("table .active").length > 0){
@@ -34,29 +25,44 @@
 				<h4>개원 장소 키워드 추천</h4>
 				<div class="row">
 					<div class="col-6 mt-3">
-						<div class="row d-flex justify-content-between flex-column"
-							style="margin: 0 auto;">
-							<table style="margin: 0 auto;">
-								<tr>
-									<td class="p-2"><div id="btn1" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">임플란트</div></td>
-									<td class="p-2"><div id="btn2" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">역세권</div></td>
-									<td class="p-2"><div id="btn3" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">소아치료전문</div></td>
-									<td class="p-2"><div id="btn4" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">노인치료전문</div></td>
-								</tr>
-								<tr>
-									<td class="p-2"><div id="btn5" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">교정전문</div></td>
-									<td class="p-2"><div id="btn6" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">턱관절교정</div></td>
-									<td class="p-2"><div id="btn7" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">사랑니발치</div></td>
-									<td class="p-2"><div id="btn8" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">편의시설</div></td>
-								</tr>
-							</table>
-
-							<div class="mr-5">
-								<span class="text-dark pr-2 float-left ml-5">* 중복 선택이가능합니다.</span>
-								<a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" onclick="resetKeyword();" /> </a>
-								<a href="#"class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px" onclick="searchKeyword();" /></a>
+							<div class="row d-flex justify-content-between flex-column" style="margin: 0 auto;">
+								<table style="margin: 0 auto;">
+									<tr>
+										<td class="p-2">
+											<div id="keyword1" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">임플란트</div>
+										</td>
+										<td class="p-2">
+											<div id="keyword2" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">역세권</div>
+										</td>
+										<td class="p-2">
+											<div id="keyword3" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">소아치료전문</div>
+										</td>
+										<td class="p-2">
+											<div id="keyword4" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">노인치료전문</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="p-2">
+											<div id="keyword5" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">교정전문</div>
+										</td>
+										<td class="p-2">
+											<div id="keyword6" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">턱관절교정</div>
+										</td>
+										<td class="p-2">
+											<div id="keyword7" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">사랑니발치</div>
+										</td>
+										<td class="p-2">
+											<div id="keyword8" class="btn btn-outline-dark w-100 m-1 searchBtn" onclick="addActive(this.id);">편의시설</div>
+										</td>
+									</tr>
+								</table>
+							
+								<div class="mr-5">
+									<span class="text-dark pr-2 float-left ml-5">* 중복 선택이가능합니다.</span>
+									<a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" onclick="resetKeyword();" /> </a>
+									<a href="#"class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px" onclick="keywordAjax();" /></a>
+								</div>
 							</div>
-						</div>
 						<div class="row d-flex mt-5 ml-4">
 							<img src="/resources/images/mascot.png" width="70px" height="70px" style="margin-top: auto;" />
 							<div class="ml-3 mr-3" style="width: 450px; height: 300px; border-radius: 15px;">
@@ -78,7 +84,7 @@
                                 let infoWindows = new Array();
                                 var marker;
                                 var cmarker;
-								
+                                var result;
                                 
                                 function getLocation() {
                                     if (navigator.geolocation) {
@@ -121,11 +127,9 @@
                                 function initMap(){
                                 	 var positions = new Array();
                                 	 positions.push(
-                                         {location : '강남', lat : '37.4959854', lng : '127.0664091'},
-                                         {location : '강동', lat : '37.5492077', lng : '127.1464824'},
-                                         {location : '강북', lat : '37.6469954', lng : '127.0147158'},
-                                         {location : '강서', lat : '37.5657617', lng : '126.8226561'},
-                                         {location : '송파', lat : '37.5177941', lng : '127.1127078'},
+                                		 <c:forEach var="keyword" items="${keywords}">
+                                		 	{location: reversegeocode('${keyword.latitude}', '${keyword.longitude}'), lat: '${keyword.latitude}', lng: '${keyword.longitude}'},
+                                		 </c:forEach>
                                      );
                                 	 
                                 	 for(var i=0; i<positions.length; i++){
@@ -190,24 +194,55 @@
                                 }
 
                                 function searchMap(){
-                                	var addr = $("#searchInput").val();
-                                	naver.maps.Service.geocode({address: addr}, function(status, response) {
-
+                                    
+                                }
+                                
+                                function reversegeocode(latitude, longitude){
+                                	var lat = Number(latitude);
+                                	var lng = Number(longitude);
+                                	
+                                	naver.maps.Service.reverseGeocode({
+                                        location: new naver.maps.LatLng(lat, lng),
+                                    }, function(status, response) {
                                         if (status !== naver.maps.Service.Status.OK) {
-                                            return alert(myaddress + '의 검색 결과가 없거나 기타 네트워크 에러');
+                                            return alert('Something wrong!');
                                         }
-                                     
-                                        var result = response.result;
-                                        var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
-                                        
-                                        console.log("myaddr : "+myaddr);
-                                        carker.setPosition(myaddr);
-                                        
-                                        var location = new naver.maps.LatLng(myaddr);
-                                        map.panTo(location);
+
+                                        result = response.result; // 검색 결과의 컨테이너
+                                        console.log(result.items[0].address);
+                                        items = result.items.address; // 검색 결과의 배열
                                     });
                                 }
-
+                                
+                                function keywordAjax(){
+                                	var elements = document.querySelectorAll("td > .active");
+                                	var keywordlst = new Array();
+                                    var keyword = new Object();
+                                    var jsonObject;
+                                    document.querySelector("#msgBox").innerHTML = "";
+                                    
+                                    	
+                                    
+                                    for(var i=0; i<elements.length; i++){
+                                    	keyword.key = (i+1);
+                                    	keyword.value = elements[i].id;
+                                    	keywordlst.push({...keyword});
+                                    	document.querySelector("#msgBox").innerHTML += "<li class='ml-5'>" + elements[i].innerHTML +"</li>";
+                                    }
+                                    var jsonObject = JSON.stringify(keywordlst);
+                                    console.log(jsonObject);
+                                    
+                                	$.ajax({
+                                		type: "POST",
+                                		url: "/opening/keyword",
+                                		contentType: "application/json; charset=UTF-8",
+                                		dataType : "json",
+                                		traditional: true,
+                                		data: jsonObject,
+                                	}).done((data) => {
+                                		console.log(data);
+                                	});
+                                }
                                 
 
                             </script>

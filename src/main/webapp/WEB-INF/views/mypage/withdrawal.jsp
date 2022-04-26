@@ -15,9 +15,10 @@
                 <div class="col-8">
                     <h3 class="m-3">회원 탈퇴</h3>
                     <div class="d-flex justify-content-center align-items-center h-100">
-                        <form>
+                        <form method="post" action="/mypage/userWithdrawal">
                             <h4>비밀번호를 입력해주세요</h4>
-                            <input type="password" class="mr-2" placeholder="비밀번호"/>
+                            <input type="hidden" name="userId" value="test"/>
+                            <input type="password" class="mr-2" placeholder="비밀번호" name="userPassword"/>
                             <input type="submit" value="회원탈퇴" class="btn btn-outline-dark"/>
                         </form>
                     </div>

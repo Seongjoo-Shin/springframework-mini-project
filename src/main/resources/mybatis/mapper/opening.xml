@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.OpeningDao">
+	
+	<select id="selectKeyword" resultType="keyword">
+		select *
+		from keywords
+		where 
+			1 = 1
+		<if test="keyword1 != null">
+			and keyword1 = 1
+		</if>
+		<if test="keyword2 != null">
+			and keyword2 = 1
+		</if>
+		<if test="keyword3 != null">
+			and keyword3 = 1
+		</if>
+		<if test="keyword4 != null">
+			and keyword4 = 1
+		</if>
+		<if test="keyword5 != null">
+			and keyword5 = 1
+		</if>
+		<if test="keyword6 != null">
+			and keyword6 = 1
+		</if>
+		<if test="keyword7 != null">
+			and keyword7 = 1
+		</if>
+		<if test="keyword8 != null">
+			and keyword8 = 1
+		</if>
+	</select>
+</mapper>
