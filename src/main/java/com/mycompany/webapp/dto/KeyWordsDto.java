@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class KeyWordsDto {
 	private int keywordNo;
-	private String keyWard1;
-	private String keyWard3;
-	private String keyWard4;
-	private String keyWard5;
-	private String keyWard6;
-	private String keyWard7;
-	private String keyWard8;
+	private String keyWord1;
+	private String keyWord3;
+	private String keyWord4;
+	private String keyWord5;
+	private String keyWord6;
+	private String keyWord7;
+	private String keyWord8;
 	private String latitude;
 	private String longtitude;
 }
