@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.FreeBoardDao">
+ 	<resultMap id="freeBoardWithUserResultMap" type="freeboard">
+		<result column="free_no" property="freeNo"/>
+		<result column="free_title" property="freeTitle"/>
+		<result column="free_writer" property="freeWriter"/>
+		<result column="free_regist_date" property="freeRegistDate"/>
+		<result column="free_hit_count" property="freeHitCount"/>
+ 	</resultMap>	
+	
+	<select id="selectByPage" parameterType="pager" resultMap="freeBoardWithUserResultMap">
+		SELECT rnum, free_no, free_title, free_writer, free_regist_date
+		FROM (
+		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date
+		  FROM (
+		    SELECT free_no, free_title, free_writer, free_regist_date
+		    FROM freeboards
+		    ORDER BY free_no DESC
+		  )
+		  WHERE rownum &lt;= #{endRowNo}  
+		)
+		WHERE rnum &gt;= #{startRowNo}
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT count(*) FROM freeboards
+	</select>
+	
+	<insert id="insert" parameterType="freeboard">
+		INSERT INTO freeboards (free_no, free_title, free_content, free_writer, free_regist_date, free_modify_date, free_use_yn, free_hit_count)
+		VALUES(#{freeNo}, #{freeTitle}, #{freeContent}, #{freeWriter}, SYSDATE, SYSDATE, 1, 0)
+	</insert>
+
+</mapper>
+
+

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
     <section>
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
@@ -21,93 +22,21 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col" style="text-align: center;">제목</th>
-                        <th scope="col" class="px-0">댓글수</th>
-                        <th scope="col">작성자</th>
+                        <th scope="col" style="text-align: center;">작성자</th>
                         <th scope="col" style="text-align: center;">작성일</th>
                         <th scope="col">조회</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr style="cursor: pointer">
-                        <th scope="row">100</th>
-                        <td><a class="text-dark" href="boardDetail">제목입니다.</a></td>
-                        <td>3</td>
-                        <td>냥냥</td>
-                        <td style="text-align: center;">2022.04.12</td>
-                        <td>10</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">99</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">98</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">97</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">96</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">95</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">94</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">93</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">92</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">91</th>
-                        <td>New admin Design</td>
-                        <td>3</td>
-                        <td>닉네임</td>
-                        <td  style="text-align: center;">2022.02.12</td>
-                        <td>13</td>
-                      </tr>
+                    <tbody>          
+						<c:forEach var="freeboard" items="${freeboards}">
+		                    <tr>
+		                      <th scope="row">${freeboard.freeNo}</th>
+		                      <td><a href="boardDetail?bno=${freeboard.freeNo}">${freeboard.freeTitle}</a></td>
+		                      <td style="text-align: center;">닉네임</td>
+		                      <td  style="text-align: center;"><fmt:formatDate value="${freeboard.freeRegistDate}" pattern="yyyy-MM-dd"/></td>
+		                      <td>${freeboard.freeHitCount}</td>
+		                    </tr>
+						</c:forEach>
                     </tbody>
                   </table>
                 </div>
@@ -120,47 +49,43 @@
 				<!-- 페이지 처리 -->
                 <div class="pt-3 my-3">
                   <ul class="pagination justify-content-center mb-0">
-                    <li class="page-item disabled">
+	               	<li class="page-item">
+						<a class="page-link" href="list?pageNo=1">First</a>
+					</li>
+					<c:if test="${pager.groupNo>1}">
+						<li class="page-item">
+							<a class="page-link" href="list?pageNo=${pager.startPageNo-1}">Previous</a>
+						</li>
+					</c:if>
+<!--                     <li class="page-item disabled">
                       <a
                         class="page-link"
                         href="#"
                         tabindex="-1"
                         aria-disabled="true"
                         >Previous</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">11</a>
-                    </li>
-                    <li class="page-item active">
-                      <a class="page-link" href="#">12</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">13</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">14</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">15</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">16</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">17</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">18</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">19</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">20</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
-                    </li>
+                    </li> -->
+                    
+                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
+						<c:if test="${pager.pageNo != i}">
+							<li class="page-item">
+								<a class="page-link" href="list?pageNo=${i}">${i}</a>
+							</li>
+						</c:if>
+						<c:if test="${pager.pageNo == i}">
+							<li class="page-item active">
+								<a class="page-link" href="list?pageNo=${i}">${i}</a>
+							</li>
+						</c:if>
+					</c:forEach>
+					<c:if test="${pager.groupNo<pager.totalGroupNo}">
+						<li class="page-item">
+	                      <a class="page-link" href="list?pageNo=${pager.endPageNo+1}">Next</a>
+	                    </li>
+					</c:if>
+					<li class="page-item">
+	                	<a class="page-link" href="list?pageNo=${pager.totalPageNo}">Last</a>
+	                </li>
                   </ul>
                 </div>
               </div>
