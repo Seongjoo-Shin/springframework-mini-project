@@ -2,6 +2,8 @@ package com.mycompany.webapp.service;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.UserDao;
@@ -12,6 +14,10 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Log4j2
 public class UserService {
+	public enum SignUpResult{
+		SUCCESS, FAIL, DUPLICATED
+	}
+	
 	public enum LoginResult{
 		SUCCESS, FAIL_USERID, FAIL_USERPASSWORD, FAIL
 	}
@@ -19,22 +25,49 @@ public class UserService {
 	@Resource
 	private UserDao userDao;
 	
-	public LoginResult loginUser(UserDto user) {
+	public LoginResult login(UserDto user) {
 		UserDto dbUser =  userDao.selectByUserId(user.getUserId());
 		log.info(dbUser);
 		if(dbUser == null) {
 			return LoginResult.FAIL_USERID;
 		} else {
-			if(dbUser.getUserPassword().equals(user.getUserPassword())) {
+			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			if(passwordEncoder.matches(user.getUserPassword(), dbUser.getUserPassword())) {
 				return LoginResult.SUCCESS;
 			}
 			return LoginResult.FAIL_USERPASSWORD;
 		}
 	}
 
-	public void signUp(UserDto user) {
-		log.info("service : " + user);
-		userDao.insert(user);
+	public SignUpResult signUp(UserDto user) {
+		UserDto dbUser =  userDao.selectByUserId(user.getUserId());
+	    if(dbUser == null) {
+	       PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		   //PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	       user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+	       int result = userDao.insert(user);
+	       return SignUpResult.SUCCESS;
+	    } else {
+	       return SignUpResult.DUPLICATED;
+	    }
+	}
+
+	public LoginResult checkId(String id) {
+		UserDto dbUser = userDao.selectByUserId(id);
+		if(dbUser==null) {
+			return LoginResult.SUCCESS;
+		} else {
+			return LoginResult.FAIL_USERID;
+		}
+	}
+
+	public LoginResult checkNickname(String nickname) {
+		UserDto dbUser = userDao.selectByUserNickname(nickname);
+		if(dbUser==null) {
+			return LoginResult.SUCCESS;
+		} else {
+			return LoginResult.FAIL_USERID;
+		}
 	}
 
 }

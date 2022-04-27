@@ -3,15 +3,18 @@ package com.mycompany.webapp.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.UserDto;
 import com.mycompany.webapp.service.UserService;
 import com.mycompany.webapp.service.UserService.LoginResult;
+import com.mycompany.webapp.service.UserService.SignUpResult;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -31,7 +34,7 @@ public class IndexController {
 	@PostMapping("/login")
 	public String login(UserDto user, HttpSession session, Model model) {
 		log.info(user);
-		LoginResult result = userService.loginUser(user);
+		LoginResult result = userService.login(user);
 		log.info(result);
 		
 		if(result == LoginResult.SUCCESS) {
@@ -46,10 +49,16 @@ public class IndexController {
 		}
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("sessionUserId");
+		return "redirect:/";
+	}
+	
 	@RequestMapping("/findAccount")
 	public String findAccount() {
 		log.info("실행");
-		return "/index/findIDPW";
+		return "/index/findIDPWForm";
 	}
 	
 	@RequestMapping("/signUpForm")
@@ -60,17 +69,47 @@ public class IndexController {
 	
 	@PostMapping("/signUp")
 	public String signUp(UserDto user) {
-		log.info("실행");
 		user.setUserEnabled(1);
 		user.setUserRole("USER_ROLE");
 		log.info(user);
-		//userService.signUp(user);
-		return "redirect:/index/loginForm";
+		SignUpResult result = userService.signUp(user);
+		if(result == SignUpResult.SUCCESS) {
+			return "redirect:/index/loginForm";
+		} else {
+			return "/index/signupForm";
+		}
+		
 	}
 	
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.removeAttribute("sessionUserId");
-		return "redirect:/";
+	@PostMapping(value = "/checkId", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String checkId(String id) {
+		LoginResult result = userService.checkId(id);
+		JSONObject jsonObject = new JSONObject();
+		if(result == LoginResult.SUCCESS) {
+			jsonObject.put("result", "fail");
+		} else {
+			jsonObject.put("result", "success");
+		}
+		
+		String json = jsonObject.toString();
+		return json;
 	}
+	
+	@PostMapping(value = "/checkNickname", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String checkNickname(String nickname) {
+		LoginResult result = userService.checkNickname(nickname);
+		JSONObject jsonObject = new JSONObject();
+		if(result == LoginResult.SUCCESS) {
+			jsonObject.put("result", "fail");
+		} else {
+			jsonObject.put("result", "success");
+		}
+		
+		String json = jsonObject.toString();
+		return json; 
+	}
+	
+	
 }

@@ -2,6 +2,28 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+<style>
+	.id_input_re_1{
+		color : green;
+		display : none;
+	}
+	
+	.id_input_re_2{
+		color : red;
+		display : none;
+	}
+	
+	.id_input_re_3{
+		color : green;
+		display : none;
+	}
+	
+	.id_input_re_4{
+		color : red;
+		display : none;
+	}
+</style>
+
 <script>
     function selectEmail(ele){ 
         var $ele = $(ele); 
@@ -28,8 +50,30 @@
                    <img class="mb-5" src="${pageContext.request.contextPath}/resources/images/logo.png" width="250px"/>  
                </div>
                <div class="form-group">
-                   <input name="userId" class ="col-md-8" placeholder="아이디" type="text"/>
-                   <button class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">중복확인</button>
+                   <input id="userId" name="userId" class ="col-md-8" placeholder="아이디" type="text"/>
+                   <button type="button" onClick="checkId()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">중복확인</button>
+                   <script>
+	                   function checkId() {
+	                	   var id = $(userId).val();
+		   					$.ajax({
+		   						url: "/index/checkId",
+		   						data: {id},
+		   						method:"post"
+		   					})
+		   					.done((data) => {
+		   						console.log(data.result);
+		   						if(data.result ==="success"){
+		   							$('.id_input_re_2').css("display","inline-block");
+		   							$('.id_input_re_1').css("display", "none")
+		   						} else if(data.result ==="fail"){
+		   							$('.id_input_re_1').css("display","inline-block");
+		   							$('.id_input_re_2').css("display", "none");
+		   						}
+		   					});
+		   				}
+                   </script>
+                   <span class="id_input_re_1">사용 가능한 아이디입니다.</span>
+				   <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
             </div>
             <div class="form-group">
                 <input name="userPassword" class ="col-md-8" placeholder="비밀번호" type="text"/>
@@ -56,8 +100,30 @@
                 <input name="userPhone" class ="col-md-8" placeholder="전화번호" type="text"/>
             </div>
             <div class="form-group">
-                <input name="userNickname" class ="col-md-8" placeholder="닉네임" type="text"/>
-                <button class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">중복확인</button>
+                <input id="userNickname" name="userNickname" class ="col-md-8" placeholder="닉네임" type="text"/>
+                <button type="button" onClick="checkNickname()" class="btn btn-sm"  style="background-color: rgb(242, 101, 45); color: white;">중복확인</button>
+            	<script>
+	                   function checkNickname() {
+	                	   var nickname = $(userNickname).val();
+		   					$.ajax({
+		   						url: "/index/checkNickname",
+		   						data: {nickname},
+		   						method:"post"
+		   					})
+		   					.done((data) => {
+		   						console.log(data.result);
+		   						if(data.result ==="success"){
+		   							$('.id_input_re_4').css("display","inline-block");
+		   							$('.id_input_re_3').css("display", "none")
+		   						} else if(data.result ==="fail"){
+		   							$('.id_input_re_3').css("display","inline-block");
+		   							$('.id_input_re_4').css("display", "none");
+		   						}
+		   					});
+		   				}
+                   </script>
+                   <span class="id_input_re_3">사용 가능한 닉네임입니다.</span>
+				   <span class="id_input_re_4">닉네임이 이미 존재합니다.</span>
             </div>
             <input type="submit" onclick="sumemail()" value="회원가입" class="btn btn-sm mb-5" style="background-color: rgb(242, 101, 45); color: white;"></input>
         </div>

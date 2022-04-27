@@ -7,5 +7,6 @@ import com.mycompany.webapp.dto.UserDto;
 @Mapper
 public interface UserDao {
 	public UserDto selectByUserId(String userId);
+	public UserDto selectByUserNickname(String nickname);
 	public int insert(UserDto user);
 }
