@@ -24,19 +24,19 @@
                             </colgroup>
                             <tr>
                                 <td class="text-center bg-light"><span>아이디</span></td>
-                                <td><input type="hidden" value="test" name="userId"/>test</td>
+                                <td><input type="hidden" value="${user.userId}" name="userId"/>${user.userId}</td>
                             </tr>
                             <tr>
                                 <td class="text-center bg-light">이름</td>
-                                <td><input type="hidden" value="테스트" name="userName"/>테스트</td>
+                                <td><input type="hidden" value="${user.userName}" name="userName"/>${user.userName}</td>
                             </tr>
                             <tr>
                                 <td class="text-center bg-light">이메일</td>
-                                <td><input type="hidden" value="test@test.com" name="userEmail"/>test@test.com</td>
+                                <td><input type="hidden" value="${user.userEmail}" name="userEmail"/>${user.userEmail}</td>
                             </tr>
                             <tr>
                                 <td class="text-center bg-light">연락처</td>
-                                <td><input type="hidden" value="01012341234" name="userPhone"/>01012341234</td>
+                                <td><input type="hidden" value="${user.userPhone}" name="userPhone"/>${user.userPhone}</td>
                             </tr>
                             <tr>
                                 <td class="text-center bg-light">현재 비밀번호</td>

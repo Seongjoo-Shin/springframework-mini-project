@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.OpeningDao">
-	
-	<select id="selectKeyword" resultType="keyword">
+
+	<select id="selectAllKeyword" resultType="keyword">
 		select *
 		from keywords
+	</select>
+	
+	<select id="selectKeyword" resultType="keyword" parameterType="keyword">
+		select keyword_no, latitude, longitude
+		from keywords
 		where 
-			1 = 1
-		<if test="keyword1 != null">
+			1 = 1 
+		<if test='keyword1 == 1'>
 			and keyword1 = 1
 		</if>
-		<if test="keyword2 != null">
+		<if test='keyword2 == 1'>
 			and keyword2 = 1
 		</if>
-		<if test="keyword3 != null">
+		<if test='keyword3 == 1'>
 			and keyword3 = 1
 		</if>
-		<if test="keyword4 != null">
+		<if test='keyword4 == 1'>
 			and keyword4 = 1
 		</if>
-		<if test="keyword5 != null">
+		<if test='keyword5 == 1'>
 			and keyword5 = 1
 		</if>
-		<if test="keyword6 != null">
+		<if test='keyword6 == 1'>
 			and keyword6 = 1
 		</if>
-		<if test="keyword7 != null">
+		<if test='keyword7 == 1'>
 			and keyword7 = 1
 		</if>
-		<if test="keyword8 != null">
+		<if test='keyword8 == 1'>
 			and keyword8 = 1
 		</if>
 	</select>

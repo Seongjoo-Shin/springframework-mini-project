@@ -9,6 +9,7 @@ import com.mycompany.webapp.dto.KeyWordDto;
 @Mapper
 public interface OpeningDao {
 	
-	public List<KeyWordDto> selectKeyword(); // 키워드 
+	public List<KeyWordDto> selectAllKeyword();
+	public List<KeyWordDto> selectKeyword(KeyWordDto keyword); // 키워드 
 	
 }

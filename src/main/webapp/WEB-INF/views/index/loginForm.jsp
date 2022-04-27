@@ -17,7 +17,7 @@
                 </div>
                 <div class="d-flex flex-column justify-content-center align-content-center ml-2 pt-4">
                     <div >
-                        <input class="btn btn-sm" type="submit" value="login" style="width:100px; height: 90px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;"></input>
+                        <input class="btn btn-sm" type="submit" value="login" style="width:100px; height: 90px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;"/>
                     </div>
                 </div>
             </div>

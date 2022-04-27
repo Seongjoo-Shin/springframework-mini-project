@@ -15,7 +15,11 @@ public class OpeningService {
 	@Resource
 	private OpeningDao openingDao;
 	
-	public List<KeyWordDto> getKeywordPlace() {
-		return openingDao.selectKeyword();
+	public List<KeyWordDto> getKeywordAllPlace() {
+		return openingDao.selectAllKeyword();
+	}
+	
+	public List<KeyWordDto> getKeywordPlace(KeyWordDto keyword) {
+		return openingDao.selectKeyword(keyword);
 	}
 }

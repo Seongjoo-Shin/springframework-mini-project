@@ -1,10 +1,16 @@
 package com.mycompany.webapp.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.MypageDao;
+import com.mycompany.webapp.dto.BuildingDto;
+import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.MarketBoardDto;
+import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.dto.UserDto;
 
 @Service
@@ -17,7 +23,7 @@ public class MypageService {
 		return mypageDao.selectUser(userId);
 	}
 	
-	public String getPassword(String userId) {
+	public UserDto getPassword(String userId) {
 		return mypageDao.selectPassword(userId);
 	}
 	
@@ -25,7 +31,23 @@ public class MypageService {
 		return mypageDao.updatePassword(user);
 	}
 	
+	public List<FreeBoardDto> getMyFreeBoardList(PagerDto pager, String userId){
+		return mypageDao.selectFreeBoardList(pager, userId);
+	}
+	
+	public List<MarketBoardDto> getMyMarketBoardList(PagerDto pager, String userId){
+		return mypageDao.selectMarketBoardList(pager, userId);
+	}
+	
+	public List<BuildingDto> getMyBuildingList(PagerDto pager, String userId){
+		return mypageDao.selectBuildingList(pager, userId);
+	}
+	
 	public int userWithdrawal(UserDto user) {
 		return mypageDao.userWithdrawal(user);
+	}
+
+	public int getTotalFreeboardCount(String userId) {
+		return mypageDao.selectAllFreeBoard(userId);
 	}
 }

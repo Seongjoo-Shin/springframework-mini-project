@@ -1,14 +1,22 @@
 package com.mycompany.webapp.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.dto.UserDto;
 import com.mycompany.webapp.service.MypageService;
 
@@ -23,92 +31,162 @@ public class MypageController {
 	private MypageService mypageService;
 	
 	@RequestMapping("/modify")
-	public String modify() {
-		log.info("실행");
-		return "/mypage/modify";
+	public String modify(HttpSession session, Model model) {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			String userId = (String) session.getAttribute("sessionUserId");
+			UserDto user = mypageService.getUser(userId);
+			log.info("userId : " + user.getUserId());
+			model.addAttribute("user", user);
+			return "/mypage/modify";	
+		}
+	}
+	// 비밀번호 수정
+	@PostMapping("/updatepassword")
+	public String updatePassword(HttpSession session, @ModelAttribute("userNewPassword") String newPwd, UserDto user, Model model) {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			// spring security 처리 들어가야함
+			String userId = (String) session.getAttribute("sessionUserId");
+			UserDto dbUser = mypageService.getUser(userId);
+			
+			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			if(passwordEncoder.matches(user.getUserPassword(), dbUser.getUserPassword())) {
+				dbUser.setUserPassword(passwordEncoder.encode(newPwd));
+				int cnt = mypageService.changePassword(dbUser);
+				model.addAttribute("user", dbUser);
+				return "mypage/modify";
+			} else {
+				model.addAttribute("user", dbUser);
+				return "mypage/modify";
+			}
+		}
 	}
 	
-	@RequestMapping("/prefer")
-	public String prefer() {
-		log.info("실행");
-		return "/mypage/prefer";
-	}
-	
-	@RequestMapping("/withdrawl")
-	public String withdrawl() {
-		log.info("실행");
-		return "/mypage/withdrawal";
-	}
-	
+	// 마이페이지 본인이 쓴 자유 게시물
 	@RequestMapping("/myboard/board")
-	public String myboardBoard() {
+	public String myboardBoard(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
 		log.info("실행");
-		return "/mypage/myboard/board";
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			String userId = (String) session.getAttribute("sessionUserId");
+			int totalCnt = mypageService.getTotalFreeboardCount(userId);
+			PagerDto pager = new PagerDto(10, 10, totalCnt, pageNo);
+			List<FreeBoardDto> lst = mypageService.getMyFreeBoardList(pager, userId);
+			model.addAttribute("boards", lst);
+			return "/mypage/myboard/board";
+		} 
 	}
 	
+	// 마이페이지 본인이 쓴 인수/매물
 	@RequestMapping("/myboard/building")
-	public String myboardBuilding() {
+	public String myboardBuilding(HttpSession session) {
 		log.info("실행");
-		return "/mypage/myboard/building";
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			return "/mypage/myboard/building";
+		} 
 	}
 	
+	// 마이페이지 본인이 쓴 거래 게시물
 	@RequestMapping("/myboard/market")
-	public String myboardMarket() {
+	public String myboardMarket(HttpSession session) {
 		log.info("실행");
-		return "/mypage/myboard/market";
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			return "/mypage/myboard/market";
+		} 
 	}
 	
-	@RequestMapping("/prefer/buildingprefer")
-	public String buildingprefer() {
+	// 찜목록 페이지 이동
+	@RequestMapping("/prefer")
+	public String prefer(HttpSession session) {
 		log.info("실행");
-		return "/mypage/prefer/buildingprefer";
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			
+			return "/mypage/prefer";
+		}
+	}
+
+	@RequestMapping("/prefer/buildingprefer")
+	public String buildingprefer(HttpSession session) {
+		log.info("실행");
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			return "/mypage/prefer/buildingprefer";			
+		} 
 	}
 	
 	@RequestMapping("/prefer/marketprefer")
-	public String marketprefer() {
+	public String marketprefer(HttpSession session) {
 		log.info("실행");
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} 
 		return "/mypage/prefer/marketprefer";
 	}
 	
 	
 	@RequestMapping("/message/receive")
-	public String messageReceive() {
+	public String messageReceive(HttpSession session) {
 		log.info("실행");
-		return "/mypage/message/receive";
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			return "/mypage/message/receive";
+		} 
 	}
 	
 	@RequestMapping("/message/send")
-	public String messageSend() {
+	public String messageSend(HttpSession session) {
 		log.info("실행");
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			
+		} 
 		return "/mypage/message/send";
 	}
 	
-	// 비밀번호 수정
-	@PostMapping("/updatepassword")
-	public String updatePassword(@ModelAttribute("userNewPassword") String newPwd, UserDto user, Model model) {
-		
-		// spring security 처리 들어가야함
-		String chkPwd = mypageService.getPassword(user.getUserId());
-		if(chkPwd.equals(user.getUserPassword())) {
-			user.setUserPassword(newPwd);
-			int cnt = mypageService.changePassword(user);
+	
+	// 회원 탈퇴 페이지 이동
+	@RequestMapping("/withdrawl")
+	public String withdrawl(HttpSession session) {
+		log.info("실행");
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			return "/mypage/withdrawal";
 		}
-		
-		return "mypage/modify";
 	}
 	
+	// 회원 탈퇴 action
 	@PostMapping("/userWithdrawal")
-	public String userWithdrawal(UserDto user, HttpServletRequest request, Model model) {
-		log.info("id : " + user.getUserId());
-		String chkPwd = mypageService.getPassword(user.getUserId());
-		log.info("pwd : " + user.getUserPassword());
-		if(chkPwd.equals(user.getUserPassword())) {
-			int cnt = mypageService.userWithdrawal(user);
-			return "redirect:/";
+	public String userWithdrawal(HttpSession session, UserDto user, HttpServletRequest request, Model model) {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
 		} else {
-			model.addAttribute("message", "비밀번호를 확인해주세요");
-			return "mypage/withdrawal";
+			log.info("user.getUserId() : " + user.getUserId());
+			UserDto chkPwd = mypageService.getPassword(user.getUserId());
+			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			log.info("user.getUserPassword() : " + user.getUserPassword());
+			log.info(chkPwd);
+			if(passwordEncoder.matches(user.getUserPassword(), chkPwd.getUserPassword())) {
+				int cnt = mypageService.userWithdrawal(user);
+				session.removeAttribute("sessionUserId");
+				return "redirect:/";
+			} else {
+				model.addAttribute("message", "비밀번호를 확인해주세요");
+				return "mypage/withdrawal";
+			}			
 		}
-		
 	}
 }

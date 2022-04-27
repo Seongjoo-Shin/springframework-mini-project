@@ -1,9 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.MypageDao">
-
+	
+	<resultMap id="userMap" type="user">
+	    <result property="userId" column="user_id"/>
+	    <result property="userPassword" column="user_password"/>
+	    <result property="userEmail" column="user_email"/>
+	    <result property="userName" column="user_name"/>
+	    <result property="userPhone" column="user_phone"/>
+	    <result property="userNickname" column="user_nickname"/>
+	    <result property="userRole" column="user_role"/>
+	    <result property="userEnabled" column="user_enabled"/>
+	    <result property="userJoinDate" column="user_joindate"/>
+	</resultMap>
+	
+	<resultMap id="freeboardMap" type="freeboard">
+	    <result property="freeNo" column="free_no"/>
+	    <result property="freeTitle" column="free_title"/>
+	    <result property="freeContent" column="free_content"/>
+	    <result property="freeWriter" column="freE_writer"/>
+	    <result property="freeRegistDate" column="free_regist_date"/>
+	    <result property="freeModifyDate" column="free_modify_date"/>
+	    <result property="freeUseYN" column="free_use_YN"/>
+	    <result property="freeHitCount" column="free_hit_count"/>
+	</resultMap>
+	
+	<resultMap id="marketboardMap" type="marketboard">
+	    <result property="marketNo" column="market_no"/>
+	    <result property="marketTitle" column="market_title"/>
+	    <result property="marketContent" column="market_content"/>
+	    <result property="marketWriter" column="market_writer"/>
+	    <result property="marketCategory" column="market_category"/>
+	    <result property="marketRegistDate" column="market_regist_date"/>
+	    <result property="marketModifyDate" column="market_modify_date"/>
+	    <result property="marketHitCount" column="market_hit_count"/>
+	    <result property="marketPrice" column="market_price"/>
+	    <result property="marketLikeCount" column="market_like_count"/>
+	</resultMap>
+	
+	<resultMap id="buildingMap" type="building">
+	    <result property="buildingNo" column="building_no"/>
+	    <result property="buildingName" column="building_name"/>
+	    <result property="buildingAddr" column="building_addr"/>
+	    <result property="buildingAddrDetail" column="building_addr_detail"/>
+	    <result property="buildingLatitude" column="building_latitude"/>
+	    <result property="buildingLongitude" column="building_longitude"/>
+	    <result property="buildingTradeInfo" column="building_trade_info"/>
+	    <result property="buildingTakeoverPrice" column="building_takeover_price"/>
+	    <result property="buildingDepositPrice" column="building_deposit_price"/>
+	    <result property="buildingMonthRent" column="building_month_rent"/>
+	    <result property="buildingPrice" column="building_price"/>
+	    <result property="buildingAvailableDate" column="building_available_date"/>
+	    <result property="buildingDetailContent" column="building_detail_content"/>
+	    <result property="buildingUseYN" column="building_use_yn"/>
+	    <result property="buildingWriter" column="building_writer"/>
+	    <result property="buildingSupplyArea" column="building_supply_area"/>
+	    <result property="buildingDedicatedArea" column="building_dedicated_area"/>
+	    <result property="buildingTotalFloor" column="building_total_floor"/>
+	    <result property="buildingFloor" column="building_floor"/>
+	    <result property="buildingOption" column="building_option"/>
+	</resultMap>
+	
+	<select id="selectUser" resultMap="userMap" parameterType="String">
+		select * from users where user_id = #{userId}
+	</select>
+	
 	<!-- 유저 비밀번호 검색 -->
-	<select id="selectPassword" resultType="String">
+	<select id="selectPassword" resultMap="userMap">
 		select user_password from users where user_id = #{userId}
 	</select>
 	
@@ -16,4 +79,23 @@
 	<update id="userWithdrawal" parameterType="user">
 		update users set user_enabled = 0 where user_id = #{userId}
 	</update>
+	
+	<select id="selectFreeBoardList" parameterType="pager" resultMap="freeboardMap">
+		SELECT rnum, free_no, free_title, free_writer, free_regist_date
+		FROM (
+		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date
+		  FROM (
+		    SELECT free_no, free_title, free_writer, free_regist_date
+		    FROM freeboards
+		    where free_writer = #{userId}
+		    ORDER BY free_no DESC
+		  )
+		  WHERE rnum &lt;= #{endRowNo}  
+		)
+		WHERE rnum &gt;= #{startRowNo}
+	</select>
+	
+	<select id="selectAllFreeBoard" resultType="Integer" parameterType="String">
+		select count(*) from freeboards where free_writer = #{userId}
+	</select>
 </mapper>

@@ -59,8 +59,8 @@
 							
 								<div class="mr-5">
 									<span class="text-dark pr-2 float-left ml-5">* 중복 선택이가능합니다.</span>
-									<a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" onclick="resetKeyword();" /> </a>
-									<a href="#"class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px" onclick="keywordAjax();" /></a>
+									<a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" onclick="location.reload();" /> </a>
+									<a href="javascript:keywordAjax();"class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px"/></a>
 								</div>
 							</div>
 						<div class="row d-flex mt-5 ml-4">
@@ -80,11 +80,12 @@
 						</div>
 						<script>
                                
-                                let markers = new Array();
-                                let infoWindows = new Array();
+                                var markers = new Array();
+                                var infoWindows = new Array();
                                 var marker;
                                 var cmarker;
                                 var result;
+                                var positions = new Array();
                                 
                                 function getLocation() {
                                     if (navigator.geolocation) {
@@ -125,35 +126,30 @@
                                 }
                                 
                                 function initMap(){
-                                	 var positions = new Array();
-                                	 positions.push(
-                                		 <c:forEach var="keyword" items="${keywords}">
-                                		 	{location: reversegeocode('${keyword.latitude}', '${keyword.longitude}'), lat: '${keyword.latitude}', lng: '${keyword.longitude}'},
-                                		 </c:forEach>
-                                     );
-                                	 
-                                	 for(var i=0; i<positions.length; i++){
-                                		 marker = new naver.maps.Marker({
-                                			 map: map,
-                                			 position: new naver.maps.LatLng(positions[i].lat, positions[i].lng),
-                                			 icon: {
-                                				 content: '<img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;">',
-                                                 size: new naver.maps.Size(20, 27),
-                                                 origin: new naver.maps.Point(0, 0),
-                                                 anchor: new naver.maps.Point(16, 32),
-                                			 }
-                                		 });
-                                		 var infoWindow = new naver.maps.InfoWindow({
-                                             content: '<div class="p-2 gotoTake" style="width:200px;"><span>' + positions[i].location + '</span><br><div class="text-center w-100"><a class="btn btn-sm btn-outline-dark w-100 mt-2" href="/take/list?">주변매물 보러가기 -></a></div></div>',
-                                         });
-                                		 
-                                		 markers.push(marker);
-                                         infoWindows.push(infoWindow);
-                                	 }
-                                	 for (var i = 0, ii = markers.length; i < ii; i++) {
-                                         naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
-                                     }
-                                }
+                                	for(var i=0; i<positions.length; i++){
+                                		marker = new naver.maps.Marker({
+                                			map: map,
+                                			position: new naver.maps.LatLng(positions[i].lat, positions[i].lng),
+                                			icon: {
+                                				content: '<img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;">',
+                                                size: new naver.maps.Size(20, 27),
+                                                origin: new naver.maps.Point(0, 0),
+                                                anchor: new naver.maps.Point(16, 32),
+                                			}
+                                	 	});
+                                	 	var infoWindow = new naver.maps.InfoWindow({
+                                            content: '<div class="p-2 gotoTake" style="width:200px;"><span>' + positions[i].location + '</span><br><div class="text-center w-100"><a class="btn btn-sm btn-outline-dark w-100 mt-2" href="/take/list?">주변매물 보러가기 -></a></div></div>',
+                                        });
+                                	 	markers.push(marker);
+                                	 	
+                                        infoWindows.push(infoWindow);
+                                	}
+                                	
+                                	for (var i = 0, ii = markers.length; i < ii; i++) {
+                                		console.log(markers[i]);
+                                        naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
+                                    }
+                               }
                                 
                                 function moveMapCurrentLoc(e){
                                     e.preventDefault();
@@ -164,7 +160,7 @@
                                 
                                 function moveMap(seq){
                                		var marker = markers[seq],
-                               			infoWindow = infoWindows[seq];
+                               		infoWindow = infoWindows[seq];
                                		if(infoWindow.getMap()){
                                			infoWindow.close();
                                		}else {
@@ -193,10 +189,6 @@
                                 	}
                                 }
 
-                                function searchMap(){
-                                    
-                                }
-                                
                                 function reversegeocode(latitude, longitude){
                                 	var lat = Number(latitude);
                                 	var lng = Number(longitude);
@@ -221,30 +213,34 @@
                                     var jsonObject;
                                     document.querySelector("#msgBox").innerHTML = "";
                                     
-                                    	
-                                    
                                     for(var i=0; i<elements.length; i++){
-                                    	keyword.key = (i+1);
-                                    	keyword.value = elements[i].id;
-                                    	keywordlst.push({...keyword});
+                                    	keyword["value"+i] = elements[i].id;
+                                    	jsonObject = JSON.stringify(keyword);
                                     	document.querySelector("#msgBox").innerHTML += "<li class='ml-5'>" + elements[i].innerHTML +"</li>";
-                                    }
-                                    var jsonObject = JSON.stringify(keywordlst);
+                                    } 
                                     console.log(jsonObject);
                                     
-                                	$.ajax({
-                                		type: "POST",
-                                		url: "/opening/keyword",
-                                		contentType: "application/json; charset=UTF-8",
-                                		dataType : "json",
-                                		traditional: true,
-                                		data: jsonObject,
-                                	}).done((data) => {
-                                		console.log(data);
-                                	});
+                                	callAjax(jsonObject);
                                 }
                                 
-
+								function callAjax(json){
+									$.ajax({
+										type: "GET",
+                                		url: "/opening/keyword",
+                                		traditional: true,
+                                		data: JSON.parse(json),
+                                	}).done((data) => {
+                                		for(var i=0; i<data.keywordsLength; i++){
+                                			positions.push(
+                                				{lat: data.keywords[i].latitude, lng: data.keywords[i].longitude},
+                                			);
+                                		}
+                                		console.log("positions : " + positions);
+                                		initMap();
+                                	}).fail((data) => {
+                                		console.log(data);
+                                	});
+								}
                             </script>
 					</div>
 				</div>

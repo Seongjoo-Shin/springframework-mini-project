@@ -17,7 +17,7 @@
                     <div class="d-flex justify-content-center align-items-center h-100">
                         <form method="post" action="/mypage/userWithdrawal">
                             <h4>비밀번호를 입력해주세요</h4>
-                            <input type="hidden" name="userId" value="test"/>
+                            <input type="hidden" name="userId" value="${sessionUserId}"/>
                             <input type="password" class="mr-2" placeholder="비밀번호" name="userPassword"/>
                             <input type="submit" value="회원탈퇴" class="btn btn-outline-dark"/>
                         </form>
