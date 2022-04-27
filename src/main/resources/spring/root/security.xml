@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- 인증이 필요없는 요청 경로 설정 -->
+	<!-- <security:http pattern = "/resources/**" security = "none" /> -->
+	 
+	<!-- 보안 필터 체인 설정 -->
+	<security:http>
+		<security:form-login
+			login-page="/loginForm"
+			username-parameter="userId"
+			password-parameter="userPassword"
+			login-processing-url="/login"
+			authentication-success-handler-ref="authenticationSuccessHandler"
+         	authentication-failure-handler-ref="authenticationFailureHandler"/>
+			
+		<!-- 로그 아웃 설정 -->
+		<security:logout
+			logout-url="/logout"
+			success-handler-ref="logoutSuccessHandler"/>
+			
+		<!-- 사이트간 요청 위조 방지 비활성 -->
+		<security:csrf disabled ="true"/>
+		
+		<!-- 요청 URL 권한 설정 -->
+		<security:intercept-url pattern="/ch17/admin*" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/ch17/manager*" access="hasRole('ROLE_MANAGER')"/>
+		<security:intercept-url pattern="/ch17/user*" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/**" access="permitAll"/>
+		
+		<!-- 권한 없을 경우 보여줄 페이지 설정 -->
+		<!-- <security:access-denied-handler error-page="/ch17/error403"/> -->
+		
+		<!-- 로그인 중복 방지를 위한 설정 -->
+        <security:session-management>
+           <!-- 이전 로그인을 유효하게 만들기 -->
+           <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
+		</security:session-management>
+	</security:http>
+	
+	<!-- 인증 관리자 설정(아이디와 패스워드를 DB와 비교해서 로그인 처리 관리) -->
+    <security:authentication-manager>
+       <security:authentication-provider ref="daoAuthenticationProvider"/>
+    </security:authentication-manager>
+    
+    <!-- 인증 제공자 설정 및 사용자 정보 가져오기 -->
+    <bean id="daoAuthenticationProvider"
+        class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+      <property name="userDetailsService" ref="userCustomService"/> 
+      <property name="authoritiesMapper" ref="roleHierarchyAuthoritiesMapper"/>
+    </bean> 
+      
+    <!-- 권한 계층 설정 -->
+    <bean id="roleHierarchyAuthoritiesMapper"
+         class="org.springframework.security.access.hierarchicalroles.RoleHierarchyAuthoritiesMapper">
+       <constructor-arg ref="roleHierarchyImpl"/>
+    </bean>   
+    
+    <bean id="roleHierarchyImpl" 
+         class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+       <property name="hierarchy">
+          <value>
+             ADMIN_ROLE > MANAGER_ROLE
+             MANAGER_ROLE > USER_ROLE
+          </value>
+       </property>
+    </bean>   
+    
+    <bean id ="authenticationSuccessHandler" class="com.mycompany.webapp.security.AuthenticationSuccessHandler">
+    	<property name="alwaysUseDefaultTargetUrl" value = "false"></property>
+    	<property name="defaultTargetUrl" value ="/"></property>
+    </bean>
+    
+    <bean id ="authenticationFailureHandler" class="com.mycompany.webapp.security.AuthenticationFailureHandler">
+    	<property name="defaultFailureUrl" value = "/index/signupForm"></property>
+    </bean>
+    
+    <bean id ="logoutSuccessHandler" class="com.mycompany.webapp.security.LogoutSuccessHandler">
+    	<property name="defaultTargetUrl" value = "/"></property>
+    </bean>
+		
+</beans>
