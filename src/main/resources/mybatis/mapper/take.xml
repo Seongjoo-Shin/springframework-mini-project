@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.TakeDao">
+	<resultMap type="building" id="buildingDtoResult">
+		<result column="building_no" property="buildingNo"/>
+		<result column="building_name" property="buildingName"/>
+		<result column="building_addr" property="buildingAddr"/>
+		<result column="building_addr_detail" property="buildingAddrDetail"/>
+		<result column="building_latitude" property="buildingLatitude"/>
+		<result column="building_longitude" property="buildingLongitude"/>
+		<result column="building_trade_info" property="buildingTradeInfo"/>
+		<result column="building_takeover_price" property="buildingTakeoverPrice"/>
+		<result column="building_deposit_price" property="buildingDepositPrice"/>
+		<result column="building_month_rent" property="buildingMonthRent"/>
+		<result column="building_price" property="buildingPrice"/>
+		<result column="building_available_date" property="buildingAvailableDate"/>
+		<result column="building_detail_content" property="buildingDetailContent"/>
+		<result column="building_use_yn" property="buildingUseYN"/>
+		<result column="building_writer" property="buildingWriter"/>
+		<result column="building_supply_area" property="buildingSupplyArea"/>
+		<result column="building_dedicated_area" property="buildingDedicatedArea"/>
+		<result column="building_total_floor" property="buildingTotalFloor"/>
+		<result column="building_floor" property="buildingFloor"/>
+		<result column="building_option" property="buildingOption"/>
+		<result column="building_regist_date" property="buildingRegistDate"/>
+	</resultMap>
+	
+	<resultMap type="buildingfile" id="buildingFileDtoResult">
+		<result column="building_no" property="buildingNo"/>
+		<result column="building_file_no" property="buildingFileNo"/>
+		<result column="attach_original_name" property="attachOriginalName"/>
+		<result column="attach_save_name" property="attachSaveName"/>
+		<result column="attach_type" property="attachType"/>
+		<result column="panorama_check" property="panoramaCheck"/>
+		<result column="building_image_file_data" property="imageFileData"/>
+	</resultMap>
+
+	<!-- select ====================================================================== -->
+	
+	<select id="selectBuildingList" resultMap="buildingDtoResult">
+		select * from buildings
+	</select>
+	
+	<select id="selectImageFileByBuildingNo" parameterType="String" resultMap="buildingFileDtoResult">
+		select * from buildingfiles
+		where building_no = #{buildingNo}
+	</select>
+	
+	<select id="selectBuildingFiles" resultMap="buildingFileDtoResult">
+		select * from buildingfiles
+	</select>
+	
+	<!-- ============================================================================= -->
+	
 	<insert id="insertBuilding" parameterType="building">
 		<selectKey keyProperty="buildingNo" resultType="int" order="BEFORE"> <!-- order = BEFORE : 아래 insert이전에 얘를 먼저 실행하겠다! -->
 			select buildings_seq.nextval from dual
@@ -51,6 +102,5 @@
 			#{imageFileData},
 			#{panoramaCheck}
 		)
-		
 	</insert>
 </mapper>

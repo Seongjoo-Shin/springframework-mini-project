@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 	<script>
-		var buildingTradeInfo = "임대";
         $(function() {
             //input을 datepicker로 선언
             $("#buildingAvailableDate").datepicker({
@@ -41,6 +40,8 @@
 
         });
 
+        var buildingTradeInfo = "임대";
+        //거래 정보의 임대 버튼을 클릭했을 때 실행되는 함수
         function leaseBtnClick(){
             $("#leaseBtn").css("background-color", "rgb(242, 101, 45)");
             $("#leaseBtn").css("color", "white");
@@ -54,6 +55,7 @@
             $("#tradeInfo").text("월세");
         }
 
+        //거래정보의 매매 버튼을 클릭했을 때 실행되는 함수
         function tradeBtnClick(){
         	$("#tradeBtn").css("background-color", "rgb(242, 101, 45)");
             $("#tradeBtn").css("color", "white");
@@ -68,6 +70,7 @@
             $("#tradeInfo").text("전세");
         }
 
+        //상세정보의 옵션 항목에 있는 버튼을 클릭하면 실행되는 함수로, 옵션의 모든 버튼에 적용되는 함수!
         function optionBtnClick(btn){
             if(btn.value == 3 && $("#equipDiv").css("display") === "none"){
                 $("#equipDiv").show();
@@ -153,6 +156,7 @@
 	                            </div>
 	                            <div id="map" class="border rounded" style="width:100%;height:400px;margin-top:10px; display: none;">지도</div>
 	                            <script>
+	                            	//매물의 위치에 대한 위경도를 저장하기 위한 변수들
 	                            	var buildingLat;
 	                            	var buildingLng;
 	                            
@@ -184,6 +188,8 @@
 	                                // 마커가 지도 위에 표시되도록 설정합니다
 	                                marker.setMap(map);
 	    
+	                                //주소검색 버튼을 클릭하게 되면 실행되는 함수입니다.
+	                                //주소를 검색하면 해당 주소를 필드에 넣고, map에서 찾아서 지도와 마커를 출력합니다.
 	                                function sample5_execDaumPostcode() {
 	                                    new daum.Postcode({
 	                                        oncomplete: function(data) {
@@ -198,23 +204,23 @@
 	    
 	                                                    var result = results[0]; //첫번째 결과의 값을 활용
 	    
-	                                                    // 해당 주소에 대한 좌표를 받아서
+	                                                    // 해당 주소에 대한 좌표를 받아서 변수에 저장합니다.
 	                                                    var coords = new daum.maps.LatLng(result.y, result.x);
 	                                                    buildingLat = result.y;
 	                                                    buildingLng = result.x;
 	                                                    
-	                                                    // 지도를 보여준다.
+	                                                    // 지도를 보여줍니다.
 	                                                    mapContainer.style.display = "block";
 	                                                    $("#addrDes").css("display","none");
 	                                                    map.relayout();
-	                                                    // 지도 중심을 변경한다.
+	                                                    // 지도 중심을 검색한 위치로 변경합니다.
 	                                                    map.setCenter(coords);
-	                                                    // 마커를 결과값으로 받은 위치로 옮긴다.
+	                                                    // 마커를 결과값으로 받은 위치로 옮깁니다.
 	                                                    marker.setPosition(coords)
 	                                                }
 	                                            });
 	                                        }
-	                                    }).open();
+	                                    }).open(); //주소검색을 클릭하게 되면 주소를 검색할 수 있는 팝업창을 열기 때문에 open!
 	                                }
 	                            </script>
 	                        </div>
@@ -378,26 +384,49 @@
 	                            </div>
 	                        </div>
 	                        <script>
+	                        	//이미지 첨부파일을 저장하기 위한 배열
 	                            var uploadFiles = [];
+	                        	//360도 이미지를 저장하기 위한 변수
 	                            var uploadAroundFile;
+	                        	
+	                        	//첨부파일에 번호를 붙이기 위해 사용하는 변수로, id에 붙여준다.
 	                            var fileNo = 0;
+	                        	
+	                        	//장비에 번호를 붙이기 위해 사용하는 함수로, id에 붙여준다.
 	                            var equipNo = 0;
+	                        	
+	                        	//이미지를 등록하게 되면 미리보기를 보여주는 엘리먼트를 id로 가져온다.
 	                            const nomalImgPreview = document.getElementById("nomalImgPreview");
 	                            const aroundImgPreview = document.getElementById("aroundImgPreview");
 	
+	                            //360도 이미지의 미리보기를 출력하는 곳의 상위 엘리먼트를 가져온다.
 	                            const aroundImgField = document.getElementById("aroundImgField");
 	
+	                            //이미지를 추가하는 버튼을 제어하기 위한 변수
 	                            var useYn = 0;
+	                            
+	                            //일반 사진을 등록할 때 실행되는 함수이다.
 	                            function getImageFiles(e) {
+	                            	//첨부된 이미지 파일들을 가져온다.
 	                                const files = e.currentTarget.files;
-	                                console.log(files);
-	                                console.log(nomalImgPreview.childElementCount + files.length);
+	                            	
+	                            	//이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 15개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 15개를 넘어가게 되면 업로드할 수 없다!(최대 15장이기 때문에)
 	                                if(nomalImgPreview.childElementCount > 15 || (nomalImgPreview.childElementCount + files.length) > 15){
-	                                    alert("이미지는 최대 15장까지 업로드가 가능합니다.");
+	                                	swal({
+	                                		icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png",
+	                                		text:"이미지는 최대 15장까지만 업로드가 가능합니다."
+	                                	});
 	                                    return;
 	                                }
+	                            	
+	                            	//모든 첨부 파일들에 대해 파일 각각을 처리하기 위해 forEach를 사용했다.
 	                                [...files].forEach(file => {
+	                                	//첨부파일의 형식이 이미지가 아니라면, 
 	                                    if(!file.type.match("image/.*")){
+	                                    	swal({
+	                                    		icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png",
+	                                    		text:"이미지파일만 입력해 주세요.(예 - .jpg .png )"
+	                                    	});
 	                                        alert("이미지 파일만 업로드 가능합니다.", {title:'START:DEN'});
 	                                        return;
 	                                    }
@@ -565,8 +594,7 @@
 										swal({
 											title:"장비 이름을 입력해주십시오.",
 											text: "정확하게 입력해주세요!",
-											icon:"error"
-											
+											icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
 										});
 										return;
 									}
@@ -574,8 +602,7 @@
 										swal({
 											title:"장비 개수를 입력해주십시오.",
 											text: "정확하게 입력해주세요!",
-											icon:"error"
-											
+											icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
 										});
 										return;
 									}
@@ -673,8 +700,7 @@
         	swal({
 				title:"입력되지 않은 곳이 존재합니다.",
 				text: "모든 정보를 입력해주십시오.",
-				icon:"warning"
-				
+				icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
 			});
         }
         
@@ -742,7 +768,7 @@
             	swal({
 					title:"이미지를 등록해주십시오.",
 					text: "이미지를 최소 1장은 등록해야 합니다.",
-					icon:"warning"
+					icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
 					
 				});
 				return;
@@ -784,7 +810,7 @@
             		swal({
     					title:"장비 옵션을 선택했습니다.",
     					text: "가지고 계신 장비 정보를 입력해주세요.",
-    					icon:"warning"
+    					icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
     				});
             		return;
             	}else{
@@ -811,7 +837,7 @@
 					text: "매물이 등록되었습니다."
 				});
             	
-            	//10뒤에 자동으로 인수맵으로 이동함!
+            	//5뒤에 자동으로 인수맵으로 이동함!
             	setTimeout(function () {
             		$(location).attr("href", "enrollCancle");
            		}, 5000);

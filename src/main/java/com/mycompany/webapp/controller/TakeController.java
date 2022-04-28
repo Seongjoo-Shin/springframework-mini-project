@@ -1,21 +1,25 @@
 package com.mycompany.webapp.controller;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,8 +38,30 @@ public class TakeController {
 	private TakeService takeService;
 	
    @RequestMapping("/list")
-   public String list() {
-      return "take/list";
+   public String list(@RequestParam(required = false) String latitude,@RequestParam(required = false) String longitude, Model model) {
+	   List<BuildingDto> buildings = takeService.selectBuildingList();
+	   model.addAttribute("buildings", buildings);
+	   
+	   List<BuildingFileDto> buildingFiles = takeService.selectBuildingFiles();
+	   model.addAttribute("buildingFiles",buildingFiles);
+	   
+	   if(latitude != null) { //만약, 개원에서 넘어왔다면 null이 아닐 것임!
+		   model.addAttribute("latitude", latitude);
+		   model.addAttribute("longitude",longitude);
+	   }else {
+		   model.addAttribute("latitude", "0");
+		   model.addAttribute("longitude","0");
+	   }
+	   return "take/list";
+   }
+   
+   @RequestMapping("/getBuildingImage")
+   public void getBuildingImage(HttpServletRequest req, HttpServletResponse res, String buildingNo) throws IOException {
+	   System.out.println(buildingNo);
+	   List<BuildingFileDto> files = takeService.selectImageFileByBuildingNo(buildingNo);
+	   byte[] temp = files.get(0).getImageFileData();
+	   InputStream is = new ByteArrayInputStream(temp);
+	   IOUtils.copy(is, res.getOutputStream());
    }
    
    @GetMapping("/view")

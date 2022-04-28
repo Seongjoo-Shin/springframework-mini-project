@@ -29,4 +29,17 @@ public class TakeService {
 	public void insertBuildingFile(BuildingFileDto bfd) {
 		takeDao.insertImageFile(bfd);
 	}
+
+	public List<BuildingDto> selectBuildingList() {
+		return takeDao.selectBuildingList();
+	}
+
+	public List<BuildingFileDto> selectBuildingFiles() {
+		return takeDao.selectBuildingFiles();
+	}
+
+	public List<BuildingFileDto> selectImageFileByBuildingNo(String buildingNo) {
+		
+		return takeDao.selectImageFileByBuildingNo(buildingNo);
+	}
 }

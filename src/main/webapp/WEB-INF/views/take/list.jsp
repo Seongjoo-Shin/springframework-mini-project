@@ -40,7 +40,6 @@
                 }else{
                     val = val.slice(0, 1);
                 }
-                // if(val2 === )
                 console.log("val : "+val);
                 $("#priceRange").attr("step", "1000");
                 $("#priceText").text(val + "억" + val2 + "000 만");
@@ -117,91 +116,32 @@
 	                                </div>
 	                                <div style="width:100%;height:555px; border: 1px solid rgb(192, 191, 191); padding: 15px; overflow:auto;">
 	                                    <ul id="saleList" class="overflow-auto" style="list-style:none;">
-	                                    	<li id="3" name="" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
-	                                    		<div class="container-fluid">
-	                                    			<div class="row">
-	                                    				<div class="col-7 d-flex flex-column justify-content-center">
-		                                    				<div class="mb-2"><b>뉴욕플란트 치과</b></div>
-				                                    		<div>서울특별시 송파구 가락동 78</div>
-				                                    		<div class="p-1 m-1">
-				                                    			<span class="border rounded p-1 text-center" style="background-color: rgb(164, 180, 235); color: white; width:60px;">임대</span>
-				                                    			<span>1억 5천만원</span>
-				                                    		</div>
+	                                    	<c:forEach var="building" items="${buildings}">
+	                                    		<li id="${building.buildingNo}" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
+		                                    		<div class="container-fluid">
+		                                    			<div class="row">
+		                                    				<div class="col-7 d-flex flex-column justify-content-center">
+			                                    				<div class="mb-2"><b>${building.buildingName}</b></div>
+					                                    		<div>${building.buildingAddr}&nbsp;&nbsp;${building.buildingAddrDetail}</div>
+					                                    		<div class="p-1 m-1">
+					                                    			<span class="border rounded p-1 text-center" style="background-color: rgb(164, 180, 235); color: white; width:60px;">${building.buildingTradeInfo}</span>
+					                                    			<c:if test="${building.buildingTradeInfo eq '임대'}">
+					                                    				<span class="m-1">월세</span>
+					                                    				<span>${building.buildingMonthRent}&nbsp;만원</span>
+					                                    			</c:if>
+					                                    			<c:if test="${building.buildingTradeInfo eq '매매'}">
+					                                    				<span class="m-1">매매가</span>
+					                                    				<span>${building.buildingPrice}&nbsp;만원</span>
+					                                    			</c:if>
+					                                    		</div>
+			                                    			</div>
+			                                    			<div class="col-5 p-0 m-0">
+			                                    				<img class="border rounded" src="getBuildingImage?buildingNo=${building.buildingNo}" width="250px" height="150px"/>
+			                                    			</div>
 		                                    			</div>
-		                                    			<div class="col-5 p-0 m-0">
-		                                    				<img class="border rounded" src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" width="100%" height="100%"/>
-		                                    			</div>
-	                                    			</div>
-	                                    		</div>
-	                                    	</li>
-	                                    	<li id="2" name="" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
-	                                    		<div class="container-fluid">
-	                                    			<div class="row">
-	                                    				<div class="col-7 d-flex flex-column justify-content-center">
-		                                    				<div class="mb-2"><b>뉴욕플란트 치과</b></div>
-				                                    		<div>서울특별시 송파구 가락동 78</div>
-				                                    		<div class="p-1 m-1">
-				                                    			<span class="border rounded p-1 text-center" style="background-color: rgb(164, 180, 235); color: white; width:60px;">임대</span>
-				                                    			<span>1억 5천만원</span>
-				                                    		</div>
-		                                    			</div>
-		                                    			<div class="col-5 p-0 m-0">
-		                                    				<img class="border rounded" src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" width="100%" height="100%"/>
-		                                    			</div>
-	                                    			</div>
-	                                    		</div>
-	                                    	</li>
-	                                    	<li id="1" name="" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
-	                                    		<div class="container-fluid">
-	                                    			<div class="row">
-	                                    				<div class="col-7 d-flex flex-column justify-content-center">
-		                                    				<div class="mb-2"><b>뉴욕플란트 치과</b></div>
-				                                    		<div>서울특별시 송파구 가락동 78</div>
-				                                    		<div class="p-1 m-1">
-				                                    			<span class="border rounded p-1 text-center" style="background-color: rgb(164, 180, 235); color: white; width:60px;">임대</span>
-				                                    			<span>1억 5천만원</span>
-				                                    		</div>
-		                                    			</div>
-		                                    			<div class="col-5 p-0 m-0">
-		                                    				<img class="border rounded" src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" width="100%" height="100%"/>
-		                                    			</div>
-	                                    			</div>
-	                                    		</div>
-	                                    	</li>
-	                                    	<li id="0" name="" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
-	                                    		<div class="container-fluid">
-	                                    			<div class="row">
-	                                    				<div class="col-7 d-flex flex-column justify-content-center">
-		                                    				<div class="mb-2"><b>뉴욕플란트 치과</b></div>
-				                                    		<div>서울특별시 송파구 가락동 78</div>
-				                                    		<div class="p-1 m-1">
-				                                    			<span class="border rounded p-1 text-center" style="background-color: rgb(164, 180, 235); color: white; width:60px;">임대</span>
-				                                    			<span>1억 5천만원</span>
-				                                    		</div>
-		                                    			</div>
-		                                    			<div class="col-5 p-0 m-0">
-		                                    				<img class="border rounded" src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" width="100%" height="100%"/>
-		                                    			</div>
-	                                    			</div>
-	                                    		</div>
-	                                    	</li>
-	                                    	<li id="4" name="" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
-	                                    		<div class="container-fluid">
-	                                    			<div class="row">
-	                                    				<div class="col-7 d-flex flex-column justify-content-center">
-		                                    				<div class="mb-2"><b>뉴욕플란트 치과</b></div>
-				                                    		<div>서울특별시 송파구 가락동 78</div>
-				                                    		<div class="p-1 m-1">
-				                                    			<span class="border rounded p-1 text-center" style="background-color: rgb(164, 180, 235); color: white; width:60px;">임대</span>
-				                                    			<span>1억 5천만원</span>
-				                                    		</div>
-		                                    			</div>
-		                                    			<div class="col-5 p-0 m-0">
-		                                    				<img class="border rounded" src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" width="100%" height="100%"/>
-		                                    			</div>
-	                                    			</div>
-	                                    		</div>
-	                                    	</li>
+		                                    		</div>
+		                                    	</li>
+	                                    	</c:forEach>
 	                                    </ul>
 	                                </div>
 	                            </div>
@@ -233,8 +173,13 @@
             }
 
             function showPosition(position) { //map을 만들고 현재 위치 마커를 추가하는 함수
-                lat = position.coords.latitude; 
-                lon = position.coords.longitude;
+            	if(${latitude} != 0){
+            		lat = ${latitude};
+            		lon = ${longitude};
+            	}else{
+            		lat = position.coords.latitude; 
+                    lon = position.coords.longitude;
+            	}
 
                 var p = new naver.maps.LatLng(lat, lon);
                 var mapOptions = {
