@@ -73,9 +73,9 @@ public class UserService {
 	public LoginResult checkEmail(String email) {
 		UserDto dbUser = userDao.selectByUserEmail(email);
 		if(dbUser==null) {
-			return LoginResult.SUCCESS;
+			return LoginResult.FAIL;
 		} else {
-			return LoginResult.FAIL_USERID;
+			return LoginResult.SUCCESS;
 		}
 	}
 	

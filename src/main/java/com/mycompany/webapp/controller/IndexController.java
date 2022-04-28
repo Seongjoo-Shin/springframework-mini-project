@@ -124,7 +124,7 @@ public class IndexController {
 		int num;
 		LoginResult result = userService.checkEmail(email);
 		JSONObject jsonObject = new JSONObject();
-		if(result == LoginResult.SUCCESS) {
+		if(result == LoginResult.FAIL) {
 			jsonObject.put("result", "success");
 			//인증번호 생성
 			Random r = new Random();
@@ -165,5 +165,21 @@ public class IndexController {
 		return json; 
 	}
 	
+	@PostMapping(value = "/findEmail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String findEmail(String emailValue) {
+		log.info(emailValue);
+		LoginResult result = userService.checkEmail(emailValue);
+		JSONObject jsonObject = new JSONObject();
+		if(result == LoginResult.SUCCESS) {
+			jsonObject.put("result", "success");
+			
+		} else {
+			jsonObject.put("result", "fail");
+		}
+		
+		String json = jsonObject.toString();
+		return json;
+	}
 	
 }
