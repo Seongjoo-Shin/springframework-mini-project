@@ -78,5 +78,11 @@ public class UserService {
 			return LoginResult.FAIL_USERID;
 		}
 	}
+	
+	public String getNickname(String id) {
+		UserDto dbUser = userDao.selectByUserId(id);
+		String dbUSerNickname = dbUser.getUserNickname();
+		return dbUSerNickname;
+	}
 
 }

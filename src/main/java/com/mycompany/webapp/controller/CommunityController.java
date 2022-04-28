@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mycompany.webapp.dao.FreeBoardDao;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
-
+import com.mycompany.webapp.dto.UserDto;
 import com.mycompany.webapp.service.FreeBoardService;
+import com.mycompany.webapp.service.UserService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -30,9 +31,11 @@ public class CommunityController {
 
 	@Resource
 	private FreeBoardService freeBoardService;
+	@Resource
+	private UserService userService;
 
 
-	// ****자유게시판 - board****
+	// 자유게시판 - board -------------------------------------------------------------------------------------------------------------------
 	@GetMapping("/board/list")
 	public String boardList(@RequestParam(defaultValue = "1") int pageNo,  Model model) { //페이지는 1페이지부터 넘어오기!
 		//게시판에 데이터 넣어놓기
@@ -106,11 +109,27 @@ public class CommunityController {
 	// 게시판 상세 페이지
 	@GetMapping("/board/boardDetail")
 	public String boardDetail(int freeNo, Model model, HttpSession session) {
+		
+		//freeBoardDto 내용 model에 싣기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
+		freeBoardService.setupdateHitCount(freeNo);
 		model.addAttribute("freeBoardDto", freeBoardDto);
+		
+		//게시물 내용 개행 처리
+		String tempContent = freeBoardDto.getFreeContent();
+		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
+		tempContent = tempContent.replaceAll("\n", "<br/>");
+		freeBoardDto.setFreeContent(tempContent);
+		
+		//현재 로그인한 사용자 id model에 싣기
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
 		model.addAttribute("seesionUserid", SessionUserid);		
 		log.info("boardDetail 실행");
+		
+		//현재 로그인한 사용자 닉네임 댓글에 보여주기
+		String nickname = userService.getNickname(SessionUserid);
+		model.addAttribute("sessionUserNickname", nickname);
+		
 		return "/community/board/view";
 	}
 	
@@ -154,8 +173,13 @@ public class CommunityController {
 		freeBoardService.updateFreeBoard(freeBoardDto);
 		return "redirect:/community/board/boardDetail?freeNo="+freeBoardDto.getFreeNo();
 	}
+	
+	// 댓글 -------------------------------------------------------------------------------------------------------------------
+	
+	
+	
 
-	// 거래게시판 - market
+	// 거래게시판 - market -------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
 	public String marketList() {
 		return "/community/market/list";
@@ -199,7 +223,7 @@ public class CommunityController {
 		return "redirect:/community/market/list";
 	}
 
-	// 공지게시판 - list
+	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@RequestMapping("/notice/list")
 	public String noticeList() {
 		return "/community/notice/list";

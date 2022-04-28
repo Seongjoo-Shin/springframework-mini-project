@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                 
+<mapper namespace="com.mycompany.webapp.dao.CommentDao">
+	 <resultMap id="commentWithUserResultMap" type="comment">
+		<result column="free_no" property="freeNo"/>
+		<result column="comment_no" property="commentNo"/>
+		<result column="comment_writer" property="commentWriter"/>
+		<result column="comment_content" property="commentContent"/>
+		<result column="comment_regist_date" property="commentRegistDate"/>
+		<result column="comment_modify_date" property="commentModifyDate"/>
+		<result column="upper_no" property="upperNo"/>
+		<result column="comment_depth" property="commentDepth"/>
+		<association property="userDto" javaType="com.mycompany.webapp.dto.UserDto">
+			<result column="user_id" property="userId"/>
+			<result column="user_nickname" property="userNickname"/> 
+		</association>
+ 	</resultMap> 
+ 	
+ 	<select id="selectByFreeNo" parameterType="pager" resultMap="commentWithUserResultMap">
+ 		SELECT rnum, free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth
+		FROM (
+		  SELECT ROWNUM as rnum, free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth
+		  FROM (
+		    SELECT free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth
+		    FROM comments
+		    ORDER BY commente_no DESC
+		  )
+		  WHERE rownum &lt;= #{endRowNo}  
+		)
+		WHERE rnum &gt;= #{startRowNo}
+ 	
+ 	</select>
+ 	
+
+	<insert id="insertComment" parameterType="int">
+		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
+			select COMMENTS_SEQ.nextval from dual
+		</selectKey>
+		insert into comments (free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth)
+		values(#{freeNo}, #{commentNo}, #{userid}, '#{commentContent}', SYSDATE, SYSDATE, 1, null, 0);
+	</insert>
+
+	<select id="selectByFreeNo" parameterType="pager" resultMap="">
+		
+	
+	</select>
+
+
+</mapper>

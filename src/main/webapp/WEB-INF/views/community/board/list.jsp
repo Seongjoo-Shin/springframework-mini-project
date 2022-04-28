@@ -33,7 +33,7 @@
 		                      <th scope="row">${freeboard.freeNo}</th>
 		                      <td><a href="boardDetail?freeNo=${freeboard.freeNo}">${freeboard.freeTitle}</a></td>
 		                      <td style="text-align: center;">${freeboard.userDto.userNickname}</td>
-		                      <td  style="text-align: center;"><fmt:formatDate value="${freeboard.freeRegistDate}" pattern="yyyy-MM-dd"/></td>
+		                      <td style="text-align: center;"><fmt:formatDate value="${freeboard.freeRegistDate}" pattern="yyyy-MM-dd"/></td>
 		                      <td>${freeboard.freeHitCount}</td>
 		                    </tr>
 						</c:forEach>

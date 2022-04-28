@@ -19,8 +19,10 @@
                 <p class="d-inline-block h6 float-right mx-2"><fmt:formatDate value="${freeBoardDto.freeRegistDate}" pattern="yyyy-MM-dd"/></p>            
               </div>
               <div id="free-board-title" class="h4 p-3" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeTitle}</div>
-              <div id="free-board-content" class="px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeContent}</div>
-              <div class="text-center mt-3">
+              <div id="free-board-content" class="px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">
+              	${freeBoardDto.freeContent}
+              </div>
+              <div class="text-center my-3">
 				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">
 					<a href="/community/board/update?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">수정</a>
 				</c:if>  	
@@ -29,36 +31,21 @@
 					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">삭제</a>
 				</c:if> 
               </div>
+              <div class="h6" style="font-weight: bold;">댓글</div>
               <div id="free-board-coment" class="my-5">
-                  <div class="h6" style="font-weight: bold;">댓글</div>
-                  <ul class="list-group">
-                    <li class="list-group-item">
-                      <div class="row" style="display: flex;">
-                        <div style="flex: 8; padding: 4px 13px;">
-                          <p style="font-weight: bold;">만식's 주인</p>
-                          <div class="comment-text">
-                            Google Style Login Page Design Using Bootstrap
-                          </div>
-                          <p><small>2022-04-10</small></p>
-                        </div>
-                        <div class="d-flex flex-column comment2" style="margin-right: 13px;">
-                          <button class="commentBtn">수정</button>
-                          <button class="commentBtn">삭제</button>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="list-group-item">
-                      <div class="row" style="display: flex;">
-                        <div style="flex: 8; padding: 4px 13px;">
-                          <p style="font-weight: bold;">만식's 주인</p>
-                          <textarea placeholder="댓글을 입력해 주세요." style="display: block; width: 100%; height: 60px; resize: none; maxlength="150"></textarea>
-                        </div>
-                        <div class="d-flex flex-column justify-content-end mb-3" style="margin-right: 13px;">
-                          <button class="commentBtn" >등록</button>
-                        </div>
-                      </div>
-                  </li>
-                  </ul>
+	              <ul>
+		              <li class="list-group-item">
+	                      <div class="row" style="display: flex;">
+	                        <div style="flex: 8; padding: 4px 13px;">
+	                          <p style="font-weight: bold;">${sessionUserNickname}</p>
+	                          <textarea placeholder="댓글을 입력해 주세요." style="display: block; width: 100%; height: 60px; resize: none; maxlength="150"></textarea>
+	                        </div>
+	                        <div class="d-flex flex-column justify-content-end mb-3" style="margin-right: 13px;">
+	                          <button class="commentBtn" >등록</button>
+	                        </div>
+	                      </div>
+	                  </li>	              
+	              </ul>
               </div>
             </div>           
           <div class="col-2"></div>

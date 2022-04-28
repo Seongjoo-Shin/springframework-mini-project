@@ -24,4 +24,7 @@ public interface FreeBoardDao {
 	
 	//자유게시판 내용 수정
 	public void update(FreeBoardDto freeBoardDto);
+	
+	//자유게시판 조회수 증가
+	public void updateHitCount(int freeNo);
 }

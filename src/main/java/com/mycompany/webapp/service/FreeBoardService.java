@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.mycompany.webapp.dao.CommentDao;
 import com.mycompany.webapp.dao.FreeBoardDao;
 
 import com.mycompany.webapp.dto.FreeBoardDto;
@@ -18,7 +19,10 @@ public class FreeBoardService {
 	
 	@Resource
 	private FreeBoardDao freeBoardDao;
+	@Resource
+	private CommentDao commentDao;
 	
+	//게시물 --------------------------------------------------------------------------------
 	//전체 게시물 갯수 가져오기
 	public int getTotalFreeBoardNum() {
 		return freeBoardDao.count();
@@ -43,4 +47,11 @@ public class FreeBoardService {
 	public void updateFreeBoard(FreeBoardDto freeBoardDto) {
 		freeBoardDao.update(freeBoardDto);
 	}
+	
+	public void setupdateHitCount(int freeNo) {
+		freeBoardDao.updateHitCount(freeNo);
+	}
+	
+	//댓글 --------------------------------------------------------------------------------
+	
 }

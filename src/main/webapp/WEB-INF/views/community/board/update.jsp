@@ -15,9 +15,11 @@
               <form id="updateForm" method="post" action="updateForm" enctype="multipart/form-data">
               	<input type="hidden" name="freeNo" value="${freeBoardDto.freeNo}"/>
                 <input type="text" class="form-control my-3" name="title" value="${freeBoardDto.freeTitle}"></input>
-                <textarea class="form-control" style="height: 300px; overflow-y:scroll" name="content">${freeBoardDto.freeContent}</textarea>
-                <button type="button" onclick="goSubmit()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">수정 완료</button>
-                <button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>            
+                <textarea class="form-control" style="height: 300px; overflow-y:scroll; white-space:pre;" name="content">${freeBoardDto.freeContent}</textarea>
+                <div class="pagination justify-content-center mb-0">
+                    <button type="button" onclick="goSubmit()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">수정 완료</button>
+                    <button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>
+                </div>
               </form>              
             </div>            
             <div class="col-2"></div>

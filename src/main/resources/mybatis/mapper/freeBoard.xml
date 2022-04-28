@@ -3,7 +3,7 @@
                  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.FreeBoardDao">
-	<!-- freeboard만 가져오는 resultMap -->
+
 	 <resultMap id="freeBoardWithUserResultMap" type="freeboard">
 		<result column="free_no" property="freeNo"/>
 		<result column="free_title" property="freeTitle"/>
@@ -20,11 +20,11 @@
  	</resultMap>
  	
 	<select id="selectByPage" parameterType="pager" resultMap="freeBoardWithUserResultMap">
-		SELECT rnum, free_no, free_title, free_writer, free_regist_date, user_nickname
+		SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_hit_count, user_nickname
 		FROM (
-		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, user_nickname
+		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, free_hit_count, user_nickname
 		  FROM (
-		    SELECT f.free_no, f.free_title, f.free_writer, f.free_regist_date, u.user_nickname
+		    SELECT f.free_no, f.free_title, f.free_writer, f.free_regist_date, f.free_hit_count, u.user_nickname
 		    FROM freeboards f, users u
 		    where f.free_writer = u.user_id
 		    ORDER BY free_no DESC
@@ -40,7 +40,7 @@
 	
 	<!-- board/view -->
 	<select id="selectByFreeNo" parameterType="int" resultMap="freeBoardWithUserResultMap">
-		select f.free_no, f.free_title, f.free_content, f.free_writer, f.free_regist_date, f.free_modify_date, f.free_use_yn, f.free_hit_count, u.user_nickname
+		select f.free_no, f.free_title, f.free_content, f.free_writer, f.free_regist_date, f.free_modify_date, f.free_use_yn, f.FREE_HIT_COUNT, u.user_nickname
 		from freeboards f, users u 
 		where f.free_no = #{freeNo} and f.free_writer = u.user_id
 	</select>
@@ -71,7 +71,12 @@
 		where free_no = #{freeNo}
 	</delete>
 	
-	
+	<!-- 조회수 올리기 -->
+	<update id="updateHitCount" parameterType="int">
+		update freeboards
+		set free_hit_count = free_hit_count + 1
+		where free_no = #{freeNo}
+	</update>
 </mapper>
 
 
