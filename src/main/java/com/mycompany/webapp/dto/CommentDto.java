@@ -14,5 +14,5 @@ public class CommentDto {
 	private Date commentModifyDate;
 	private int commentUseYN;
 	private int upperNo;
-	private int depth;
+	private int commentDepth;
 }
