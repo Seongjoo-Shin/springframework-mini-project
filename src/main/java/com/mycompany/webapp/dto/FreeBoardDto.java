@@ -14,5 +14,5 @@ public class FreeBoardDto {
 	private Date freeModifyDate;	//수정일
 	private int freeUseYN;			//삭제 여부
 	private int freeHitCount;		//조회수
-
+	private UserDto userDto;
 }

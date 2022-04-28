@@ -1,6 +1,7 @@
 package com.mycompany.webapp.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -33,5 +34,9 @@ public class FreeBoardService {
 	
 	public FreeBoardDto getFreeBoardsContent(int freeNo) {
 		return freeBoardDao.selectByFreeNo(freeNo);
+	}
+	
+	public void insertFreeBoard(FreeBoardDto freeBoardDto) {
+		freeBoardDao.freeboardInsert(freeBoardDto);
 	}
 }

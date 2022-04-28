@@ -1,9 +1,12 @@
 package com.mycompany.webapp.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mycompany.webapp.dao.FreeBoardDao;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
-import com.mycompany.webapp.service.CommentService;
+
 import com.mycompany.webapp.service.FreeBoardService;
 
 import lombok.extern.log4j.Log4j2;
@@ -28,8 +31,6 @@ public class CommunityController {
 	@Resource
 	private FreeBoardService freeBoardService;
 
-	@Resource
-	private CommentService commentService;
 
 	// ****자유게시판 - board****
 	@GetMapping("/board/list")
@@ -67,14 +68,32 @@ public class CommunityController {
 
 	// board/list에서 글쓰기 버튼 눌렀을 때
 	@GetMapping("/board/insert")
-	public String boardInsertBtn() {
-		log.info("실행");
-		return "/community/board/insert";
+	public String boardInsertBtn(HttpSession session) {
+		log.info(session.getAttribute("sessionUserId"));
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		}else {
+			return "/community/board/insert";
+		}
 	}
 
 	// 글쓰기 등록 버튼
-	@PostMapping("/board/insertContent")
-	public String insertContent() {
+	@PostMapping("/board/insertContent") //@RequestParam(value="currp",required=false)String currp,@RequestParam(value="pname",required=false)String pname
+	public String insertContent(
+			@RequestParam("title") String title,
+			@RequestParam("content") String content,
+			HttpSession session) {
+		log.info("insertContentBtn 클릭");
+		log.info("아이디 정보"+session.getAttribute("sessionUserId"));
+		String SessionUserid = (String) session.getAttribute("sessionUserId");
+		
+		//freeDto정보와 user정보를 같이 전달
+		FreeBoardDto freeBoardDto = new FreeBoardDto();
+		freeBoardDto.setFreeTitle(title);
+		freeBoardDto.setFreeContent(content);
+		freeBoardDto.setFreeWriter(SessionUserid);
+
+		freeBoardService.insertFreeBoard(freeBoardDto);
 		return "redirect:/community/board/list";
 	}
 
@@ -87,10 +106,10 @@ public class CommunityController {
 	// 게시판 상세 페이지
 	@GetMapping("/board/boardDetail")
 	public String boardDetail(int freeNo, Model model) {
-		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
+		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoardsContent(freeNo);
 		model.addAttribute("freeBoardDto", freeBoardDto);
 		log.info("boardDetail 실행");
-		return "/board/boardDetail/view";
+		return "/community/board/view";
 	}
 	
 	@RequestMapping("/board/view")

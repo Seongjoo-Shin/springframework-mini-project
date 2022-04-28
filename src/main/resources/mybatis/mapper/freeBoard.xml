@@ -3,7 +3,8 @@
                  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.FreeBoardDao">
- 	<resultMap id="freeBoardResultMap" type="freeboard">
+	<!-- freeboard만 가져오는 resultMap -->
+	 <resultMap id="freeBoardWithUserResultMap" type="freeboard">
 		<result column="free_no" property="freeNo"/>
 		<result column="free_title" property="freeTitle"/>
 		<result column="free_content" property="freeContent"/>
@@ -12,15 +13,20 @@
 		<result column="free_modify_date" property="freeModifyDate"/>
 		<result column="free_use_yn" property="freeUseYN"/>
 		<result column="free_hit_count" property="freeHitCount"/>
- 	</resultMap>	
-	
-	<select id="selectByPage" parameterType="pager" resultMap="freeBoardResultMap">
-		SELECT rnum, free_no, free_title, free_writer, free_regist_date
+		<association property="userDto" javaType="com.mycompany.webapp.dto.UserDto">
+			<result column="user_id" property="userId"/>
+			<result column="user_nickname" property="userNickname"/>
+		</association>
+ 	</resultMap>
+ 	
+	<select id="selectByPage" parameterType="pager" resultMap="freeBoardWithUserResultMap">
+		SELECT rnum, free_no, free_title, free_writer, free_regist_date, user_nickname
 		FROM (
-		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date
+		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, user_nickname
 		  FROM (
-		    SELECT free_no, free_title, free_writer, free_regist_date
-		    FROM freeboards
+		    SELECT f.free_no, f.free_title, f.free_writer, f.free_regist_date, u.user_nickname
+		    FROM freeboards f, users u
+		    where f.free_writer = u.user_id
 		    ORDER BY free_no DESC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
@@ -32,15 +38,35 @@
 		SELECT count(*) FROM freeboards
 	</select>
 	
+	<!-- freeboard만 가져오는 resultMap -->
+	 <resultMap id="freeBoardResultMap" type="freeboard">
+		<result column="free_no" property="freeNo"/>
+		<result column="free_title" property="freeTitle"/>
+		<result column="free_content" property="freeContent"/>
+		<result column="free_writer" property="freeWriter"/>
+		<result column="free_regist_date" property="freeRegistDate"/>
+		<result column="free_modify_date" property="freeModifyDate"/>
+		<result column="free_use_yn" property="freeUseYN"/>
+		<result column="free_hit_count" property="freeHitCount"/>
+ 	</resultMap>	
 	<select id="selectByFreeNo" parameterType="int" resultMap="freeBoardResultMap">
 		select free_no, free_title, free_content, free_writer, free_regist_date, free_modify_date, free_use_yn, free_hit_count
 		from freeboards
 		where free_no = #{freeNo}
 	</select>
-	
+ 	
+ 	<!-- 모든 내용 insert -->
 	<insert id="insert" parameterType="freeboard">
 		INSERT INTO freeboards (free_no, free_title, free_content, free_writer, free_regist_date, free_modify_date, free_use_yn, free_hit_count)
 		VALUES(#{freeNo}, #{freeTitle}, #{freeContent}, #{freeWriter}, SYSDATE, SYSDATE, 1, 0)
+	</insert>
+	
+	<insert id="freeboardInsert" parameterType="Map">
+		<selectKey keyProperty="freeNo" resultType="int" order="BEFORE">
+			select FREEBOARDS_SEQ.nextval from dual
+		</selectKey>
+			INSERT INTO freeboards (free_no, free_title, free_content, free_writer, free_regist_date, free_modify_date, free_use_yn, free_hit_count)
+			VALUES(#{freeNo}, #{freeTitle}, #{freeContent}, #{freeWriter}, SYSDATE, SYSDATE, 1, 0)
 	</insert>
 
 </mapper>
