@@ -15,55 +15,53 @@
               </ul>
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                   <div class="d-flex flex-column justify-content-center align-items-center p-3" style="border: 1px solid black; border-radius: 5px;">
-                        <div>
-                            <h2 class="pb-3" style="text-align: center;">아이디찾기</h2>
-                            <div class="form-group">
-                                <input placeholder="이름" type="text" />
-                            </div>
-                            <div class="form-group">
-                                <input placeholder="생년월일" type="text"/>
-                            </div>
-                            <div class="form-group">
-                                <input placeholder="등록된 이메일" type="text"/>
-                                <button class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">인증번호 받기</button>
-                            </div>
-                            <div class="form-group">
-                                <input placeholder="인증번호" type="text"/>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <button class="btn btn-sm" style="width: 300px; background-color: rgb(242, 101, 45); color: white;">아이디찾기</button>
-                        </div>
-                   </div>
+	                <form method="post" action="">
+		                <div class="d-flex flex-column justify-content-center align-items-center p-3" style="border: 1px solid black; border-radius: 5px;">
+	                        <div>
+	                            <h2 class="pb-3" style="text-align: center;">아이디찾기</h2>
+	                            <div class="form-group">
+	                                <input placeholder="이름" type="text" />
+	                            </div>
+	                            <div class="form-group">
+	                                <input placeholder="등록된 이메일" type="text"/>
+	                                <button class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">인증번호 받기</button>
+	                            </div>
+	                            <div class="form-group">
+	                                <input placeholder="인증번호" type="text"/>
+	                            </div>
+	                        </div>
+	                        
+	                        <div>
+	                            <button class="btn btn-sm" style="width: 300px; background-color: rgb(242, 101, 45); color: white;">아이디찾기</button>
+	                        </div>
+	                    </div>
+		             </form>
                 </div>
                 <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="d-flex flex-column justify-content-center align-items-center p-3" style="border: 1px solid black; border-radius: 5px;">
-                        <div>
-                            <h2 class="pb-3" style="text-align: center;">비밀번호찾기</h2>
-                            <div class="form-group">
-                                <input placeholder="이름" type="text" />
-                            </div>
-                            <div class="form-group">
-                                <input placeholder="생년월일" type="text"/>
-                            </div>
-                            <div class="form-group">
-                                <input placeholder="아이디" type="text"/>
-                            </div>
-                            <div class="form-group">
-                                <input placeholder="등록된 이메일" type="text"/>
-                                <button class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">인증번호 받기</button>
-                            </div>
-                            <div class="form-group">
-                                <input placeholder="인증번호" type="text"/>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <button class="btn btn-sm" style="width: 300px; background-color: rgb(242, 101, 45); color: white;">비밀번호찾기</button>
-                        </div>
-                   </div>
+                	<form method="post" action="">
+	                	<div class="d-flex flex-column justify-content-center align-items-center p-3" style="border: 1px solid black; border-radius: 5px;">
+	                        <div>
+	                            <h2 class="pb-3" style="text-align: center;">비밀번호찾기</h2>
+	                            <div class="form-group">
+	                                <input placeholder="이름" type="text" />
+	                            </div>
+	                            <div class="form-group">
+	                                <input placeholder="아이디" type="text"/>
+	                            </div>
+	                            <div class="form-group">
+	                                <input placeholder="등록된 이메일" type="text"/>
+	                                <button class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">인증번호 받기</button>
+	                            </div>
+	                            <div class="form-group">
+	                                <input placeholder="인증번호" type="text"/>
+	                            </div>
+	                        </div>
+	                        <div>
+	                            <button class="btn btn-sm" style="width: 300px; background-color: rgb(242, 101, 45); color: white;">비밀번호찾기</button>
+	                        </div>
+	                        
+	                    </div>
+                	</form>
                 </div>
               </div>
         </div>
