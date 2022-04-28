@@ -38,21 +38,11 @@
 		SELECT count(*) FROM freeboards
 	</select>
 	
-	<!-- freeboard만 가져오는 resultMap -->
-	 <resultMap id="freeBoardResultMap" type="freeboard">
-		<result column="free_no" property="freeNo"/>
-		<result column="free_title" property="freeTitle"/>
-		<result column="free_content" property="freeContent"/>
-		<result column="free_writer" property="freeWriter"/>
-		<result column="free_regist_date" property="freeRegistDate"/>
-		<result column="free_modify_date" property="freeModifyDate"/>
-		<result column="free_use_yn" property="freeUseYN"/>
-		<result column="free_hit_count" property="freeHitCount"/>
- 	</resultMap>	
-	<select id="selectByFreeNo" parameterType="int" resultMap="freeBoardResultMap">
-		select free_no, free_title, free_content, free_writer, free_regist_date, free_modify_date, free_use_yn, free_hit_count
-		from freeboards
-		where free_no = #{freeNo}
+	<!-- board/view -->
+	<select id="selectByFreeNo" parameterType="int" resultMap="freeBoardWithUserResultMap">
+		select f.free_no, f.free_title, f.free_content, f.free_writer, f.free_regist_date, f.free_modify_date, f.free_use_yn, f.free_hit_count, u.user_nickname
+		from freeboards f, users u 
+		where f.free_no = #{freeNo} and f.free_writer = u.user_id
 	</select>
  	
  	<!-- 모든 내용 insert -->
@@ -69,6 +59,13 @@
 			VALUES(#{freeNo}, #{freeTitle}, #{freeContent}, #{freeWriter}, SYSDATE, SYSDATE, 1, 0)
 	</insert>
 
+	<!-- //자유게시판 게시물 삭제 (본인의 게시물을 자유게시판에서 삭제하는 것임.) -> 나중에 댓글 지우는것 까지 연계 -->
+	<delete id="deleteByFreeNo" parameterType="int">
+		delete from freeboards
+		where free_no = #{freeNo}
+	</delete>
+	
+	
 </mapper>
 
 

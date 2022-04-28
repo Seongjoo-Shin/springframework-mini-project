@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
     <section>
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
@@ -12,15 +13,21 @@
           <div class="col-8">
             <div class="mb-5">
               <div>
-                <p class="d-inline-block h6 mx-2">글쓴이 <span class="ml-1">냥냥</span></p>
+                <p class="d-inline-block h6 mx-2">글쓴이 <span class="ml-1">${freeBoardDto.userDto.userNickname}</span></p>
                 <p class="d-inline-block h6 float-right mx-2">조회수: <span>${freeBoardDto.freeHitCount}</span></p>
-                <p class="d-inline-block h6  float-right mx-2">23:02</p>
-                <p class="d-inline-block h6 float-right mx-2">2022-04-12</p>            
+                <p class="d-inline-block h6  float-right mx-2"><fmt:formatDate value="${freeBoardDto.freeRegistDate}" pattern="hh:mm"/></p>
+                <p class="d-inline-block h6 float-right mx-2"><fmt:formatDate value="${freeBoardDto.freeRegistDate}" pattern="yyyy-MM-dd"/></p>            
               </div>
               <div id="free-board-title" class="h4 p-3" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeTitle}</div>
               <div id="free-board-content" class="px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeContent}</div>
               <div class="text-center mt-3">
-              	<a href="/community/board/list" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">
+					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">수정</a>
+				</c:if>  	
+				<a href="/community/board/list" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">
+					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">삭제</a>
+				</c:if> 
               </div>
               <div id="free-board-coment" class="my-5">
                   <div class="h6" style="font-weight: bold;">댓글</div>
@@ -59,5 +66,7 @@
       </div>
       </div>
     </section>
-    
+    <script>
+    	
+    </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

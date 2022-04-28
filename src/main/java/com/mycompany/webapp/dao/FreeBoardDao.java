@@ -13,11 +13,15 @@ public interface FreeBoardDao {
 	public int count();
 	public FreeBoardDto selectByBno(int bno);
 	public int insert(FreeBoardDto freeBoardDto);	//작성
-	public int deleteByBno(int bno);
-	public int update(FreeBoardDto freeBoardDto);
+	//자유게시판 게시물 삭제 (본인의 게시물을 자유게시판에서 삭제하는 것임.) -> 나중에 댓글 지우는것 까지 연계
+	public int deleteByFreeNo(int bno);
+	
+	//자유게시판 내용 수정
+	public int updateByFreeNo(int bno);
 	
 	//view에서 활용
 	public FreeBoardDto selectByFreeNo(int freeNo);
 	
+	//자유게시판 내용 작성하고 insert
 	public int freeboardInsert(FreeBoardDto freeBoardDto);
 }

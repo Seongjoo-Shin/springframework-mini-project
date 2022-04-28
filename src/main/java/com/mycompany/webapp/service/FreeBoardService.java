@@ -39,4 +39,8 @@ public class FreeBoardService {
 	public void insertFreeBoard(FreeBoardDto freeBoardDto) {
 		freeBoardDao.freeboardInsert(freeBoardDto);
 	}
+	
+	public void deleteFreeBoard(int freeNo) {
+		freeBoardDao.deleteByFreeNo(freeNo);
+	}
 }
