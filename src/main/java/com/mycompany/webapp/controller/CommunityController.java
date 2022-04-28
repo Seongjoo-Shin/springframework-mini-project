@@ -105,11 +105,25 @@ public class CommunityController {
 
 	// 게시판 상세 페이지
 	@GetMapping("/board/boardDetail")
-	public String boardDetail(int freeNo, Model model) {
+	public String boardDetail(int freeNo, Model model, HttpSession session) {
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoardsContent(freeNo);
 		model.addAttribute("freeBoardDto", freeBoardDto);
+		String SessionUserid = (String) session.getAttribute("sessionUserId");
+		model.addAttribute("seesionUserid", SessionUserid);
+		if(freeBoardDto.getFreeWriter() == SessionUserid) {
+			model.addAttribute("sameId", true);
+		}else {
+			model.addAttribute("sameId", false);
+		}
+		
 		log.info("boardDetail 실행");
 		return "/community/board/view";
+	}
+	
+	@GetMapping("/board/freeBoardPostingDelete")
+	public String freeBoardPostingDelete(int freeNo) {
+		freeBoardService.deleteFreeBoard(freeNo);
+		return "redirect:/community/board/list";
 	}
 	
 	@RequestMapping("/board/view")
