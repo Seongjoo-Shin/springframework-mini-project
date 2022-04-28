@@ -61,7 +61,7 @@
 	    <result property="buildingOption" column="building_option"/>
 	</resultMap>
 	
-	<resultMap id="meesageMap" type="message">
+	<resultMap id="messageMap" type="message">
 	    <result property="messageNo" column="message_no"/>
 	    <result property="messageTitle" column="message_title"/>
 	    <result property="messageContent" column="message_content"/>
@@ -142,7 +142,7 @@
 			free_no = #{freeNo}
 	</update>	
 	
-	<select id="selectReceiveMessageList" parameterType="pager" resultMap="meesageMap">
+	<select id="selectReceiveMessageList" parameterType="pager" resultMap="messageMap">
 		<![CDATA[
 		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
 		FROM (
@@ -159,7 +159,7 @@
 		]]>
 	</select>
 	
-	<select id="selectSendMessageList" parameterType="pager" resultMap="meesageMap">
+	<select id="selectSendMessageList" parameterType="pager" resultMap="messageMap">
 		<![CDATA[
 		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
 		FROM (
@@ -182,7 +182,7 @@
 		FROM 
 			messages 
 		WHERE
-			message_receiver = #{userId} and message_reply_yn = 1
+			message_receiver = #{userId}
 	</select>
 	
 	<select id="selectSendMessageAll" resultType="Integer" parameterType="String">
@@ -191,17 +191,21 @@
 		FROM 
 			messages 
 		WHERE
-			message_sender = #{userId} and message_reply_yn = 1
+			message_sender = #{userId}
 	</select>
 	
-	<update id="updateYnMyMessage" parameterType="Integer">
-		UPDATE
-		    messages   
-		SET 
-		    message_reply_yn = 0   
-		WHERE    
-			message_no = #{freeNo}
-	</update>
+	<delete id="deleteMyMessage" parameterType="Integer">
+		DELETE FROM messages 
+		WHERE message_no = #{messageNo}
+	</delete>
 	
+	<select id="selectMessageByNo" resultType="message" parameterType="Integer" >
+		SELECT
+			*
+		FROM 
+			messages
+		WHERE
+			message_no = #{messageNo}
+	</select>
 		
 </mapper>

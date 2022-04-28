@@ -14,17 +14,13 @@
 
 	    function openMsgForm(name){
 	    	console.log(name);
-            var url = "<%=request.getContextPath() %>/message?sender="+name;
+            var url = "<%=request.getContextPath() %>/message?receiver="+name;
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
-            msgForm = window.open(url, "message", option);
-            msgForm.document.getElementById(name);
-            
-            msgForm.document.getElementById("receiver").value = name; 
-            
+            window.open(url, "message", option);
         }
 		
-	    function receiveMsg(){
-            var url = "<%=request.getContextPath() %>/messageView";
+	    function receiveMsg(name){
+            var url = "<%=request.getContextPath() %>/messageView?messageNo="+name;
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);
         }
@@ -43,7 +39,7 @@
         		console.log(arr);
         		$.ajax({
         			type: 'POST',
-        			url: '/mypage/myboard/rdeleteMsg',
+        			url: '/mypage/message/rdeleteMsg',
         			dataType: 'json',
         			data: {delArr: arr},
         		}).done((data) => {
@@ -83,7 +79,6 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>제목</th>
-                                    <th>내용</th>
                                     <th>받은날</th>
                                     <th>보낸사람</th>
                                     <th>답장여부</th>
@@ -93,8 +88,7 @@
                             <tbody>
                             <c:forEach var="message" items="${messages}">
                             	<tr class="text-center">
-                                    <td><a onclick="javascript:receiveMsg();" class="text-dark">${message.messageTitle}</a></td>
-                                    <td>${message.messageContent}</td>
+                                    <td><a onclick="javascript:receiveMsg('${message.messageNo}');" class="text-dark">${message.messageTitle}</a></td>
                                     <td><fmt:formatDate value="${message.messageDate}" pattern="yyyy-MM-dd HH:mm"/></td>
                                     <td><span id="${message.messageNo}">${message.messageSender }</span></td>
                                     <td><a href="#" class="btn btn-outline-dark" onclick="openMsgForm('${message.messageSender}')">답장</a></td>

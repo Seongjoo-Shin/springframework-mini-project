@@ -14,7 +14,10 @@ import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.dto.UserDto;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class MypageService {
 	
 	@Resource
@@ -79,8 +82,12 @@ public class MypageService {
 	public int deleteMyMessage(List<String> delArr) {
 		int cnt = 0;
 		for(String s : delArr) {
-			mypageDao.updateYnMyMessage(Integer.parseInt(s));
+			cnt = mypageDao.deleteMyMessage(Integer.parseInt(s));
 		}
 		return cnt;	
+	}
+
+	public MessageDto getMessageByNo(int messageNo) {
+		return mypageDao.selectMessageByNo(messageNo);
 	}
 }

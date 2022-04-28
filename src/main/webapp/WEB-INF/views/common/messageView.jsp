@@ -27,17 +27,16 @@
             </div>
             <div class="row justify-content-around  mb-2">
                 <div class="float-left mr-3">보낸사람</div>
-                <div class="float-left"><span>보낸사람이 들어갑니다.</span></div>
+                <div class="float-left"><span>${message.messageSender}</span></div>
             </div>
             <div class="row justify-content-around mb-2">
                 <div class="float-left mr-5"><span>제목</span></div>
-                <div class="float-left"><span>제목이 들어갑니다.</span></div>
+                <div class="float-left"><span>${message.messageTitle}</span></div>
             </div>
             <div class="row justify-content-around mb-2">
-                <textarea style="resize: none; height: 150px;" class="w-100" >쪽지 내용이 들어갑니다. 쪽지 내용이 들어갑니다. 쪽지 내용이 들어갑니다. 쪽지 내용이 들어갑니다.</textarea>
+                <textarea style="resize: none; height: 150px;" class="w-100" >${message.messageTitle}</textarea>
             </div>
             <div class="row justify-content-center">
-                <div class="float-left"><a class="btn btn-outline-dark mr-2" href="/message">답장하기</a></div>
                 <div class="float-left"><button class="btn btn-outline-dark ml-2" onclick="window.close();">취소</button></div>
             </div>
         </div>

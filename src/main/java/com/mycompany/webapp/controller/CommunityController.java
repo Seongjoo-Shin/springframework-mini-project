@@ -1,11 +1,9 @@
 package com.mycompany.webapp.controller;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -15,10 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mycompany.webapp.dao.FreeBoardDao;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
-import com.mycompany.webapp.dto.UserDto;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.UserService;
 
@@ -108,7 +104,7 @@ public class CommunityController {
 
 	// 게시판 상세 페이지
 	@GetMapping("/board/boardDetail")
-	public String boardDetail(int freeNo, Model model, HttpSession session) {
+	public String boardDetail(int freeNo, Model model, HttpSession session, HttpServletRequest request) {
 		
 		//freeBoardDto 내용 model에 싣기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
@@ -129,6 +125,8 @@ public class CommunityController {
 		//현재 로그인한 사용자 닉네임 댓글에 보여주기
 		String nickname = userService.getNickname(SessionUserid);
 		model.addAttribute("sessionUserNickname", nickname);
+		model.addAttribute("from", request.getParameter("from"));
+		model.addAttribute("pageNo", request.getParameter("pageNo"));
 		
 		return "/community/board/view";
 	}

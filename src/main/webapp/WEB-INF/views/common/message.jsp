@@ -21,11 +21,18 @@
 		}
 		
 </style>
+<script>
+	function fn_submit(){
+		$("#frm").attr("action", "/message/send");
+		$("#frm").submit();
+		window.close();
+	}
+</script>
 </head>
 <body class="bg-light">
     <div style="width:300px; height:200px;" class="p-2">
         <div class="container text-center">
-        <form method="post" action="/message/send">
+        <form id="frm" method="post" name="frm"  action="">
 	        <input type="hidden"/>
 	        <input type="hidden"/>
             <div class="row justify-content-center p-2">
@@ -33,18 +40,18 @@
             </div>
             <div class="row justify-content-around  mb-2">
                 <div class="float-left mr-3">보낸사람</div>
-                <div class="float-left"><input type="text" value="${sender}" name="messageReceiver" id="receiver"/></div>
+                <div class="float-left"><input type="text" value="${receiver}" name="messageReceiver" id="receiver"/></div>
             </div>
             <div class="row justify-content-around mb-2">
                 <div class="float-left mr-5"><span>제목</span></div>
-                <div class="float-left"><input type="text" value="" name="meesgeContent" placeholder="제목을 입력하세요"/></div>
+                <div class="float-left"><input type="text" value="" name="meesgeTitle" placeholder="제목을 입력하세요"/></div>
             </div>
             <div class="row justify-content-around mb-2">
-                <textarea style="resize: none; height: 150px;" class="w-100" ></textarea>
+                <textarea style="resize: none; height: 150px;" class="w-100" name="messageContent" ></textarea>
             </div>
             <div class="row justify-content-center">
-                <div class="float-left"><button type="submit" class="btn btn-outline-dark mr-2">보내기</button></div>
-                <div class="float-left"><button class="btn btn-outline-dark ml-2" onclick="window.close();">취소</button></div>
+                <div class="float-left"><a href="#" class="btn btn-outline-dark mr-2" onclick="javascript:fn_submit();">보내기</a></div>
+                <div class="float-left"><a href="#" class="btn btn-outline-dark ml-2" onclick="javascript:window.close();">취소</a></div>
             </div>
         </form>
         </div>

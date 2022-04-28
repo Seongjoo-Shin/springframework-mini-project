@@ -26,7 +26,12 @@
 				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">
 					<a href="/community/board/update?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">수정</a>
 				</c:if>  	
-				<a href="/community/board/list" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+				<c:if test="${from ne 'mypage'}">
+					<a href="/community/board/list" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+				</c:if>
+				<c:if test="${from eq 'mypage'}">
+					<a href="/mypage/myboard/board?pageNo=${pageNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+				</c:if>
 				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">
 					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">삭제</a>
 				</c:if> 

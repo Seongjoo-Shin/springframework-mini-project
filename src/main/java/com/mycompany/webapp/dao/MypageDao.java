@@ -35,7 +35,7 @@ public interface MypageDao {
 	public int updateMessageStatus(int messageNo); // 회신여부 설정
 	public int selectReceiveMessageAll(String userId);
 	public int selectSendMessageAll(String userId);
-	public void updateYnMyMessage(int parseInt);
+	public int deleteMyMessage(int parseInt);
 	
 	// 찜목록
 	public List<BuildingDto> selectBuildingLikeist(PagerDto pager, UserDto user); // 본인이 관심있는 인수목록 리스트
@@ -52,6 +52,8 @@ public interface MypageDao {
 	public int updateYnMyPosting(List<String> delArr);
 
 	public void updateYnMyPosting(int freeNo);
+
+	public MessageDto selectMessageByNo(int messageNo);
 
 
 	

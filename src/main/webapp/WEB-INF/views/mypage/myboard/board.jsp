@@ -73,7 +73,7 @@
                             <c:forEach items="${boards}" var="board" varStatus="status">
                             	<tr>
                             		<td class="text-center bg-light"><span>${board.freeNo}</span></td>
-	                                <td><a href="/community/board/boardDetail?freeNo=${board.freeNo}&from=mypage" class="text-dark">${board.freeTitle}</a></td>
+	                                <td><a href="/community/board/boardDetail?freeNo=${board.freeNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${board.freeTitle}</a></td>
 	                                <td class="text-center"><fmt:formatDate value="${board.freeModifyDate}" pattern="yyyy-MM-dd"/></td>
 	                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
 	                                <td class="text-center"><input type="checkbox" class="delete" name="freeNo" class="delete_box" id="${board.freeNo}"></td>

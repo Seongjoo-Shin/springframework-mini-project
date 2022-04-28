@@ -10,6 +10,12 @@
             })
         }
         
+	    function receiveMsg(messageNo){
+            var url = "<%=request.getContextPath() %>/messageView?messageNo="+messageNo;
+            var option = "width = 300, height = 350, top = 100, left = 200, location = no";
+            window.open(url, "message", option);
+        }
+        
         function fn_checkedDel(){
         	var cnt = $("input[name='messageNo']:checked").length;
         	console.log(cnt);
@@ -24,7 +30,7 @@
         		console.log(arr);
         		$.ajax({
         			type: 'POST',
-        			url: '/mypage/myboard/sdeleteMsg',
+        			url: '/mypage/message/sdeleteMsg',
         			dataType: 'json',
         			data: {delArr: arr},
         		}).done((data) => {
@@ -63,7 +69,6 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>제목</th>
-                                    <th>내용</th>
                                     <th>받은날</th>
                                     <th>받은사람</th>
                                     <th>회신여부</th>
@@ -73,11 +78,13 @@
                             <tbody>
                             <c:forEach var="message" items="${messages}">
                             	<tr class="text-center">
-                                    <td><a onclick="javascript:receiveMsg();" class="text-dark">${message.messageTitle}</a></td>
-                                    <td>${message.messageContent}</td>
+                                    <td><a onclick="javascript:receiveMsg('${message.messageNo}');" class="text-dark">${message.messageTitle}</a></td>
                                     <td><fmt:formatDate value="${message.messageDate}" pattern="yyyy-MM-dd HH:mm"/></td>
                                     <td>${message.messageReceiver}</td>
-                                    <td>답장여부</td>
+                                    <td>
+                                    	<c:if test="${message.messageReplyYN == 1}">답장완료</c:if>
+                                    	<c:if test="${message.messageReplyYN != 1}">답장미완료</c:if>
+                                    </td>
                                     <td><input type="checkbox" class="delete" name="messageNo" id="${message.messageNo}"/></td>
                                 </tr>
                             </c:forEach>
@@ -86,7 +93,7 @@
                     </div>
                     <div class="row float-right">
                         <div class="mr-2">
-                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-dark" onclick="fn_checkDel();"/>
+                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-dark" onclick="fn_checkedDel();"/>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mb-5">
