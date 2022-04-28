@@ -11,11 +11,13 @@
 		<config>src/main/resources/spring/dispatcher/viewresolver.xml</config>
 		<config>src/main/resources/spring/dispatcher/resources.xml</config>
 		<config>src/main/resources/spring/root/component_scan.xml</config>
+		<config>src/main/resources/spring/root/mailservlet.xml</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/resources/spring/root/datasource.xml</config>
 		<config>src/main/resources/spring/root/multipart_resolver.xml</config>
 		<config>src/main/resources/spring/root/mybatis.xml</config>
+		<config>src/main/resources/spring/root/security.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

@@ -3,9 +3,12 @@ package com.mycompany.webapp.controller;
 import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,8 @@ import lombok.extern.log4j.Log4j2;
 public class IndexController {
 	@Resource
 	private UserService userService;
+	@Resource
+	private JavaMailSender mailSender;
 	
 	@GetMapping("/loginForm")
 	public String loginForm() {
@@ -120,6 +125,26 @@ public class IndexController {
 		JSONObject jsonObject = new JSONObject();
 		if(result == LoginResult.SUCCESS) {
 			jsonObject.put("result", "success");
+			Random r = new Random();
+			int num = r.nextInt(999999);
+			String setfrom = "tmd5785@gmail.com";
+			String tomail = email;
+			String title = "[이메일인증]이메인증 메일입니다.";
+			String content = System.getProperty("line.separator") + "인증번호는 " + num + " 입니다." + System.getProperty("line.separator");
+			
+			try {
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
+			
+				messageHelper.setFrom(setfrom); 
+				messageHelper.setTo(tomail); 
+				messageHelper.setSubject(title);
+				messageHelper.setText(content); 
+			
+				mailSender.send(message);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 			
 		} else {
 			jsonObject.put("result", "fail");
