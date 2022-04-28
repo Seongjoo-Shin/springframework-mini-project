@@ -22,7 +22,7 @@
               <div id="free-board-content" class="px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeContent}</div>
               <div class="text-center mt-3">
 				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">
-					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">수정</a>
+					<a href="/community/board/update?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">수정</a>
 				</c:if>  	
 				<a href="/community/board/list" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
 				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">

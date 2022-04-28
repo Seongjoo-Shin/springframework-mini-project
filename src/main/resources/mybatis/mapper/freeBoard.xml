@@ -51,6 +51,12 @@
 		VALUES(#{freeNo}, #{freeTitle}, #{freeContent}, #{freeWriter}, SYSDATE, SYSDATE, 1, 0)
 	</insert>
 	
+	<insert id="update" parameterType="freeboard" >
+		update freeboards
+		set free_title = #{freeTitle}, free_content=#{freeContent}, free_modify_date=SYSDATE
+		where free_no = #{freeNo}
+	</insert>
+	
 	<insert id="freeboardInsert" parameterType="Map">
 		<selectKey keyProperty="freeNo" resultType="int" order="BEFORE">
 			select FREEBOARDS_SEQ.nextval from dual

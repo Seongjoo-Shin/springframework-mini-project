@@ -28,11 +28,7 @@ public class FreeBoardService {
 		return freeBoardDao.selectByPage(pagerDto);
 	}
 	
-	public FreeBoardDto getFreeBoard(int bno) {
-		return freeBoardDao.selectByBno(bno);
-	}
-	
-	public FreeBoardDto getFreeBoardsContent(int freeNo) {
+	public FreeBoardDto getFreeBoard(int freeNo) {
 		return freeBoardDao.selectByFreeNo(freeNo);
 	}
 	
@@ -42,5 +38,9 @@ public class FreeBoardService {
 	
 	public void deleteFreeBoard(int freeNo) {
 		freeBoardDao.deleteByFreeNo(freeNo);
+	}
+	
+	public void updateFreeBoard(FreeBoardDto freeBoardDto) {
+		freeBoardDao.update(freeBoardDto);
 	}
 }

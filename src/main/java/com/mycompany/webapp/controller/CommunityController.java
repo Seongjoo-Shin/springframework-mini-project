@@ -106,16 +106,10 @@ public class CommunityController {
 	// 게시판 상세 페이지
 	@GetMapping("/board/boardDetail")
 	public String boardDetail(int freeNo, Model model, HttpSession session) {
-		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoardsContent(freeNo);
+		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
 		model.addAttribute("freeBoardDto", freeBoardDto);
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
-		model.addAttribute("seesionUserid", SessionUserid);
-		if(freeBoardDto.getFreeWriter() == SessionUserid) {
-			model.addAttribute("sameId", true);
-		}else {
-			model.addAttribute("sameId", false);
-		}
-		
+		model.addAttribute("seesionUserid", SessionUserid);		
 		log.info("boardDetail 실행");
 		return "/community/board/view";
 	}
@@ -136,9 +130,29 @@ public class CommunityController {
 		return "/community/board/insert";
 	}
 
-	@RequestMapping("/board/update")
-	public String boardUpdate() {
+	@GetMapping("/board/update")
+	public String boardUpdate(int freeNo, Model model, HttpSession session) {
+		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
+		model.addAttribute("freeBoardDto", freeBoardDto);
 		return "/community/board/update";
+	}
+	
+	@PostMapping("/board/updateForm")
+	public String boardUpdateFrom(
+			@RequestParam("title") String title,
+			@RequestParam("content") String content,
+			HttpSession session,
+			@RequestParam("freeNo") int freeNo) {
+
+		log.info("수정페이지에서 boardUpdateForm 클릭");
+
+		//먼저 저장되 있던 정보 불러오기
+		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
+		freeBoardDto.setFreeTitle(title);
+		freeBoardDto.setFreeContent(content);
+
+		freeBoardService.updateFreeBoard(freeBoardDto);
+		return "redirect:/community/board/boardDetail?freeNo="+freeBoardDto.getFreeNo();
 	}
 
 	// 거래게시판 - market
