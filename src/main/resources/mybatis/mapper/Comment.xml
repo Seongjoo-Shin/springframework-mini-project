@@ -42,10 +42,10 @@
 		values(#{freeNo}, #{commentNo}, #{userid}, '#{commentContent}', SYSDATE, SYSDATE, 1, null, 0);
 	</insert>
 
-	<select id="selectByFreeNo" parameterType="pager" resultMap="">
+<!-- 	<select id="selectByFreeNo" parameterType="pager" resultMap="">
 		
 	
-	</select>
+	</select> -->
 
 
 </mapper>

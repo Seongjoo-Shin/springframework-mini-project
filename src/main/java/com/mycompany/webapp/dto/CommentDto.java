@@ -15,4 +15,5 @@ public class CommentDto {
 	private int commentUseYN;
 	private int upperNo;
 	private int commentDepth;
+	private UserDto userDto;
 }
