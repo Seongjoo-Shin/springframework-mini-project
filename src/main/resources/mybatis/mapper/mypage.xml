@@ -61,6 +61,16 @@
 	    <result property="buildingOption" column="building_option"/>
 	</resultMap>
 	
+	<resultMap id="meesageMap" type="message">
+	    <result property="messageNo" column="message_no"/>
+	    <result property="messageTitle" column="message_title"/>
+	    <result property="messageContent" column="message_content"/>
+	    <result property="messageDate" column="message_date"/>
+	    <result property="messageSender" column="message_sender"/>
+	    <result property="messageReceiver" column="message_receiver"/>
+	    <result property="messageReplyYN" column="message_reply_yn"/>
+	</resultMap>
+	
 	<select id="selectUser" resultMap="userMap" parameterType="String">
 		SELECT 
 			* 
@@ -120,7 +130,7 @@
 		FROM 
 			freeboards 
 		WHERE
-			free_writer = #{userId}
+			free_writer = #{userId} and free_use_yn = 1
 	</select>
 	
 	<update id="updateYnMyPosting" parameterType="Integer">
@@ -132,4 +142,66 @@
 			free_no = #{freeNo}
 	</update>	
 	
+	<select id="selectReceiveMessageList" parameterType="pager" resultMap="meesageMap">
+		<![CDATA[
+		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		FROM (
+		  SELECT ROWNUM as rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		  FROM (
+		    SELECT message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		    FROM messages
+		    WHERE message_receiver = #{userId} and message_reply_yn = 1
+		    ORDER BY message_no desc
+		  )
+		  WHERE ROWNUM <= #{endRowNo}
+		)
+		WHERE rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	<select id="selectSendMessageList" parameterType="pager" resultMap="meesageMap">
+		<![CDATA[
+		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		FROM (
+		  SELECT ROWNUM as rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		  FROM (
+		    SELECT message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		    FROM messages
+		    WHERE message_sender = #{userId} and message_reply_yn = 1
+		    ORDER BY message_no desc
+		  )
+		  WHERE ROWNUM <= #{endRowNo}
+		)
+		WHERE rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	<select id="selectReceiveMessageAll" resultType="Integer" parameterType="String">
+		SELECT 
+			count(*) 
+		FROM 
+			messages 
+		WHERE
+			message_receiver = #{userId} and message_reply_yn = 1
+	</select>
+	
+	<select id="selectSendMessageAll" resultType="Integer" parameterType="String">
+		SELECT 
+			count(*) 
+		FROM 
+			messages 
+		WHERE
+			message_sender = #{userId} and message_reply_yn = 1
+	</select>
+	
+	<update id="updateYnMyMessage" parameterType="Integer">
+		UPDATE
+		    messages   
+		SET 
+		    message_reply_yn = 0   
+		WHERE    
+			message_no = #{freeNo}
+	</update>
+	
+		
 </mapper>

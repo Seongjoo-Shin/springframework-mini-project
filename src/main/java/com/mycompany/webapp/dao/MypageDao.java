@@ -27,12 +27,15 @@ public interface MypageDao {
 	public List<FreeBoardDto> selectFreeBoardList(PagerDto pager); // 본인이 작성한 자유게시판 검색
 	
 	// 쪽지함
-	public List<MessageDto> selectReceiveMessageList(UserDto user, PagerDto pager); // 받은 메세지함 
-	public List<MessageDto> selectSendMessage(UserDto user, PagerDto pager); // 보낸 메세지함
+	public List<MessageDto> selectReceiveMessageList(PagerDto pager); // 받은 메세지함 
+	public List<MessageDto> selectSendMessageList(PagerDto pager); // 보낸 메세지함
 	public int sendMessage(String userId); // 마이페이지 메시지 보내기
 	public MessageDto selectReceiveMessage(int messageNo); // 받은 메세지 보기
 	public int deleteMessage(int messageNo); // 메세지 삭제하기
 	public int updateMessageStatus(int messageNo); // 회신여부 설정
+	public int selectReceiveMessageAll(String userId);
+	public int selectSendMessageAll(String userId);
+	public void updateYnMyMessage(int parseInt);
 	
 	// 찜목록
 	public List<BuildingDto> selectBuildingLikeist(PagerDto pager, UserDto user); // 본인이 관심있는 인수목록 리스트
@@ -49,4 +52,7 @@ public interface MypageDao {
 	public int updateYnMyPosting(List<String> delArr);
 
 	public void updateYnMyPosting(int freeNo);
+
+
+	
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.dto.UserDto;
 import com.mycompany.webapp.service.MypageService;
@@ -153,27 +154,70 @@ public class MypageController {
 		} 
 		return "/mypage/prefer/marketprefer";
 	}
-	
+		
 	
 	@RequestMapping("/message/receive")
-	public String messageReceive(HttpSession session) {
+	public String messageReceive(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
 		log.info("실행");
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		} else {
+			String userId = (String) session.getAttribute("sessionUserId");
+			int totalCnt = mypageService.getTotalReceiveMessage(userId);
+			PagerDto pager = new PagerDto(10, 10, totalCnt, pageNo);
+			pager.setUserId(userId);
+			model.addAttribute("pager", pager);
+			List<MessageDto> rmessages = mypageService.getMessageReceiveList(pager);
+			model.addAttribute("messages", rmessages);
 			return "/mypage/message/receive";
 		} 
 	}
 	
 	@RequestMapping("/message/send")
-	public String messageSend(HttpSession session) {
+	public String messageSend(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
 		log.info("실행");
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		} else {
-			
+			String userId = (String) session.getAttribute("sessionUserId");
+			int totalCnt = mypageService.getTotalSendMessage(userId);
+			PagerDto pager = new PagerDto(10, 10, totalCnt, pageNo);
+			pager.setUserId(userId);
+			model.addAttribute("pager", pager);
+			List<MessageDto> smessages = mypageService.getMessageSendList(pager);
+			model.addAttribute("messages", smessages);
+			return "/mypage/message/send";
 		} 
-		return "/mypage/message/send";
+	}
+	
+	@PostMapping("/myboard/rdeleteMsg")
+	@ResponseBody
+	public String rDeleteMsg(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			int cnt = mypageService.deleteMyPosting(delArr);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("message", cnt + "개를 삭제하였습니다");
+			String json = jsonObject.toString();
+			
+			return json;
+		}
+	}
+	
+	@PostMapping("/myboard/sdeleteMsg")
+	@ResponseBody
+	public String sDeleteMsg(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			int cnt = mypageService.deleteMyPosting(delArr);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("message", cnt + "개를 삭제하였습니다");
+			String json = jsonObject.toString();
+			
+			return json;
+		}
 	}
 	
 	
