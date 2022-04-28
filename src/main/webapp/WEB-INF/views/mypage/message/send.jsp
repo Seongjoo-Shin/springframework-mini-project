@@ -9,6 +9,30 @@
                 checkbox.checked = selectAll.checked
             })
         }
+        
+        function fn_checkedDel(){
+        	var cnt = $("input[name='messageNo']:checked").length;
+        	console.log(cnt);
+        	
+        	var arr = new Array();
+        	$("input[name='messageNo']:checked").each(function(){
+        		arr.push($(this).attr('id'));
+        	});
+        	if(cnt == 0){
+				swal("선택된 게시물이 없습니다.");
+        	} else {
+        		console.log(arr);
+        		$.ajax({
+        			type: 'POST',
+        			url: '/mypage/myboard/sdeleteMsg',
+        			dataType: 'json',
+        			data: {delArr: arr},
+        		}).done((data) => {
+        		}).fail((data) => {
+        		});
+        	}
+        	location.reload();
+        }
     </script>
     <section>
         <div class="container-fluid h-100 mt-5">
@@ -41,110 +65,61 @@
                                     <th>제목</th>
                                     <th>내용</th>
                                     <th>받은날</th>
-                                    <th>보낸사람</th>
+                                    <th>받은사람</th>
                                     <th>회신여부</th>
                                     <td><input type="checkbox" onclick="selectAll(this)"/></td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>답장완료</td>
-                                    <td><input type="checkbox" class="delete"/></td>
+                            <c:forEach var="message" items="${messages}">
+                            	<tr class="text-center">
+                                    <td><a onclick="javascript:receiveMsg();" class="text-dark">${message.messageTitle}</a></td>
+                                    <td>${message.messageContent}</td>
+                                    <td><fmt:formatDate value="${message.messageDate}" pattern="yyyy-MM-dd HH:mm"/></td>
+                                    <td>${message.messageReceiver}</td>
+                                    <td>답장여부</td>
+                                    <td><input type="checkbox" class="delete" name="messageNo" id="${message.messageNo}"/></td>
                                 </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>X</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>답장완료</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>X</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>답장완료</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>X</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>답장완료</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>X</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>답장완료</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>제목이 들어갑니다</td>
-                                    <td>요약된 내용이 들어갑니다......</td>
-                                    <td>2022-04-10</td>
-                                    <td>보낸 사람 아이디</td>
-                                    <td>X</td>
-                                    <td><input type="checkbox" class="delete"/></td>
-                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
                     <div class="row float-right">
                         <div class="mr-2">
-                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-dark"/>
+                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-dark" onclick="fn_checkDel();"/>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-center">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link text-dark" href="#"><</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">></a></li>
-                        </ul>
+                    <div class="row d-flex justify-content-center mb-5">
+						<ul class="pagination justify-content-center mb-0">
+			               	<li class="page-item">
+								<a class="page-link" href="/mypage/message/send?pageNo=1">First</a>
+							</li>
+							<c:if test="${pager.groupNo>1}">
+								<li class="page-item">
+									<a class="page-link" href="/mypage/message/send?pageNo=${pager.startPageNo-1}">Previous</a>
+								</li>
+							</c:if>
+		                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
+								<c:if test="${pager.pageNo != i}">
+									<li class="page-item">
+										<a class="page-link" href="/mypage/message/send?pageNo=${i}">${i}</a>
+									</li>
+								</c:if>
+								<c:if test="${pager.pageNo == i}">
+									<li class="page-item active">
+										<a class="page-link" href="/mypage/message/send?pageNo=${i}">${i}</a>
+									</li>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pager.groupNo<pager.totalGroupNo}">
+								<li class="page-item">
+			                      <a class="page-link" href="/mypage/message/send?pageNo=${pager.endPageNo+1}">Next</a>
+			                    </li>
+							</c:if>
+							<li class="page-item">
+			                	<a class="page-link" href="/mypage/message/send?pageNo=${pager.totalPageNo}">Last</a>
+			                </li>
+	                	</ul>	
                     </div>
                 </div>
                 <div class="col-2">

@@ -20,29 +20,33 @@
 			resize: none;
 		}
 		
-</style> 
+</style>
 </head>
 <body class="bg-light">
     <div style="width:300px; height:200px;" class="p-2">
         <div class="container text-center">
+        <form method="post" action="/message/send">
+	        <input type="hidden"/>
+	        <input type="hidden"/>
             <div class="row justify-content-center p-2">
                 <h3>메세지 보내기</h3>
             </div>
             <div class="row justify-content-around  mb-2">
                 <div class="float-left mr-3">보낸사람</div>
-                <div class="float-left"><input type="text" value="홍길동"/></div>
+                <div class="float-left"><input type="text" value="${sender}" name="messageReceiver" id="receiver"/></div>
             </div>
             <div class="row justify-content-around mb-2">
                 <div class="float-left mr-5"><span>제목</span></div>
-                <div class="float-left"><input type="text" value="" placeholder="제목을 입력하세요"/></div>
+                <div class="float-left"><input type="text" value="" name="meesgeContent" placeholder="제목을 입력하세요"/></div>
             </div>
             <div class="row justify-content-around mb-2">
                 <textarea style="resize: none; height: 150px;" class="w-100" ></textarea>
             </div>
             <div class="row justify-content-center">
-                <div class="float-left"><button class="btn btn-outline-dark mr-2">보내기</button></div>
+                <div class="float-left"><button type="submit" class="btn btn-outline-dark mr-2">보내기</button></div>
                 <div class="float-left"><button class="btn btn-outline-dark ml-2" onclick="window.close();">취소</button></div>
             </div>
+        </form>
         </div>
     </div>
 </body>
