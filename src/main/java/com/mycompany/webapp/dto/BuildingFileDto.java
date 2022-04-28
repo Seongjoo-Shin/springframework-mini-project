@@ -11,5 +11,8 @@ public class BuildingFileDto {
 	private String attachOriginalName;
 	private String attachSaveName;
 	private String attachType;
-	private MultipartFile fileAttach;
+	private int panoramaCheck;
+	
+	//이미지 데이터를 담기 위한 변수
+	private byte[] imageFileData;
 }

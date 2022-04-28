@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.TakeDao">
+	<insert id="insertBuilding" parameterType="building">
+		<selectKey keyProperty="buildingNo" resultType="int" order="BEFORE"> <!-- order = BEFORE : 아래 insert이전에 얘를 먼저 실행하겠다! -->
+			select buildings_seq.nextval from dual
+		</selectKey>
+		insert into buildings
+		values(
+			#{buildingNo},
+			#{buildingName},
+			#{buildingAddr},
+			#{buildingAddrDetail},
+			#{buildingLatitude},
+			#{buildingLongitude},
+			#{buildingTradeInfo},
+			#{buildingTakeoverPrice},
+			#{buildingDepositPrice},
+			#{buildingMonthRent},
+			#{buildingPrice},
+			#{buildingAvailableDate},
+			#{buildingDetailContent},
+			'1',
+			#{buildingWriter},
+			#{buildingSupplyArea},
+			#{buildingDedicatedArea},
+			#{buildingTotalFloor},
+			#{buildingFloor},
+			#{buildingOption},
+			SYSDATE
+		)
+	</insert>
+	
+	<insert id="insertEquipments" parameterType="equipment">
+		insert into equipments 
+		values(
+			#{buildingNo},
+			#{equipmentName},
+			#{equipmentCount}
+		)
+	</insert>
+	
+	<insert id="insertImageFile" parameterType="buildingfile">
+		insert into buildingfiles
+		values(
+			#{attachOriginalName},
+			#{attachSaveName},
+			#{attachType},
+			#{buildingNo},
+			buildingsfiles_seq.nextval,
+			#{imageFileData},
+			#{panoramaCheck}
+		)
+		
+	</insert>
+</mapper>

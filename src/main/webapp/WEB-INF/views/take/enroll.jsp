@@ -87,7 +87,7 @@
         }
     </script>
     <style>
-    	.equipNo::placeholder{color:red;}
+    	.error::placeholder{color:red;}
     	
          .optionBtn{
             width: 100px; 
@@ -119,7 +119,7 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-            	<form method="POST" enctype="multipart/form-data">
+            	<form action="" id="frm" method="POST" enctype="multipart/form-data">
 	                <div class="text-center">
 	                    <h3 class="m-2">매물 등록</h3>
 	                    <h4 class="border rounded mt-4 p-3 w-100" style="color: gray; background-color: rgb(238, 238, 241);">등록된 매물은 목록에 30일간 나타납니다.</h4>
@@ -248,7 +248,7 @@
 	                                    </div>
 	                                    <div id="tradeDiv" style="display:none;">
 	                                    	<div class="d-flex m-2" >
-		                                        <input class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="매매가"/>
+		                                        <input id="buildingPrice" name="buildingPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="매매가"/>
 		                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 		                                    </div>
 	                                    </div>
@@ -266,13 +266,13 @@
 	                        <div class="p-2 d-flex flex-column mr-6">
 	                            <div class="d-flex m-2">
 	                                <div class="m-2">공급 면적</div>
-	                                <span><input onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;"/>&nbsp;&nbsp;&nbsp;평</span>
+	                                <span><input onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="공급면적"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingSupplyAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
 	                            <div class="border-bottom"></div>
 	                            <div class="d-flex m-2 mt-3">
 	                                <div class="m-2">전용 면적</div>
-	                                <span><input onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;"/>&nbsp;&nbsp;&nbsp;평</span>
+	                                <span><input onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="전용면적"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingDedicatedAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
 	                        </div>
@@ -282,12 +282,12 @@
 	                        <div class="p-2 d-flex flex-column mr-6">
 	                            <div class="d-flex m-2 mb-1">
 	                                <div class="m-2 p-1 pr-2">건물 층수</div>
-	                                <input id="buildingTotalFloor" name="buildingTotalFloor" class="p-1 border" style="border-color: transparent;" placeholder="건물 층수 입력"/>
+	                                <input type="number" id="buildingTotalFloor" name="buildingTotalFloor" class="p-1 border" style="border-color: transparent;" placeholder="건물 층수 입력"/>
 	                            </div>
 	                            <div class="border-bottom"></div>
 	                            <div class="d-flex m-2 mt-3">
 	                                <div class="m-2 p-1 pr-2">해당 층수</div>
-	                                <input id="buildingFloor" name="buildingFloor" class="p-1 border" style="border-color: transparent;" placeholder="해당 층수 입력"/>
+	                                <input type="number" id="buildingFloor" name="buildingFloor" class="p-1 border" style="border-color: transparent;" placeholder="해당 층수 입력"/>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -580,6 +580,26 @@
 										return;
 									}
 									
+									//만약, 지금 등록하는 장비와 등록되어 있는 장비의 이름이 같은 경우, 등록된 부분에 갯수를 더해서만 나타낸다!
+									var tempList = $("#equipmentList").children();
+									
+									if(tempList != null){
+										for(t of tempList){
+											var tempId = t.getAttribute("id");
+											
+											//만약, 등록된 장비와 지금 등록하는 장비의 이름이 같아면, 개수를 더해서 출력하도록 한다!
+											if(equipmentName == $("#"+tempId+"Name").text()){
+												var tempCnt = $("#"+tempId+"Cnt").text();
+												var saveCnt = parseInt(tempCnt) + parseInt(equipmentCnt);
+												$("#"+tempId+"Cnt").text(saveCnt);
+												$("#equipmentName").val("");
+												$("#equipmentCnt").val("");
+												return;
+											}
+										}
+									}
+									
+									//이름이 같은 장비가 없다면 새로 만들어서 equipList에 추가해준다.
 									var equipSpan = document.createElement("span");
 						            var equipName = document.createElement("span");
 						            var equipCnt = document.createElement("span");
@@ -613,9 +633,7 @@
 	                            
 	                            //추가한 장비를 삭제하기 위한 함수
 	                            function equipmentDel(e){
-	                            	console.log(e);
 	                            	var equipEle = e.parentNode;
-	                            	console.log(equipEle);
 	                            	$(equipEle).remove();
 	                            }
 	
@@ -624,11 +642,10 @@
 	                </div>
                 </form>
                 <div class="d-flex justify-content-center mt-5 mb-4">
-	                    <button onclick="submitBtnClick()" class="btn border rounded m-2 p-2 btn-info" style="font-size: 25px; width: 130px;">등록</
->
-	                    <button onclick="cancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
-	                    <button class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
-	                    <button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+	                <button onclick="submitBtnClick()" class="btn border rounded m-2 p-2 btn-info" style="font-size: 25px; width: 130px;">등록</button>
+	                <button onclick="cancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
+	                <button class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
+	                <button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -652,10 +669,73 @@
         function cancle() {
         	$(location).attr("href", "enrollCancle");
 		}
+        function alertShow(){
+        	swal({
+				title:"입력되지 않은 곳이 존재합니다.",
+				text: "모든 정보를 입력해주십시오.",
+				icon:"warning"
+				
+			});
+        }
         
         function submitBtnClick(){
         	var form = document.querySelector("form");
             var formData = new FormData(form);
+            
+            var errorNum = 0;
+            
+            if($("#buildingName").val() == ""){
+            	$("#buildingName").addClass("error");
+            	errorNum = 1;
+            }
+            if($("#buildingAddr").val() == ""){
+            	$("#buildingAddr").addClass("error");
+            	$("#buildingAddrDetail").addClass("error");
+            	errorNum = 1;
+            }
+            if($("#buildingTakeoverPrice").val() == ""){
+            	$("#buildingTakeoverPrice").addClass("error");
+            	errorNum = 1;
+            }
+            
+            if(buildingTradeInfo == "임대"){
+            	if($("#buildingDepositPrice").val() == ""){
+                	$("#buildingDepositPrice").addClass("error");
+                	errorNum = 1;
+                }
+            	if($("#buildingMonthRent").val() == ""){
+                	$("#buildingMonthRent").addClass("error");
+                	errorNum = 1;
+                }
+            }else{
+            	if($("#buildingPrice").val() == ""){
+                	$("#buildingPrice").addClass("error");
+                	errorNum = 1;
+                }
+            }
+            
+            if($("#buildingSupplyArea").val() == ""){
+            	$("#buildingSupplyArea").addClass("error");
+            	errorNum = 1;
+            }
+            if($("#buildingDedicatedArea").val() == ""){
+            	$("#buildingDedicatedArea").addClass("error");
+            	errorNum = 1;
+            }
+            if($("#buildingTotalFloor").val() == ""){
+            	$("#buildingTotalFloor").addClass("error");
+            	errorNum = 1;
+            }
+            if($("#buildingFloor").val() == ""){
+            	$("#buildingFloor").addClass("error");
+            	errorNum = 1;
+            }
+            
+            if(errorNum == 1){
+            	alertShow();
+            	errorNum = 0;
+            	return;
+            }
             
             //이미지 첨부파일이 있다면 formData에 담기----------
             if($("#nomalImgPreview").children().length == 0){
@@ -700,13 +780,13 @@
             var equipList = [];
             if(optionValueList.indexOf("3") != -1){
             	var tempList = $("#equipmentList").children();
-            	if(tempList == null){
+            	if(tempList.length == 0){
             		swal({
     					title:"장비 옵션을 선택했습니다.",
     					text: "가지고 계신 장비 정보를 입력해주세요.",
     					icon:"warning"
-    					
     				});
+            		return;
             	}else{
             		for(equip of tempList){
             			console.log(equip);
@@ -714,15 +794,10 @@
             			var name = $("#"+equipId + "Name").text();
             			var cnt = $("#"+equipId + "Cnt").text();
             			var equipInfo = '{' + '"name":"' + name + '",' + '"cnt":"'+cnt+'"}';
-            			/* equipInfo = JSON.stringify(equipInfo); */
-            			console.log(equipInfo);
-            			/* equipList.push(equipInfo); */
             			formData.append("equipList", equipInfo);
             		}
             	}
             }
-            console.log(formData.getAll("equipList"));
-            /* formData.append("equipList", equipList); */
             
             $.ajax({
             	method: 'POST',
@@ -731,7 +806,22 @@
             	contentType: false,
             	processData:false
             })
+            .done((data) => {
+            	swal({
+					text: "매물이 등록되었습니다."
+				});
+            	
+            	//10뒤에 자동으로 인수맵으로 이동함!
+            	setTimeout(function () {
+            		$(location).attr("href", "enrollCancle");
+           		}, 5000);
+			});
         }
+        $('input').keydown(function() {
+        	  if (event.keyCode === 13) {
+        	    event.preventDefault();
+        	  };
+       	});
     </script>
                				
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
