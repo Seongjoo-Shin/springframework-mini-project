@@ -8,5 +8,6 @@ import com.mycompany.webapp.dto.UserDto;
 public interface UserDao {
 	public UserDto selectByUserId(String userId);
 	public UserDto selectByUserNickname(String nickname);
+	public UserDto selectByUserEmail(String email);
 	public int insert(UserDto user);
 }

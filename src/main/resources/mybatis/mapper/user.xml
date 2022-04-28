@@ -28,6 +28,12 @@
 		where user_nickname=#{userNickname}
 	</select>
 	
+	<select id="selectByUserEmail" parameterType="String" resultMap="userMap"> 
+		select *
+		from USERS
+		where user_email=#{userEmail}
+	</select>
+	
 	<insert id="insert" parameterType="user">
 		insert into users(user_id, user_password, user_email, user_name, user_phone, user_nickname, user_role, user_enabled ,user_joindate)
 		values(#{userId}, #{userPassword}, #{userEmail}, #{userName}, #{userPhone}, #{userNickname}, #{userRole}, #{userEnabled}, SYSDATE)

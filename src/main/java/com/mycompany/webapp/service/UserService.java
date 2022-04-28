@@ -70,4 +70,13 @@ public class UserService {
 		}
 	}
 
+	public LoginResult checkEmail(String email) {
+		UserDto dbUser = userDao.selectByUserEmail(email);
+		if(dbUser==null) {
+			return LoginResult.SUCCESS;
+		} else {
+			return LoginResult.FAIL_USERID;
+		}
+	}
+
 }

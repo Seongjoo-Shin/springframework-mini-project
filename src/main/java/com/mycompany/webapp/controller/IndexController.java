@@ -1,5 +1,7 @@
 package com.mycompany.webapp.controller;
 
+import java.util.Random;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -105,6 +107,22 @@ public class IndexController {
 			jsonObject.put("result", "fail");
 		} else {
 			jsonObject.put("result", "success");
+		}
+		
+		String json = jsonObject.toString();
+		return json; 
+	}
+	
+	@PostMapping(value = "/checkEmail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String checkEmail(String email) {
+		LoginResult result = userService.checkEmail(email);
+		JSONObject jsonObject = new JSONObject();
+		if(result == LoginResult.SUCCESS) {
+			jsonObject.put("result", "success");
+			
+		} else {
+			jsonObject.put("result", "fail");
 		}
 		
 		String json = jsonObject.toString();
