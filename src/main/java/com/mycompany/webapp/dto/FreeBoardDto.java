@@ -15,4 +15,5 @@ public class FreeBoardDto {
 	private int freeUseYN;			//삭제 여부
 	private int freeHitCount;		//조회수
 	private UserDto userDto;
+	private int rnum;
 }

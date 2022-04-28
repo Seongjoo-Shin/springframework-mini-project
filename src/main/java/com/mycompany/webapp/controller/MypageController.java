@@ -6,14 +6,17 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
@@ -66,7 +69,7 @@ public class MypageController {
 	}
 	
 	// 마이페이지 본인이 쓴 자유 게시물
-	@RequestMapping("/myboard/board")
+	@GetMapping("/myboard/board")
 	public String myboardBoard(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
 		log.info("실행");
 		if(session.getAttribute("sessionUserId") == null) {
@@ -75,8 +78,10 @@ public class MypageController {
 			String userId = (String) session.getAttribute("sessionUserId");
 			int totalCnt = mypageService.getTotalFreeboardCount(userId);
 			PagerDto pager = new PagerDto(10, 10, totalCnt, pageNo);
-			List<FreeBoardDto> lst = mypageService.getMyFreeBoardList(pager, userId);
-			model.addAttribute("boards", lst);
+			pager.setUserId(userId);
+			model.addAttribute("pager", pager);
+			List<FreeBoardDto> boards = mypageService.getMyFreeBoardList(pager);
+			model.addAttribute("boards", boards);
 			return "/mypage/myboard/board";
 		} 
 	}
@@ -101,6 +106,21 @@ public class MypageController {
 		} else {
 			return "/mypage/myboard/market";
 		} 
+	}
+	
+	@PostMapping("/myboard/delete")
+	@ResponseBody
+	public String myboardDelete(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			int cnt = mypageService.deleteMyPosting(delArr);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("message", cnt + "개를 삭제하였습니다");
+			String json = jsonObject.toString();
+			
+			return json;
+		}
 	}
 	
 	// 찜목록 페이지 이동

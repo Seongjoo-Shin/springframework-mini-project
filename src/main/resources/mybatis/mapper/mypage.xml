@@ -62,40 +62,74 @@
 	</resultMap>
 	
 	<select id="selectUser" resultMap="userMap" parameterType="String">
-		select * from users where user_id = #{userId}
+		SELECT 
+			* 
+		FROM
+			users 
+		WHERE 
+			user_id = #{userId}
 	</select>
 	
 	<!-- 유저 비밀번호 검색 -->
 	<select id="selectPassword" resultMap="userMap">
-		select user_password from users where user_id = #{userId}
+		SELET 
+			user_password 
+		FROM
+			users 
+		WHERE 
+			user_id = #{userId}
 	</select>
 	
 	<!-- 유저 비밀번호 수정 -->
 	<update id="updatePassword" parameterType="user">
-		update users set user_password = #{userPassword} where user_id = #{userId}
+		UPDATE 
+			users 
+		SET 
+			user_password = #{userPassword} 
+		WHERE 
+			user_id = #{userId}
 	</update>
 	
 	<!-- 유저 탈퇴 -->
 	<update id="userWithdrawal" parameterType="user">
-		update users set user_enabled = 0 where user_id = #{userId}
+		update 
+			users set user_enabled = 0 
+		where user_id = #{userId}
 	</update>
 	
 	<select id="selectFreeBoardList" parameterType="pager" resultMap="freeboardMap">
-		SELECT rnum, free_no, free_title, free_writer, free_regist_date
+		<![CDATA[
+		SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_modify_date
 		FROM (
-		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date
+		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, free_modify_date
 		  FROM (
-		    SELECT free_no, free_title, free_writer, free_regist_date
+		    SELECT free_no, free_title, free_writer, free_regist_date, free_modify_date
 		    FROM freeboards
-		    where free_writer = #{userId}
-		    ORDER BY free_no DESC
+		    WHERE free_writer = #{userId} and free_use_yn = 1
+		    ORDER BY free_no desc
 		  )
-		  WHERE rnum &lt;= #{endRowNo}  
+		  WHERE ROWNUM <= #{endRowNo}
 		)
-		WHERE rnum &gt;= #{startRowNo}
+		WHERE rnum >= #{startRowNo}
+		]]>
 	</select>
 	
 	<select id="selectAllFreeBoard" resultType="Integer" parameterType="String">
-		select count(*) from freeboards where free_writer = #{userId}
+		SELECT 
+			count(*) 
+		FROM 
+			freeboards 
+		WHERE
+			free_writer = #{userId}
 	</select>
+	
+	<update id="updateYnMyPosting" parameterType="Integer">
+		UPDATE
+		    freeboards   
+		SET 
+		    free_use_yn = 0   
+		WHERE    
+			free_no = #{freeNo}
+	</update>	
+	
 </mapper>

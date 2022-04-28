@@ -31,6 +31,10 @@
                                 <td><input type="hidden" value="${user.userName}" name="userName"/>${user.userName}</td>
                             </tr>
                             <tr>
+                                <td class="text-center bg-light">별명</td>
+                                <td><input type="hidden" value="${user.userNickname}" name="userName"/>${user.userNickname}</td>
+                            </tr>
+                            <tr>
                                 <td class="text-center bg-light">이메일</td>
                                 <td><input type="hidden" value="${user.userEmail}" name="userEmail"/>${user.userEmail}</td>
                             </tr>

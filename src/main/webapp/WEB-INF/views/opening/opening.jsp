@@ -86,6 +86,8 @@
                                 var cmarker;
                                 var result;
                                 var positions = new Array();
+                                var juso = new Array();
+                                var infoWindow;
                                 
                                 function getLocation() {
                                     if (navigator.geolocation) {
@@ -104,7 +106,7 @@
                                 			center: curPos,
                                 			scaleControl: false,
                                 			mapDataControl: false,
-                                			zoom: 11,
+                                			zoom: 10,
                                 	};
                                 	
                                 	map = new naver.maps.Map('map', mapOptions);
@@ -122,12 +124,11 @@
                                 	
                                 	cmarker = new naver.maps.Marker(markerOptions);
                                 	initMap();
-                                	
                                 }
                                 
                                 function initMap(){
                                 	for(var i=0; i<positions.length; i++){
-                                		marker = new naver.maps.Marker({
+                                	 	marker = new naver.maps.Marker({
                                 			map: map,
                                 			position: new naver.maps.LatLng(positions[i].lat, positions[i].lng),
                                 			icon: {
@@ -137,8 +138,8 @@
                                                 anchor: new naver.maps.Point(16, 32),
                                 			}
                                 	 	});
-                                	 	var infoWindow = new naver.maps.InfoWindow({
-                                            content: '<div class="p-2 gotoTake" style="width:200px;"><span>' + positions[i].location + '</span><br><div class="text-center w-100"><a class="btn btn-sm btn-outline-dark w-100 mt-2" href="/take/list?">주변매물 보러가기 -></a></div></div>',
+                                	 	infoWindow = new naver.maps.InfoWindow({
+                                            content: '<form method="get" action="/take/list"><div class="p-2 gotoTake" style="width:200px;"><span>' + positions[i].location + '</span><br><div class="text-center w-100"><input type="hidden" value="'+positions[i].lat+'" name="latitude"/><input type="hidden" value="'+positions[i].lng+'" name="longitude"/><input type="submit" class="btn btn-sm btn-outline-dark w-100 mt-2" value="주변매물 보러가기 ->" /></div></div></form>',
                                         });
                                 	 	markers.push(marker);
                                 	 	
@@ -146,28 +147,10 @@
                                 	}
                                 	
                                 	for (var i = 0, ii = markers.length; i < ii; i++) {
-                                		console.log(markers[i]);
                                         naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
                                     }
                                }
-                                
-                                function moveMapCurrentLoc(e){
-                                    e.preventDefault();
-                                    var curPosition = cmarker.position;
-                                    var currentLoc = new naver.maps.LatLng(curPosition.y, curPosition.x);
-                                    map.panTo(currentLoc);
-                                }
-                                
-                                function moveMap(seq){
-                               		var marker = markers[seq],
-                               		infoWindow = infoWindows[seq];
-                               		if(infoWindow.getMap()){
-                               			infoWindow.close();
-                               		}else {
-                                        infoWindow.open(map, marker); // 표출
-                                    }
-                                }
-                                
+
                                 //지도위의 현재위치 버튼을 클릭하면 실행되는 함수로, 현재위치가 찍힌 마커로 지도가 이동한다.
                                 function moveMapCurrentLoc(e){
                                     e.preventDefault();
@@ -177,7 +160,6 @@
                                 }
 
                                 function getClickHandler(seq){
-                                	console.log(seq);
                                 	return function(e){
                                 		var marker = markers[seq],
                                 			infoWindow = infoWindows[seq];
@@ -192,7 +174,7 @@
                                 function reversegeocode(latitude, longitude){
                                 	var lat = Number(latitude);
                                 	var lng = Number(longitude);
-                                	
+                                	var addr; 
                                 	naver.maps.Service.reverseGeocode({
                                         location: new naver.maps.LatLng(lat, lng),
                                     }, function(status, response) {
@@ -201,9 +183,9 @@
                                         }
 
                                         result = response.result; // 검색 결과의 컨테이너
-                                        console.log(result.items[0].address);
                                         items = result.items.address; // 검색 결과의 배열
                                     });
+                                	return addr;
                                 }
                                 
                                 function keywordAjax(){
@@ -230,17 +212,27 @@
                                 		traditional: true,
                                 		data: JSON.parse(json),
                                 	}).done((data) => {
+                                		positions = [];
+                                		for(var i=0; i<markers.length; i++){
+                                			markers[i].setMap(null);
+                                		}
                                 		for(var i=0; i<data.keywordsLength; i++){
                                 			positions.push(
-                                				{lat: data.keywords[i].latitude, lng: data.keywords[i].longitude},
+                                				{
+                                					location: juso[i],
+                                					lat: data.keywords[i].latitude, 
+                                					lng: data.keywords[i].longitude
+                                				},
                                 			);
+                                			console.log(positions);
                                 		}
-                                		console.log("positions : " + positions);
                                 		initMap();
                                 	}).fail((data) => {
                                 		console.log(data);
                                 	});
 								}
+								
+								
                             </script>
 					</div>
 				</div>

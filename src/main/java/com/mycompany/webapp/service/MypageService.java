@@ -31,8 +31,8 @@ public class MypageService {
 		return mypageDao.updatePassword(user);
 	}
 	
-	public List<FreeBoardDto> getMyFreeBoardList(PagerDto pager, String userId){
-		return mypageDao.selectFreeBoardList(pager, userId);
+	public List<FreeBoardDto> getMyFreeBoardList(PagerDto pager){
+		return mypageDao.selectFreeBoardList(pager);
 	}
 	
 	public List<MarketBoardDto> getMyMarketBoardList(PagerDto pager, String userId){
@@ -49,5 +49,15 @@ public class MypageService {
 
 	public int getTotalFreeboardCount(String userId) {
 		return mypageDao.selectAllFreeBoard(userId);
+	}
+
+	public int deleteMyPosting(List<String> delArr) {
+		int cnt = 0;
+		for(String s : delArr) {
+			int freeNo = Integer.parseInt(s);
+			mypageDao.updateYnMyPosting(freeNo);
+		}
+		
+		return cnt;
 	}
 }

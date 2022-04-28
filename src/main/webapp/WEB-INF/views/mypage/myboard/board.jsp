@@ -8,9 +8,36 @@
                 checkbox.checked = selectAll.checked
             })
         }
+        
+        function fn_checkedDel(){
+        	var cnt = $("input[name='freeNo']:checked").length;
+        	console.log(cnt);
+        	
+        	var arr = new Array();
+        	$("input[name='freeNo']:checked").each(function(){
+        		arr.push($(this).attr('id'));
+        	});
+        	if(cnt == 0){
+				swal("선택된 게시물이 없습니다.");
+        	} else {
+        		console.log(arr);
+        		$.ajax({
+        			type: 'POST',
+        			url: '/mypage/myboard/delete',
+        			dataType: 'json',
+        			data: {delArr: arr},
+        		}).done((data) => {
+        			swal(${message});
+        		}).fail((data) => {
+        			
+        		});
+        	}
+        	
+        	location.reload();
+        }
     </script>
     <section>
-        <div class="container-fluid h-100 mt-5">
+        <div class="container-fluid h-100 mt-5 mb-5">
             <div class="row">
                 <div class="col-2">
                     <div class="p-5 justify-content-center">
@@ -45,127 +72,54 @@
                                 <th>수정</thclass=>
                                 <td><input type="checkbox" onclick="selectAll(this)"></tdclass=>
                             </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>10</span></td>
-                                <td><a href="/community/board/boardDetail" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>9</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>8</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>7</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>6</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>5</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>4</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>3</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>2</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>1</span></td>
-                                <td><a href="#" class="text-dark">제목제목제목제목제목제목제목제목제목</a></td>
-                                <td class="text-center">날짜</td>
-                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
+                            <c:forEach items="${boards}" var="board" varStatus="status">
+                            	<tr>
+                            		<td class="text-center bg-light"><span>${board.freeNo}</span></td>
+	                                <td><a href="/community/board/boardDetail?freeNo=${board.freeNo}&from=mypage" class="text-dark">${board.freeTitle}</a></td>
+	                                <td class="text-center"><fmt:formatDate value="${board.freeModifyDate}" pattern="yyyy-MM-dd"/></td>
+	                                <td class="text-center"><button class="btn btn-sm btn-outline-dark">수정</button></td>
+	                                <td class="text-center"><input type="checkbox" class="delete" name="freeNo" class="delete_box" id="${board.freeNo}"></td>
+                            	</tr>
+                            </c:forEach>
                         </table>
                     </div>
                     <div class="row float-right">
                         <div class="mr-4">
-                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-danger"/>
+                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-danger" onclick="fn_checkedDel();"/>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-center">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link text-dark" href="#"><</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">></a></li>
-                        </ul>
-                    </div>
-                    <div class="pt-3 my-3">
-                  <ul class="pagination justify-content-center mb-0">
-	               	<li class="page-item">
-						<a class="page-link" href="list?pageNo=1">First</a>
-					</li>
-					<c:if test="${pager.groupNo>1}">
-						<li class="page-item">
-							<a class="page-link" href="list?pageNo=${pager.startPageNo-1}">Previous</a>
-						</li>
-					</c:if>
-                    
-                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
-						<c:if test="${pager.pageNo != i}">
+                    <div class="row d-flex justify-content-center mb-5">
+						<ul class="pagination justify-content-center mb-0">
+			               	<li class="page-item">
+								<a class="page-link" href="/mypage/myboard/board?pageNo=1">First</a>
+							</li>
+							<c:if test="${pager.groupNo>1}">
+								<li class="page-item">
+									<a class="page-link" href="/mypage/myboard/board?pageNo=${pager.startPageNo-1}">Previous</a>
+								</li>
+							</c:if>
+		                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
+								<c:if test="${pager.pageNo != i}">
+									<li class="page-item">
+										<a class="page-link" href="/mypage/myboard/board?pageNo=${i}">${i}</a>
+									</li>
+								</c:if>
+								<c:if test="${pager.pageNo == i}">
+									<li class="page-item active">
+										<a class="page-link" href="/mypage/myboard/board?pageNo=${i}">${i}</a>
+									</li>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pager.groupNo<pager.totalGroupNo}">
+								<li class="page-item">
+			                      <a class="page-link" href="/mypage/myboard/board?pageNo=${pager.endPageNo+1}">Next</a>
+			                    </li>
+							</c:if>
 							<li class="page-item">
-								<a class="page-link" href="list?pageNo=${i}">${i}</a>
-							</li>
-						</c:if>
-						<c:if test="${pager.pageNo == i}">
-							<li class="page-item active">
-								<a class="page-link" href="list?pageNo=${i}">${i}</a>
-							</li>
-						</c:if>
-					</c:forEach>
-					<c:if test="${pager.groupNo<pager.totalGroupNo}">
-						<li class="page-item">
-	                      <a class="page-link" href="list?pageNo=${pager.endPageNo+1}">Next</a>
-	                    </li>
-					</c:if>
-					<li class="page-item">
-	                	<a class="page-link" href="list?pageNo=${pager.totalPageNo}">Last</a>
-	                </li>
-                  </ul>
-                </div>
+			                	<a class="page-link" href="/mypage/myboard/board?pageNo=${pager.totalPageNo}">Last</a>
+			                </li>
+	                	</ul>	
+                    </div>
                 </div>
                 <div class="col-2">
                     
