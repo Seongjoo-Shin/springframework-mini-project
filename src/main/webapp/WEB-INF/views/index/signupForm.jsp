@@ -22,6 +22,15 @@
 		color : red;
 		display : none;
 	}
+	
+	.id_input_re_5{
+		color : red;
+		display : none;
+	}
+	
+	.error::-webkit-input-placeholder{
+		color : red
+	}
 </style>
 
 <script>
@@ -37,13 +46,45 @@
             $email2.val($ele.val()); 
         } 
     }
+    //이메일 합치기
     function sumemail(){
         var text1=document.getElementById('email1').value + '@' + document.getElementById('email2').value;
         document.getElementById('email').value = text1;
     }
+    //회원가입 폼 빈값 검사
+    function check(){
+    	if($('#userId').val()==""){
+    		$('#userId').attr('placeholder', '아이디를 입력하세요')
+    		$('#userId').addClass('error');
+    		return false;
+    	} else if ($('#userPassword').val()==""){
+    		$('#userPassword').attr('placeholder', '비밀번호를 입력하세요')
+    		$('#userPassword').addClass('error');
+    		return false;
+    	}else if ($('#email1').val()==""){
+    		$('#email1').attr('placeholder', '이메일를 입력하세요')
+    		$('#email1').addClass('error');
+    		return false;
+    	}else if ($('#userName').val()==""){
+    		$('#userName').attr('placeholder', '이름을 입력하세요')
+    		$('#userName').addClass('error');
+    		return false;
+    	}else if ($('#userPhone').val()==""){
+    		$('#userPhone').attr('placeholder', '전화번호를 입력하세요')
+    		$('#userPhone').addClass('error');
+    		return false;
+    	}else if ($('#userNickname').val()==""){
+    		$('#userNickname').attr('placeholder', '닉네임을 입력하세요')
+    		$('#userNickname').addClass('error');
+    		return false;
+    	}else if($('#confirmPassword').val()!=$('#userPassword').val()){
+    		$('.id_input_re_5').css("display","inline-block");
+    		return false;
+    	}
+    }
 </script>
 
-<form method="post" action="/index/signUp">
+<form id="signupForm" method="post" action="/index/signUp" onsubmit ="return check()">
        <div class="d-flex flex-row justify-content-center align-items-center vh-100">
            <div class="d-flex flex-column col-md-3">
                <div class="d-flex justify-content-center align-items-center">
@@ -54,6 +95,10 @@
                    <button type="button" onClick="checkId()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">중복확인</button>
                    <script>
 	                   function checkId() {
+	                	   if($(userId).val() == ""){
+	                			check();
+	                			return
+	                	   }
 	                	   var id = $(userId).val();
 		   					$.ajax({
 		   						url: "/index/checkId",
@@ -64,10 +109,12 @@
 		   						console.log(data.result);
 		   						if(data.result ==="success"){
 		   							$('.id_input_re_2').css("display","inline-block");
-		   							$('.id_input_re_1').css("display", "none")
+		   							$('.id_input_re_1').css("display", "none");
+		   							$('.id_input_re_5').css("display","none");
 		   						} else if(data.result ==="fail"){
 		   							$('.id_input_re_1').css("display","inline-block");
 		   							$('.id_input_re_2').css("display", "none");
+		   							$('.id_input_re_5').css("display","none");
 		   						}
 		   					});
 		   				}
@@ -76,10 +123,11 @@
 				   <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
             </div>
             <div class="form-group">
-                <input name="userPassword" class ="col-md-8" placeholder="비밀번호" type="text"/>
+                <input id="userPassword" name="userPassword" class ="col-md-8" placeholder="비밀번호" type="password"/>
             </div>
             <div class="form-group">
-                <input class ="col-md-8" placeholder="비밀번호 확인" type="text"/>
+                <input id="confirmPassword" class ="col-md-8" placeholder="비밀번호 확인" type="text"/>
+                <span class="id_input_re_5">비밀번호가 일치하지 않습니다.</span>
             </div>
             <div class="form-group d-flex flex-row">
                 <input class ="col-md-3" id="email1" name="email1" placeholder="이메일" type="text" style="width: 80px;"/>@<input id="email2" name="email2" type="text"/>
@@ -94,10 +142,10 @@
                 <input id="email" name="userEmail" value="" style="display:none"/>
             </div>
             <div class="form-group">
-                <input name="userName" class ="col-md-8" placeholder="이름" type="text"/>
+                <input id="userName" name="userName" class ="col-md-8" placeholder="이름" type="text"/>
             </div>
             <div class="form-group">
-                <input name="userPhone" class ="col-md-8" placeholder="전화번호" type="text"/>
+                <input id="userPhone" name="userPhone" class ="col-md-8" placeholder="전화번호" type="text"/>
             </div>
             <div class="form-group">
                 <input id="userNickname" name="userNickname" class ="col-md-8" placeholder="닉네임" type="text"/>
