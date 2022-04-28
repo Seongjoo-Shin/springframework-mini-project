@@ -12,5 +12,5 @@ public class MessageDto {
 	private Date messageDate;
 	private String messageSender;
 	private String messageReceiver;
-	private int messageRepplyYN;
+	private int messageReplyYN;
 }

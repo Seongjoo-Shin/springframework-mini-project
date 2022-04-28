@@ -27,12 +27,9 @@
         			dataType: 'json',
         			data: {delArr: arr},
         		}).done((data) => {
-        			swal(${message});
         		}).fail((data) => {
-        			
         		});
         	}
-        	
         	location.reload();
         }
     </script>
@@ -72,6 +69,7 @@
                                 <th>수정</thclass=>
                                 <td><input type="checkbox" onclick="selectAll(this)"></tdclass=>
                             </tr>
+                            <form action="" id="frm" name="frm" method="post">
                             <c:forEach items="${boards}" var="board" varStatus="status">
                             	<tr>
                             		<td class="text-center bg-light"><span>${board.freeNo}</span></td>
@@ -81,6 +79,7 @@
 	                                <td class="text-center"><input type="checkbox" class="delete" name="freeNo" class="delete_box" id="${board.freeNo}"></td>
                             	</tr>
                             </c:forEach>
+                            </form>
                         </table>
                     </div>
                     <div class="row float-right">
