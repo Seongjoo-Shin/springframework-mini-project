@@ -33,12 +33,30 @@
 		display : none;
 	}
 	
+	.id_input_re_7{
+		color : red;
+		display : none;
+	}
+	
+	.id_input_re_8{
+		color : green;
+		display : none;
+	}
+	
 	.error::-webkit-input-placeholder{
 		color : red
 	}
 </style>
 
 <script>
+	//인증번호로 사용한 전역변수 생성
+	var num;
+	var idFlag = 0;
+	var passwordFlag = 0;
+	var emailFlag = 0;
+	var nameFlag = 0;
+	var nicknameFlag = 0;
+	
     function selectEmail(ele){ 
         var $ele = $(ele); 
         var $userEmail2 = $('input[name=userEmail2]'); 
@@ -63,35 +81,51 @@
     		$('#userId').addClass('error');
     		return false;
     	} 
+    	
     	if ($('#userPassword').val()==""){
     		$('#userPassword').attr('placeholder', '비밀번호를 입력하세요')
     		$('#userPassword').addClass('error');
     		return false;
-    	}
+    	} 
+    	
     	if ($('#email1').val()==""){
     		$('#email1').attr('placeholder', '이메일를 입력하세요')
     		$('#email1').addClass('error');
     		return false;
     	}
+    	
     	if ($('#userName').val()==""){
     		$('#userName').attr('placeholder', '이름을 입력하세요')
     		$('#userName').addClass('error');
     		return false;
+    	} else {
+    		nameFlag = 1;
     	}
+    	
     	if ($('#userPhone').val()==""){
     		$('#userPhone').attr('placeholder', '전화번호를 입력하세요')
     		$('#userPhone').addClass('error');
     		return false;
     	}
+    	
     	if ($('#userNickname').val()==""){
     		$('#userNickname').attr('placeholder', '닉네임을 입력하세요')
     		$('#userNickname').addClass('error');
     		return false;
     	}
+    	
     	if($('#confirmPassword').val()!=$('#userPassword').val()){
     		$('.id_input_re_5').css("display","inline-block");
     		return false;
+    	} else {
+    		passwordFlag = 1;
     	}
+    	
+    	//폼의 모든 내용이 잘 작성 되었나 확인후 submit
+    	if(idFlag==1 && passwordFlag==1 && emailFlag==1 && nameFlag==1 && nicknameFlag==1 ){
+    		return true;
+    	}
+    	
     }
 </script>
 
@@ -124,6 +158,7 @@
 	 							$('.id_input_re_1').css("display", "none");
 	 							$('.id_input_re_5').css("display","none");
 	 						} else if(data.result ==="fail"){
+	 							idFlag = 1;
 	 							$('.id_input_re_1').css("display","inline-block");
 	 							$('.id_input_re_2').css("display", "none");
 	 							$('.id_input_re_5').css("display","none");
@@ -173,6 +208,7 @@
 	 						console.log(data.result);
 	 						if(data.result ==="success"){
 	 							emailAuthenticate();
+	 							num=data.num;
 	 							$('.id_input_re_6').css("display","none");
 	 						} else if(data.result ==="fail"){
 	 							$('.id_input_re_6').css("display","inline-block");
@@ -188,8 +224,24 @@
 	       	
 	       	<div id="aDiv" class="form-group" style="display:none">
 	       		<input id="certificationinput" name="certificationNum" class ="col-md-8" placeholder="인증번호" type="text"/>
-	       		<button type="button" onClick="" class="btn btn-sm col-3" style="background-color: rgb(242, 101, 45); color: white;">확인</button>
+	       		<button type="button" onClick="checkNum()" class="btn btn-sm col-3" style="background-color: rgb(242, 101, 45); color: white;">확인</button>
+	       		<span class="id_input_re_7">인증번호가 일치하지 않습니다.</span>
+	       		<span class="id_input_re_8">인증이 성공했습니다.</span>
 	       	</div>
+	       	<script>
+	       		function checkNum(){
+	       			if(num == $('#certificationinput').val()){
+	       				console.log("인증이 성공하였습니다.");
+	       				emailFlag = 1;
+	       				$('.id_input_re_8').css("display","inline-block");
+						$('.id_input_re_7').css("display", "none");
+	       			} else {
+	       				console.log("인증이 실패하였습니다.");
+	       				$('.id_input_re_7').css("display","inline-block");
+						$('.id_input_re_8').css("display", "none");
+	       			}
+	       		}
+	       	</script>
 	       	
 	        <div class="form-group">
 	            <input id="userName" name="userName" class ="col-md-8" placeholder="이름" type="text"/>
@@ -214,6 +266,7 @@
 	 							$('.id_input_re_4').css("display","inline-block");
 	 							$('.id_input_re_3').css("display", "none")
 	 						} else if(data.result ==="fail"){
+	 							nicknameFlag = 1;
 	 							$('.id_input_re_3').css("display","inline-block");
 	 							$('.id_input_re_4').css("display", "none");
 	 						}

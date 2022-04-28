@@ -121,15 +121,24 @@ public class IndexController {
 	@PostMapping(value = "/checkEmail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String checkEmail(String email) {
+		int num;
 		LoginResult result = userService.checkEmail(email);
 		JSONObject jsonObject = new JSONObject();
 		if(result == LoginResult.SUCCESS) {
 			jsonObject.put("result", "success");
+			//인증번호 생성
 			Random r = new Random();
-			int num = r.nextInt(999999);
-			String setfrom = "tmd5785@gmail.com";
+			num = r.nextInt(999999);
+			//인증번호 쿠키에 저장
+			
+			
+			//인증메일 보낸사람
+			String setfrom = "ssj980204@gmail.com";
+			//인증메일 받는사람
 			String tomail = email;
-			String title = "[이메일인증]이메인증 메일입니다.";
+			//메일 제목
+			String title = "[회원가입 이메일인증]메일입니다.";
+			//메일내용 인증번호 포함
 			String content = System.getProperty("line.separator") + "인증번호는 " + num + " 입니다." + System.getProperty("line.separator");
 			
 			try {
@@ -145,6 +154,8 @@ public class IndexController {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+			
+			jsonObject.put("num", num);
 			
 		} else {
 			jsonObject.put("result", "fail");
