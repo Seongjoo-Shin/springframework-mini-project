@@ -12,15 +12,15 @@
 	        })
 	    }
 
-	    function openMsgForm(name){
+	    function openMsgForm(receiver, messageNo){
 	    	console.log(name);
-            var url = "<%=request.getContextPath() %>/message?receiver="+name;
+            var url = "<%=request.getContextPath() %>/message?receiver="+receiver+"&messagedNo="+messageNo;
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);
         }
 		
-	    function receiveMsg(name){
-            var url = "<%=request.getContextPath() %>/messageView?messageNo="+name;
+	    function receiveMsg(msgNo){
+            var url = "<%=request.getContextPath() %>/messageView?messageNo="+msgNo;
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);
         }
@@ -91,7 +91,7 @@
                                     <td><a onclick="javascript:receiveMsg('${message.messageNo}');" class="text-dark">${message.messageTitle}</a></td>
                                     <td><fmt:formatDate value="${message.messageDate}" pattern="yyyy-MM-dd HH:mm"/></td>
                                     <td><span id="${message.messageNo}">${message.messageSender }</span></td>
-                                    <td><a href="#" class="btn btn-outline-dark" onclick="openMsgForm('${message.messageSender}')">답장</a></td>
+                                    <td><a href="#" class="btn btn-outline-dark" onclick="openMsgForm('${message.messageSender}','${message.messageNo}')">답장</a></td>
                                     <td><input type="checkbox" class="delete" name="messageNo" id="${message.messageNo}"/></td>
                                 </tr>
                             </c:forEach>

@@ -107,6 +107,8 @@
 		where user_id = #{userId}
 	</update>
 	
+	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 작성글 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+	<!-- 자유게시판 -->
 	<select id="selectFreeBoardList" parameterType="pager" resultMap="freeboardMap">
 		<![CDATA[
 		SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_modify_date
@@ -142,6 +144,11 @@
 			free_no = #{freeNo}
 	</update>	
 	
+	<!-- 거래게시판 -->
+	
+	<!-- 인수매물 -->
+	
+	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 쪽지함 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 	<select id="selectReceiveMessageList" parameterType="pager" resultMap="messageMap">
 		<![CDATA[
 		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
@@ -150,7 +157,7 @@
 		  FROM (
 		    SELECT message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
 		    FROM messages
-		    WHERE message_receiver = #{userId} and message_reply_yn = 1
+		    WHERE message_receiver = #{userId}
 		    ORDER BY message_no desc
 		  )
 		  WHERE ROWNUM <= #{endRowNo}
@@ -167,7 +174,7 @@
 		  FROM (
 		    SELECT message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
 		    FROM messages
-		    WHERE message_sender = #{userId} and message_reply_yn = 1
+		    WHERE message_sender = #{userId}
 		    ORDER BY message_no desc
 		  )
 		  WHERE ROWNUM <= #{endRowNo}
@@ -199,13 +206,37 @@
 		WHERE message_no = #{messageNo}
 	</delete>
 	
-	<select id="selectMessageByNo" resultType="message" parameterType="Integer" >
+	<select id="selectMessageByNo" parameterType="Integer" resultType="message">
 		SELECT
-			*
+			message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
 		FROM 
 			messages
 		WHERE
 			message_no = #{messageNo}
 	</select>
-		
+	
+	<insert id="insertMessage" parameterType="message">
+		INSERT INTO 
+			messages
+		VALUES (
+			messages_seq.nextval, 
+			#{messageTitle}, 
+			#{messageContent}, 
+			sysdate, 
+			#{messageSender}, 
+			#{messageReceiver}, 
+			0
+		)
+	</insert>
+	
+	<update id="updateReplyYN" parameterType="Integer">
+		UPDATE
+		    messages   
+		SET 
+		    message_reply_yn = 1   
+		WHERE    
+			message_no = #{messageNo}
+	</update>
+	
+	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 </mapper>

@@ -25,6 +25,9 @@ public interface MypageDao {
 	public List<BuildingDto> selectBuildingList(PagerDto pager, String userId); // 본인이 작성한 공지사항 게시물 검색
 	public List<MarketBoardDto> selectMarketBoardList(PagerDto pager, String userId); // 본인이 작성항 거래게시판 검색
 	public List<FreeBoardDto> selectFreeBoardList(PagerDto pager); // 본인이 작성한 자유게시판 검색
+	public int selectAllFreeBoard(String userId);
+	public int updateYnMyPosting(List<String> delArr);
+	public void updateYnMyPosting(int freeNo);
 	
 	// 쪽지함
 	public List<MessageDto> selectReceiveMessageList(PagerDto pager); // 받은 메세지함 
@@ -36,6 +39,9 @@ public interface MypageDao {
 	public int selectReceiveMessageAll(String userId);
 	public int selectSendMessageAll(String userId);
 	public int deleteMyMessage(int parseInt);
+	public MessageDto selectMessageByNo(int messageNo);
+	public int insertMessage(MessageDto message);
+	public int updateReplyYN(int changeNo);
 	
 	// 찜목록
 	public List<BuildingDto> selectBuildingLikeist(PagerDto pager, UserDto user); // 본인이 관심있는 인수목록 리스트
@@ -47,13 +53,9 @@ public interface MypageDao {
 	// 회원 탈퇴
 	public int userWithdrawal(UserDto user);
 
-	public int selectAllFreeBoard(String userId);
 
-	public int updateYnMyPosting(List<String> delArr);
 
-	public void updateYnMyPosting(int freeNo);
 
-	public MessageDto selectMessageByNo(int messageNo);
 
 
 	

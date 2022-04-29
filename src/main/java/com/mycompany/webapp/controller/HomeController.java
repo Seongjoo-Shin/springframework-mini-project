@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mycompany.webapp.dto.MessageDto;
@@ -36,18 +35,10 @@ public class HomeController {
 	
 	@GetMapping("/messageView")
 	public String messageView(HttpSession session, HttpServletRequest request, Model model) {
-		int messageNo = Integer.parseInt(request.getParameter("messageNo"));
-		MessageDto message = mypageService.getMessageByNo(messageNo);
+		MessageDto message = mypageService.getMessageByNo(Integer.parseInt(request.getParameter("messageNo")));
 		log.info(message);
 		model.addAttribute("message", message);
 		return "common/messageView";
 	}
-	
-	@PostMapping("/message/send")
-	public String messageSend(MessageDto message, HttpSession session) {
-		String userId = (String) session.getAttribute("sessionUserId");
-		log.info("실행");
-		
-		return "redirect:/mypage/message/send";
-	}
 }
+

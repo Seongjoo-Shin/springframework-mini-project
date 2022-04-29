@@ -23,18 +23,20 @@
 </style>
 <script>
 	function fn_submit(){
-		$("#frm").attr("action", "/message/send");
+		setTimeout(function(){
+			window.close();			
+		}, 1000);
+
 		$("#frm").submit();
-		window.close();
 	}
 </script>
 </head>
 <body class="bg-light">
     <div style="width:300px; height:200px;" class="p-2">
         <div class="container text-center">
-        <form id="frm" method="post" name="frm"  action="">
-	        <input type="hidden"/>
-	        <input type="hidden"/>
+        <form id="frm" method="post" name="frm" action="/mypage/message/send">
+	        <input type="hidden" name="messageSender" value="${sessionUserId}"/>
+	        <input type="hidden" name="changeMsgNo" value='<%=request.getParameter("messagedNo") %>' />
             <div class="row justify-content-center p-2">
                 <h3>메세지 보내기</h3>
             </div>
@@ -44,14 +46,18 @@
             </div>
             <div class="row justify-content-around mb-2">
                 <div class="float-left mr-5"><span>제목</span></div>
-                <div class="float-left"><input type="text" value="" name="meesgeTitle" placeholder="제목을 입력하세요"/></div>
+                <div class="float-left"><input type="text" value="" name="messageTitle" placeholder="제목을 입력하세요" id="title"/></div>
             </div>
             <div class="row justify-content-around mb-2">
-                <textarea style="resize: none; height: 150px;" class="w-100" name="messageContent" ></textarea>
+                <textarea style="resize: none; height: 150px;" class="w-100" name="messageContent" id="content" placeholder="내용을 입력하세요"></textarea>
             </div>
             <div class="row justify-content-center">
-                <div class="float-left"><a href="#" class="btn btn-outline-dark mr-2" onclick="javascript:fn_submit();">보내기</a></div>
-                <div class="float-left"><a href="#" class="btn btn-outline-dark ml-2" onclick="javascript:window.close();">취소</a></div>
+                <div class="float-left">
+                	<a href="#" class="btn btn-outline-dark mr-2" onclick="javascript:fn_submit();">보내기</a>
+                </div>
+                <div class="float-left">
+                	<a href="#" class="btn btn-outline-dark ml-2" onclick="javascript:window.close();">취소</a>
+                </div>
             </div>
         </form>
         </div>

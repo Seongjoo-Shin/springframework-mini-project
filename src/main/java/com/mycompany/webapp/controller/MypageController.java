@@ -222,6 +222,13 @@ public class MypageController {
 		}
 	}
 	
+	@PostMapping("/message/send")
+	public void messageSend(MessageDto message, HttpSession session, HttpServletRequest request, @RequestParam("changeMsgNo") int changeNo) {
+		String userId = (String) session.getAttribute("sessionUserId");
+		int result = mypageService.sendMessage(message);
+		int res = mypageService.checkReceivedMsg(changeNo);
+	}
+	
 	
 	// 회원 탈퇴 페이지 이동
 	@RequestMapping("/withdrawl")

@@ -69,7 +69,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>제목</th>
-                                    <th>받은날</th>
+                                    <th>보낸날</th>
                                     <th>받은사람</th>
                                     <th>회신여부</th>
                                     <td><input type="checkbox" onclick="selectAll(this)"/></td>

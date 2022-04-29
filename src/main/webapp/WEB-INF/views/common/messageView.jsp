@@ -17,7 +17,10 @@
          *{
              font-family: "elice";
          }
-    </style> 
+    </style>
+    <script>
+  
+    </script> 
 </head>
 <body class="bg-light">
     <div style="width:300px; height:200px;" class="p-2">
@@ -25,16 +28,17 @@
             <div class="row justify-content-center p-2">
                 <h3>받은 쪽지</h3>
             </div>
+            
             <div class="row justify-content-around  mb-2">
                 <div class="float-left mr-3">보낸사람</div>
-                <div class="float-left"><span>${message.messageSender}</span></div>
+                <div class="float-left"><input type="text" value="${message.messageSender}" name="messageReceiver" id="receiver" readonly/></div>
             </div>
             <div class="row justify-content-around mb-2">
                 <div class="float-left mr-5"><span>제목</span></div>
-                <div class="float-left"><span>${message.messageTitle}</span></div>
+                <div class="float-left"><input type="text" value="${message.messageTitle}" name="meesgeTitle" placeholder="제목을 입력하세요"  readonly/></div>
             </div>
             <div class="row justify-content-around mb-2">
-                <textarea style="resize: none; height: 150px;" class="w-100" >${message.messageTitle}</textarea>
+                <textarea style="resize: none; height: 150px;" class="w-100" name="messageContent" readonly>${message.messageTitle}</textarea>
             </div>
             <div class="row justify-content-center">
                 <div class="float-left"><button class="btn btn-outline-dark ml-2" onclick="window.close();">취소</button></div>

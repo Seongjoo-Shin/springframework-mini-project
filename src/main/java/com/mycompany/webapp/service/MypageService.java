@@ -88,6 +88,15 @@ public class MypageService {
 	}
 
 	public MessageDto getMessageByNo(int messageNo) {
+		log.info("실행");
 		return mypageDao.selectMessageByNo(messageNo);
+	}
+
+	public int sendMessage(MessageDto message) {
+		return mypageDao.insertMessage(message);
+	}
+
+	public int checkReceivedMsg(int changeNo) {
+		return mypageDao.updateReplyYN(changeNo);
 	}
 }
