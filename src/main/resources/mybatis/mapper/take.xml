@@ -34,6 +34,12 @@
 		<result column="panorama_check" property="panoramaCheck"/>
 		<result column="building_image_file_data" property="imageFileData"/>
 	</resultMap>
+	
+	<resultMap type="equipment" id="buildingEquipmentDtoResult">
+		<result column="building_no" property="buildingNo"/>
+		<result column="equipment_name" property="equipmentName"/>
+		<result column="equipment_count" property="equipmentCount"/>
+	</resultMap>
 
 	<!-- select ====================================================================== -->
 	
@@ -48,6 +54,16 @@
 	
 	<select id="selectBuildingFiles" resultMap="buildingFileDtoResult">
 		select * from buildingfiles
+	</select>
+	
+	<select id="selectBuildingByBuildingNo" parameterType="String" resultMap="buildingDtoResult">
+		select * from buildings
+		where building_no = #{buildingNo}
+	</select>
+	
+	<select id="selectEquipmentByBuildingNo" parameterType="String" resultMap="buildingEquipmentDtoResult">
+		select * from equipments
+		where building_no = #{buildingNo}
 	</select>
 	
 	<!-- ============================================================================= -->

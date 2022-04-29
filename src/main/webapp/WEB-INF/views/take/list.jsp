@@ -117,7 +117,7 @@
 	                                <div style="width:100%;height:555px; border: 1px solid rgb(192, 191, 191); padding: 15px; overflow:auto;">
 	                                    <ul id="saleList" class="overflow-auto" style="list-style:none;">
 	                                    	<c:forEach var="building" items="${buildings}">
-	                                    		<li id="${building.buildingNo}" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
+	                                    		<li id="" name="building${building.buildingNo}" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
 		                                    		<div class="container-fluid">
 		                                    			<div class="row">
 		                                    				<div class="col-7 d-flex flex-column justify-content-center">
@@ -162,6 +162,9 @@
 	    	
             let lat;
             let lon; 
+            
+            //병원 마커를 생성하기 위해 병원 정보들을 담을 배열
+            var areaArr = new Array();
             
             //초기에 실행되는 함수들로, 현재 위치를 얻고, map을 만들어 마커를 세팅하기 위한 함수로 실행순서는 아래로 쭈르륵 이다! -------------------------------------------
             function getLocation() {
@@ -208,14 +211,23 @@
             
             function initMap(){ //처음에 병원 마커를 생성하는 함수
             	var areaArr = new Array();
-            	areaArr.push(
-            		{hospitalName : '하늘치과', lat : '37.495953' , lon : '127.121959', location:'서울특별시 송파구 가락동 77-6'},
-            		{hospitalName : '땅치과', lat : '37.515270' , lon : '127.107121', location:'서울특별시 송파구 올림픽로 336 대우유토피아 1911호'},
-            		{hospitalName : '별치과', lat : '37.513853' , lon : '127.107577', location:'서울특별시 송파구 방이2동 65-6'},
-            		{hospitalName : '뉴욕플란트치과', lat : '37.494802', lon : '127.122287', location:'서울특별시 송파구 가락동 78'},
-            		{hospitalName : '냠냠치과', lat : '37.494416', lon : '127.122826', location:'서울특별시 송파구 가락동 112'},
-            		{hospitalName : '충치사라져치과', lat : '37.494275' , lon : '127.122723', location:'서울특별시 송파구 가락동 112'}
-            	);
+            	var num = 0;
+            	<c:forEach items="${buildings}" var="buildingInfo">
+            		var temp = new Object();
+            		temp.buildingNo = ${buildingInfo.buildingNo};
+            		temp.hospitalName = `${buildingInfo.buildingName}`;
+            		temp.lat = ${buildingInfo.buildingLatitude};
+            		temp.lon = ${buildingInfo.buildingLongitude};
+            		temp.location = `${buildingInfo.buildingAddr}  ${buildingInfo.buildingAddrDetail}`;
+            		areaArr.push(temp);
+            		
+            		var card = $("li[name='building${buildingInfo.buildingNo}']");
+            		card.attr("id", num);
+            		console.log(card);
+            		num++;
+            	</c:forEach>
+            	
+            	console.log(areaArr);
             	
             	for(var i=0; i< areaArr.length; i++){
             		marker = new naver.maps.Marker({
@@ -229,13 +241,14 @@
                          }
             		});
             		var infoWindow = new naver.maps.InfoWindow({
-            			content : '<div style="width:250px; padding:13px;"><b style="font-size:20px;">' + areaArr[i].hospitalName + '</b><br/><div>'+ areaArr[i].location + '</div><a href= "view" class="btn btn-sm mt-2 w-100 p-1" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none;">매물 상세 정보</a></div>'
+            			content : '<div id="hosMark'+ i + '" style="width:300px; padding:13px;"><b style="font-size:20px;">' + areaArr[i].hospitalName + '</b><br/><div>'+ areaArr[i].location + '</div><a href= "view?buildingNo='+ areaArr[i].buildingNo +'" class="btn btn-sm mt-2 w-100 p-1" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none;">매물 상세 정보</a></div>'
             		});
             		
             		markers.push(marker);
             		infoWindows.push(infoWindow);
             		
             	}
+            	console.log(markers[0]);
             	for(var i=0, ii=markers.length; i<ii; i++) {
                     naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
                 }
@@ -300,6 +313,7 @@
             }
             //리셋 버튼 클릭하면 실행되는 함수 끝------------------------------------------------------------------------------------------
             
+            //인수매물 목록에 있는 병원의 카드를 클릭하면 실행되는 함수로, 해당 마커가 생성된 곳으로 지도가 이동한다!
             function moveMap(seq){
             	console.log(seq);
            		var marker = markers[seq],

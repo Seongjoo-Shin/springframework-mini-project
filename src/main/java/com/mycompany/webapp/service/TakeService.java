@@ -39,7 +39,14 @@ public class TakeService {
 	}
 
 	public List<BuildingFileDto> selectImageFileByBuildingNo(String buildingNo) {
-		
 		return takeDao.selectImageFileByBuildingNo(buildingNo);
+	}
+
+	public BuildingDto selectBuildingByBuildingNo(String buildingNo) {
+		return takeDao.selectBuildingByBuildingNo(buildingNo);
+	}
+
+	public List<EquipmentDto> selectEquipmentByBuildingNo(String buildingNo) {
+		return takeDao.selectEquipmentByBuildingNo(buildingNo);
 	}
 }

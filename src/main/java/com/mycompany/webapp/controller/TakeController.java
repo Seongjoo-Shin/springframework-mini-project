@@ -40,7 +40,15 @@ public class TakeController {
    @RequestMapping("/list")
    public String list(@RequestParam(required = false) String latitude,@RequestParam(required = false) String longitude, Model model) {
 	   List<BuildingDto> buildings = takeService.selectBuildingList();
-	   model.addAttribute("buildings", buildings);
+	   
+	   List<BuildingDto> buildingInfo = new ArrayList<BuildingDto>();
+	   for(BuildingDto b : buildings) {
+		   String temp = b.getBuildingDetailContent();
+		   temp = temp.replace("\r\n", "<br>");
+		   b.setBuildingDetailContent(temp);
+		   buildingInfo.add(b);
+	   }
+	   model.addAttribute("buildings", buildingInfo);
 	   
 	   List<BuildingFileDto> buildingFiles = takeService.selectBuildingFiles();
 	   model.addAttribute("buildingFiles",buildingFiles);
@@ -65,8 +73,28 @@ public class TakeController {
    }
    
    @GetMapping("/view")
-   public String view() {
+   public String view(String buildingNo, Model model) {
 	  log.info("실행");
+	  log.info(buildingNo);
+	  
+	  //매물 정보
+	  BuildingDto buildingDetailBuildingDto = takeService.selectBuildingByBuildingNo(buildingNo);
+	  String temp = buildingDetailBuildingDto.getBuildingDetailContent();
+	  temp = temp.replace("\r\n", "<br>");
+	  buildingDetailBuildingDto.setBuildingDetailContent(temp);
+	  log.info(buildingDetailBuildingDto);
+	  
+	  //해당 매물의 장비들 가져오기
+	  List<EquipmentDto> equipDto = takeService.selectEquipmentByBuildingNo(buildingNo);
+	  log.info(equipDto);
+	  
+	  //매물의 첨부파일에 대한 정보를 가져오기
+	  List<BuildingFileDto> fileDto = takeService.selectImageFileByBuildingNo(buildingNo);
+	  
+	  model.addAttribute("buildingInfo", buildingDetailBuildingDto);
+	  model.addAttribute("equipments", equipDto);
+	  model.addAttribute("imageFile", fileDto);
+	  
       return "take/view";
    }
    

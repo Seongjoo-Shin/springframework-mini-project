@@ -16,7 +16,10 @@ public interface TakeDao {
 	void insertEquipments(EquipmentDto edto);
 	void insertImageFile(BuildingFileDto bfd);
 	List<BuildingDto> selectBuildingList();
+	
 	List<BuildingFileDto> selectBuildingFiles();
 	List<BuildingFileDto> selectImageFileByBuildingNo(String buildingNo);
-
+	
+	BuildingDto selectBuildingByBuildingNo(String buildingNo);
+	List<EquipmentDto> selectEquipmentByBuildingNo(String buildingNo);
 }

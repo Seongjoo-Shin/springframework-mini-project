@@ -20,6 +20,7 @@
         }
         
         $( document ).ready(function() {
+        	
         	hospitalLocation();
         });
     </script>
@@ -41,18 +42,18 @@
                         </div>
                     </div>
                     <div class="mt-1 mr-4 p-2 float-right">
-                            <span><a class="btn border rounded p-2" name="allImg" style="text-decoration: none; color:black;" onclick="showPopUp(this)">모든 사진 보기 →</a></span>
-                            <span><a class="btn border rounded p-2" name="360Img" style="text-decoration: none; color:black;" onclick="showPopUp(this)">360도 사진 보기 →</a></span>
+                            <span><button class="btn border rounded p-2" name="allImg" style="text-decoration: none; color:black;" onclick="showPopUp(this)">모든 사진 보기 →</button></span>
+                            <span class="ml-1"><button class="btn border rounded p-2" name="360Img" style="text-decoration: none; color:black;" onclick="showPopUp(this)">360도 사진 보기 →</button></span>
                     </div>
                 </div>
                 <div class="ml-2" style="margin-top: 100px;">
                     <div class="mt-5">
-                        <span class="mt-5" style="font-size: 30px;">뉴욕플란트 치과</span>
-                        <span class="mr-4 mt-2 float-right" style="font-size: 20px;">건물 번호 : 000001</span>
+                        <span class="mt-5" style="font-size: 30px;">${buildingInfo.buildingName}</span>
+                        <span class="mr-4 mt-2 float-right" style="font-size: 20px;">건물 번호 : ${buildingInfo.buildingNo}</span>
                     </div>
                     <div class="mt-1">
-                        <span style="font-size: 23px;">작성자 : 냥냥</span>
-                        <span class="mr-4 float-right" style="font-size: 20px;">작성 일자 : 2022.04.19</span>
+                        <span style="font-size: 23px;">작성자 : ${buildingInfo.buildingWriter}</span>
+                        <span class="mr-4 float-right" style="font-size: 20px;">작성 일자 : ${buildingInfo.buildingRegistDate}</span>
                     </div>
                 </div>
 
@@ -166,7 +167,7 @@
                             	<div id="map" class="mr-4 mt-3" style="width:100%;height:400px; border: 1px solid rgb(192, 191, 191); padding: 50px;" onchange="getMarkers()"></div>
                             </div>
                         </div>
-                        <span id="quickmenu" class="col-5">
+                        <div id="quickmenu" class="col-5">
                             <div id="box" class="border shadow w-100 float-right">
                                 <div class="border text-center p-1 m-2 mb-5" style="width: 130px;">
                                     건물번호 0001
@@ -211,23 +212,21 @@
                                         </div>
                                     </div>
                                     <div class="container-fluid mt-4 mb-4">
-                                        <div class="row">
-                                            <div class="col-7 p-1 m-2">
-                                                <div onclick="openMsgForm()" class="border p-3 text-center" style="background-color: rgb(242, 101, 45); color: white; font-size: 30px; border-radius: 8px; cursor: pointer;">문의 하기</div>
+                                        <div class="row align-content-center">
+                                            <div class="col-6 p-1 m-1">
+                                                <button onclick="openMsgForm()" class="btn border p-3 text-center" style="width:100%; background-color: rgb(242, 101, 45); color: white; font-size: 30px; border-radius: 8px; cursor: pointer;">문의 하기</button>
                                             </div>
-                                            <div class="col-4 p-1 m-2">
-                                                <div class="d-flex border justify-content-center" style="cursor: pointer; border-radius: 8px;">
-                                                	<div class="d-flex flex-column justify-content-center">
-                                                		<img id="interestImg" src="${pageContext.request.contextPath}/resources/images/interestBtn2.png" width="30px" height="30px" class="mr-1"/>
-                                                	</div>
-                                                	<div id="interestText" onclick="interestBtnClick(this)" name="off" class="p-3" style="font-size: 30px; color: rgb(105,105,105);">4</div>
-                                                </div>
+                                            <div class="col-4 p-1 m-1">
+                                                <button class="btn btn-outline-dark ml-3 p-3" style="width:100%; font-size: 30px;" onclick="changeImg(this);">
+                                                	<img id="interImg" class="mr-2" src="/resources/images/interestBefore.png" width="30px;"/>
+                                                	<span id="interCnt">12</span>
+                                               	</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </span>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-5 mb-4">
@@ -274,6 +273,19 @@
 	        window.open(url, "message", option);
 	    }
 	    
+	    function changeImg(img){
+            var path = document.getElementById("interImg").src;
+            var cntInter = document.getElementById("interCnt").innerHTML;
+
+            if(path.includes("Before")){
+                $("#interImg").attr("src", "/resources/images/interestAfter.png");
+                document.getElementById("interCnt").innerHTML = Number(cntInter) + 1;
+            } else {
+                $("#interImg").attr("src", "/resources/images/interestBefore.png");
+                document.getElementById("interCnt").innerHTML = Number(cntInter) - 1;
+            }
+        }
+	    
 	    function interestBtnClick(m) {
 	    	var state = $(m).attr("name");
 	    	if(state == "off"){
@@ -303,7 +315,7 @@
     		console.log("position : " + position);
     		console.log("halfPos : " + halfPos);
 
-    		if(position < 2086){
+    		if(position < 1000){
    				$("#quickmenu").stop().animate({"top":halfPos+"px"},600);
     		}
     		
