@@ -127,6 +127,8 @@
                                 }
                                 
                                 function initMap(){
+                                	setTimeout(() => {
+                                		
                                 	for(var i=0; i<positions.length; i++){
                                 	 	marker = new naver.maps.Marker({
                                 			map: map,
@@ -149,6 +151,8 @@
                                 	for (var i = 0, ii = markers.length; i < ii; i++) {
                                         naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
                                     }
+
+                                	}, 1000);
                                }
 
                                 //지도위의 현재위치 버튼을 클릭하면 실행되는 함수로, 현재위치가 찍힌 마커로 지도가 이동한다.
@@ -170,23 +174,6 @@
                                         }
                                 	}
                                 }
-
-                                function reversegeocode(latitude, longitude){
-                                	var lat = Number(latitude);
-                                	var lng = Number(longitude);
-                                	var addr; 
-                                	naver.maps.Service.reverseGeocode({
-                                        location: new naver.maps.LatLng(lat, lng),
-                                    }, function(status, response) {
-                                        if (status !== naver.maps.Service.Status.OK) {
-                                            return alert('Something wrong!');
-                                        }
-
-                                        result = response.result; // 검색 결과의 컨테이너
-                                        items = result.items.address; // 검색 결과의 배열
-                                    });
-                                	return addr;
-                                }
                                 
                                 function keywordAjax(){
                                 	var elements = document.querySelectorAll("td > .active");
@@ -200,8 +187,6 @@
                                     	jsonObject = JSON.stringify(keyword);
                                     	document.querySelector("#msgBox").innerHTML += "<li class='ml-5'>" + elements[i].innerHTML +"</li>";
                                     } 
-                                    console.log(jsonObject);
-                                    
                                 	callAjax(jsonObject);
                                 }
                                 
@@ -213,19 +198,40 @@
                                 		data: JSON.parse(json),
                                 	}).done((data) => {
                                 		positions = [];
+                                		
                                 		for(var i=0; i<markers.length; i++){
                                 			markers[i].setMap(null);
                                 		}
+
                                 		for(var i=0; i<data.keywordsLength; i++){
-                                			positions.push(
-                                				{
-                                					location: juso[i],
-                                					lat: data.keywords[i].latitude, 
-                                					lng: data.keywords[i].longitude
-                                				},
-                                			);
-                                			console.log(positions);
-                                		}
+	                                		naver.maps.Service.reverseGeocode({
+	                                            location: new naver.maps.LatLng(data.keywords[i].latitude, data.keywords[i].longitude),
+	                                        }, function(status, response) {
+	                                            if (status !== naver.maps.Service.Status.OK) {
+	                                                return alert('Something wrong!');
+	                                            }
+	                                            result = response.result; // 검색 결과의 컨테이너
+	                                            items = result.items.address; // 검색 결과의 배열
+	                                            addr = result.items[1].address;
+	                                            juso.push(addr);
+	                                        });
+	                                	}
+										console.log("juso : " + juso);
+										setTimeout(() => {
+											for(var i=0; i<data.keywordsLength; i++){
+	                                			positions.push(
+	                                				{
+	                                					location: juso[i],
+	                                					lat: data.keywords[i].latitude, 
+	                                					lng: data.keywords[i].longitude
+	                                				},
+	                                			);
+	                                			console.log("location : " + positions[i].location);
+	                                			console.log("lat : " + positions[i].lat);
+	                                			console.log("lng : " + positions[i].lng);
+	                                		}	
+										}, 1000);
+                                		
                                 		initMap();
                                 	}).fail((data) => {
                                 		console.log(data);

@@ -33,7 +33,7 @@
         	location.reload();
         }
     </script>
-    <section>
+    <section <c:if test="${total eq 0}">style="margin-bottom: 194px;"</c:if>>
         <div class="container-fluid h-100 mt-5">
             <div class="row">
                 <div class="col-2">
@@ -90,10 +90,13 @@
                     </div>
                     <div class="row float-right">
                         <div class="mr-3">
+                        <c:if test="${total > 0}">
                             <input type="button" value="삭제" class="float-right"/>
+                        </c:if>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mb-5">
+                    <c:if test="${total > 0}">
 						<ul class="pagination justify-content-center mb-0">
 			               	<li class="page-item">
 								<a class="page-link" href="/mypage/myboard/building?pageNo=1">First</a>
@@ -103,6 +106,7 @@
 									<a class="page-link" href="/mypage/myboard/building?pageNo=${pager.startPageNo-1}">Previous</a>
 								</li>
 							</c:if>
+							
 		                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
 								<c:if test="${pager.pageNo != i}">
 									<li class="page-item">
@@ -123,7 +127,8 @@
 							<li class="page-item">
 			                	<a class="page-link" href="/mypage/myboard/building?pageNo=${pager.totalPageNo}">Last</a>
 			                </li>
-	                	</ul>	
+	                	</ul>
+	                </c:if>
 	                </div>
                 </div>
                 <div class="col-2">

@@ -84,6 +84,7 @@ public class MypageController {
 			pager.setUserId(userId);
 			model.addAttribute("pager", pager);
 			List<FreeBoardDto> boards = mypageService.getMyFreeBoardList(pager);
+			model.addAttribute("total", totalCnt);
 			model.addAttribute("boards", boards);
 			return "/mypage/myboard/board";
 		} 
@@ -114,10 +115,11 @@ public class MypageController {
 		} else {
 			String userId = (String) session.getAttribute("sessionUserId");
 			int totalCnt = mypageService.getTotalBuildingCount(userId); //
-			PagerDto pager = new PagerDto(8 , 10, totalCnt, pageNo);
+			PagerDto pager = new PagerDto(10 , 10, totalCnt, pageNo);
 			pager.setUserId(userId);
 			model.addAttribute("pager", pager);
 			List<BuildingDto> buildings = mypageService.getMyBuildingList(pager); // 
+			model.addAttribute("total", totalCnt);
 			model.addAttribute("buildings", buildings);
 			return "/mypage/myboard/building";
 		} 
@@ -153,6 +155,7 @@ public class MypageController {
 			pager.setUserId(userId);
 			model.addAttribute("pager", pager);
 			List<MarketBoardDto> markets = mypageService.getMyMarketBoardList(pager); // 
+			model.addAttribute("total", totalCnt);
 			model.addAttribute("markets", markets);
 			return "/mypage/myboard/market";
 		} 

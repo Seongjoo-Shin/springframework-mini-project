@@ -114,7 +114,7 @@ public class MypageService {
 		return cnt;	
 	}
 
-	public MessageDto getMessageByNo(int messageNo) {
+	public List<MessageDto> getMessageByNo(int messageNo) {
 		log.info("실행");
 		return mypageDao.selectMessageByNo(messageNo);
 	}

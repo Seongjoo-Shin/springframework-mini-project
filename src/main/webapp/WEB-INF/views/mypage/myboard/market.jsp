@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<section>
+<script>
+
+</script>
+<section <c:if test="${total eq 0}">style="margin-bottom: 146px;"</c:if>>
 	<div class="container-fluid h-100 mt-5">
 		<div class="row">
 			<div class="col-2">
@@ -34,144 +37,31 @@
 						<li class="nav-item"><a class="nav-link h5 text-dark" href="/mypage/myboard/building">인수/매물</a></li>
 					</ul>
 				</div>
-				<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
-					<div class="card-body">
-						<a href="/community/market/marketDetail"><img src="https://via.placeholder.com/150" /></a>
-						<div class="button float-right">
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">수정</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">식제</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
-							</div>
-						</div>
-					</div>
-					<div class="ml-3 mb-2">
-						<p>제목이 들어갑니다.</p>
-						<button class="btn btn-outline-dark float-right mr-5">좋아요</button>
-						<span>카테고리</span><br> 
-						<span>가격</span><br> 
-						<span>날짜</span>
-					</div>
-				</div>
-				<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
-					<div class="card-body">
-						<img src="https://via.placeholder.com/150" />
-						<div class="button float-right">
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">수정</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">식제</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
+				<c:forEach var="market" items="${markets}">
+					<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
+						<div class="card-body">
+							<a href="/community/market/marketDetail?marketNo=${market.marketNo}&from=mypage"><img src=""/></a>
+							<div class="button float-right">
+								<div>
+									<a class="btn btn-outline-dark ml-3 mb-2">수정</a>
+								</div>
+								<div>
+									<a class="btn btn-outline-dark ml-3 mb-2">식제</a>
+								</div>
+								<div>
+									<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="ml-3 mb-2">
-						<p>제목이 들어갑니다.</p>
-						<button class="btn btn-outline-dark float-right mr-5">좋아요</button>
-						<span>카테고리</span><br> 
-						<span>가격</span><br> 
-						<span>날짜</span>
-					</div>
-				</div>
-				<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
-					<div class="card-body">
-						<img src="https://via.placeholder.com/150" />
-						<div class="button float-right">
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">수정</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">식제</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
-							</div>
+						<div class="ml-3 mb-2">
+							<p>${market.marketTitle}</p>
+							<button class="btn btn-outline-dark float-right mr-5">좋아요</button>
+							<span>${market.marketCategory}</span><br> 
+							<span>${market.marketPrice}</span><br> 
+							<span>${market.marketRegistDate}</span>
 						</div>
 					</div>
-					<div class="ml-3 mb-2">
-						<p>제목이 들어갑니다.</p>
-						<button class="btn btn-outline-dark float-right mr-5">좋아요</button>
-						<span>카테고리</span><br> 
-						<span>가격</span><br> 
-						<span>날짜</span>
-					</div>
-				</div>
-				<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
-					<div class="card-body">
-						<img src="https://via.placeholder.com/150" />
-						<div class="button float-right">
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">수정</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">식제</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
-							</div>
-						</div>
-					</div>
-					<div class="ml-3 mb-2">
-						<p>제목이 들어갑니다.</p>
-						<button class="btn btn-outline-dark float-right mr-5">좋아요</button>
-						<span>카테고리</span><br> 
-						<span>가격</span><br> 
-						<span>날짜</span>
-					</div>
-				</div>
-				<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
-					<div class="card-body">
-						<img src="https://via.placeholder.com/150" />
-						<div class="button float-right">
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">수정</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">식제</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
-							</div>
-						</div>
-					</div>
-					<div class="ml-3 mb-2">
-						<p>제목이 들어갑니다.</p>
-						<button class="btn btn-outline-dark float-right mr-5">좋아요</button>
-						<span>카테고리</span><br> 
-						<span>가격</span><br> 
-						<span>날짜</span>
-					</div>
-				</div>
-				<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
-					<div class="card-body">
-						<img src="https://via.placeholder.com/150" />
-						<div class="button float-right">
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">수정</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">식제</button>
-							</div>
-							<div>
-								<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
-							</div>
-						</div>
-					</div>
-					<div class="ml-3 mb-2">
-						<p>제목이 들어갑니다.</p>
-						<button class="btn btn-outline-dark float-right mr-5">좋아요</button>
-						<span>카테고리</span><br> 
-						<span>가격</span><br> 
-						<span>날짜</span>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div class="col-2"></div>
 		</div>
@@ -179,6 +69,7 @@
 			<div class="col-2"></div>
 			<div class="col-8">
 				<div class="row d-flex justify-content-center mb-5">
+				<c:if test="${total > 0}">
 					<ul class="pagination justify-content-center mb-0">
 		               	<li class="page-item">
 							<a class="page-link" href="/mypage/myboard/market?pageNo=1">First</a>
@@ -208,7 +99,8 @@
 						<li class="page-item">
 		                	<a class="page-link" href="/mypage/myboard/market?pageNo=${pager.totalPageNo}">Last</a>
 		                </li>
-                	</ul>	
+                	</ul>
+                </c:if>	
                 </div>
 			</div>
 			<div class="col-2"></div>

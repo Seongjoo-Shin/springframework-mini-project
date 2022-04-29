@@ -45,7 +45,7 @@ public interface MypageDao {
 	public int selectReceiveMessageAll(String userId);
 	public int selectSendMessageAll(String userId);
 	public int deleteMyMessage(int parseInt);
-	public MessageDto selectMessageByNo(int messageNo);
+	public List<MessageDto> selectMessageByNo(int messageNo);
 	public int insertMessage(MessageDto message);
 	public int updateReplyYN(int changeNo);
 	
