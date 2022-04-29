@@ -70,6 +70,10 @@ public class OpeningController {
 		
 		List<KeyWordDto> res = openingService.getKeywordPlace(keyword);
 		
+		for(KeyWordDto k : res) {
+			log.info(k);
+		}
+		
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("keywords", res);
 		jsonObject.put("keywordsLength", res.size());

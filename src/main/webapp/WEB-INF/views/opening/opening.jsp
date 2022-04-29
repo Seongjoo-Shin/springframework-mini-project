@@ -88,6 +88,8 @@
                                 var positions = new Array();
                                 var juso = new Array();
                                 var infoWindow;
+                                var keywords = ["임플란트", "역세권", "소아치료", "노인치료", "교정", "턱관절교정", "사랑니발치", "편의시설"];
+                                var conhtml = '';
                                 
                                 function getLocation() {
                                     if (navigator.geolocation) {
@@ -129,28 +131,28 @@
                                 function initMap(){
                                 	setTimeout(() => {
                                 		
-                                	for(var i=0; i<positions.length; i++){
-                                	 	marker = new naver.maps.Marker({
-                                			map: map,
-                                			position: new naver.maps.LatLng(positions[i].lat, positions[i].lng),
-                                			icon: {
-                                				content: '<img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;">',
-                                                size: new naver.maps.Size(20, 27),
-                                                origin: new naver.maps.Point(0, 0),
-                                                anchor: new naver.maps.Point(16, 32),
-                                			}
-                                	 	});
-                                	 	infoWindow = new naver.maps.InfoWindow({
-                                            content: '<form method="get" action="/take/list"><div class="p-2 gotoTake" style="width:200px;"><span>' + positions[i].location + '</span><br><div class="text-center w-100"><input type="hidden" value="'+positions[i].lat+'" name="latitude"/><input type="hidden" value="'+positions[i].lng+'" name="longitude"/><input type="submit" class="btn btn-sm btn-outline-dark w-100 mt-2" value="주변매물 보러가기 ->" /></div></div></form>',
-                                        });
-                                	 	markers.push(marker);
-                                	 	
-                                        infoWindows.push(infoWindow);
-                                	}
-                                	
-                                	for (var i = 0, ii = markers.length; i < ii; i++) {
-                                        naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
-                                    }
+	                                	for(var i=0; i<positions.length; i++){
+	                                	 	marker = new naver.maps.Marker({
+	                                			map: map,
+	                                			position: new naver.maps.LatLng(positions[i].lat, positions[i].lng),
+	                                			icon: {
+	                                				content: '<img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;">',
+	                                                size: new naver.maps.Size(20, 27),
+	                                                origin: new naver.maps.Point(0, 0),
+	                                                anchor: new naver.maps.Point(16, 32),
+	                                			}
+	                                	 	});
+	                                	 	infoWindow = new naver.maps.InfoWindow({
+	                                            content: '<form method="get" action="/take/list"><div class="p-2 gotoTake" style="width:300px;"><span>' + positions[i].location + '</span><br><div class="text-center w-100"><input type="hidden" value="' + positions[i].lat + '" name="latitude"/><input type="hidden" value="' + positions[i].lng+'" name="longitude"/><div></div><input type="submit" class="btn btn-sm btn-outline-dark w-100 mt-2" value="주변매물 보러가기 ->" /></div></div></form>',
+	                                        });
+	                                	 	markers.push(marker);
+	                                	 	
+	                                        infoWindows.push(infoWindow);
+	                                	}
+	                                	
+	                                	for (var i = 0, ii = markers.length; i < ii; i++) {
+	                                        naver.maps.Event.addListener(markers[i], "click", getClickHandler(i)); // 클릭한 마커 핸들러
+	                                    }
 
                                 	}, 1000);
                                }
@@ -223,22 +225,27 @@
 	                                				{
 	                                					location: juso[i],
 	                                					lat: data.keywords[i].latitude, 
-	                                					lng: data.keywords[i].longitude
+	                                					lng: data.keywords[i].longitude,
+	                                					keyword1: data.keywords[i].keyword1,
+	                                					keyword2: data.keywords[i].keyword2,
+	                                					keyword3: data.keywords[i].keyword3,
+	                                					keyword4: data.keywords[i].keyword4,
+	                                					keyword5: data.keywords[i].keyword5,
+	                                					keyword6: data.keywords[i].keyword6,
+	                                					keyword7: data.keywords[i].keyword7,
+	                                					keyword8: data.keywords[i].keyword8,
 	                                				},
 	                                			);
-	                                			console.log("location : " + positions[i].location);
-	                                			console.log("lat : " + positions[i].lat);
-	                                			console.log("lng : " + positions[i].lng);
+	                                			console.log(positions[i]);
+														
 	                                		}	
 										}, 1000);
-                                		
+                            			
                                 		initMap();
                                 	}).fail((data) => {
                                 		console.log(data);
                                 	});
 								}
-								
-								
                             </script>
 					</div>
 				</div>

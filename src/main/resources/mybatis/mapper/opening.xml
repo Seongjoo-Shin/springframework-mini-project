@@ -8,33 +8,35 @@
 	</select>
 	
 	<select id="selectKeyword" resultType="keyword" parameterType="keyword">
-		select keyword_no, latitude, longitude
+		select *
 		from keywords
 		where 
-			1 = 1
-		<if test='keyword1 == 1'>
-			and keyword1 = 1
-		</if>
-		<if test='keyword2 == 1'>
-			and keyword2 = 1
-		</if>
-		<if test='keyword3 == 1'>
-			and keyword3 = 1
-		</if>
-		<if test='keyword4 == 1'>
-			and keyword4 = 1
-		</if>
-		<if test='keyword5 == 1'>
-			and keyword5 = 1
-		</if>
-		<if test='keyword6 == 1'>
-			and keyword6 = 1
-		</if>
-		<if test='keyword7 == 1'>
-			and keyword7 = 1
-		</if>
-		<if test='keyword8 == 1'>
-			and keyword8 = 1
-		</if>
+			1 = 1 and
+		<trim prefix="(" suffixOverrides="or" suffix=")" >
+			<if test='keyword1 == 1'>
+				keyword1 = 1 or
+			</if>
+			<if test='keyword2 == 1'>
+				keyword2 = 1 or
+			</if>
+			<if test='keyword3 == 1'>
+				keyword3 = 1 or
+			</if>
+			<if test='keyword4 == 1'>
+				keyword4 = 1 or
+			</if>
+			<if test='keyword5 == 1'>
+				keyword5 = 1 or
+			</if>
+			<if test='keyword6 == 1'>
+				keyword6 = 1 or
+			</if>
+			<if test='keyword7 == 1'>
+				keyword7 = 1 or
+			</if>
+			<if test='keyword8 == 1'>
+				keyword8 = 1 or
+			</if>
+		</trim>
 	</select>
 </mapper>
