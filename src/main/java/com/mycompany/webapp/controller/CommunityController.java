@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
+import com.mycompany.webapp.service.CommentService;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.UserService;
 
@@ -29,6 +31,8 @@ public class CommunityController {
 	private FreeBoardService freeBoardService;
 	@Resource
 	private UserService userService;
+	@Resource
+	private CommentService commentService;
 
 
 	// 자유게시판 - board -------------------------------------------------------------------------------------------------------------------
@@ -128,8 +132,27 @@ public class CommunityController {
 		model.addAttribute("from", request.getParameter("from"));
 		model.addAttribute("pageNo", request.getParameter("pageNo"));
 		
-		//등록된 댓글 보여주기
+		//Board 게시물 개수 가져오기
+		/*		int totalBoardNum = freeBoardService.getTotalFreeBoardNum(); // 전체 개수 가져오기
+				PagerDto pager = new PagerDto(10, 10, totalBoardNum, pageNo);
+				model.addAttribute("pager", pager);
+				
+				//페이지 정보
+				List<FreeBoardDto> freeboards = freeBoardService.getFreeBoards(pager);
+				model.addAttribute("freeboards", freeboards);
+				log.info(freeboards.toString());
+				log.info("boardList페이지");*/
 		
+		//등록된 댓글 보여주기--------------------------------------------------
+		CommentDto commentDto = new CommentDto();
+		//댓글 개수 가져오기
+		int totalCommentNum = commentService.totalCountwhenFreeNo(freeNo);
+		PagerDto pager = new PagerDto(50,10,totalCommentNum,1);
+		model.addAttribute("pager",pager); //jsp에서 페이지 만들 때 사용하려고 model로 보내줌.
+		
+		//페이지 정보
+		List<CommentDto> comments = commentService.getselectByFreeNo(pager);
+		model.addAttribute("comments", comments);
 		
 		return "/community/board/view";
 	}
