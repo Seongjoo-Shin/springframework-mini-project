@@ -22,12 +22,18 @@ public interface MypageDao {
 	public UserDto selectPassword(String userId); // 비밀번호 체크를 위한 메소드
 	
 	// 작성글
-	public List<BuildingDto> selectBuildingList(PagerDto pager, String userId); // 본인이 작성한 공지사항 게시물 검색
-	public List<MarketBoardDto> selectMarketBoardList(PagerDto pager, String userId); // 본인이 작성항 거래게시판 검색
-	public List<FreeBoardDto> selectFreeBoardList(PagerDto pager); // 본인이 작성한 자유게시판 검색
+	// 자유게시판
+	public List<FreeBoardDto> selectFreeBoardList(PagerDto pager); // 본인이 작성한 자유게시판 검색	
 	public int selectAllFreeBoard(String userId);
-	public int updateYnMyPosting(List<String> delArr);
-	public void updateYnMyPosting(int freeNo);
+	public int deleteYnMyPosting(int freeNo);
+	// 거래게시판
+	public List<MarketBoardDto> selectMarketBoardList(PagerDto pager); // 본인이 작성항 거래게시판 검색
+	public int selectAllMarketBoard(String userId);
+	public int deleteYnMyMarket(int marketNo);
+	// 인수/매물
+	public List<BuildingDto> selectBuildingList(PagerDto pager); // 본인이 작성한 공지사항 게시물 검색
+	public int selectAllBuilding(String userId);
+	public int deleteYnMyBuilding(int buildingNo);
 	
 	// 쪽지함
 	public List<MessageDto> selectReceiveMessageList(PagerDto pager); // 받은 메세지함 
@@ -52,6 +58,7 @@ public interface MypageDao {
 	
 	// 회원 탈퇴
 	public int userWithdrawal(UserDto user);
+
 
 
 

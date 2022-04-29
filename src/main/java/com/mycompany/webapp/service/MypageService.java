@@ -35,20 +35,10 @@ public class MypageService {
 		return mypageDao.updatePassword(user);
 	}
 	
+	// --------------------- 작성글 자유게시판 ------------------------------
+	
 	public List<FreeBoardDto> getMyFreeBoardList(PagerDto pager){
 		return mypageDao.selectFreeBoardList(pager);
-	}
-	
-	public List<MarketBoardDto> getMyMarketBoardList(PagerDto pager, String userId){
-		return mypageDao.selectMarketBoardList(pager, userId);
-	}
-	
-	public List<BuildingDto> getMyBuildingList(PagerDto pager, String userId){
-		return mypageDao.selectBuildingList(pager, userId);
-	}
-	
-	public int userWithdrawal(UserDto user) {
-		return mypageDao.userWithdrawal(user);
 	}
 
 	public int getTotalFreeboardCount(String userId) {
@@ -58,11 +48,48 @@ public class MypageService {
 	public int deleteMyPosting(List<String> delArr) {
 		int cnt = 0;
 		for(String s : delArr) {
-			mypageDao.updateYnMyPosting(Integer.parseInt(s));
+			mypageDao.deleteYnMyPosting(Integer.parseInt(s));
 		}
 		return cnt;
 	}
 	
+	// --------------------- 작성글 거래게시판 ------------------------------
+	
+	public List<MarketBoardDto> getMyMarketBoardList(PagerDto pager){
+		return mypageDao.selectMarketBoardList(pager);
+	}
+	
+	public int getTotalMarketboardCount(String userId) {
+		return mypageDao.selectAllMarketBoard(userId);
+	}
+
+	public int deleteMyMarket(List<String> delArr) {
+		int cnt = 0;
+		for(String s : delArr) {
+			mypageDao.deleteYnMyMarket(Integer.parseInt(s));
+		}
+		return cnt;
+	}
+	
+	// --------------------- 작성글 인수매물 ------------------------------
+	public List<BuildingDto> getMyBuildingList(PagerDto pager){
+		return mypageDao.selectBuildingList(pager);
+	}
+	
+	public int getTotalBuildingCount(String userId) {
+		return mypageDao.selectAllBuilding(userId);
+	}
+
+	public int deleteMyBuilding(List<String> delArr) {
+		int cnt = 0;
+		for(String s : delArr) {
+			mypageDao.deleteYnMyBuilding(Integer.parseInt(s));
+		}
+		return cnt;
+	}
+	
+
+	// --------------------- 쪽지함 기능 ------------------------------
 	public List<MessageDto> getMessageReceiveList(PagerDto pager){
 		return mypageDao.selectReceiveMessageList(pager);
 	}
@@ -98,5 +125,10 @@ public class MypageService {
 
 	public int checkReceivedMsg(int changeNo) {
 		return mypageDao.updateReplyYN(changeNo);
+	}
+	
+	// --------------------- 사용자 탈퇴 ------------------------------
+	public int userWithdrawal(UserDto user) {
+		return mypageDao.userWithdrawal(user);
 	}
 }

@@ -8,6 +8,30 @@
                 checkbox.checked = selectAll.checked
             })
         }
+        
+        function fn_checkedDel(){
+        	var cnt = $("input[name='buildingNo']:checked").length;
+        	console.log(cnt);
+        	
+        	var arr = new Array();
+        	$("input[name='buildingNo']:checked").each(function(){
+        		arr.push($(this).attr('id'));
+        	});
+        	if(cnt == 0){
+				swal("선택된 게시물이 없습니다.");
+        	} else {
+        		console.log(arr);
+        		$.ajax({
+        			type: 'POST',
+        			url: '/mypage/mybuilding/delete',
+        			dataType: 'json',
+        			data: {delArr: arr},
+        		}).done((data) => {
+        		}).fail((data) => {
+        		});
+        	}
+        	location.reload();
+        }
     </script>
     <section>
         <div class="container-fluid h-100 mt-5">
@@ -50,96 +74,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="text-center bg-light"><span>10</span></td>
-                                <td><a href="/take/view" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">임대</td>
-                                <td class="text-center">60평</td>
-                                <td class="text-center">2022-04-10</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>9</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">매매</td>
-                                <td class="text-center">120평</td>
-                                <td class="text-center">2022-04-09</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>8</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">임대</td>
-                                <td class="text-center">150평</td>
-                                <td class="text-center">2022-04-08</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>7</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">매매</td>
-                                <td class="text-center">60평</td>
-                                <td class="text-center">2022-04-07</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>6</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">임대</td>
-                                <td class="text-center">30평</td>
-                                <td class="text-center">2022-04-06</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>5</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">매매</td>
-                                <td class="text-center">60평</td>
-                                <td class="text-center">2022-04-05</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>4</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">임대</td>
-                                <td class="text-center">60평</td>
-                                <td class="text-center">2022-04-04</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>3</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">매매</td>
-                                <td class="text-center">100평</td>
-                                <td class="text-center">2022-04-03</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>2</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">임대</td>
-                                <td class="text-center">60평</td>
-                                <td class="text-center">2022-04-02</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center bg-light"><span>1</span></td>
-                                <td><a href="#" class="text-dark">매물 이름, 매물 이름, 매물 이름</a></td>
-                                <td class="text-center">매매</td>
-                                <td class="text-center">50평</td>
-                                <td class="text-center">2022-04-01</td>
-                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
-                                <td class="text-center"><input type="checkbox" class="delete"></td>
-                            </tr>
+							<c:forEach var="building" items="${buildings}">
+								<tr>
+	                                <td class="text-center bg-light"><span>${building.buildingNo}</span></td>
+	                                <td><a href="/take/view?buildingNo=${building.buildingNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${building.buildingName}</a></td>
+	                                <td class="text-center">거래종류 : ${building.buildingTradeInfo }</td>
+	                                <td class="text-center">공급면적 : ${building.buildingSupplyArea}</td>
+	                                <td class="text-center">등록일 : ${building.buildingRegistDate}</td>
+	                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
+	                                <td class="text-center"><input type="checkbox" class="delete" name="buildingNo" class="delete_box" id="${building.buildingNo}"></td>
+	                            </tr>
+							</c:forEach>
                         </tbody>
                         </table>
                     </div>
@@ -148,17 +93,38 @@
                             <input type="button" value="삭제" class="float-right"/>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-center">
-                        <ul class="pagination" class="d-flex justify-content-center">
-                            <li class="page-item"><a class="page-link text-dark" href="#"><</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">></a></li>
-                        </ul>
-                    </div>
+                    <div class="row d-flex justify-content-center mb-5">
+						<ul class="pagination justify-content-center mb-0">
+			               	<li class="page-item">
+								<a class="page-link" href="/mypage/myboard/building?pageNo=1">First</a>
+							</li>
+							<c:if test="${pager.groupNo>1}">
+								<li class="page-item">
+									<a class="page-link" href="/mypage/myboard/building?pageNo=${pager.startPageNo-1}">Previous</a>
+								</li>
+							</c:if>
+		                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
+								<c:if test="${pager.pageNo != i}">
+									<li class="page-item">
+										<a class="page-link" href="/mypage/myboard/building?pageNo=${i}">${i}</a>
+									</li>
+								</c:if>
+								<c:if test="${pager.pageNo == i}">
+									<li class="page-item active">
+										<a class="page-link" href="/mypage/myboard/building?pageNo=${i}">${i}</a>
+									</li>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pager.groupNo<pager.totalGroupNo}">
+								<li class="page-item">
+			                      <a class="page-link" href="/mypage/myboard/building?pageNo=${pager.endPageNo+1}">Next</a>
+			                    </li>
+							</c:if>
+							<li class="page-item">
+			                	<a class="page-link" href="/mypage/myboard/building?pageNo=${pager.totalPageNo}">Last</a>
+			                </li>
+	                	</ul>	
+	                </div>
                 </div>
                 <div class="col-2">
                     

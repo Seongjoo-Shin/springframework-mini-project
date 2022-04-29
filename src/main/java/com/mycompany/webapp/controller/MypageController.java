@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.dto.BuildingDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.dto.UserDto;
@@ -87,28 +89,6 @@ public class MypageController {
 		} 
 	}
 	
-	// 마이페이지 본인이 쓴 인수/매물
-	@RequestMapping("/myboard/building")
-	public String myboardBuilding(HttpSession session) {
-		log.info("실행");
-		if(session.getAttribute("sessionUserId") == null) {
-			return "redirect:/index/loginForm";
-		} else {
-			return "/mypage/myboard/building";
-		} 
-	}
-	
-	// 마이페이지 본인이 쓴 거래 게시물
-	@RequestMapping("/myboard/market")
-	public String myboardMarket(HttpSession session) {
-		log.info("실행");
-		if(session.getAttribute("sessionUserId") == null) {
-			return "redirect:/index/loginForm";
-		} else {
-			return "/mypage/myboard/market";
-		} 
-	}
-	
 	@PostMapping("/myboard/delete")
 	@ResponseBody
 	public String myboardDelete(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
@@ -124,6 +104,75 @@ public class MypageController {
 		}
 	}
 	
+	
+	// 마이페이지 본인이 쓴 인수/매물
+	@RequestMapping("/myboard/building")
+	public String myboardBuilding(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
+		log.info("실행");
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			String userId = (String) session.getAttribute("sessionUserId");
+			int totalCnt = mypageService.getTotalBuildingCount(userId); //
+			PagerDto pager = new PagerDto(8 , 10, totalCnt, pageNo);
+			pager.setUserId(userId);
+			model.addAttribute("pager", pager);
+			List<BuildingDto> buildings = mypageService.getMyBuildingList(pager); // 
+			model.addAttribute("buildings", buildings);
+			return "/mypage/myboard/building";
+		} 
+	}
+	
+	@PostMapping("/mybuilding/delete")
+	@ResponseBody
+	public String mybuildingDelete(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			int cnt = mypageService.deleteMyBuilding(delArr);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("message", cnt + "개를 삭제하였습니다");
+			String json = jsonObject.toString();
+			
+			return json;
+		}
+	}
+	
+	// 마이페이지 본인이 쓴 거래 게시물
+	@RequestMapping("/myboard/market")
+	public String myboardMarket(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
+
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			log.info("실행");
+			String userId = (String) session.getAttribute("sessionUserId");
+			int totalCnt = mypageService.getTotalMarketboardCount(userId); //
+			log.info(totalCnt);
+			PagerDto pager = new PagerDto(6, 10, totalCnt, pageNo);
+			pager.setUserId(userId);
+			model.addAttribute("pager", pager);
+			List<MarketBoardDto> markets = mypageService.getMyMarketBoardList(pager); // 
+			model.addAttribute("markets", markets);
+			return "/mypage/myboard/market";
+		} 
+	}
+	
+	@PostMapping("/mymarket/delete")
+	@ResponseBody
+	public String mymarketDelete(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			int cnt = mypageService.deleteMyPosting(delArr);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("message", cnt + "개를 삭제하였습니다");
+			String json = jsonObject.toString();
+			
+			return json;
+		}
+	}
+
 	// 찜목록 페이지 이동
 	@RequestMapping("/prefer")
 	public String prefer(HttpSession session) {
@@ -156,6 +205,7 @@ public class MypageController {
 	}
 		
 	
+	// ------------------- 쪽지함 ------------------- 
 	@RequestMapping("/message/receive")
 	public String messageReceive(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
 		log.info("실행");
@@ -230,12 +280,6 @@ public class MypageController {
 		
 		
 		return "redirect:/mypage/message/test";
-		
-//		JSONObject jsonObject= new JSONObject();
-//		jsonObject.put("close", "close");
-//		String json = jsonObject.toString();
-//		
-//		return json;
 	}
 	
 	

@@ -33,6 +33,7 @@
 	    <result property="marketCategory" column="market_category"/>
 	    <result property="marketRegistDate" column="market_regist_date"/>
 	    <result property="marketModifyDate" column="market_modify_date"/>
+	    <result property="marketUseYN" column="market_use_yn"/>
 	    <result property="marketHitCount" column="market_hit_count"/>
 	    <result property="marketPrice" column="market_price"/>
 	    <result property="marketLikeCount" column="market_like_count"/>
@@ -109,6 +110,15 @@
 	
 	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 작성글 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 	<!-- 자유게시판 -->
+	<select id="selectAllFreeBoard" resultType="Integer" parameterType="String">
+		SELECT 
+			count(*) 
+		FROM 
+			freeboards 
+		WHERE
+			free_writer = #{userId} and free_use_yn = 1
+	</select>
+	
 	<select id="selectFreeBoardList" parameterType="pager" resultMap="freeboardMap">
 		<![CDATA[
 		SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_modify_date
@@ -125,17 +135,9 @@
 		WHERE rnum >= #{startRowNo}
 		]]>
 	</select>
+
 	
-	<select id="selectAllFreeBoard" resultType="Integer" parameterType="String">
-		SELECT 
-			count(*) 
-		FROM 
-			freeboards 
-		WHERE
-			free_writer = #{userId} and free_use_yn = 1
-	</select>
-	
-	<update id="updateYnMyPosting" parameterType="Integer">
+	<update id="deleteYnMyPosting" parameterType="Integer">
 		UPDATE
 		    freeboards   
 		SET 
@@ -145,8 +147,77 @@
 	</update>	
 	
 	<!-- 거래게시판 -->
+	<select id="selectAllMarketBoard" resultType="Integer" parameterType="String">
+		SELECT 
+			count(*) 
+		FROM 
+			marketboards 
+		WHERE
+			market_writer = #{userId} and market_use_yn = 1
+	</select>
+	
+	<select id="selectMarketBoardList" parameterType="pager" resultMap="marketboardMap">
+		<![CDATA[
+		SELECT rnum, market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		FROM (
+		  SELECT ROWNUM as rnum, market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		  FROM (
+		    SELECT market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		    FROM marketboards
+		    WHERE market_writer = #{userId} and market_use_yn = 1
+		    ORDER BY market_no desc
+		  )
+		  WHERE ROWNUM <= #{endRowNo}
+		)
+		WHERE rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	<update id="deleteYnMyMarket" parameterType="Integer">
+		UPDATE
+		    marketboards   
+		SET 
+		    MARKET_USE_YN = 0   
+		WHERE    
+			market_no = #{marketNo}
+	</update>
 	
 	<!-- 인수매물 -->
+	<select id="selectAllBuilding" resultType="Integer" parameterType="String">
+		SELECT 
+			count(*) 
+		FROM 
+			buildings 
+		WHERE
+			building_writer = #{userId} and building_use_yn = 1
+	</select>
+	
+	<select id="selectBuildingList" parameterType="pager" resultMap="buildingMap">
+		<![CDATA[
+		SELECT rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		FROM (
+		  SELECT ROWNUM as rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		  FROM (
+		    SELECT building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		    FROM buildings
+		    WHERE building_writer = #{userId} and building_use_yn = 1
+		    ORDER BY building_no desc
+		  )
+		  WHERE ROWNUM <= #{endRowNo}
+		)
+		WHERE rnum >= #{startRowNo}
+		]]>
+	</select>
+
+	
+	<update id="deleteYnMyBuilding" parameterType="Integer">
+		UPDATE
+		    buildings   
+		SET 
+		    building_use_yn = 0   
+		WHERE    
+			building_no = #{buildingNo}
+	</update>
 	
 	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 쪽지함 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 	<select id="selectReceiveMessageList" parameterType="pager" resultMap="messageMap">
