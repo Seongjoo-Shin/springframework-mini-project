@@ -38,5 +38,14 @@
 		insert into users(user_id, user_password, user_email, user_name, user_phone, user_nickname, user_role, user_enabled ,user_joindate)
 		values(#{userId}, #{userPassword}, #{userEmail}, #{userName}, #{userPhone}, #{userNickname}, #{userRole}, #{userEnabled}, SYSDATE)
 	</insert>
+	
+	<update id="updatePasswordById" parameterType="user">
+		UPDATE 
+			users 
+		SET 
+			user_password = #{userPassword} 
+		WHERE 
+			user_id = #{userId}
+	</update>
 </mapper> 
 

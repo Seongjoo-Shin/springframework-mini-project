@@ -85,4 +85,25 @@ public class UserService {
 		return dbUSerNickname;
 	}
 
+	public String findIdByEmail(String findInputEmail) {
+		UserDto dbUser = userDao.selectByUserEmail(findInputEmail);
+		return dbUser.getUserId();
+	}
+
+	public String findPasswordByEmail(String emailValue) {
+		UserDto dbUser = userDao.selectByUserEmail(emailValue);
+		return dbUser.getUserPassword();
+	}
+	
+	public UserDto findPasswordByEmail1(String emailValue) {
+		UserDto dbUser = userDao.selectByUserEmail(emailValue);
+		return dbUser;
+	}
+
+	public int updateNewPassword(UserDto user) {
+		int row = userDao.updatePasswordById(user);
+		return row;
+	}
+
+
 }

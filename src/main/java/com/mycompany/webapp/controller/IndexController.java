@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -169,10 +171,42 @@ public class IndexController {
 	@ResponseBody
 	public String findEmail(String emailValue) {
 		log.info(emailValue);
+		int num;
 		LoginResult result = userService.checkEmail(emailValue);
 		JSONObject jsonObject = new JSONObject();
 		if(result == LoginResult.SUCCESS) {
 			jsonObject.put("result", "success");
+			
+			//인증번호 생성
+			Random r = new Random();
+			num = r.nextInt(999999);
+			//인증번호 쿠키에 저장
+			
+			
+			//인증메일 보낸사람
+			String setfrom = "ssj980204@gmail.com";
+			//인증메일 받는사람
+			String tomail = emailValue;
+			//메일 제목
+			String title = "[아이디찾기]인증번호 메일입니다.";
+			//메일내용 인증번호 포함
+			String content = System.getProperty("line.separator") + "인증번호는 " + num + " 입니다." + System.getProperty("line.separator");
+			
+			try {
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
+			
+				messageHelper.setFrom(setfrom); 
+				messageHelper.setTo(tomail); 
+				messageHelper.setSubject(title);
+				messageHelper.setText(content); 
+			
+				mailSender.send(message);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			jsonObject.put("num", num);
 			
 		} else {
 			jsonObject.put("result", "fail");
@@ -180,6 +214,120 @@ public class IndexController {
 		
 		String json = jsonObject.toString();
 		return json;
+	}
+	
+	
+	@PostMapping(value = "/findIdByEmail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String findIdByEmail(String emailValue) {
+		log.info(emailValue);
+		String result = userService.findIdByEmail(emailValue);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("result", result);
+		String json = jsonObject.toString();
+		
+		return json;
+		
+	}
+	
+	//비밀번호 찾기 아이디, 이메일 확인 후 인증번호 전송
+	@PostMapping(value = "/findPasswordByEmail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String findPasswordByEmail(String idValue, String passwordEmail) {
+		log.info(idValue);
+		log.info(passwordEmail);
+		LoginResult resultId = userService.checkId(idValue);
+		JSONObject jsonObject = new JSONObject();
+		if(resultId == LoginResult.FAIL_USERID) {
+			UserDto result = userService.findPasswordByEmail1(passwordEmail);
+			if(result != null) {
+				//인증번호 생성
+				Random r = new Random();
+				int num = r.nextInt(999999);
+				//인증번호 쿠키에 저장
+				
+				
+				//인증메일 보낸사람
+				String setfrom = "ssj980204@gmail.com";
+				//인증메일 받는사람
+				String tomail = passwordEmail;
+				//메일 제목
+				String title = "[비밀번호찾기]인증번호 메일입니다.";
+				//메일내용 인증번호 포함
+				String content = System.getProperty("line.separator") + "인증번호는 " + num + " 입니다." + System.getProperty("line.separator");
+				
+				try {
+					MimeMessage message = mailSender.createMimeMessage();
+					MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
+				
+					messageHelper.setFrom(setfrom); 
+					messageHelper.setTo(tomail); 
+					messageHelper.setSubject(title);
+					messageHelper.setText(content); 
+				
+					mailSender.send(message);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				
+				jsonObject.put("num", num);
+				jsonObject.put("result", "successAll");
+			} else {
+				jsonObject.put("result", "noEmail");
+			}
+		} else {
+			jsonObject.put("result", "noId");
+		}
+		
+		String json = jsonObject.toString();
+		return json;
+	}
+	
+	//비밀번호 찾기 기능시 비밀번호는 디코딩 기능을 제공하지 않기 때문에 새로운 비밀번호를 메일로 보내준다.
+	@PostMapping(value = "/sendNewPassword", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String sendNewPassword(String idValue, String toEamil) {
+		UserDto user = new UserDto();
+		user.setUserId(idValue);
+		user.setUserEmail(toEamil);
+		JSONObject jsonObject = new JSONObject();
+		//4자리비밀번호 생성
+		Random r = new Random();
+		int num = r.nextInt(9999);
+		//인증메일 보낸사람
+		String setfrom = "ssj980204@gmail.com";
+		//인증메일 받는사람
+		String tomail = toEamil;
+		//메일 제목
+		String title = "[임시비밀번호]메일입니다.";
+		//메일내용 인증번호 포함
+		String content = System.getProperty("line.separator") + "임시비밀번호는 " + num + " 입니다." + System.getProperty("line.separator");
+		
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
+		
+			messageHelper.setFrom(setfrom); 
+			messageHelper.setTo(tomail); 
+			messageHelper.setSubject(title);
+			messageHelper.setText(content); 
+		
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		//새로운 비밀번호 인코딩
+		String newPassword = Integer.toString(num);
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		user.setUserPassword(passwordEncoder.encode(newPassword));
+		
+		int result = userService.updateNewPassword(user);
+		
+		jsonObject.put("result", "update");
+		
+		String json = jsonObject.toString();
+		return json; 
 	}
 	
 }

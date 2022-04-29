@@ -10,4 +10,5 @@ public interface UserDao {
 	public UserDto selectByUserNickname(String nickname);
 	public UserDto selectByUserEmail(String email);
 	public int insert(UserDto user);
+	public int updatePasswordById(UserDto user);
 }
