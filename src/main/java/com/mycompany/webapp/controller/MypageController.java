@@ -223,10 +223,19 @@ public class MypageController {
 	}
 	
 	@PostMapping("/message/send")
-	public void messageSend(MessageDto message, HttpSession session, HttpServletRequest request, @RequestParam("changeMsgNo") int changeNo) {
+	public String messageSend(MessageDto message, HttpSession session, HttpServletRequest request, @RequestParam("changeMsgNo") int changeNo) {
 		String userId = (String) session.getAttribute("sessionUserId");
 		int result = mypageService.sendMessage(message);
 		int res = mypageService.checkReceivedMsg(changeNo);
+		
+		
+		return "redirect:/mypage/message/test";
+		
+//		JSONObject jsonObject= new JSONObject();
+//		jsonObject.put("close", "close");
+//		String json = jsonObject.toString();
+//		
+//		return json;
 	}
 	
 	

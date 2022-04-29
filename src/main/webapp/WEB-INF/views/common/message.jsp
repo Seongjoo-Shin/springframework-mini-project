@@ -23,11 +23,10 @@
 </style>
 <script>
 	function fn_submit(){
-		setTimeout(function(){
-			window.close();			
-		}, 1000);
-
-		$("#frm").submit();
+		document.frm.submit();
+		setTimeout(() => {
+			window.open("about:blank", "_self").close();	
+		});
 	}
 </script>
 </head>
