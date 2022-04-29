@@ -231,7 +231,12 @@
                 </div>
                 <div class="d-flex justify-content-center mt-5 mb-4">
                     <button class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
-                    <button onclick="viewCancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</button>
+                    <c:if test="${from ne 'mypage'}">
+						<button onclick="viewCancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</button>
+					</c:if>
+					<c:if test="${from eq 'mypage'}">
+						<a href="/mypage/myboard/building?pageNo=${pageNo}" class="btn border rounded m-2 p-2" style="width:100px;">목록</a>
+					</c:if>
                     <button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
                 </div>
             </div>

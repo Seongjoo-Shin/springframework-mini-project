@@ -3,7 +3,6 @@ package com.mycompany.webapp.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,7 +72,7 @@ public class TakeController {
    }
    
    @GetMapping("/view")
-   public String view(String buildingNo, Model model) {
+   public String view(String buildingNo, Model model, HttpServletRequest request) {
 	  log.info("실행");
 	  log.info(buildingNo);
 	  
@@ -94,6 +93,8 @@ public class TakeController {
 	  model.addAttribute("buildingInfo", buildingDetailBuildingDto);
 	  model.addAttribute("equipments", equipDto);
 	  model.addAttribute("imageFile", fileDto);
+	  model.addAttribute("from", request.getParameter("from"));
+	  model.addAttribute("pageNo", request.getParameter("pageNo"));
 	  
       return "take/view";
    }
