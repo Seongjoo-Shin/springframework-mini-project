@@ -20,6 +20,7 @@
         }
         
         $( document ).ready(function() {
+        	showOption();
         	
         	hospitalLocation();
         });
@@ -71,7 +72,14 @@
                                             <span class="font-weight-bold">인수</span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="font-weight-bold">월세</span>
+                                            <span class="font-weight-bold">
+                                            	<c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
+                                            		보증금 / 월세
+                                            	</c:if>
+                                            	<c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
+                                            		매매가
+                                            	</c:if>
+                                            </span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
                                             <span class="font-weight-bold">관리비</span>
@@ -80,7 +88,7 @@
                                             <span class="font-weight-bold">주차</span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="font-weight-bold">해당층</span>
+                                            <span class="font-weight-bold">해당층 / 전체층</span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
                                             <span class="font-weight-bold">전용/공급 면적</span>
@@ -94,28 +102,47 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">5400만원</span>
+                                            <span class="ml-5">${buildingInfo.buildingTakeoverPrice} 만원</span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">5400만원</span>
+                                            <span class="ml-5">
+                                            	<c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
+                                            		${buildingInfo.buildingDepositPrice} / ${buildingInfo.buildingMonthRent} 만원
+                                            	</c:if>
+                                            	<c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
+                                            		${buildingInfo.buildingPrice} 만원
+                                            	</c:if>
+                                            </span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">5400만원</span>
+                                            <span class="ml-5">${buildingInfo.buildingTakeoverPrice} 만원</span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">가능 (무료)</span>
+                                            <span class="ml-5">
+                                            	<c:forTokens var="option" items="${buildingInfo.buildingOption}" delims=",">
+                                            		<c:if test="${option eq '2'}">
+                                            			주차 가능
+                                            		</c:if>
+                                            	</c:forTokens>
+                                            </span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">6층/9층</span>
+                                            <span class="ml-5">${buildingInfo.buildingFloor}층 / ${buildingInfo.buildingTotalFloor}층</span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">24.88/35.14</span>
+                                            <span class="ml-5">${buildingInfo.buildingDedicatedArea} / ${buildingInfo.buildingSupplyArea}</span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">있음</span>
+                                            <span class="ml-5">
+                                            	<c:forTokens var="option" items="${buildingInfo.buildingOption}" delims=",">
+                                            		<c:if test="${option eq '1'}">
+                                            			있음
+                                            		</c:if>
+                                            	</c:forTokens>
+                                            </span>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">2022.04.24</span>
+                                            <span class="ml-5">${buildingInfo.buildingAvailableDate}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -123,37 +150,7 @@
                             <div class="mb-4 font-weight-bold" style="font-size: 23px;">
                                 옵션
                             </div>
-                            <div class="d-flex mb-2">
-                                <span>
-                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
-                                        <img src="${pageContext.request.contextPath}/resources/images/carImg.png" width="50px"/>
-                                        <div class="mt-2">주차 가능</div>
-                                    </div>
-                                </span>
-                                <span>
-                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
-                                        <img src="${pageContext.request.contextPath}/resources/images/equipImg.png" width="42px"/>
-                                        <div class="mt-2">장비 있음</div>
-                                    </div>
-                                </span>
-                                <span>
-                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
-                                        <img src="${pageContext.request.contextPath}/resources/images/elevatorImg.png" width="40px"/>
-                                        <div class="mt-2">엘리베이터</div>
-                                    </div>
-                                </span>
-                                <span>
-                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
-                                        <img src="${pageContext.request.contextPath}/resources/images/restroomImg.png" width="47px"/>
-                                        <div class="mt-2">화장실</div>
-                                    </div>
-                                </span>
-                                <span>
-                                    <div class="border rounded p-3 mr-3 text-center" style="width: 120px; background-color: rgb(231, 231, 236);">
-                                        <img src="${pageContext.request.contextPath}/resources/images/cctvImg.png" width="52px"/>
-                                        <div class="mt-2">엘리베이터</div>
-                                    </div>
-                                </span>
+                            <div id="optionList" class="d-flex mb-2">
                             </div>
                             
                             <div class="mb-4 mt-5 font-weight-bold" style="font-size: 23px;">
@@ -170,23 +167,47 @@
                         <div id="quickmenu" class="col-5">
                             <div id="box" class="border shadow w-100 float-right">
                                 <div class="border text-center p-1 m-2 mb-5" style="width: 130px;">
-                                    건물번호 0001
+                                    건물번호 - ${buildingInfo.buildingNo}
                                 </div>
                                 <div class="ml-3">
                                     <div class="p-1 m-2">
-                                        <h3>뉴욕플란트 치과</h3>
+                                        <h3>${buildingInfo.buildingName}</h3>
                                     </div>
                                     <div class="p-1 m-2">
-                                        서울특별시 송파구 가락동 78
+                                    	${buildingInfo.buildingAddr} ${buildingInfo.buildingAddrDetail}
                                     </div>
-                                    <div class="p-1 m-2">
-                                        <span style="font-size: 23px;">인수</span>
-                                        <span class="ml-5" style="font-size: 23px;"><span>5400만원</span></span>
+                                    
+                                    <div class="p-1 m-2 container-fluid">
+                                    	<div class="row">
+                                    		<div class="col-4 mb-2">
+                                    			<div style="font-size: 23px;">인수</div>
+                                    			<c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
+		                                       		<div style="font-size: 23px;">보증금 / 월세</div>
+	                                          	</c:if>
+	                                          	<c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
+	                                          		<div style="font-size: 23px;">매매가</div>
+		                                       	</c:if>
+	                                    		</div>
+                                    		<div class="col-7">
+                                    			<div>
+                                    				<div class="ml-5" style="font-size: 23px;">
+		                                       			${buildingInfo.buildingTakeoverPrice} 만원
+		                                       		</div>
+                                    			</div>
+                                    			<c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
+		                                       		<span class="ml-5" style="font-size: 23px;">
+		                                       			${buildingInfo.buildingDepositPrice} / ${buildingInfo.buildingMonthRent} 만원
+		                                       		</span>
+	                                          	</c:if>
+	                                          	<c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
+		                                       		<span class="ml-5 " style="font-size: 23px;"><span>
+		                                       			${buildingInfo.buildingPrice} 만원
+		                                       		</span>
+		                                       	</c:if>
+                                    		</div>
+                                    	</div>
                                     </div>
-                                    <div class="p-1 m-2">
-                                        <span style="font-size: 23px;">월세</span>
-                                        <span class="ml-5" style="font-size: 23px;"><span>5400만원</span></span>
-                                    </div>
+                                    
                                     <div class="container-fluid mt-2">
                                         <div class="row">
                                             <div class="col-4 p-1 m-2 d-flex">
@@ -230,14 +251,19 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-5 mb-4">
-                    <button class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
+                	<c:if test="${sessionUserId eq buildingInfo.buildingWriter}">
+                		<button class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
+                	</c:if>
                     <c:if test="${from ne 'mypage'}">
 						<button onclick="viewCancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</button>
 					</c:if>
 					<c:if test="${from eq 'mypage'}">
 						<a href="/mypage/myboard/building?pageNo=${pageNo}" class="btn border rounded m-2 p-2" style="width:100px;">목록</a>
 					</c:if>
-                    <button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+					<c:if test="${sessionUserId eq buildingInfo.buildingWriter}">
+						<button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+					</c:if>
+                    
                 </div>
             </div>
             <div class="col-2"></div>
@@ -309,7 +335,45 @@
 		}
 	    
 	    function viewCancle() {
-	    	$(location).attr("href", "viewCancle");
+	    	$(location).attr("href", "list");
+		}
+	    
+	    function showOption() {
+	    	var optionList = `${buildingInfo.buildingOption}`;
+        	var optionValue = optionList.split(",");
+        	console.log(optionValue);
+        	
+        	var options = $("#optionList");
+        	for(o of optionValue){
+        		
+        		var span = document.createElement('span');
+        		span.setAttribute('class', 'd-flex justify-content-center');
+        		var tempSpan = '<div class="border rounded p-3 mr-3 text-center" style="width: 120px; height:120px; background-color: rgb(231, 231, 236);">';
+        		tempSpan 	+= '		<img width="40px" src="${pageContext.request.contextPath}/resources/images/';
+				if(o == '1'){
+					tempSpan += 'elevatorImg.png" />';
+					tempSpan += '		<div class="mt-2">엘리베이터</div>';
+        		}else if (o == '2'){
+        			tempSpan += 'carImg.png" />';
+        			tempSpan += '		<div class="mt-2">주차 가능</div>';
+        		}else if(o == '3'){
+        			tempSpan += 'equipImg.png" />';
+        			tempSpan += '		<div class="mt-2">장비</div>';
+        		}else if(o == '4'){
+        			tempSpan += 'restroomImg.png" />';
+        			tempSpan += '		<div class="mt-2">화장실</div>';
+        		}else if(o == '5'){
+        			tempSpan += 'cctvImg.png" />';
+        			tempSpan += '		<div class="mt-2">CCTV</div>';
+        		}else if(o == '6'){
+        			tempSpan += 'medicine.png" />';
+        			tempSpan += '		<div class="mt-2">주변 약국</div>';
+        		}
+				tempSpan 	+= '</div>';
+        		
+				span.innerHTML =  tempSpan;
+    			options.append(span);
+        	}
 		}
 	    
 	    $(window).scroll(function() { 

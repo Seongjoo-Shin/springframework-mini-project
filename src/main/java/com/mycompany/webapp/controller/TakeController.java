@@ -72,7 +72,7 @@ public class TakeController {
    }
    
    @GetMapping("/view")
-   public String view(String buildingNo, Model model, HttpServletRequest request) {
+   public String view(String buildingNo, Model model, HttpServletRequest request, HttpSession session) {
 	  log.info("실행");
 	  log.info(buildingNo);
 	  
@@ -95,6 +95,8 @@ public class TakeController {
 	  model.addAttribute("imageFile", fileDto);
 	  model.addAttribute("from", request.getParameter("from"));
 	  model.addAttribute("pageNo", request.getParameter("pageNo"));
+	  
+	  model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
 	  
       return "take/view";
    }
