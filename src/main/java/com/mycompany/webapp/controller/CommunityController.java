@@ -128,6 +128,9 @@ public class CommunityController {
 		model.addAttribute("from", request.getParameter("from"));
 		model.addAttribute("pageNo", request.getParameter("pageNo"));
 		
+		//등록된 댓글 보여주기
+		
+		
 		return "/community/board/view";
 	}
 	

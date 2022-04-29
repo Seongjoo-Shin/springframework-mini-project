@@ -36,19 +36,45 @@
 					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">삭제</a>
 				</c:if> 
               </div>
-              <div class="h6" style="font-weight: bold;">댓글</div>
-              <div id="free-board-coment" class="my-5">
+              <div class="h6 ml-2" style="font-weight: bold;">댓글</div>
+              <div id="free-board-coment">
 	              <ul>
+<%-- 	              	<c:forEach var="commentDto" items="${comments}">
+		              	<li class="list-group-item">
+			              	<form method="post" action="insertComment" id="insertComment">
+			              		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
+			              		<input type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+			              		<input type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
+			              		<input type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
+			                     <div class="row" style="display: flex;">
+			                       <div style="flex: 8; padding: 4px 13px;">
+			                         <p style="font-weight: bold;">${commentDto.commentWriter}</p>
+			                         <div class="comment-text">
+			                           ${commentDto.commentContent}
+			                         </div>
+			                         <p><small>${commentDto.commentModifyDate}</small></p>
+			                       </div>
+			                       <div class="d-flex flex-column comment2" style="margin-right: 13px;">
+			                         <button class="commentBtn">수정</button>
+			                         <button class="commentBtn">삭제</button>
+			                       </div>
+			                     </div>		              
+			              	</form>
+		                  </li>	 
+	              	  </c:forEach>  --%>
 		              <li class="list-group-item">
-	                      <div class="row" style="display: flex;">
-	                        <div style="flex: 8; padding: 4px 13px;">
-	                          <p style="font-weight: bold;">${sessionUserNickname}</p>
-	                          <textarea placeholder="댓글을 입력해 주세요." style="display: block; width: 100%; height: 60px; resize: none; maxlength="150"></textarea>
-	                        </div>
-	                        <div class="d-flex flex-column justify-content-end mb-3" style="margin-right: 13px;">
-	                          <button class="commentBtn" >등록</button>
-	                        </div>
-	                      </div>
+		              	<form method="post" action="insertComment" id="insertComment">
+		              		<input type="hidden" name="freeNo" value="${freeBoardDto.freeNo}"/>
+	                      	<div class="row" style="display: flex;">
+		                        <div style="flex: 8; padding: 4px 13px;">
+		                          	<p style="font-weight: bold;">${sessionUserNickname}</p>
+		                          	<textarea placeholder="댓글을 입력해 주세요." style="display: block; width: 100%; height: 60px; resize: none;" name="commentContent"></textarea>
+		                        </div>
+		                        <div class="d-flex flex-column justify-content-end mb-3" style="margin-right: 13px;">
+		                          <button type="submit" class="commentBtn">등록</button>
+		                        </div>
+	                      	</div>		              
+		              	</form>
 	                  </li>	              
 	              </ul>
               </div>

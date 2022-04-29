@@ -33,13 +33,17 @@
  	
  	</select>
  	
+ 	<select id="count" parameterType="int">
+ 		select count(*) from comments where free_no=#{freeNo}
+ 	</select>
+ 	
 
 	<insert id="insertComment" parameterType="int">
 		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
 			select COMMENTS_SEQ.nextval from dual
 		</selectKey>
 		insert into comments (free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth)
-		values(#{freeNo}, #{commentNo}, #{userid}, '#{commentContent}', SYSDATE, SYSDATE, 1, null, 0);
+		values(#{freeNo}, #{commentNo}, #{userid}, '#{commentContent}', SYSDATE, SYSDATE, 1, null, 0)
 	</insert>
 
 <!-- 	<select id="selectByFreeNo" parameterType="pager" resultMap="">
