@@ -33,6 +33,12 @@ public class HomeController {
 		return "common/message";
 	}
 	
+	@RequestMapping("/messageSend")
+	public String messageSend(HttpServletRequest request, Model model) {
+		model.addAttribute("receiver", request.getParameter("receiver"));
+		return "common/messageSend";
+	}
+	
 	@GetMapping("/messageView")
 	public String messageView(HttpSession session, HttpServletRequest request, Model model) {
 		MessageDto message = mypageService.getMessageByNo(Integer.parseInt(request.getParameter("messageNo")));
