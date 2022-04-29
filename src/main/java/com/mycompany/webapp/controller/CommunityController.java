@@ -132,18 +132,7 @@ public class CommunityController {
 		model.addAttribute("from", request.getParameter("from"));
 		model.addAttribute("pageNo", request.getParameter("pageNo"));
 		
-		//Board 게시물 개수 가져오기
-		/*		int totalBoardNum = freeBoardService.getTotalFreeBoardNum(); // 전체 개수 가져오기
-				PagerDto pager = new PagerDto(10, 10, totalBoardNum, pageNo);
-				model.addAttribute("pager", pager);
-				
-				//페이지 정보
-				List<FreeBoardDto> freeboards = freeBoardService.getFreeBoards(pager);
-				model.addAttribute("freeboards", freeboards);
-				log.info(freeboards.toString());
-				log.info("boardList페이지");*/
-		
-		//등록된 댓글 보여주기--------------------------------------------------
+		//등록된 댓글 보여주기----------------------------
 		CommentDto commentDto = new CommentDto();
 		//댓글 개수 가져오기
 		int totalCommentNum = commentService.totalCountwhenFreeNo(freeNo);
@@ -199,7 +188,22 @@ public class CommunityController {
 	}
 	
 	// 댓글 -------------------------------------------------------------------------------------------------------------------
-	
+	@PostMapping("/board/insertComment")
+	public String insertComment(
+			int freeNo,
+			@RequestParam("commentContent") String commentContent,
+			HttpSession session) {
+		String userid = (String) session.getAttribute(commentContent);
+		
+		CommentDto commentDto = new CommentDto();
+		commentDto.setCommentContent(commentContent);
+		commentDto.setFreeNo(freeNo);
+		commentDto.setCommentWriter(userid);
+		
+		
+		
+		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
+	}
 	
 	
 
