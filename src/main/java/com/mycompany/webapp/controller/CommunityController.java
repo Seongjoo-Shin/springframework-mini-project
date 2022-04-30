@@ -193,14 +193,14 @@ public class CommunityController {
 			int freeNo,
 			@RequestParam("commentContent") String commentContent,
 			HttpSession session) {
-		String userid = (String) session.getAttribute(commentContent);
-		
+		String SessionUserid = (String) session.getAttribute("sessionUserId");
+		log.info(SessionUserid);
 		CommentDto commentDto = new CommentDto();
 		commentDto.setCommentContent(commentContent);
 		commentDto.setFreeNo(freeNo);
-		commentDto.setCommentWriter(userid);
+		commentDto.setCommentWriter(SessionUserid);
 		
-		
+		commentService.insertComment(commentDto);
 		
 		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}

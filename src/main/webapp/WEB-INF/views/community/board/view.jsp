@@ -40,25 +40,25 @@
               <div id="free-board-coment">
 	              <ul>
  	              	<c:forEach var="commentDto" items="${comments}">
-			        	<form method="post" action="insertComment" id="insertComment"> 	              	
-		              		<li class="list-group-item">
-			              		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
-			              		<input type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
-			              		<input type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
-			              		<input type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
-			                     <div class="row" style="display: flex;">
-			                       <div style="flex: 8; padding: 4px 13px;">
-			                         <p style="font-weight: bold;">${commentDto.commentWriter}</p>
-			                         <div class="comment-text">
-			                           ${commentDto.commentContent}
-			                         </div>
-			                         <p><small>${commentDto.commentModifyDate}</small></p>
-			                       </div>
-			                       <div class="d-flex flex-column comment2" style="margin-right: 13px;">
-			                         <button class="commentBtn">수정</button>
-			                         <button class="commentBtn">삭제</button>
-			                       </div>
-			                     </div>		              
+			        	<form method="post"> 	  
+			        		<li class="list-group-item">            	
+		              		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
+		              		<input type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+		              		<input type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
+		              		<input type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
+		                     <div class="row" style="display: flex;">
+		                       <div style="flex: 8; padding: 4px 13px;">
+		                         <p style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
+		                         <div class="comment-text">
+		                           ${commentDto.commentContent}
+		                         </div>
+		                         <p><small>${commentDto.commentModifyDate}</small></p>
+		                       </div>
+		                       <div class="d-flex flex-column comment2" style="margin-right: 13px;">
+		                         <button class="commentBtn">수정</button>
+		                         <button class="commentBtn">삭제</button>
+		                       </div>
+		                     </div>		              
 		                  	</li>	 
 			              </form>		                  
 	              	  </c:forEach>  

@@ -20,12 +20,13 @@
  	</resultMap> 
  	
  	<select id="selectByFreeNo" parameterType="pager" resultMap="commentWithUserResultMap">
- 		SELECT rnum, free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth
+ 		SELECT rnum, free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth, user_Nickname
 		FROM (
-		  SELECT ROWNUM as rnum, free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth
+		  SELECT ROWNUM as rnum, free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth, user_Nickname
 		  FROM (
-		    SELECT free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth
-		    FROM comments
+		    SELECT c.free_no, c.comment_no, c.comment_writer, c.comment_content, c.comment_regist_date, c.comment_modify_date, c.comment_use_yn, c.upper_no, c.comment_depth, u.user_Nickname
+		    FROM comments c, users u
+		    where c.comment_writer = u.user_id
 		    ORDER BY comment_no ASC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
@@ -38,12 +39,30 @@
  	</select>
  	
 
-	<insert id="insertComment" parameterType="int">
+	<insert id="insertComment" parameterType="Map">
 		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
 			select COMMENTS_SEQ.nextval from dual
 		</selectKey>
-		insert into comments (free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth)
-		values(#{freeNo}, #{commentNo}, #{userid}, '#{commentContent}', SYSDATE, SYSDATE, 1, null, 0)
+		insert into comments (
+			free_no, 
+			comment_no, 
+			comment_writer, 
+			comment_content, 
+			comment_regist_date, 
+			comment_modify_date, 
+			comment_use_yn, 
+			upper_no, 
+			comment_depth)
+		values(
+			#{freeNo}, 
+			#{commentNo}, 
+			#{commentWriter}, 
+			#{commentContent}, 
+			SYSDATE, 
+			SYSDATE, 
+			1, 
+			null, 
+			0)
 	</insert>
 
 <!-- 	<select id="selectByFreeNo" parameterType="pager" resultMap="">
