@@ -23,6 +23,7 @@
 		<result column="building_floor" property="buildingFloor"/>
 		<result column="building_option" property="buildingOption"/>
 		<result column="building_regist_date" property="buildingRegistDate"/>
+		<result column="building_like_count" property="buildingLikeCount"/>
 	</resultMap>
 	
 	<resultMap type="buildingfile" id="buildingFileDtoResult">

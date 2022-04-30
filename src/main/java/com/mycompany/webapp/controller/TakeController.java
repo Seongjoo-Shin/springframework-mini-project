@@ -108,9 +108,10 @@ public class TakeController {
    }
    
    @RequestMapping("/enroll")
-   public String enroll(HttpSession session) {
+   public String enroll(HttpSession session, String type, Model model) {
 	  log.info(session.getAttribute("sessionUserId"));
 	  if(session.getAttribute("sessionUserId") == null) {
+		  model.addAttribute("type", type);
 		  return "redirect:/index/loginForm";
 	  }else {
 		  return "take/enroll";

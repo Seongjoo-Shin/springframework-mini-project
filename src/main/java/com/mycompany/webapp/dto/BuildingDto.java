@@ -29,4 +29,6 @@ public class BuildingDto {
 	private int buildingFloor;
 	private String buildingOption;
 	private String buildingRegistDate;
+	private int buildingLikeCount;
+	
 }

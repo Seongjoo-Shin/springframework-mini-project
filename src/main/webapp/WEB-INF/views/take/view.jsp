@@ -35,11 +35,11 @@
                 </div>
                 <div>
                     <div class="col-12 row d-flex justify-content-center" style="padding-right: 0;">
-                        <div class="col-6 d-flex flex-column row-cols-sm-1">
-                            <img class="rounded" src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg">
+                        <div class="col-6 d-flex justify-content-center row-cols-sm-1">
+                            <img class="rounded" width="550px" heigth="400px" src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg">
                         </div>
-                        <div class="col-6 d-flex flex-column row-cols-sm-1">
-                            <img class="rounded" src="${pageContext.request.contextPath}/resources/images/hosImg2.jpg">
+                        <div class="col-6 d-flex justify-content-center row-cols-sm-1">
+                            <img class="rounded" width="550px" heigth="400px" src="${pageContext.request.contextPath}/resources/images/hosImg2.jpg">
                         </div>
                     </div>
                     <div class="mt-1 mr-4 p-2 float-right">
@@ -179,8 +179,8 @@
                                     
                                     <div class="p-1 m-2 container-fluid">
                                     	<div class="row">
-                                    		<div class="col-4 mb-2">
-                                    			<div style="font-size: 23px;">인수</div>
+                                    		<div class="col-4">
+                                    			<div class="mb-2" style="font-size: 23px;">인수</div>
                                     			<c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
 		                                       		<div style="font-size: 23px;">보증금 / 월세</div>
 	                                          	</c:if>
@@ -189,7 +189,7 @@
 		                                       	</c:if>
 	                                    		</div>
                                     		<div class="col-7">
-                                    			<div>
+                                    			<div class="mb-2">
                                     				<div class="ml-5" style="font-size: 23px;">
 		                                       			${buildingInfo.buildingTakeoverPrice} 만원
 		                                       		</div>
@@ -272,8 +272,8 @@
     <script>
     
     	function hospitalLocation(){
-    		var lat = '37.494802';
-    		var lon = '127.122287';
+    		var lat = ${buildingInfo.buildingLatitude};
+    		var lon = ${buildingInfo.buildingLongitude};
     		
     		var p = new naver.maps.LatLng(lat, lon);
             var mapOptions = {
