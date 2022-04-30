@@ -39,28 +39,65 @@
               <div class="h6 ml-2" style="font-weight: bold;">댓글</div>
               <div id="free-board-coment">
 	              <ul>
- 	              	<c:forEach var="commentDto" items="${comments}">
-			        	<form method="post"> 	  
-			        		<li class="list-group-item">            	
-		              		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
-		              		<input type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
-		              		<input type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
-		              		<input type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
-		                     <div class="row" style="display: flex;">
+ 	              	<c:forEach var="commentDto" items="${comments}" varStatus="status">	  
+		        		<li class="list-group-item">
+		        			<div id="container${commentDto.commentNo}" class="row">
+		        			<div class="col-10">
+			              		<input id="freeNo${commentDto.commentNo}" type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
+			              		<input id="commentNo${commentDto.commentNo}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+			              		<input id="upperNo${commentDto.commentNo}" type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
+			              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>		                     
 		                       <div style="flex: 8; padding: 4px 13px;">
 		                         <p style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
-		                         <div class="comment-text">
+		                         <div id="commentContent" class="comment-text">
 		                           ${commentDto.commentContent}
 		                         </div>
 		                         <p><small>${commentDto.commentModifyDate}</small></p>
-		                       </div>
-		                       <div class="d-flex flex-column comment2" style="margin-right: 13px;">
-		                         <button class="commentBtn">수정</button>
-		                         <button class="commentBtn">삭제</button>
-		                       </div>
-		                     </div>		              
-		                  	</li>	 
-			              </form>		                  
+		                       </div>		                     		                    			
+		        			</div>
+							<div class="col-2">
+		                  		<div class="d-flex flex-column comment2" style="margin-right: 13px;">
+		                  			<button class="commentBtn">답글</button>
+		                       		<c:if test="${sessionUserId == commentDto.commentWriter}">
+	             				       <button class="commentBtn" onclick="updateContent('${commentDto.commentNo}')">수정</button>
+	             				       <form method="post" action="commentDelete">
+	             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
+	             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+	             				       		<button type="submit" class="commentBtn">삭제</button>
+	             				       	</form>
+			                   		   	<script>
+			                   		   		function updateContent(commentNo){
+			                   		   			var commentNo = $("#commentNo"+commentNo).val();
+			                   		   			var freeNo = $("#freeNo"+commentNo).val();
+			                   		   			
+			                   		   			var commentContent = "${commentDto.commentContent}";       		   		
+			                   		   			var userNickname = "${commentDto.userDto.userNickname}";
+			                   		   			var userId = "${commentDto.commentWriter}";
+			                   		   			var statusIndex = "statusIndex";
+			                   		   			
+			                   		   			$("#container"+commentNo).attr('style','display:none');
+			                   		   			
+			                   		   			console.log(statusIndex);
+			                   		   			console.log(commentNo);
+		                   		   			
+			                   		   			$.ajax({
+			                   		   				url: "/board/updateContent",
+			                   		   				method: "post",
+			                   		   				data: {"commentContent":commentContent, "commentNo":commentNo}
+			                   		   			}).done((data)=>{
+			                   		   				$("#container"+commentNo).html(data);
+			                   		   			}) 
+			                   		   		}
+			                   		   	
+			                   		   	</script>
+			                   		 	                                         
+		                       		</c:if>
+		                      	</div>							
+							</div>
+
+		                  	</div>
+		                  </li>	 
+		                  
 	              	  </c:forEach>  
 		              <li class="list-group-item">
 		              	<form method="post" action="insertComment" id="insertComment">
@@ -85,6 +122,31 @@
       </div>
     </section>
     <script>
-    	
+    /* function goSubmit(){
+	      $("#insertForm").submit(); //form태그의 action="insertContent"탐
+	    } */
+    
+    
+    	//삭제 버튼을 눌렀을 때
+/*     	function commentDelete(){
+    		$("#modifyDelete").subit();
+    	} */
+    
+    
+    
+/*  		function commentDelete(){
+			console.log("commentDelete() 실행")
+			let statusIndex = ${"#statusIncex"}.val();
+			console.log("statusIndex");
+			
+			
+			$.ajax({
+				url:"commentDelete",
+				data: {commentNo},
+				method: "post"
+			}).done(()=>{
+				console.log("해당 댓글 삭제")
+			});
+		}  */
     </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

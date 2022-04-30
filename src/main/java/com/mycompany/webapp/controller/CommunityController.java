@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
@@ -137,6 +138,7 @@ public class CommunityController {
 		//댓글 개수 가져오기
 		int totalCommentNum = commentService.totalCountwhenFreeNo(freeNo);
 		PagerDto pager = new PagerDto(50,10,totalCommentNum,1);
+		pager.setFreeNo(freeNo);
 		model.addAttribute("pager",pager); //jsp에서 페이지 만들 때 사용하려고 model로 보내줌.
 		
 		//페이지 정보
@@ -205,7 +207,34 @@ public class CommunityController {
 		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}
 	
+	/*	@RequestMapping(value="/board/commentDelete", produces="application/json; charset=UTF-8")
+		@ResponseBody
+		public void commentDelete(int commentNo) {
+			commentService.deleteComment(commentNo);
+		}*/
 	
+	@PostMapping("/board/commentDelete")
+	public String commentDelete(
+			@RequestParam("freeNo") int freeNo,
+			@RequestParam("commentNo") int commentNo) {
+		commentService.deleteComment(commentNo);
+		log.info("commentDelete 실행, commentNo: "+commentNo);
+		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
+	}
+	
+	/*	@PostMapping("/board/updateContent")
+		public String updateContent() {
+			return "community/board/comment";
+		}*/
+	
+	//댓글 수정 html 조각 가져오기
+	@RequestMapping(value="/board/updateContent", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String updateContent(String commentContent, int commentNo, Model model) {
+		model.addAttribute("commentContent", commentContent);
+		model.addAttribute("commentNo", commentNo);
+		return "community/board/updateContent?";
+	}
 
 	// 거래게시판 - market -------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")

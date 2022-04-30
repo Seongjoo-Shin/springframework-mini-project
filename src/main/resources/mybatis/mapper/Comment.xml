@@ -26,7 +26,7 @@
 		  FROM (
 		    SELECT c.free_no, c.comment_no, c.comment_writer, c.comment_content, c.comment_regist_date, c.comment_modify_date, c.comment_use_yn, c.upper_no, c.comment_depth, u.user_Nickname
 		    FROM comments c, users u
-		    where c.comment_writer = u.user_id
+		    where c.comment_writer = u.user_id and c.free_no = #{freeNo} and c.comment_use_yn=1
 		    ORDER BY comment_no ASC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
@@ -64,6 +64,21 @@
 			null, 
 			0)
 	</insert>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteComment" parameterType="int">
+		update comments 
+		set comment_use_yn = 0
+		where comment_no = #{commentNo}
+	</update>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="comment">
+		update comments
+		set comment_content = #{commentContent},
+			comment_modify_date = SYSDATE
+		where comment_no = #{commentNo}
+	</update>
 
 <!-- 	<select id="selectByFreeNo" parameterType="pager" resultMap="">
 		

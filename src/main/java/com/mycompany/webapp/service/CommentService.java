@@ -32,4 +32,9 @@ public class CommentService {
 	public void insertComment(CommentDto commentDto) {
 		commentDao.insertComment(commentDto);
 	}
+	
+	//댓글 삭제
+	public void deleteComment(int commentNo) {
+		commentDao.deleteComment(commentNo);
+	}
 }
