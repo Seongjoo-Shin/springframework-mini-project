@@ -78,9 +78,9 @@
 								<tr>
 	                                <td class="text-center bg-light"><span>${building.buildingNo}</span></td>
 	                                <td><a href="/take/view?buildingNo=${building.buildingNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${building.buildingName}</a></td>
-	                                <td class="text-center">거래종류 : ${building.buildingTradeInfo }</td>
-	                                <td class="text-center">공급면적 : ${building.buildingSupplyArea}</td>
-	                                <td class="text-center">등록일 : ${building.buildingRegistDate}</td>
+	                                <td class="text-center">${building.buildingTradeInfo }</td>
+	                                <td class="text-center">${building.buildingSupplyArea}</td>
+	                                <td class="text-center">${building.buildingRegistDate}</td>
 	                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
 	                                <td class="text-center"><input type="checkbox" class="delete" name="buildingNo" class="delete_box" id="${building.buildingNo}"></td>
 	                            </tr>

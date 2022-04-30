@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mycompany.webapp.dto.BuildingDto;
 import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.EquipmentDto;
+import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.service.TakeService;
 
 import lombok.extern.log4j.Log4j2;
@@ -224,4 +226,10 @@ public class TakeController {
 	   log.info("123(");
 	   return "take/list";
    }
+   
+   @PostMapping("/message/sending")
+  	public void messageSend(MessageDto message, HttpSession session, HttpServletRequest request) {
+  	    String userId = (String) session.getAttribute("sessionUserId");
+  		int result = takeService.sendMessage(message);
+  	}
 }

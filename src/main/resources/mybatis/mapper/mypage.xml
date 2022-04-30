@@ -60,6 +60,7 @@
 	    <result property="buildingTotalFloor" column="building_total_floor"/>
 	    <result property="buildingFloor" column="building_floor"/>
 	    <result property="buildingOption" column="building_option"/>
+	    <result property="buildingRegistDate" column="building_regist_date"/>
 	</resultMap>
 	
 	<resultMap id="messageMap" type="message">

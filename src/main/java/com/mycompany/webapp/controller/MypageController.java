@@ -275,7 +275,7 @@ public class MypageController {
 		}
 	}
 	
-	@PostMapping("/message/send")
+	@PostMapping("/message/sending")
 	public String messageSend(MessageDto message, HttpSession session, HttpServletRequest request, @RequestParam("changeMsgNo") int changeNo) {
 		String userId = (String) session.getAttribute("sessionUserId");
 		int result = mypageService.sendMessage(message);

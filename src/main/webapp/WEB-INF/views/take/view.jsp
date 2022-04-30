@@ -235,7 +235,7 @@
                                     <div class="container-fluid mt-4 mb-4">
                                         <div class="row align-content-center">
                                             <div class="col-6 p-1 m-1">
-                                                <button onclick="openMsgForm('${buildingInfo.buildingWriter}')" class="btn border p-3 text-center" style="width:100%; background-color: rgb(242, 101, 45); color: white; font-size: 30px; border-radius: 8px; cursor: pointer;">문의 하기</button>
+                                                <a href="#" onclick="openMsgForm('${buildingInfo.buildingWriter}')" class="btn border p-3 text-center" style="width:100%; background-color: rgb(242, 101, 45); color: white; font-size: 30px; border-radius: 8px; cursor: pointer;">문의 하기</a>
                                             </div>
                                             <div class="col-4 p-1 m-1">
                                                 <button class="btn btn-outline-dark ml-3 p-3" style="width:100%; font-size: 30px;" onclick="changeImg(this);">

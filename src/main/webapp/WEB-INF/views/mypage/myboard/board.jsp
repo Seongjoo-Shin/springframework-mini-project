@@ -66,8 +66,8 @@
                                 <th>번호</th>
                                 <th>제목</th>
                                 <th>날짜</th>
-                                <th>수정</thclass=>
-                                <td><input type="checkbox" onclick="selectAll(this)"></tdclass=>
+                                <th>수정</th>
+                                <td><input type="checkbox" onclick="selectAll(this)"></td>
                             </tr>
                             <form action="" id="frm" name="frm" method="post">
                             <c:forEach items="${boards}" var="board" varStatus="status">

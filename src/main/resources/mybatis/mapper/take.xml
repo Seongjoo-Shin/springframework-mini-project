@@ -120,4 +120,17 @@
 			#{panoramaCheck}
 		)
 	</insert>
+	
+	<insert id="insertMessage" parameterType="message">
+		INSERT INTO messages
+		VALUES (
+			messages_seq.nextval, 
+			#{messageTitle}, 
+			#{messageContent}, 
+			sysdate, 
+			#{messageSender},
+			#{messageReceiver},
+			0
+		)
+	</insert>
 </mapper>

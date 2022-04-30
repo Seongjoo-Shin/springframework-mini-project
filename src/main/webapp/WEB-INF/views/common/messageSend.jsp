@@ -23,6 +23,7 @@
 </style>
 <script>
 	function fn_submit(){
+		console.log("실행");
 		document.frm.submit();
 		setTimeout(() => {
 			window.open("about:blank", "_self").close();	
@@ -33,7 +34,7 @@
 <body class="bg-light">
     <div style="width:300px; height:200px;" class="p-2">
         <div class="container text-center">
-        <form id="frm" method="post" name="frm" action="/mypage/message/send">
+        <form id="frm" method="post" name="frm" action="/take/message/sending">
 	        <input type="hidden" name="messageSender" value="${sessionUserId}"/>
 	        <input type="hidden" name="changeMsgNo" value='<%=request.getParameter("messagedNo") %>' />
             <div class="row justify-content-center p-2">
@@ -52,10 +53,10 @@
             </div>
             <div class="row justify-content-center">
                 <div class="float-left">
-                	<a href="#" class="btn btn-outline-dark mr-2" onclick="javascript:fn_submit();">보내기</a>
+                	<button class="btn btn-outline-dark mr-2" onclick="javascript:fn_submit();">보내기</button>
                 </div>
                 <div class="float-left">
-                	<a href="#" class="btn btn-outline-dark ml-2" onclick="javascript:window.close();">취소</a>
+                	<button class="btn btn-outline-dark ml-2" onclick="javascript:window.close();">취소</button>
                 </div>
             </div>
         </form>

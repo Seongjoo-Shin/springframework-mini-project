@@ -10,6 +10,7 @@ import com.mycompany.webapp.dao.TakeDao;
 import com.mycompany.webapp.dto.BuildingDto;
 import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.EquipmentDto;
+import com.mycompany.webapp.dto.MessageDto;
 
 @Service
 public class TakeService {
@@ -48,5 +49,9 @@ public class TakeService {
 
 	public List<EquipmentDto> selectEquipmentByBuildingNo(String buildingNo) {
 		return takeDao.selectEquipmentByBuildingNo(buildingNo);
+	}
+	
+	public int sendMessage(MessageDto message) {
+		return takeDao.insertMessage(message);
 	}
 }
