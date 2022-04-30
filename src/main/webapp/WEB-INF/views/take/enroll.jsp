@@ -348,13 +348,13 @@
 	                            <div class="border rounded m-2">
 	                                <div>
 	                                    <div class="m-2">- 사진은 가로로 찍은 사진을 권장합니다!</div>
-	                                    <div class="m-2">- 사진은 최소 1장 이상 등록해야 하며, 최대 15장까지 가능합니다.</div>
+	                                    <div class="m-2">- 사진은 최소 2장 이상 등록해야 하며, 최대 15장까지 가능합니다.</div>
 	                                </div>
 	                            </div>
 	                            <div class="border rounded m-2" style="background-color: rgb(231, 231, 236);">
 	                                <div id="explainNomal" class="p-5 text-center">
 	                                    <img src="${pageContext.request.contextPath}/resources/images/mascot.png" width="100px"/>
-	                                    <h6>최소 3장 이상 등록해야 하며, 가로 사진을 권장합니다.</h6>
+	                                    <h6>최소 2장 이상 등록해야 하며, 가로 사진을 권장합니다.</h6>
 	                                    <label for="chooseNomalImg" class="btn btn-info m-2">사진 등록</label>
 	                                    <input type="file" id="chooseNomalImg"  name="chooseNomalImg" accept="image/*" style="display: none;" onchange="getImageFiles(event)" multiple>
 	                                </div>
@@ -462,7 +462,8 @@
 	
 	                                pannellum.viewer("panorama", {
 	                                    type: "equirectangular",
-	                                    panorama: panoName
+	                                    panorama: panoName,
+	                                    autoLoad: true
 	                                });
 	                                $("#explainAround").css('display', 'none');
 	
@@ -541,15 +542,6 @@
 	                                span.appendChild(addBtnLabel);
 	                                return span;
 	                            }
-	
-	                            /* function deleteImg(_this){
-	                                $(_this).parent('span').remove();
-	                                if(nomalImgPreview.childElementCount === 0){
-	                                    $("#addBtn").remove();
-	                                    $("#explainNomal").css('display', 'block');
-	                                    useYn = 0;
-	                                }
-	                            } */
 	                            
 	                            function deleteImg(fnum){
 	                            	document.querySelector("#file" + fnum).remove();
@@ -764,10 +756,10 @@
             }
             
             //이미지 첨부파일이 있다면 formData에 담기----------
-            if($("#nomalImgPreview").children().length == 0){
+            if($("#nomalImgPreview").children().length == 0 || $("#nomalImgPreview").children().length == 1){
             	swal({
 					title:"이미지를 등록해주십시오.",
-					text: "이미지를 최소 1장은 등록해야 합니다.",
+					text: "이미지를 최소 2장은 등록해야 합니다.",
 					icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
 					
 				});

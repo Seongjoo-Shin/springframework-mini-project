@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.mycompany.webapp.dto.BuildingDto;
 import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.EquipmentDto;
+import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MessageDto;
 
 @Mapper
@@ -24,4 +25,10 @@ public interface TakeDao {
 	BuildingDto selectBuildingByBuildingNo(String buildingNo);
 	List<EquipmentDto> selectEquipmentByBuildingNo(String buildingNo);
 	int insertMessage(MessageDto message);
+	int buildingFilesCount(String buildingNo);
+	int selectLikeListByBuildingNo(LikeListDto lld);
+	
+	void insertLikeLists(LikeListDto lld);
+	void deleteLikeLists(LikeListDto lld);
+	void updateLikeCount(BuildingDto bdt);
 }

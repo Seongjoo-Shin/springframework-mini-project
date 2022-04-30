@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,20 +28,13 @@
             <h3 class="bg-light border rounded p-5 text-center">모든 사진 보기</h3>
         </div>
     </header>
-    <section>
+    <section style="align-items: center;">
         <div id="imagePreview" class="w-100" style="align-items: center; display: inline;">
-            <span>
-                <img class="p-2 m-2" src="${pageContext.request.contextPath}/resources/images/hosImg1.jpg" width="500px" height="400px"/>
-            </span>
-            <span>
-                <img class="p-2 m-2" src="${pageContext.request.contextPath}/resources/images/hosImg2.jpg" width="500px" height="400px"/>
-            </span>
-            <span>
-                <img class="p-2 m-2" src="${pageContext.request.contextPath}/resources/images/hosImg3.jpg" width="500px" height="400px"/>
-            </span>
-            <span>
-                <img class="p-2 m-2" src="${pageContext.request.contextPath}/resources/images/hosImg4.jpg" width="500px" height="400px"/>
-            </span>
+        	<c:forEach var="file" begin="0" end="${filesCnt}" step="1" varStatus="status">
+        		<span>
+        			<img class="border rounded p-2 m-2" src="getBuildingImage?buildingNo=${buildingNo}&type=nomal&img=${status.index}" width="500px" height="400px"/>
+        		</span>
+        	</c:forEach>
         </div>
     </section>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

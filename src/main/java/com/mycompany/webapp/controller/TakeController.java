@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.dto.BuildingDto;
 import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.EquipmentDto;
+import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.service.TakeService;
 
@@ -64,13 +66,33 @@ public class TakeController {
 	   return "take/list";
    }
    
+   //type에 따라서, nomal :일반사진 / pano : 파노라마 사진
+   //img는, 상세보기에서 미리보기로 2개 띄울 때, 넘어오는 파라미터!
    @RequestMapping("/getBuildingImage")
-   public void getBuildingImage(HttpServletRequest req, HttpServletResponse res, String buildingNo) throws IOException {
+   public void getBuildingImage(HttpServletRequest req, HttpServletResponse res, String buildingNo, String type, String img) throws IOException {
 	   System.out.println(buildingNo);
 	   List<BuildingFileDto> files = takeService.selectImageFileByBuildingNo(buildingNo);
-	   byte[] temp = files.get(0).getImageFileData();
-	   InputStream is = new ByteArrayInputStream(temp);
-	   IOUtils.copy(is, res.getOutputStream());
+	   
+	   log.info("type : " + type);
+	   
+	   if(type.equals("nomal")) { //일반 사진만 가져와!
+		   int num = Integer.parseInt(img);
+		   if(files.get(num).getPanoramaCheck() == 1) {
+			   num++;
+		   }
+		   byte[] temp = files.get(num).getImageFileData();
+		   InputStream is = new ByteArrayInputStream(temp);
+		   IOUtils.copy(is, res.getOutputStream());
+	   }else {
+		   //files안에 있는 파노라마 이미지를 찾기 위함
+		   for(BuildingFileDto f : files) {
+			   if(f.getPanoramaCheck() == 1) { //파노라마 사진이라면...!
+				   byte[] temp = f.getImageFileData();
+				   InputStream is = new ByteArrayInputStream(temp);
+				   IOUtils.copy(is, res.getOutputStream());
+			   }
+		   }
+	   }
    }
    
    @GetMapping("/view")
@@ -127,13 +149,22 @@ public class TakeController {
    }
    
    @RequestMapping("/popUpImg")
-   public String popUpImg() {
+   public String popUpImg(String buildingNo, Model model) {
 	  log.info("실행");
+	  model.addAttribute("buildingNo", buildingNo);
+	  
+	  int filesCnt = takeService.buildingFilesCount(buildingNo);
+	  filesCnt--;
+	  model.addAttribute("filesCnt", filesCnt);
       return "take/popUpImg";
    }
    
    @RequestMapping("/popUp360Img")
-   public String popUp360Img() {
+   public String popUp360Img(String buildingNo, Model model) {
+	   log.info("실행");
+	   model.addAttribute("buildingNo", buildingNo);
+	   
+	   
       return "take/popUp360Img";
    }
    
@@ -155,7 +186,7 @@ public class TakeController {
 	   bdt.setBuildingDepositPrice(request.getParameter("buildingDepositPrice"));
 	   bdt.setBuildingMonthRent(request.getParameter("buildingMonthRent"));
 	   bdt.setBuildingPrice(request.getParameter("buildingPrice"));
-	   bdt.setBuildingAvailableDate(request.getParameter("buildingAvailableDate"));
+	   bdt.setBuildingAvailableDate(new Date(request.getParameter("buildingAvailableDate")));
 	   
 	   bdt.setBuildingDetailContent(request.getParameter("buildingDetailContent"));
 	   bdt.setBuildingWriter(session.getAttribute("sessionUserId").toString());
@@ -232,4 +263,62 @@ public class TakeController {
   	    String userId = (String) session.getAttribute("sessionUserId");
   		int result = takeService.sendMessage(message);
   	}
+   
+   @RequestMapping(value="/checkLike", produces = "application/json; charset=UTF-8")
+   @ResponseBody
+   public String checkLike(String id, String type, String buildingNo) {
+	   log.info("type : " + type);
+	   log.info("id : " + id);
+	   log.info("bn : " + buildingNo);
+	   LikeListDto lld = new LikeListDto();
+	   
+	   lld.setLikeListNo(Integer.parseInt(buildingNo));
+	   lld.setLikeType(type);
+	   lld.setLikeUserId(id);
+	   
+	   String json;
+	   JSONObject jsonObject = new JSONObject();
+	   int check = takeService.selectLikeListByBuildingNo(lld);
+	   if(check == 1) {
+		   jsonObject.put("likeCheck", "like");
+	   }else {
+		   jsonObject.put("likeCheck", "noLike");
+	   }
+	   json = jsonObject.toString();
+	   return json;
+   }
+   
+   @RequestMapping(value="/setLikeLists", produces = "application/json; charset=UTF-8")
+   @ResponseBody
+   public String setLikeLists(String check, String id, String type, String buildingNo, String likeCnt) {
+	   log.info("type : " + type);
+	   log.info("id : " + id);
+	   log.info("bn : " + buildingNo);
+	   LikeListDto lld = new LikeListDto();
+	   
+	   lld.setLikeListNo(Integer.parseInt(buildingNo));
+	   lld.setLikeType(type);
+	   lld.setLikeUserId(id);
+	   
+	   //누르지 않은 상태일 경우
+	   if(check.equals("before")) {
+		   takeService.insertLikeLists(lld);
+	   }else { //클릭한 것을 취소할 경우
+		   takeService.deleteLikeLists(lld);
+	   }
+	   
+	   BuildingDto bdt = new BuildingDto();
+	   bdt.setBuildingLikeCount(Integer.parseInt(likeCnt));
+	   bdt.setBuildingNo(Integer.parseInt(buildingNo));
+	   
+	   
+	   // 좋아요 수 업데이트
+	   takeService.updateLikeCount(bdt);
+	   
+	   String json;
+	   JSONObject jsonObject = new JSONObject();
+	   
+	   json = jsonObject.toString();
+	   return json;
+   }
 }

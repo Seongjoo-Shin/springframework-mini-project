@@ -10,6 +10,7 @@ import com.mycompany.webapp.dao.TakeDao;
 import com.mycompany.webapp.dto.BuildingDto;
 import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.EquipmentDto;
+import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MessageDto;
 
 @Service
@@ -53,5 +54,25 @@ public class TakeService {
 	
 	public int sendMessage(MessageDto message) {
 		return takeDao.insertMessage(message);
+	}
+
+	public int buildingFilesCount(String buildingNo) {
+		return takeDao.buildingFilesCount(buildingNo);
+	}
+
+	public int selectLikeListByBuildingNo(LikeListDto lld) {
+		return takeDao.selectLikeListByBuildingNo(lld);
+	}
+
+	public void insertLikeLists(LikeListDto lld) {
+		takeDao.insertLikeLists(lld);
+	}
+
+	public void deleteLikeLists(LikeListDto lld) {
+		takeDao.deleteLikeLists(lld);
+	}
+
+	public void updateLikeCount(BuildingDto bdt) {
+		takeDao.updateLikeCount(bdt);
 	}
 }

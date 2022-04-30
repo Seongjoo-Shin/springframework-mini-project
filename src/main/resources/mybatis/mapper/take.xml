@@ -67,6 +67,20 @@
 		where building_no = #{buildingNo}
 	</select>
 	
+	<!-- 인수매물의 일반 사진의 갯수를 가져오는! -->
+	<select id="buildingFilesCount" parameterType="String" resultType="int">
+		select count(*) from buildingfiles
+		where building_no = #{buildingNo}
+			and panorama_check = '0'
+	</select>
+	
+	<select id="selectLikeListByBuildingNo" parameterType="likelist" resultType="int">
+		select count(*) from likelists
+		where like_type = #{likeType}
+			and like_list_no = #{likeListNo}
+			and like_user_id = #{likeUserId}
+	</select>
+	
 	<!-- ============================================================================= -->
 	
 	<insert id="insertBuilding" parameterType="building">
@@ -133,4 +147,26 @@
 			0
 		)
 	</insert>
+	
+	<insert id="insertLikeLists" parameterType="likelist">
+		insert into likelists
+		values (
+			#{likeType},
+			#{likeListNo},
+			#{likeUserId}
+		)
+	</insert>
+	
+	<update id="updateLikeCount" parameterType="building">
+		update buildings
+		set building_like_count = #{buildingLikeCount}
+		where building_no = #{buildingNo}
+	</update>
+	
+	<delete id="deleteLikeLists" parameterType="likelist">
+		delete from likelists
+		where like_type = #{likeType}
+			and like_list_no = #{likeListNo}
+			and like_user_id = #{likeUserId}
+	</delete>
 </mapper>

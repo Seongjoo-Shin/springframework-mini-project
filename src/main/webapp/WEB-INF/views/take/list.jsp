@@ -116,7 +116,7 @@
 	                                </div>
 	                                <div style="width:100%;height:555px; border: 1px solid rgb(192, 191, 191); padding: 15px; overflow:auto;">
 	                                    <ul id="saleList" class="overflow-auto" style="list-style:none;">
-	                                    	<c:forEach var="building" items="${buildings}">
+	                                    	<c:forEach var="building" items="${buildings}" varStatus="status">
 	                                    		<li id="" name="building${building.buildingNo}" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
 		                                    		<div class="container-fluid">
 		                                    			<div class="row">
@@ -136,7 +136,7 @@
 					                                    		</div>
 			                                    			</div>
 			                                    			<div class="col-5 p-0 m-0">
-			                                    				<img class="border rounded" src="getBuildingImage?buildingNo=${building.buildingNo}" width="250px" height="150px"/>
+			                                    				<img class="border rounded" src="getBuildingImage?buildingNo=${building.buildingNo}&type=nomal&img=0" width="250px" height="150px"/>
 			                                    			</div>
 		                                    			</div>
 		                                    		</div>
