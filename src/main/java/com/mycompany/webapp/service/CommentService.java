@@ -42,4 +42,9 @@ public class CommentService {
 	public void updateComment(CommentDto commentDto) {
 		commentDao.updateComment(commentDto);
 	}
+	
+	//대댓글 등록
+	public int insertReplyComment(CommentDto commentDto) {
+		return commentDao.insertReplyComment(commentDto);
+	}
 }

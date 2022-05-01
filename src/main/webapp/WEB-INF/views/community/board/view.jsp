@@ -47,10 +47,10 @@
 			              		<input id="freeNo${commentDto.commentNo}" type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
 			              		<input id="commentNo${commentDto.commentNo}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
 			              		<input id="upperNo${commentDto.commentNo}" type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
-			              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>		                     
-		                       <div style="flex: 8; padding: 4px 13px;">
-		                         <p style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
-		                         <div id="commentContent" class="comment-text">
+			              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
+			                     <div style="flex: 8; padding: 4px 13px;">
+		                         <p id="commentWriter${commentDto.commentNo}" style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
+		                         <div id="commentContent${commentDto.commentNo}" class="comment-text">
 		                           ${commentDto.commentContent}
 		                         </div>
 		                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>
@@ -58,47 +58,21 @@
 		        			</div>
 							<div class="col-2">
 		                  		<div class="d-flex flex-column comment2" style="margin-right: 13px;">
-		                  			<button class="commentBtn">답글</button>
+		                  			<button class="commentBtn" onclick="bringReplyJson('${commentDto.commentNo}')">답글</button>
 		                       		<c:if test="${sessionUserId == commentDto.commentWriter}">
 	             				       <button class="commentBtn" onclick="updateContent('${commentDto.commentNo}')">수정</button>
 	             				       <form method="post" action="commentDelete">
 	             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
 	             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
 	             				       		<button type="submit" class="commentBtn" style="width:90px;">삭제</button>
-	             				       	</form>
-			                   		   	<script>
-			                   		   		function updateContent(commentNo){
-			                   		   			var commentNo = $("#commentNo"+commentNo).val();
-			                   		   			var freeNo = $("#freeNo"+commentNo).val();
-			                   		   			
-			                   		   			var commentContent = "${commentDto.commentContent}";       		   		
-			                   		   			var userNickname = "${commentDto.userDto.userNickname}";
-			                   		   			var userId = "${commentDto.commentWriter}";
-			                   		   			var statusIndex = "statusIndex";
-			                   		   			
-			                   		   			$("#container"+commentNo).attr('style','display:none');
-			                   		   			
-			                   		   			console.log(userNickname);
-		                   		   			
-			                   		   			$.ajax({
-			                   		   				url: "/community/board/updateContent",
-			                   		   				data: {"commentContent":commentContent, "commentNo":commentNo, "userId":userId,
-			                   		   						"userNickname":userNickname, "freeNo":freeNo},
-			                   		   				method: "post"
-			                   		   			}).done((data)=>{
-			                   		   				$("#innerContainer"+commentNo).html(data);
-			                   		   			}) 
-			                   		   		}
-			                   		   	
-			                   		   	</script>
-			                   		 	                                         
+	             				       	</form>                                 
 		                       		</c:if>
 		                      	</div>							
 							</div>
-
 		                  	</div>
-		                  </li>	 
-		                  
+		                  	<div id ="replyContainer${commentDto.commentNo}"></div>
+		                  	<div id ="replyComment${commentDto.commentNo}"></div>
+		                  </li>	                  
 	              	  </c:forEach>  
 		              <li class="list-group-item">
 		              	<form method="post" action="insertComment" id="insertComment">
@@ -122,32 +96,102 @@
       </div>
       </div>
     </section>
-    <script>
-    /* function goSubmit(){
-	      $("#insertForm").submit(); //form태그의 action="insertContent"탐
-	    } */
-    
-    
-    	//삭제 버튼을 눌렀을 때
-/*     	function commentDelete(){
-    		$("#modifyDelete").subit();
-    	} */
-    
-    
-    
-/*  		function commentDelete(){
-			console.log("commentDelete() 실행")
-			let statusIndex = ${"#statusIncex"}.val();
-			console.log("statusIndex");
+<script>
+	function updateContent(commentNo){
+		var freeNo = $("#freeNo"+commentNo).val();
+		var commentContent = $("#commentDto"+commentNo).val();
+		var userNickname = $("#commentWriter"+commentNo).text();    
+		console.log("userNickname");
+		var userId = "${sessionUserId}";
+		$("#container"+commentNo).attr('style','display:none');
+		
+		console.log(userNickname);
+
+		$.ajax({
+			url: "/community/board/updateContent",
+			data: {"commentContent":commentContent, "commentNo":commentNo, "userId":userId,
+					"userNickname":userNickname, "freeNo":freeNo},
+			method: "post"
+		}).done((data)=>{
+			$("#innerContainer"+commentNo).html(data);
+		}) 
+	}
+
+	function bringReplyJson(commentNo){
+		var param = {
+			upperNo : $("#upperNo"+commentNo).val(),
+			freeNo : $("#freeNo"+commentNo).val(),
+			userId : "${sessionUserId}",
+			commentDepth : $("#commentDepth"+commentNo).val()
+		}
+
+		$.ajax({
+			url: "/community/board/bringReplyJson",
+			data: param,
+			method: "post"
+		
+		}).done((data)=>{
+			var html = '';
+			html +='	<div class="row pl-5" style="display: flex;">';
+			html +='		<div style="flex: 8; padding: 4px 13px;">';
+			html +='			<p style="font-weight: bold;">\''+data.sessionUserNickname+'\'</p>';
+			html +='			<textarea id="textarea\''+data.upperNo+'\'" placeholder="댓글을 입력해 주세요." style="display: block; width: 100%; height: 60px; resize: none;"></textarea>';
+			html +='		</div>';
+			html +='		<div class="d-flex flex-column justify-content-end mb-3" style="margin-right: 13px;">';
+			html +='		  <button type="submit" class="commentBtn" onclick="registReply(\''+data.commentNo+'\')">등록</button>';
+			html +='		</div>';
+			html +='	</div>';
 			
+			$("#replyContainer"+commentNo).html(html);
+		})
+	}
+	
+	function registReply(commentNo){
+		var resParam = {
+				upperNo : $("#upperNo"+commentNo).val(),
+				freeNo : $("#freeNo"+commentNo).val(),
+				sessionUserId : "${sessionUserId}",
+				commentDepth : $("#commentDepth"+commentNo).val(),
+				commentContext: $("#textarea"+commentNo).text()
+			}
+
+		$.ajax({
+			url: "community/board/registReply",
+			data: resParam,
+			method:"post"
+		}).done((data)=>{
+			$("#container"+commentNo).attr('style','display:none');
 			
-			$.ajax({
-				url:"commentDelete",
-				data: {commentNo},
-				method: "post"
-			}).done(()=>{
-				console.log("해당 댓글 삭제")
-			});
-		}  */
-    </script>
+			var html = '';
+			html += '<div id="container\''+data.commentDto.commentNo+'\' class="row">';
+			html += '<div class="col-10">';            
+			html += '   <div style="flex: 8; padding: 4px 13px;">';
+			html += '     <p id="commentWriter\''+data.commentDto.commentNo+'\' style="font-weight: bold;">\''+data.commentDto.userDto.userNickname+'\'</p>';
+			html += '     <div id="commentContent\''+data.commentDto.commentNo+'\' class="comment-text">';
+			html += data.commentDto.commentContent;
+			html += '     </div>';
+			html += '     <p><small>'+data.commentDto.commentRegistDate+'</small></p>';
+			html += '   </div>';                    		                    			
+			html += '</div>';
+			html += '<div class="col-2">';
+			html += '	<div class="d-flex flex-column comment2" style="margin-right: 13px;">';
+// 			html += '   		<c:if test="${sessionUserId == commentDto.commentWriter}">';
+			if('${sessionUserId}'==data.commentDto.commentWriter){
+				html += '	       <form method="post" action="commentDelete">';
+				html += '	       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>';
+				html += '	       		<input id="${status.index}" type="hidden" name="commentNo" value="\''+data.commentDto.commentNo+'\'/>';
+				html += '	       		<button type="submit" class="commentBtn" style="width:90px;">삭제</button>';
+				html += '	       	</form>';          		 	                                         
+			}
+// 			html += '   		</c:if>';
+			html += '     </div>	';						
+			html += '</div>';
+			html += '</div>';
+			
+			$("#container"+commentNo).html(resParam);
+		})
+		
+	}
+		
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

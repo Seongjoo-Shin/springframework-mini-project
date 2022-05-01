@@ -80,10 +80,39 @@
 		where comment_no = #{commentNo}
 	</update>
 
-<!-- 	<select id="selectByFreeNo" parameterType="pager" resultMap="">
-		
-	
+	<!-- 대댓글 버튼1 -->
+<!-- 	<select id="selectbyCommentNo" parameterType="int" resultType="comment">
+	    SELECT c.free_no, c.comment_no, c.comment_writer, c.comment_content, c.comment_regist_date, c.comment_modify_date, c.comment_use_yn, c.upper_no, c.comment_depth, u.user_Nickname
+	    FROM comments c, users u
+	    where c.comment_writer = u.user_id and c.comment_no = #{commentNo} and c.comment_use_yn=1
 	</select> -->
-
+	
+	<!-- 대댓글 insert -->
+	<insert id="insertReplyComment" parameterType="Map">
+		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
+			select COMMENTS_SEQ.nextval from dual
+		</selectKey>
+		insert into comments (
+			free_no, 
+			comment_no, 
+			comment_writer, 
+			comment_content, 
+			comment_regist_date, 
+			comment_modify_date, 
+			comment_use_yn, 
+			upper_no, 
+			comment_depth)
+		values(
+			#{freeNo}, 
+			#{commentNo}, 
+			#{commentWriter}, 
+			#{commentContent}, 
+			#{commentRegistDate}, 
+			#{commentModifyDate}, 
+			1, 
+			#{upperNo}, 
+			#{commentDepth})
+	</insert>
+	
 
 </mapper>

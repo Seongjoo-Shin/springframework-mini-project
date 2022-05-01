@@ -1,13 +1,16 @@
 package com.mycompany.webapp.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,7 @@ import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.service.CommentService;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.UserService;
+import com.mycompany.webapp.service.UserService.LoginResult;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -111,7 +115,7 @@ public class CommunityController {
 	@GetMapping("/board/boardDetail")
 	public String boardDetail(int freeNo, Model model, HttpSession session, HttpServletRequest request) {
 		
-		//freeBoardDto 내용 model에 싣기
+ 		//freeBoardDto 내용 model에 싣기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
 		freeBoardService.setupdateHitCount(freeNo);
 		model.addAttribute("freeBoardDto", freeBoardDto);
@@ -242,7 +246,78 @@ public class CommunityController {
 		model.addAttribute("commentNo", commentNo);
 		model.addAttribute("userNickname", userNickname);
 		model.addAttribute("freeNo", freeNo);
-		return "/community/board/comment";
+		return "/community/board/commentModify";
+	}
+	
+	//답글달기 버튼 클릭했을 때 -> 조각 html 리턴
+	@PostMapping("/board/bringReplyForm")
+	public String bringReplyForm(int upperNo, String userId, int commentDepth, int freeNo, Model model) {
+		//1. 닉네임 얻기
+		String userNickname = userService.getNickname(userId);
+		
+		model.addAttribute("sessionUserNickname", userNickname);
+		model.addAttribute("upperNo", upperNo);
+		model.addAttribute("userId", userId);
+		model.addAttribute("commentDepth", commentDepth);
+		model.addAttribute("freeNo", freeNo);
+
+		return "/community/board/commentReplyForm";
+	}
+	
+	@PostMapping(value = "/board/bringReplyJson", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String bringReplyJson(int upperNo, String userId, int commentDepth, int freeNo, Model model) {
+		
+		//1. 닉네임 얻기
+		String userNickname = userService.getNickname(userId);
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("sessionUserNickname", userNickname);
+		jsonObject.put("upperNo", upperNo);
+		jsonObject.put("userId", userId);
+		jsonObject.put("commentDepth", commentDepth);
+		jsonObject.put("freeNo", freeNo);
+
+		jsonObject.put("result", "success");
+		
+		String json = jsonObject.toString();
+		return json; 
+	}
+	
+	
+	@PostMapping("/board/registReply")
+	public String replyComment(
+			@RequestParam("upperNo") int upperNo,
+			@RequestParam("freeNo") int freeNo,
+			@RequestParam("commentContent") String commentContent,
+			@RequestParam("sessionUserId") String sessionUserId,
+			@RequestParam("commentDepth") int commentDepth){
+		
+		//댓글 등록 시간
+		Date utilDate = new Date();
+		long timeInMilliSeconds = utilDate.getTime();
+		java.sql.Date sqlDate = new java.sql.Date(timeInMilliSeconds);
+		
+		CommentDto commentDto = new CommentDto();
+		commentDto.setUpperNo(upperNo);
+		commentDto.setFreeNo(freeNo);
+		commentDto.setCommentContent(commentContent);
+		commentDto.setCommentWriter(sessionUserId);
+		commentDto.setCommentDepth(commentDepth+1);
+		commentDto.setCommentModifyDate(sqlDate);
+		commentDto.setCommentRegistDate(sqlDate);
+
+		
+		int commentNo = commentService.insertReplyComment(commentDto);
+		commentDto.setCommentNo(commentNo);
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("commentDto", commentDto);
+		
+		String json = jsonObject.toString();
+		log.info(json.toString());
+		
+		return "json";
 	}
 
 
