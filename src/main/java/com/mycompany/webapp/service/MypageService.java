@@ -151,4 +151,8 @@ public class MypageService {
 	public int deleteLikeBuilding(LikeListDto likeList) {
 		return mypageDao.deleteLikeBuilding(likeList);
 	}
+
+	public int updateBuildingLikeCount(int buildingNo) {
+		return mypageDao.updateBuildingLikeCount(buildingNo);
+	}
 }

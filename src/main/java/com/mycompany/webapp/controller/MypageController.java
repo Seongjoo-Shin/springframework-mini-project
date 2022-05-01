@@ -239,6 +239,7 @@ public class MypageController {
 		log.info(likeList);
 		
 		mypageService.deleteLikeBuilding(likeList);
+		mypageService.updateBuildingLikeCount(buildingNo);
 		
 		return "mypage/prefer/buildingprefer";
 	}

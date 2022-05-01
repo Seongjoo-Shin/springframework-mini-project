@@ -175,7 +175,6 @@
 			html += '</div>';
 			html += '<div class="col-2">';
 			html += '	<div class="d-flex flex-column comment2" style="margin-right: 13px;">';
-// 			html += '   		<c:if test="${sessionUserId == commentDto.commentWriter}">';
 			if('${sessionUserId}'==data.commentDto.commentWriter){
 				html += '	       <form method="post" action="commentDelete">';
 				html += '	       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>';
@@ -183,7 +182,6 @@
 				html += '	       		<button type="submit" class="commentBtn" style="width:90px;">삭제</button>';
 				html += '	       	</form>';          		 	                                         
 			}
-// 			html += '   		</c:if>';
 			html += '     </div>	';						
 			html += '</div>';
 			html += '</div>';

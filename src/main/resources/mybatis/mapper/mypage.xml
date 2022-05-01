@@ -357,4 +357,13 @@
 		where like_list_no = #{likeListNo} and like_user_id = #{likeUserId} and like_type = #{likeType}
 	</delete>
 	
+	<update id="updateBuildingLikeCount" parameterType="Integer">
+		UPDATE
+		    buildings   
+		SET 
+		    building_like_count = building_like_count - 1    
+		WHERE    
+			building_no = #{buildingNo}
+	</update>
+	
 </mapper>
