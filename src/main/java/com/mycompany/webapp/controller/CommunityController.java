@@ -222,19 +222,29 @@ public class CommunityController {
 		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}
 	
-	/*	@PostMapping("/board/updateContent")
-		public String updateContent() {
-			return "community/board/comment";
-		}*/
+	//수정 하고 수정버튼 눌렀을 때
+	@PostMapping("/board/updateComment")
+	public String updateContent(
+			@RequestParam("freeNo") int freeNo,
+			@RequestParam("commentContent") String commentContent,
+			@RequestParam("commentNo") int commentNo) {
+		CommentDto commentDto = new CommentDto();
+		commentDto.setCommentContent(commentContent);
+		commentDto.setCommentNo(commentNo);
+		commentService.updateComment(commentDto);
+		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
+	}
 	
 	//댓글 수정 html 조각 가져오기
-	@RequestMapping(value="/board/updateContent", produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public String updateContent(String commentContent, int commentNo, Model model) {
+	@PostMapping("/board/updateContent")
+	public String updateContent(String commentContent, int commentNo, String userNickname, int freeNo, Model model) {
 		model.addAttribute("commentContent", commentContent);
 		model.addAttribute("commentNo", commentNo);
-		return "community/board/updateContent?";
+		model.addAttribute("userNickname", userNickname);
+		model.addAttribute("freeNo", freeNo);
+		return "/community/board/comment";
 	}
+
 
 	// 거래게시판 - market -------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")

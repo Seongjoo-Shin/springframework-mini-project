@@ -15,7 +15,7 @@
               <div>
                 <p class="d-inline-block h6 mx-2">글쓴이 <span class="ml-1">${freeBoardDto.userDto.userNickname}</span></p>
                 <p class="d-inline-block h6 float-right mx-2">조회수: <span>${freeBoardDto.freeHitCount}</span></p>
-                <p class="d-inline-block h6  float-right mx-2"><fmt:formatDate value="${freeBoardDto.freeRegistDate}" pattern="hh:mm"/></p>
+                <p class="d-inline-block h6  float-right mx-2"><fmt:formatDate value="${freeBoardDto.freeRegistDate}" pattern="HH:mm"/></p>
                 <p class="d-inline-block h6 float-right mx-2"><fmt:formatDate value="${freeBoardDto.freeRegistDate}" pattern="yyyy-MM-dd"/></p>            
               </div>
               <div id="free-board-title" class="h4 p-3" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeTitle}</div>
@@ -41,6 +41,7 @@
 	              <ul>
  	              	<c:forEach var="commentDto" items="${comments}" varStatus="status">	  
 		        		<li class="list-group-item">
+		        			<div id ="innerContainer${commentDto.commentNo}"></div>
 		        			<div id="container${commentDto.commentNo}" class="row">
 		        			<div class="col-10">
 			              		<input id="freeNo${commentDto.commentNo}" type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
@@ -52,7 +53,7 @@
 		                         <div id="commentContent" class="comment-text">
 		                           ${commentDto.commentContent}
 		                         </div>
-		                         <p><small>${commentDto.commentModifyDate}</small></p>
+		                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>
 		                       </div>		                     		                    			
 		        			</div>
 							<div class="col-2">
@@ -63,7 +64,7 @@
 	             				       <form method="post" action="commentDelete">
 	             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
 	             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
-	             				       		<button type="submit" class="commentBtn">삭제</button>
+	             				       		<button type="submit" class="commentBtn" style="width:90px;">삭제</button>
 	             				       	</form>
 			                   		   	<script>
 			                   		   		function updateContent(commentNo){
@@ -77,15 +78,15 @@
 			                   		   			
 			                   		   			$("#container"+commentNo).attr('style','display:none');
 			                   		   			
-			                   		   			console.log(statusIndex);
-			                   		   			console.log(commentNo);
+			                   		   			console.log(userNickname);
 		                   		   			
 			                   		   			$.ajax({
-			                   		   				url: "/board/updateContent",
-			                   		   				method: "post",
-			                   		   				data: {"commentContent":commentContent, "commentNo":commentNo}
+			                   		   				url: "/community/board/updateContent",
+			                   		   				data: {"commentContent":commentContent, "commentNo":commentNo, "userId":userId,
+			                   		   						"userNickname":userNickname, "freeNo":freeNo},
+			                   		   				method: "post"
 			                   		   			}).done((data)=>{
-			                   		   				$("#container"+commentNo).html(data);
+			                   		   				$("#innerContainer"+commentNo).html(data);
 			                   		   			}) 
 			                   		   		}
 			                   		   	

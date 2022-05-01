@@ -37,4 +37,9 @@ public class CommentService {
 	public void deleteComment(int commentNo) {
 		commentDao.deleteComment(commentNo);
 	}
+	
+	//댓글 수정
+	public void updateComment(CommentDto commentDto) {
+		commentDao.updateComment(commentDto);
+	}
 }
