@@ -73,6 +73,16 @@
 	    <result property="messageReplyYN" column="message_reply_yn"/>
 	</resultMap>
 	
+	<resultMap type="buildingfile" id="buildingFileDtoResult">
+		<result column="building_no" property="buildingNo"/>
+		<result column="building_file_no" property="buildingFileNo"/>
+		<result column="attach_original_name" property="attachOriginalName"/>
+		<result column="attach_save_name" property="attachSaveName"/>
+		<result column="attach_type" property="attachType"/>
+		<result column="panorama_check" property="panoramaCheck"/>
+		<result column="building_image_file_data" property="imageFileData"/>
+	</resultMap>
+	
 	<select id="selectUser" resultMap="userMap" parameterType="String">
 		SELECT 
 			* 
@@ -183,7 +193,7 @@
 			market_no = #{marketNo}
 	</update>
 	
-	<!-- 인수매물 -->
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  인수매물  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 	<select id="selectAllBuilding" resultType="Integer" parameterType="String">
 		SELECT 
 			count(*) 
@@ -310,5 +320,41 @@
 			message_no = #{messageNo}
 	</update>
 	
-	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 찜목록 인수 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+	<select id="selectLikeBuildingCnt" parameterType="String" resultType="Integer">
+		SELECT
+			count(*)
+		FROM
+			likelists
+		WHERE
+			like_user_id = #{userId}
+	</select>
+	
+	<select id="selectLikeListWithBuilding" parameterType="pager" resultMap="buildingMap">
+		<![CDATA[
+		SELECT rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		FROM (
+		  SELECT ROWNUM as rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		  FROM (
+		    SELECT building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		    FROM buildings b, likelists l
+		    WHERE b.building_no = l.like_list_no and l.like_user_id = #{userId}
+		    ORDER BY b.building_no desc
+		  )
+		  WHERE ROWNUM <= #{endRowNo}
+		)
+		WHERE rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	<select id="selectImageFileByBuildingNo" parameterType="String" resultMap="buildingFileDtoResult">
+		select * from buildingfiles
+		where building_no = #{buildingNo}
+	</select>
+	
+	<delete id="deleteLikeBuilding" parameterType="likelist">
+		delete from likelists 
+		where like_list_no = #{likeListNo} and like_user_id = #{likeUserId} and like_type = #{likeType}
+	</delete>
+	
 </mapper>

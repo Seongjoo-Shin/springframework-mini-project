@@ -1,11 +1,16 @@
 package com.mycompany.webapp.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.BuildingDto;
+import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.dto.PagerDto;
@@ -176,28 +183,67 @@ public class MypageController {
 		}
 	}
 
-	// 찜목록 페이지 이동
-	@RequestMapping("/prefer")
-	public String prefer(HttpSession session) {
-		log.info("실행");
-		if(session.getAttribute("sessionUserId") == null) {
-			return "redirect:/index/loginForm";
-		} else {
-			
-			return "/mypage/prefer";
-		}
-	}
-
+	// ------------------------------- 찜목록 인수 ---------------------------------------
 	@RequestMapping("/prefer/buildingprefer")
-	public String buildingprefer(HttpSession session) {
+	public String buildingprefer(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, Model model) {
 		log.info("실행");
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		} else {
+			String userId = (String) session.getAttribute("sessionUserId");
+			int totalCnt = mypageService.getLikeBuildingCnt(userId);
+			PagerDto pager = new PagerDto(8, 10, totalCnt, pageNo);
+			pager.setUserId(userId);
+			model.addAttribute("pager", pager);
+			List<BuildingDto> buildings = mypageService.getLikeBuilding(pager);
+			model.addAttribute("total", totalCnt);
+			model.addAttribute("buildings", buildings);
 			return "/mypage/prefer/buildingprefer";			
 		} 
 	}
 	
+	@RequestMapping("/getBuildingImage")
+	public void getBuildingImage(HttpServletRequest req, HttpServletResponse res, String buildingNo, String type, String img) throws IOException {
+		List<BuildingFileDto> files = mypageService.selectImageFileByBuildingNo(buildingNo);
+   	    if(type.equals("nomal")) { //일반 사진만 가져와!
+   	    	int num = Integer.parseInt(img);
+			if(files.get(num).getPanoramaCheck() == 1) {
+				num++;
+			}
+			byte[] temp = files.get(num).getImageFileData();
+			InputStream is = new ByteArrayInputStream(temp);
+			IOUtils.copy(is, res.getOutputStream());
+   	    } else {
+			   //files안에 있는 파노라마 이미지를 찾기 위함
+   	    	for(BuildingFileDto f : files) {
+   	    		if(f.getPanoramaCheck() == 1) { //파노라마 사진이라면...!
+   	    			byte[] temp = f.getImageFileData();
+					InputStream is = new ByteArrayInputStream(temp);
+					IOUtils.copy(is, res.getOutputStream());
+				}
+			}
+		}
+	}
+	
+	@PostMapping("/deleteLikeBuilding")
+	public String deleteLikeBuilding(HttpServletRequest request, HttpSession session) {
+		
+		log.info("실행");
+		String userId = (String) session.getAttribute("sessionUserId");
+		int buildingNo = Integer.parseInt(request.getParameter("buildingNo"));
+		LikeListDto likeList = new LikeListDto();
+		likeList.setLikeListNo(buildingNo);
+		likeList.setLikeType("building");
+		likeList.setLikeUserId(userId);
+		
+		log.info(likeList);
+		
+		mypageService.deleteLikeBuilding(likeList);
+		
+		return "mypage/prefer/buildingprefer";
+	}
+	
+	// ------------------------------- 찜목록 거래---------------------------------------
 	@RequestMapping("/prefer/marketprefer")
 	public String marketprefer(HttpSession session) {
 		log.info("실행");

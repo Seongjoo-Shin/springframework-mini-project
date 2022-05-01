@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mycompany.webapp.dto.BuildingDto;
+import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.dto.PagerDto;
@@ -50,14 +52,25 @@ public interface MypageDao {
 	public int updateReplyYN(int changeNo);
 	
 	// 찜목록
-	public List<BuildingDto> selectBuildingLikeist(PagerDto pager, UserDto user); // 본인이 관심있는 인수목록 리스트
-	public int updateLikeBuilding(int buildingNo, UserDto user); // 본인의 관심 인수매물 삭제
+	public List<BuildingDto> selectLikeListWithBuilding(PagerDto pager); // 본인이 관심있는 인수목록 리스트
+	public int selectLikeBuildingCnt(String userId);
+	public List<BuildingFileDto> selectImageFileByBuildingNo(String buildingNo);
+	public int deleteLikeBuilding(LikeListDto likeList); // 본인의 관심 인수매물 삭제
 	
 	public List<MarketBoardDto> selectMarketListList(PagerDto pager, UserDto user); // 본인이 관심있는 거래매물 리스트
 	public int updateListMarket(int marketNo, UserDto user); // 본인의 관심 거래매물 삭제
 	
 	// 회원 탈퇴
 	public int userWithdrawal(UserDto user);
+
+	
+	
+
+	
+
+	
+
+	
 
 
 

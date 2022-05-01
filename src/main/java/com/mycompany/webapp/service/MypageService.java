@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.MypageDao;
 import com.mycompany.webapp.dto.BuildingDto;
+import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.dto.PagerDto;
@@ -130,5 +132,23 @@ public class MypageService {
 	// --------------------- 사용자 탈퇴 ------------------------------
 	public int userWithdrawal(UserDto user) {
 		return mypageDao.userWithdrawal(user);
+	}
+	
+	
+	// --------------------- 찜목록 인수 ------------------------------
+	public List<BuildingDto> getLikeBuilding(PagerDto pager) {
+		return mypageDao.selectLikeListWithBuilding(pager);
+	}
+
+	public int getLikeBuildingCnt(String userId) {
+		return mypageDao.selectLikeBuildingCnt(userId);
+	}
+
+	public List<BuildingFileDto> selectImageFileByBuildingNo(String buildingNo) {
+		return mypageDao.selectImageFileByBuildingNo(buildingNo);
+	}
+
+	public int deleteLikeBuilding(LikeListDto likeList) {
+		return mypageDao.deleteLikeBuilding(likeList);
 	}
 }
