@@ -57,7 +57,7 @@
 							</div>
 							<div class="float-left">
 								<p>${market.marketTitle}</p><br>
-								<span><img src="${pageContext.request.contextPath}/resources/images/like (2).png"/> &nbsp;${market.marketLikeCount }</span><br>
+								<span><img src="${pageContext.request.contextPath}/resources/images/like.png"/>&nbsp;&nbsp;${market.marketLikeCount }</span><br>
 								<span>${market.marketCategory}</span><br> 
 								<span>${market.marketPrice}</span><br> 
 								<span><fmt:formatDate value="${market.marketRegistDate}" pattern="yyyy-MM-dd"/></span>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.KeyWordDto;
@@ -79,6 +80,45 @@ public class OpeningController {
 		jsonObject.put("keywordsLength", res.size());
 		String json = jsonObject.toString();
 		
+		return json;
+	}
+	
+	@RequestMapping(value="/oneKeyword", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String oneKeyword(@RequestParam("kNo") int keywordNo) {
+		
+		KeyWordDto keyword = openingService.getKeyword(keywordNo);
+		JSONObject jsonObject = new JSONObject();
+		if(keyword.getKeyword1() != null) {
+			jsonObject.put("keyword1", keyword.getKeyword1());
+		}
+		if(keyword.getKeyword2() != null) {
+			jsonObject.put("keyword2", keyword.getKeyword2());
+		}
+		if(keyword.getKeyword3() != null) {
+			jsonObject.put("keyword3", keyword.getKeyword3());
+		}
+		if(keyword.getKeyword4() != null) {
+			jsonObject.put("keyword4", keyword.getKeyword4());
+		}
+		if(keyword.getKeyword5() != null) {
+			jsonObject.put("keyword5", keyword.getKeyword5());
+		}
+		if(keyword.getKeyword6() != null) {
+			jsonObject.put("keyword6", keyword.getKeyword6());
+		}
+		if(keyword.getKeyword7() != null) {
+			jsonObject.put("keyword7", keyword.getKeyword7());
+		}
+		if(keyword.getKeyword8() != null) {
+			jsonObject.put("keyword8", keyword.getKeyword8());
+		}
+		
+		jsonObject.put("latitude", keyword.getLatitude());
+		jsonObject.put("longitude", keyword.getLongitude());
+		
+		String json = jsonObject.toString();
+		log.info(json);
 		return json;
 	}
 }

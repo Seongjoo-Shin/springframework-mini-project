@@ -11,5 +11,6 @@ public interface OpeningDao {
 	
 	public List<KeyWordDto> selectAllKeyword();
 	public List<KeyWordDto> selectKeyword(KeyWordDto keyword); // 키워드 
+	public KeyWordDto selectOneKeyword(int keywordNo);
 	
 }

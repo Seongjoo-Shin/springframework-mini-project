@@ -128,33 +128,12 @@
                                 
                                 function initMap(){
                                 	setTimeout(() => {
-                                		/* positions.forEach(function(position) {
-                                			//console.log("$$$$ : " + no.keywordNo);
-                                			marker = new naver.maps.Marker({
-	                                			map: map,
-	                                			position: new naver.maps.LatLng(position.lat, position.lng),
-	                                			icon: {
-	                                				content: '<img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;">',
-	                                                size: new naver.maps.Size(20, 27),
-	                                                origin: new naver.maps.Point(0, 0),
-	                                                anchor: new naver.maps.Point(16, 32),
-	                                			}
-	                                	 	});
-                                			infoWindow = new naver.maps.InfoWindow({
-	                                            content: '<form method="get" action="/take/list"><div class="p-2 gotoTake" style="width:200px;"><div class="text-center w-100"><input type="hidden" value="' + position.lat + '" name="latitude"/><input type="hidden" value="' + positions.lng+'" name="longitude"/><input type="submit" class="btn btn-sm btn-outline-dark w-100" value="주변매물 보러가기" /></div></div></form>',
-												
-	                                	 	});
-	                                	 	markers.push(marker);
-	                                        infoWindows.push(infoWindow);
-	                                        naver.maps.Event.addListener(markers[position.keywordNo], "click", getClickHandler(position.keywordNo)); // 클릭한 마커 핸들러
-                                		}); */
-                                		
 	                                	for(var i=0; i<positions.length; i++){
 	                                	 	marker = new naver.maps.Marker({
 	                                			map: map,
 	                                			position: new naver.maps.LatLng(positions[i].lat, positions[i].lng),
 	                                			icon: {
-	                                				content: '<img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;">',
+	                                				content: '<a onclick="innerInfo(\''+positions[i].keywordNo+'\');"><img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;"></a>',
 	                                                size: new naver.maps.Size(20, 27),
 	                                                origin: new naver.maps.Point(0, 0),
 	                                                anchor: new naver.maps.Point(16, 32),
@@ -165,11 +144,8 @@
 												
 	                                	 	});
 	                                	 	markers.push(marker);
-	                                	 	
 	                                        infoWindows.push(infoWindow);
-	                                        
 	                                	}
-										
                                 		for(var i=0, ii=markers.length; i<ii; i++) {
                                             naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
                                         }
@@ -192,11 +168,6 @@
                                 			infoWindow.close();
                                 		}else {
                                             infoWindow.open(map, marker); // 표출
-                                			document.querySelector("#msgBox").innerHTML = '';
-                                			var html = '';
-                                			html += '<div>';
-                                			html += '</div>';
-                                			document.querySelector("#msgBox").innerHTML = html;
                                         }
                                 	}
                                 }
@@ -227,21 +198,9 @@
                                 		
                                 		for(var i=0; i<markers.length; i++){
                                 			markers[i].setMap(null);
+                                			infoWindows[i].setMap(null);
                                 		}
 										
-                                		for(var i=0; i<data.keywordsLength; i++){
-	                                		naver.maps.Service.reverseGeocode({
-	                                            location: new naver.maps.LatLng(data.keywords[i].latitude, data.keywords[i].longitude),
-	                                        }, function(status, response) {
-	                                            if (status !== naver.maps.Service.Status.OK) {
-	                                                return alert('Something wrong!');
-	                                            }
-	                                            result = response.result; // 검색 결과의 컨테이너
-	                                            items = result.items.address; // 검색 결과의 배열
-	                                            addr = result.items[1].address;
-	                                            juso.push(addr);
-	                                        });
-	                                	}
 										setTimeout(() => {
 											for(var i=0; i<data.keywordsLength; i++){
 	                                			positions.push(
@@ -267,6 +226,60 @@
                                 	}).fail((data) => {
                                 		console.log(data);
                                 	});
+								}
+								
+								function innerInfo(kNo){
+									var addr;
+									document.getElementById("msgBox").innerHTML = '';
+									$.ajax({
+										url: '/opening/oneKeyword',
+										data: {kNo},
+									}).done((data) => {
+										naver.maps.Service.reverseGeocode({
+                                            location: new naver.maps.LatLng(data.latitude, data.longitude),
+                                        }, function(status, response) {
+                                            if (status !== naver.maps.Service.Status.OK) {
+                                                return alert('Something wrong!');
+                                            }
+                                            result = response.result; // 검색 결과의 컨테이너
+                                            items = result.items.address; // 검색 결과의 배열
+                                            addr = result.items[0].address;
+                                        });
+										console.log(data);
+										setTimeout(() => {
+											var html = '';
+											html += '<div>';
+											html += '    <p>주소 : ' + addr + '</p>';
+											if(data.keyword1 != null){
+												html += '    <span>' + data.keyword1 + '</span><br>';
+											}
+											if(data.keyword2 != null){
+												html += '    <span>' + data.keyword2 + '</span><br>';
+											}
+											if(data.keyword3 != null){
+												html += '    <span>' + data.keyword3 + '</span><br>';
+											}
+											if(data.keyword4 != null){
+												html += '    <span>' + data.keyword4 + '</span><br>';
+											}
+											if(data.keyword5 != null){
+												html += '    <span>' + data.keyword5 + '</span><br>';
+											}
+											if(data.keyword6 != null){
+												html += '    <span>' + data.keyword6 + '</span><br>';
+											}
+											if(data.keyword7 != null){
+												html += '    <span>' + data.keyword7 + '</span><br>';
+											}
+											if(data.keyword8 != null){
+												html += '    <span>' + data.keyword8 + '</span><br>';
+											}
+											html += '</div>';
+											document.getElementById("msgBox").innerHTML = html;	
+										}, 300)
+									}).fail((data) => {
+										
+									});
 								}
                             </script>
 					</div>

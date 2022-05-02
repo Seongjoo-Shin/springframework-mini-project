@@ -88,13 +88,20 @@
                                     <td><input type="checkbox" class="delete" name="messageNo" id="${message.messageNo}"/></td>
                                 </tr>
                             </c:forEach>
+                            <c:if test="${total eq 0 }">
+                            	<tr>
+                            		<td class="text-center" colspan="5"><h5>보낸 쪽지가 없습니다.</h5></td>
+                            	</tr>
+                            </c:if>
                             </tbody>
                         </table>
                     </div>
                     <div class="row float-right">
+                    	<c:if test="${total > 0}">
                         <div class="mr-2">
                             <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-dark" onclick="fn_checkedDel();"/>
                         </div>
+                        </c:if>
                     </div>
                     <div class="row d-flex justify-content-center mb-5">
                     <c:if test="${total > 0}">

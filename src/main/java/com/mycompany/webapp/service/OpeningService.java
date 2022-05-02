@@ -22,4 +22,8 @@ public class OpeningService {
 	public List<KeyWordDto> getKeywordPlace(KeyWordDto keyword) {
 		return openingDao.selectKeyword(keyword);
 	}
+
+	public KeyWordDto getKeyword(int keywordNo) {
+		return openingDao.selectOneKeyword(keywordNo);
+	}
 }

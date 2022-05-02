@@ -40,4 +40,13 @@
 		</trim>
 		ORDER BY keyword_no ASC
 	</select>
+	
+	<select id="selectOneKeyword" parameterType="Integer" resultType="keyword">
+		select 
+			* 
+		from 
+			keywords 
+		where 
+			keyword_no = #{keywordNo}
+	</select>
 </mapper>
