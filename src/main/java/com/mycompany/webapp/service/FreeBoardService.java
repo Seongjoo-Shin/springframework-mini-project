@@ -51,7 +51,4 @@ public class FreeBoardService {
 	public void setupdateHitCount(int freeNo) {
 		freeBoardDao.updateHitCount(freeNo);
 	}
-	
-	//댓글 --------------------------------------------------------------------------------
-	
 }

@@ -28,131 +28,74 @@
                 </div>
               </div>
             </div>
-            <div class="cardrow mb-4 col-12 d-flex justify-content-center">
-            <c:forEach var="i" begin="1" end="4">
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <a href="marketDetail"><img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" class="card-img-top row-cols-1 embed-responsive-item"/></a>
-                  </div>
-                  <div class="card-body" style="padding: 1rem;">
-                    <p style="margin-bottom: 0px;">제목입니다.</p>
-                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
-                    <button class="float-right recommentCount" onclick="changeImg(this);"><img src="${pageContext.request.contextPath}/resources/images/interestBefore.png" width="16px" class="interImg"><span class="interCnt">13</span></button>
-                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
-                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
-                  </div>
-                </div>
-              </div>       
-            </c:forEach>
-            </div>
-            <div class="cardrow mb-4 col-12 d-flex justify-content-center">
-            <c:forEach var="i" begin="1" end="4">
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body" style="padding: 1rem;">
-                    <p style="margin-bottom: 0px;">제목입니다.</p>
-                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
-                    <button class="float-right recommentCount" onclick="changeImg(this);"><img src="${pageContext.request.contextPath}/resources/images/interestBefore.png" width="16px" class="interImg"><span class="interCnt">13</span></button>
-                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
-                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
-                  </div>
-                </div>
-              </div>       
-            </c:forEach>
-            </div>
-            <div class="cardrow mb-4 col-12 d-flex justify-content-center">
-            <c:forEach var="i" begin="1" end="4">
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body" style="padding: 1rem;">
-                    <p style="margin-bottom: 0px;">제목입니다.</p>
-                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
-                    <button class="float-right recommentCount" onclick="changeImg(this);"><img src="${pageContext.request.contextPath}/resources/images/interestBefore.png" width="16px" class="interImg"><span class="interCnt">13</span></button>                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
-                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
-                  </div>
-                </div>
-              </div>       
-            </c:forEach>
-            </div>
-           
             
-            <div class="cardrow mb-4 col-12 d-flex justify-content-center">
-            <c:forEach var="i" begin="1" end="4">
-              <div class="col-3">
-                <div class="card">
-                  <div class="embed-responsive embed-responsive-4by3">
-                    <img src="${pageContext.request.contextPath}/resources/images/marketListSample1.jpg" alt="" class="card-img-top row-cols-1 embed-responsive-item"/>
-                  </div>
-                  <div class="card-body" style="padding: 1rem;">
-                    <p style="margin-bottom: 0px;">제목입니다.</p>
-                    <p style="margin-bottom: 7px; font-weight: bold;">900,000원</p>
-                    <button class="float-right recommentCount" onclick="changeImg(this);"><img src="${pageContext.request.contextPath}/resources/images/interestBefore.png" width="16px" class="interImg"><span class="interCnt">13</span></button>                    <p style="margin-bottom: 0px; font-size:15px;">작성자</p>
-                    <p style="margin-bottom: 0px; font-size:15px;">2022-04-21</p>
-                  </div>
-                </div>
-              </div>       
-            </c:forEach>
-            </div>
-            
+            <!-- 거래게시판 물품 목록 -->        
+              <c:forEach var="marketboard" items="${marketBoards}">
+	              <div class="col-3 float-left mb-5">
+	                <div class="card">
+	                  <div class="embed-responsive embed-responsive-4by3">
+	                    <a href="marketDetail">
+	                    	<img src="/community/market/getMarketImage?marketNo=${marketboard.marketNo}&type=nomal&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>
+	                    </a>
+	                  </div>
+	                  <div class="card-body" style="padding: 1rem;">
+	                    <p style="margin-bottom: 0px;">${marketboard.marketTitle}</p>
+	                    <p style="margin-bottom: 7px; font-weight: bold;"><span>${marketboard.marketPrice}</span>원</p>
+	                    <button id="likeBtnClick${marketboard.marketNo}" class="float-right recommentCount likeBtnClick" onclick="likeBtnClick(${marketboard.marketNo})" value="${marketboard.marketNo}">
+	                    	<img id="interImg${marketboard.marketNo}" src="/resources/images/interestBefore.png" width="16px" class="interImg">
+	                    	<span id="intCtn${marketboard.marketNo}" class="interCnt">${marketboard.marketLikeCount}</span>
+	                    </button>
+	                    <input id="marketWriter${marketboard.marketNo}" type="hidden" name="freeNo" value="${marketboard.marketWriter}"/>
+	                    <p style="margin-bottom: 0px; font-size:15px;">${marketboard.userDto.userNickname}</p>
+	                    <p style="margin-bottom: 0px; font-size:15px;">
+	                    	<fmt:formatDate value="${marketboard.marketRegistDate}" pattern="yyyy-MM-dd" />
+	                    </p>
+	                  </div>
+	                </div>
+	              </div>
+              </c:forEach>  
+
             <!-- 글쓰기 버튼 -->
             <div class="col-12 d-flex align-content-end justify-content-end">
               <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
             </div>
             
-            <!-- 페이지 처리 -->
+            <!-- 페이지 & 검색 -->
             <div class="col-12 d-flex flex-column align-content-center justify-content-center">
-              <div>
-                <ul class="pagination justify-content-center mb-3">
-                  <li class="page-item disabled">
-                    <a
-                      class="page-link"
-                      href="#"
-                      tabindex="-1"
-                      aria-disabled="true"
-                      >Previous</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">11</a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">12</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">13</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">14</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">15</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">16</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">17</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">18</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">19</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">20</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                  </li>
-                </ul>
-              </div>
+				<!-- 페이지 처리 -->
+                <div class="pt-3 my-3">
+                  <ul class="pagination justify-content-center mb-0">
+	               	<li class="page-item">
+						<a class="page-link" href="list?pageNo=1">First</a>
+					</li>
+					<c:if test="${pager.groupNo>1}">
+						<li class="page-item">
+							<a class="page-link" href="list?pageNo=${pager.startPageNo-1}">Previous</a>
+						</li>
+					</c:if>
+                    
+                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
+						<c:if test="${pager.pageNo != i}">
+							<li class="page-item">
+								<a class="page-link" href="list?pageNo=${i}">${i}</a>
+							</li>
+						</c:if>
+						<c:if test="${pager.pageNo == i}">
+							<li class="page-item active">
+								<a class="page-link" href="list?pageNo=${i}">${i}</a>
+							</li>
+						</c:if>
+					</c:forEach>
+					<c:if test="${pager.groupNo<pager.totalGroupNo}">
+						<li class="page-item">
+	                      <a class="page-link" href="list?pageNo=${pager.endPageNo+1}">Next</a>
+	                    </li>
+					</c:if>
+					<li class="page-item">
+	                	<a class="page-link" href="list?pageNo=${pager.totalPageNo}">Last</a>
+	                </li>
+                  </ul>
+                </div>
               <form class="form-inline my-2 my-lg-0 justify-content-center">
                   <select name="searchType">
                     <option value="제목+내용" selected="select">제목+내용</option>
@@ -178,18 +121,42 @@
       </div>
     </section>
     <script>
-	    function changeImg(img){
-	        var path = document.getElementByClass("interImg").src;
-	        var cntInter = document.getElementByClass("interCnt").innerHTML;
-	
-	        if(path.includes("Before")){
-	            $("#interImg").attr("src", "/resources/images/interestAfter.png");
-	            document.getElementByClass("interCnt").innerHTML = Number(cntInter) + 1;
-	        } else {
-	            $("#interImg").attr("src", "/resources/images/interestBefore.png");
-	            document.getElementByClass("interCnt").innerHTML = Number(cntInter) - 1;
-	        }  
-	    }
+	    function likeBtnClick(marketNo){
+	    	var likeCnt = $("#intCtn"+marketNo).text();
+	    	console.log(likeCnt);
+	    	var path = document.getElementById("interImg"+marketNo).src;
+	    	var interCnt = "interCnt"+marketNo;
+	    	console.log(interCnt);
+	    	
+	    	if(path.includes("Before")){ //누르지 않은 상태에서 클릭했을 경우!
+	    		likeCnt++;
+	    		console.log("더해졌을 때:"+ likeCnt);
+	    		$.ajax({
+	    			url: "setLikeLists",
+	    			data:{
+            			check:"before",
+            			id:`${sessionUserId}`,
+    	    			type:"market",
+    	    			marketNo:marketNo,
+    	    			likeCnt:likeCnt	    				
+	    			}
+	    		}).done((data)=>{
+	    			$("#interImg"+marketNo).attr("src", "/resources/images/interestAfter.png");
+	    			$("#intCtn"+marketNo).html(likeCnt);
+	    		});
+	    	}else{
+	    		likeCnt--;
+	    		$.ajax({
+        			check:"after",
+        			id:`${sessionUserId}`,
+	    			type:"market",
+	    			marketNo:marketNo,
+	    			likeCnt:likeCnt	   	    			
+	    		}).done((data)=>{
+	    			
+	    		});
+	    	}
+        }	    
     </script>
     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

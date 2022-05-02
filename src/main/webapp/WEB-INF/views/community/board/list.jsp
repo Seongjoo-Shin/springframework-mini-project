@@ -57,14 +57,6 @@
 							<a class="page-link" href="list?pageNo=${pager.startPageNo-1}">Previous</a>
 						</li>
 					</c:if>
-<!--                     <li class="page-item disabled">
-                      <a
-                        class="page-link"
-                        href="#"
-                        tabindex="-1"
-                        aria-disabled="true"
-                        >Previous</a>
-                    </li> -->
                     
                     <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
 						<c:if test="${pager.pageNo != i}">

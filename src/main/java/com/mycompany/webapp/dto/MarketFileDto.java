@@ -11,5 +11,7 @@ public class MarketFileDto {
 	private String attachType;
 	private int marketNo;
 	private int marketFileNo;
-	private MultipartFile fileAttach;
+	private MultipartFile marketFileAttach;
+	private byte[] imageFileData; //이미지 데이터를 담기 위한 변수
+	private UserDto userDto;
 }

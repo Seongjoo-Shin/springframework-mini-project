@@ -51,9 +51,7 @@
 				              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
 				                     <div style="flex: 8; padding: 4px 13px;">
 			                         <p id="commentWriter${commentDto.commentNo}" style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
-			                         <div id="commentContent${commentDto.commentNo}" class="comment-text">
-			                           ${commentDto.commentContent}
-			                         </div>
+			                         <div id="commentContent${commentDto.commentNo}" class="comment-text">${commentDto.commentContent}</div>
 			                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>
 			                       </div>		                     		                    			
 			        			</div>
@@ -98,7 +96,7 @@
 		             				       <form method="post" action="commentDelete">
 		             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
 		             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
-		             				       		<button type="submit" class="commentBtn" style="width:153px;">삭제</button>
+		             				       		<button type="submit" class="commentBtn" style="width:144px;">삭제</button>
 		             				       	</form>                                 
 			                       		</c:if>
 			                      	</div>							
@@ -136,7 +134,7 @@
 		console.log(commentNo);
 		
 		var freeNo = $("#freeNo"+commentNo).val();
-		var commentContent = $("#commentDto"+commentNo).val();
+		var commentContent = $("#commentContent"+commentNo).text();
 		var userNickname = $("#commentWriter"+commentNo).text();    
 
 		var userId = "${sessionUserId}";

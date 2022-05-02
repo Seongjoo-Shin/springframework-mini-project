@@ -148,11 +148,6 @@
 	    		console.log("이건??");
 		      $(location).attr("href", "insertMarketCancle")
 		    }
-	    
-	    //등록버튼 함수였느데 잠시 주석처리
-		/* function goSubmit(){
-		      $("#insertForm").submit();	//form태그의 action="insertContent"탐
-		} */
     
 		var input = document.getElementById("price");
 		

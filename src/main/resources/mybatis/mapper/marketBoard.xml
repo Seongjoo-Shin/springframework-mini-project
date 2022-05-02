@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.MarketBoardDao">
+
+	<resultMap id="marketBoardWithUserResultMap" type="marketboard">
+	    <result property="marketNo" column="market_no"/>
+	    <result property="marketTitle" column="market_title"/>
+	    <result property="marketContent" column="market_content"/>
+	    <result property="marketWriter" column="market_writer"/>
+	    <result property="marketCategory" column="market_category"/>
+	    <result property="marketRegistDate" column="market_regist_date"/>
+	    <result property="marketModifyDate" column="market_modify_date"/>
+	    <result property="marketUseYN" column="market_use_yn"/>
+	    <result property="marketHitCount" column="market_hit_count"/>
+	    <result property="marketPrice" column="market_price"/>
+	    <result property="marketLikeCount" column="market_like_count"/>
+		<association property="userDto" javaType="com.mycompany.webapp.dto.UserDto">
+			<result column="user_id" property="userId"/>
+			<result column="user_nickname" property="userNickname"/>
+		</association>
+ 	</resultMap>
+ 	
+ 	 <select id="selectByPage" parameterType="pager" resultMap="marketBoardWithUserResultMap">
+ 		SELECT rnum, market_no, market_title, market_writer, market_category
+ 				, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, user_nickname
+		FROM (
+		  SELECT ROWNUM as rnum, market_no, market_title, market_writer, market_category
+		  					, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, user_nickname
+		  FROM (
+			SELECT  m.market_no
+					,m.market_title
+			        ,m.market_writer
+			        ,m.market_category
+			        ,m.market_regist_date
+			        ,m.market_modify_date
+			        ,m.market_use_yn
+			        ,m.market_hit_count
+			        ,m.market_price
+			        ,m.market_like_count
+			        ,u.user_nickname
+			FROM marketboards m, users u
+			where m.market_writer = u.user_id
+			ORDER BY market_no DESC
+		  )
+		  WHERE rownum &lt;= #{endRowNo}  
+		)
+		WHERE rnum &gt;= #{startRowNo}
+ 	</select>
+ 	
+ 	<select id="totalCount" resultType="int">
+		SELECT count(*) FROM marketboards
+	</select>
+	
+	<resultMap id="marketboardMap" type="marketboard">
+	    <result property="marketNo" column="market_no"/>
+	    <result property="marketTitle" column="market_title"/>
+	    <result property="marketContent" column="market_content"/>
+	    <result property="marketWriter" column="market_writer"/>
+	    <result property="marketCategory" column="market_category"/>
+	    <result property="marketRegistDate" column="market_regist_date"/>
+	    <result property="marketModifyDate" column="market_modify_date"/>
+	    <result property="marketUseYN" column="market_use_yn"/>
+	    <result property="marketHitCount" column="market_hit_count"/>
+	    <result property="marketPrice" column="market_price"/>
+	    <result property="marketLikeCount" column="market_like_count"/>
+	</resultMap>	
+	
+	<select id="selectImageFileByMarketNo" parameterType="int" resultMap="marketboardMap">
+		select * from marketboards
+		where market_no = #{marketNo}
+	</select>
+ 	
+</mapper>
+
+

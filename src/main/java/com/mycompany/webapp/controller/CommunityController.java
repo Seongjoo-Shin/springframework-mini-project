@@ -1,12 +1,17 @@
 package com.mycompany.webapp.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +21,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.dto.BuildingDto;
+import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.LikeListDto;
+import com.mycompany.webapp.dto.MarketBoardDto;
+import com.mycompany.webapp.dto.MarketFileDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.service.CommentService;
 import com.mycompany.webapp.service.FreeBoardService;
+import com.mycompany.webapp.service.MarketBoardService;
 import com.mycompany.webapp.service.UserService;
 
 import lombok.extern.log4j.Log4j2;
@@ -36,6 +47,8 @@ public class CommunityController {
 	private UserService userService;
 	@Resource
 	private CommentService commentService;
+	@Resource
+	private MarketBoardService marketBoardService;	
 
 
 	// 자유게시판 - board -------------------------------------------------------------------------------------------------------------------
@@ -57,7 +70,7 @@ public class CommunityController {
 					freeBoardDto.setFreeHitCount(0);
 					freeBoardDao.insert(freeBoardDto);
 				}*/
-		
+
 		//Board 게시물 개수 가져오기
 		int totalBoardNum = freeBoardService.getTotalFreeBoardNum(); // 전체 개수 가져오기
 		PagerDto pager = new PagerDto(10, 10, totalBoardNum, pageNo);
@@ -84,7 +97,7 @@ public class CommunityController {
 	}
 
 	// 글쓰기 등록 버튼
-	@PostMapping("/board/insertContent") //@RequestParam(value="currp",required=false)String currp,@RequestParam(value="pname",required=false)String pname
+	@PostMapping("/board/insertContent")
 	public String insertContent(
 			@RequestParam("title") String title,
 			@RequestParam("content") String content,
@@ -113,6 +126,11 @@ public class CommunityController {
 	@GetMapping("/board/boardDetail")
 	public String boardDetail(int freeNo, Model model, HttpSession session, HttpServletRequest request) {
 		
+		log.info(session.getAttribute("sessionUserId"));
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		}
+
  		//freeBoardDto 내용 model에 싣기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
 		freeBoardService.setupdateHitCount(freeNo);
@@ -190,7 +208,7 @@ public class CommunityController {
 		return "redirect:/community/board/boardDetail?freeNo="+freeBoardDto.getFreeNo();
 	}
 	
-	// 댓글 -------------------------------------------------------------------------------------------------------------------
+	// 댓글 ---------------------------------------------------------------------------------------------------------------------------------------------
 	@PostMapping("/board/insertComment")
 	public String insertComment(
 			int freeNo,
@@ -207,32 +225,13 @@ public class CommunityController {
 		
 		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}
-	
-	/*	@RequestMapping(value="/board/commentDelete", produces="application/json; charset=UTF-8")
-		@ResponseBody
-		public void commentDelete(int commentNo) {
-			commentService.deleteComment(commentNo);
-		}*/
-	
+
 	@PostMapping("/board/commentDelete")
 	public String commentDelete(
 			@RequestParam("freeNo") int freeNo,
 			@RequestParam("commentNo") int commentNo) {
 		commentService.deleteComment(commentNo);
 		log.info("commentDelete 실행, commentNo: "+commentNo);
-		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
-	}
-	
-	//수정 하고 수정버튼 눌렀을 때
-	@PostMapping("/board/updateComment")
-	public String updateContent(
-			@RequestParam("freeNo") int freeNo,
-			@RequestParam("commentContent") String commentContent,
-			@RequestParam("commentNo") int commentNo) {
-		CommentDto commentDto = new CommentDto();
-		commentDto.setCommentContent(commentContent);
-		commentDto.setCommentNo(commentNo);
-		commentService.updateComment(commentDto);
 		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}
 	
@@ -246,19 +245,17 @@ public class CommunityController {
 		return "/community/board/commentModify";
 	}
 	
-	//답글달기 버튼 클릭했을 때 -> 조각 html 리턴
-	@PostMapping("/board/bringReplyForm")
-	public String bringReplyForm(int upperNo, String userId, int commentDepth, int freeNo, Model model) {
-		//1. 닉네임 얻기
-		String userNickname = userService.getNickname(userId);
-		
-		model.addAttribute("sessionUserNickname", userNickname);
-		model.addAttribute("upperNo", upperNo);
-		model.addAttribute("userId", userId);
-		model.addAttribute("commentDepth", commentDepth);
-		model.addAttribute("freeNo", freeNo);
-
-		return "/community/board/commentReplyForm";
+	//수정 하고 수정버튼 눌렀을 때
+	@PostMapping("/board/updateComment")
+	public String updateContent(
+			@RequestParam("freeNo") int freeNo,
+			@RequestParam("commentContent") String commentContent,
+			@RequestParam("commentNo") int commentNo) {
+		CommentDto commentDto = new CommentDto();
+		commentDto.setCommentContent(commentContent);
+		commentDto.setCommentNo(commentNo);
+		commentService.updateComment(commentDto);
+		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}
 	
 	@PostMapping(value = "/board/bringReplyJson", produces = "application/json; charset=UTF-8")
@@ -323,15 +320,81 @@ public class CommunityController {
 	}
 
 
-	// 거래게시판 - market -------------------------------------------------------------------------------------------------------
+	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
-	public String marketList() {
+	public String marketList(@RequestParam(defaultValue = "1") int pageNo,  Model model, HttpSession session) {
+		log.info("실행");
+		//market 게시물 개수 가져오기
+		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
+		PagerDto pager = new PagerDto(16, 10, totalBoardNum, pageNo);
+		model.addAttribute("pager", pager);
+		
+		//페이지 정보
+		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
+		model.addAttribute("marketBoards", marketboards);
+		log.info("marketList페이지");
+		
+		//사용자 정보
+		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
+		
 		return "/community/market/list";
 	}
+	
+	//리스트에서 대표사진 보여줌
+	@RequestMapping("/getMarketImage")
+	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
+		List<MarketFileDto> files = marketBoardService.selectImageFileByMarketNo(marketNo);
+   	    	
+		int num = Integer.parseInt(img);
+		byte[] temp = files.get(num).getImageFileData();
+		InputStream is = new ByteArrayInputStream(temp);
+		IOUtils.copy(is, res.getOutputStream());
+   	    
+	}
+	
+   @RequestMapping(value="/market/setLikeLists", produces = "application/json; charset=UTF-8")
+   @ResponseBody
+   public void setLikeLists(String check, String id, String type, int marketNo, String likeCnt) {
+	   log.info("type : " + type);
+	   log.info("id : " + id);
+	   log.info("marketNo : " + marketNo);
+	   LikeListDto lld = new LikeListDto();
+	   
+	   lld.setLikeListNo(marketNo);
+	   lld.setLikeType(type);
+	   lld.setLikeUserId(id);
+	   
+		/*	   //누르지 않은 상태일 경우
+			   if(check.equals("before")) {
+				   takeService.insertLikeLists(lld);
+			   }else { //클릭한 것을 취소할 경우
+				   takeService.deleteLikeLists(lld);
+			   }
+			   
+			   BuildingDto bdt = new BuildingDto();
+			   bdt.setBuildingLikeCount(Integer.parseInt(likeCnt));
+			   bdt.setBuildingNo(Integer.parseInt(buildingNo));
+			   
+			   
+			   // 좋아요 수 업데이트
+			   takeService.updateLikeCount(bdt);
+			   
+			   String json;
+			   JSONObject jsonObject = new JSONObject();
+			   
+			   json = jsonObject.toString();
+			   return json;*/
+   }
 
 	// 게시판 상세 페이지
 	@GetMapping("/market/marketDetail")
-	public String marketDetail() {
+	public String marketDetail(HttpSession session) {
+		
+		log.info(session.getAttribute("sessionUserId"));
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		}
+		
 		return "/community/market/view";
 	}
 

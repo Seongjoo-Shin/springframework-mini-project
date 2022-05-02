@@ -35,7 +35,7 @@
 			        ,comment_depth
 			        ,user_Nickname
 			FROM comments c, users u
-			where c.free_no=2 and c.comment_use_yn=1 and  c.comment_writer = u.user_id
+			where c.free_no=#{freeNo} and c.comment_use_yn=1 and  c.comment_writer = u.user_id
 			START WITH c.upper_no is null
 			CONNECT BY PRIOR c.comment_no = c.upper_no
 		  )
