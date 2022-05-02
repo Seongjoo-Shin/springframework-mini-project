@@ -58,11 +58,11 @@
 			            <a class="h3 float-right text-dark" href="/community/board/list">+</a>
 			          </div>
 			          <table>
-			            <tr><td><a href="/community/board/view" class="text-dark">자유 게시판 제목입니다.</a></td></tr>
-			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
-			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
-			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
-			            <tr><td><a>자유 게시판 제목입니다.</a></td></tr>
+			          <c:forEach var="freeboard" items="${freeboards}">
+   			          	<tr>
+			          		<td><a class="text-dark" href="/community/market/view?freeNo=${freeboard.freeNo}">${freeboard.freeTitle }</a></td>
+			          	</tr>
+			          </c:forEach>
 			          </table>
 			        </div>
 			      </div>
@@ -74,11 +74,11 @@
 			            <a class="h3 float-right text-dark" href="/community/market/list">+</a>
 			          </div>
 			          <table>
-			            <tr><td><a href="/community/market/view" class="text-dark">거래 게시판 제목입니다.</a></td></tr>
-			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
-			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
-			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
-			            <tr><td><a>거래 게시판 제목입니다.</a></td></tr>
+			          <c:forEach var="marketboard" items="${marketboards}">
+			          	<tr>
+			          		<td><a class="text-dark" href="/community/market/view?marketNo=${marketboard.marketNo}">${marketboard.marketTitle }</a></td>
+			          	</tr>
+			          </c:forEach>
 			          </table>
 			        </div>
 			      </div>
@@ -90,11 +90,11 @@
 			            <a class="h3 float-right text-dark" href="/community/notice/list">+</a>
 			          </div>
 			          <table>
-			            <tr><td><a href="/community/notice/noticeDetail" class="text-dark">공지 사항 제목입니다.</a></td></tr>
-			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
-			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
-			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
-			            <tr><td><a>공지 사항 제목입니다.</a></td></tr>
+			          <c:forEach var="noticeboards" items="${noticeboards}">
+			          	<tr>
+			          		<td><a class="text-dark" href="/community/market/view?noticeNo=${noticeboards.noticeNo}">${noticeboards.noticeTitle }</a></td>
+			          	</tr>
+			          </c:forEach>
 			          </table>
 			        </div>
 			      </div>

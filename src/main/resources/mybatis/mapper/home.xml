@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.HomeDao">
+	
+	<resultMap id="freeboardMap" type="freeboard">
+	    <result property="freeNo" column="free_no"/>
+	    <result property="freeTitle" column="free_title"/>
+	    <result property="freeContent" column="free_content"/>
+	    <result property="freeWriter" column="freE_writer"/>
+	    <result property="freeRegistDate" column="free_regist_date"/>
+	    <result property="freeModifyDate" column="free_modify_date"/>
+	    <result property="freeUseYN" column="free_use_YN"/>
+	    <result property="freeHitCount" column="free_hit_count"/>
+	</resultMap>
+	
+	<resultMap id="marketboardMap" type="marketboard">
+	    <result property="marketNo" column="market_no"/>
+	    <result property="marketTitle" column="market_title"/>
+	    <result property="marketContent" column="market_content"/>
+	    <result property="marketWriter" column="market_writer"/>
+	    <result property="marketCategory" column="market_category"/>
+	    <result property="marketRegistDate" column="market_regist_date"/>
+	    <result property="marketModifyDate" column="market_modify_date"/>
+	    <result property="marketUseYN" column="market_use_yn"/>
+	    <result property="marketHitCount" column="market_hit_count"/>
+	    <result property="marketPrice" column="market_price"/>
+	    <result property="marketLikeCount" column="market_like_count"/>
+	</resultMap>
+	
+	<resultMap id="noticeboardMap" type="noticeboard">
+	    <result property="noticeNo" column="notice_no"/>
+	    <result property="noticeWriter" column="notice_writer"/>
+	    <result property="noticeTitile" column="notice_title"/>
+	    <result property="noticeContent" column="notice_content"/>
+	    <result property="noticeFileSeq" column="notice_file_seq"/>
+	    <result property="noticeRegistDate" column="notice_regist_date"/>
+	    <result property="noticeModifyDate" column="notice_modify_date"/>
+	    <result property="noticeUseYN" column="notice_use_yn"/>
+	    <result property="noticeHitCount" column="notice_hit_count"/>
+	</resultMap>
+	
+	<select id="selectFreeAll" resultMap="freeboardMap">
+	<![CDATA[
+		select
+    		* 
+		from 
+		(
+		    select 
+		        *
+		    from freeboards
+		    where free_use_yn = 1
+		    order by free_regist_date desc
+		    
+		) 
+		where rownum <= 5
+	]]>
+	</select>
+	
+	<select id="selectMarketAll" resultMap="marketboardMap">
+	<![CDATA[
+		select
+    		* 
+		from 
+		(
+		    select 
+		        *
+		    from marketboards
+		    where market_use_yn = 1
+		    order by market_regist_date desc
+		    
+		) 
+		where rownum <= 5
+	]]>
+	</select>
+	
+	<select id="selectNoticeAll" resultMap="noticeboardMap">
+	<![CDATA[
+		select
+    		* 
+		from 
+		(
+		    select 
+		        *
+		    from noticeboards
+		    where notice_use_yn = 1
+		    order by notice_regist_date desc
+		    
+		) 
+		where rownum <= 5
+	]]>
+	</select>
+</mapper>

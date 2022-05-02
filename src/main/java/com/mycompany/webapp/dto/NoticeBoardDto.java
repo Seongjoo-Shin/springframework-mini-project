@@ -10,6 +10,7 @@ public class NoticeBoardDto {
 	private String noticeWriter;
 	private String noticeTitile;
 	private String noticeContent;
+	private String noticeFileSeq;
 	private Date noticeRegistDate;
 	private Date noticeModifyDate;
 	private int noticeUseYN;

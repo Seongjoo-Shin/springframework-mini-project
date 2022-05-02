@@ -243,12 +243,11 @@
                                             }
                                             result = response.result; // 검색 결과의 컨테이너
                                             items = result.items.address; // 검색 결과의 배열
-                                            addr = result.items[0].address;
+                                            addr = result.items[1].address;
                                         });
-										console.log(data);
 										setTimeout(() => {
 											var html = '';
-											html += '<div>';
+											html += '<div class="ml-4">';
 											html += '    <p>주소 : ' + addr + '</p>';
 											if(data.keyword1 != null){
 												html += '    <span>' + data.keyword1 + '</span><br>';

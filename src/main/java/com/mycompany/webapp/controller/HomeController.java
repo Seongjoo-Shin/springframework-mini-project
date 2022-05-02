@@ -11,7 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mycompany.webapp.dto.FreeBoardDto;
+import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MessageDto;
+import com.mycompany.webapp.dto.NoticeBoardDto;
+import com.mycompany.webapp.service.HomeService;
 import com.mycompany.webapp.service.MypageService;
 
 import lombok.extern.log4j.Log4j2;
@@ -23,9 +27,18 @@ public class HomeController {
 	@Resource
 	private MypageService mypageService;
 	
+	@Resource
+	private HomeService homeService;
+	
 	@RequestMapping("/")
-	public String home() {
+	public String home(Model model) {
 		log.info("실행");
+		List<FreeBoardDto> freeboards = homeService.getFreeBoards();
+		List<MarketBoardDto> marketboards = homeService.getMarketBoards();
+		List<NoticeBoardDto> noticeboards = homeService.getNoticeBoards();
+		model.addAttribute("freeboards", freeboards);
+		model.addAttribute("marketboards", marketboards);
+		model.addAttribute("noticeboards", noticeboards);
 		return "home";
 	}
 	
