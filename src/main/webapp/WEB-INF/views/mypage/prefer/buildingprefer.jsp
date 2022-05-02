@@ -40,7 +40,7 @@
                     <div class="row">
                     <c:forEach var="building" items="${buildings}">
 	                    <div class="col-3 float-left mb-5">
-	                        <div class="card">
+	                        <div class="card" style="height:386px;">
 	                            <div class="card-body">
 	                                <img class="border rounded" src="/mypage/getBuildingImage?buildingNo=${building.buildingNo}&type=nomal&img=0" width="100%"/>
 	                                <div class="information mr-3">
@@ -71,32 +71,32 @@
                             <c:if test="${total > 0}">
                                 <ul class="pagination justify-content-center mb-0">
 				               	<li class="page-item">
-									<a class="page-link" href="/mypage/message/receive?pageNo=1">First</a>
+									<a class="page-link" href="/mypage/prefer/buildingprefer?pageNo=1">First</a>
 								</li>
 								<c:if test="${pager.groupNo>1}">
 									<li class="page-item">
-										<a class="page-link" href="/mypage/message/receive?pageNo=${pager.startPageNo-1}">Previous</a>
+										<a class="page-link" href="/mypage/prefer/buildingprefer?pageNo=${pager.startPageNo-1}">Previous</a>
 									</li>
 								</c:if>
 			                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
 									<c:if test="${pager.pageNo != i}">
 										<li class="page-item">
-											<a class="page-link" href="/mypage/message/receive?pageNo=${i}">${i}</a>
+											<a class="page-link" href="/mypage/prefer/buildingprefer?pageNo=${i}">${i}</a>
 										</li>
 									</c:if>
 									<c:if test="${pager.pageNo == i}">
 										<li class="page-item active">
-											<a class="page-link" href="/mypage/message/receive?pageNo=${i}">${i}</a>
+											<a class="page-link" href="/mypage/prefer/buildingprefer?pageNo=${i}">${i}</a>
 										</li>
 									</c:if>
 								</c:forEach>
 								<c:if test="${pager.groupNo<pager.totalGroupNo}">
 									<li class="page-item">
-				                      <a class="page-link" href="/mypage/message/receive?pageNo=${pager.endPageNo+1}">Next</a>
+				                      <a class="page-link" href="/mypage/prefer/buildingprefer?pageNo=${pager.endPageNo+1}">Next</a>
 				                    </li>
 								</c:if>
 								<li class="page-item">
-				                	<a class="page-link" href="/mypage/message/receive?pageNo=${pager.totalPageNo}">Last</a>
+				                	<a class="page-link" href="/mypage/prefer/buildingprefer?pageNo=${pager.totalPageNo}">Last</a>
 				                </li>
 		                	</ul>
 		                	</c:if>

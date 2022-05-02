@@ -204,7 +204,7 @@
                                 		for(var i=0; i<markers.length; i++){
                                 			markers[i].setMap(null);
                                 		}
-
+										
                                 		for(var i=0; i<data.keywordsLength; i++){
 	                                		naver.maps.Service.reverseGeocode({
 	                                            location: new naver.maps.LatLng(data.keywords[i].latitude, data.keywords[i].longitude),

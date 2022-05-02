@@ -50,6 +50,7 @@
 			  <div class="container row">
 			    <div class="col-1"></div>
 			    <div class="col-10 row">
+			    
 			      <div class="col-4 p-3">
 			        <div class="border p-3 bg-light rounded">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
@@ -65,6 +66,7 @@
 			          </table>
 			        </div>
 			      </div>
+			      
 			      <div class="col-4 p-3">
 			        <div class="border p-3 bg-light rounded">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
@@ -80,6 +82,7 @@
 			          </table>
 			        </div>
 			      </div>
+			      
 			      <div class="col-4 p-3">
 			        <div class="border p-3 bg-light rounded">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
@@ -95,6 +98,7 @@
 			          </table>
 			        </div>
 			      </div>
+			      
 			    </div>
 			  </div>
 			  <div class="col-1"></div>

@@ -85,6 +85,11 @@
 	                                <td class="text-center"><input type="checkbox" class="delete" name="buildingNo" class="delete_box" id="${building.buildingNo}"></td>
 	                            </tr>
 							</c:forEach>
+							<c:if test="${total eq 0}">
+								<tr class="m-5">
+									<td colspan="5" class="text-center m-5"><h5>작성한 게시물이 없습니다.</h5></td>
+								</tr>
+							</c:if>
                         </tbody>
                         </table>
                     </div>

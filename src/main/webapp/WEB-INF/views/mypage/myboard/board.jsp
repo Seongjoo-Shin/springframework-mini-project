@@ -33,7 +33,7 @@
         	location.reload();
         }
     </script>
-    <section>
+    <section <c:if test="${total eq 0}">style="margin-bottom: 194px;"</c:if>>
         <div class="container-fluid h-100 mt-5 mb-5">
             <div class="row">
                 <div class="col-2">
@@ -80,6 +80,12 @@
                             	</tr>
                             </c:forEach>
                             </form>
+                            <c:if test="${total eq 0 }">
+                            	<tr>
+                            		<td colspan="5" class="text-center"><h5>작성한 게시물이 없습니다.</h5></td>
+                            	</tr>
+                            	
+                            </c:if>
                         </table>
                     </div>
                     <div class="row float-right">
@@ -88,6 +94,7 @@
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mb-5">
+                    <c:if test="${total > 0}">
 						<ul class="pagination justify-content-center mb-0">
 			               	<li class="page-item">
 								<a class="page-link" href="/mypage/myboard/board?pageNo=1">First</a>
@@ -117,7 +124,8 @@
 							<li class="page-item">
 			                	<a class="page-link" href="/mypage/myboard/board?pageNo=${pager.totalPageNo}">Last</a>
 			                </li>
-	                	</ul>	
+	                	</ul>
+	                </c:if>	
                     </div>
                 </div>
                 <div class="col-2">

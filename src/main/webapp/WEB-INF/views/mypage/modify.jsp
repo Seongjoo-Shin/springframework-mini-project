@@ -1,7 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<script>
-		
+	function fn_changePwd(){	
+
+		var pwd = document.getElementById("password").value;
+		var newPwd = document.getElementById("newPwd").value;
+		var chkNewPwd = document.getElementById("chkNewPwd").value;
+		if(newPwd == chkNewPwd){
+			$.ajax({
+				url: '/mypage/updatepassword',
+				data: {'pwd':pwd, 'newPwd':newPwd, 'chkNewPwd': chkNewPwd},
+				method: 'POST',
+			}).done((data, status) => {
+				swal(data.message).then(() => {
+					location.reload();
+				});	
+			});
+		} else {
+			swal("새로운 비밀번호가 일치하지 않습니다.").then(() => {
+				location.reload();				
+			});
+		}
+	}
 	</script>
     <section>
         <div class="container-fluid h-100 mt-5 mb-5">
@@ -44,7 +64,7 @@
                             </tr>
                             <tr>
                                 <td class="text-center bg-light">현재 비밀번호</td>
-                                <td><input type="password" name="userPassword" class="w-50" placeholder="현재 비밀번호를 입력하시오"/></td>
+                                <td><input type="password" id="password" name="userPassword" class="w-50" placeholder="현재 비밀번호를 입력하시오"/></td>
                             </tr>
                             <tr>
                                 <td class="text-center bg-light">새로운 비밀번호</td>
@@ -55,7 +75,7 @@
                                 <td><input type="password" id="chkNewPwd" class="w-50" placeholder="새로운 비밀번호를 한번더 입력하시오"/></td>
                             </tr>
                         </table>
-                        <input type="submit" class="btn btn-outline-dark float-right" value="비밀번호 변경" />
+                        <input type="button" class="btn btn-outline-dark float-right" value="비밀번호 변경" onclick="fn_changePwd();"/>
                     </form>
                 </div>
                 <div class="col-2">
@@ -65,4 +85,5 @@
         </div>
     </section>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+    
     

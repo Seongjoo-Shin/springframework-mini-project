@@ -38,10 +38,13 @@
 					</ul>
 				</div>
 				<c:forEach var="market" items="${markets}">
-					<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important;">
+					<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important; width:300px;">
 						<div class="card-body">
-							<a href="/community/market/marketDetail?marketNo=${market.marketNo}&from=mypage"><img src=""/></a>
-							<div class="button float-right">
+							<img src="http://via.placeholder.com/250X200"/>
+							<%-- <a href="/community/market/marketDetail?marketNo=${market.marketNo}&from=mypage"><img src="" width="200px" height="250px"/></a> --%>
+						</div>
+						<div class="ml-3 mb-2">
+							<div class="button float-right mr-2">
 								<div>
 									<a class="btn btn-outline-dark ml-3 mb-2">수정</a>
 								</div>
@@ -52,16 +55,19 @@
 									<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
 								</div>
 							</div>
-						</div>
-						<div class="ml-3 mb-2">
-							<p>${market.marketTitle}</p>
-							<button class="btn btn-outline-dark float-right mr-5">좋아요</button>
-							<span>${market.marketCategory}</span><br> 
-							<span>${market.marketPrice}</span><br> 
-							<span>${market.marketRegistDate}</span>
+							<div class="float-left">
+								<p>${market.marketTitle}</p><br>
+								<span>${market.marketLikeCount }</span><br>
+								<span>${market.marketCategory}</span><br> 
+								<span>${market.marketPrice}</span><br> 
+								<span><fmt:formatDate value="${market.marketRegistDate}" pattern="yyyy-MM-dd"/></span>
+							</div>
 						</div>
 					</div>
 				</c:forEach>
+				<c:if test="${total eq 0}">
+					<div class="text-center m-5"><h5>작성한 게시물이 없습니다.</h5></div>
+				</c:if>
 			</div>
 			<div class="col-2"></div>
 		</div>

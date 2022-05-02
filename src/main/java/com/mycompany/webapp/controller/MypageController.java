@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,8 +55,9 @@ public class MypageController {
 		}
 	}
 	// 비밀번호 수정
-	@PostMapping("/updatepassword")
-	public String updatePassword(HttpSession session, @ModelAttribute("userNewPassword") String newPwd, UserDto user, Model model) {
+	@PostMapping(value="/updatepassword", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String updatePassword(HttpSession session, UserDto user, Model model, HttpServletRequest request) {
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		} else {
@@ -65,16 +65,24 @@ public class MypageController {
 			String userId = (String) session.getAttribute("sessionUserId");
 			UserDto dbUser = mypageService.getUser(userId);
 			
+			String pwd = request.getParameter("pwd");
+			String newpwd = request.getParameter("newPwd");
+			String chknewpwd = request.getParameter("chkNewPwd");
+			
+			JSONObject jsonObject = new JSONObject();
+			
 			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-			if(passwordEncoder.matches(user.getUserPassword(), dbUser.getUserPassword())) {
-				dbUser.setUserPassword(passwordEncoder.encode(newPwd));
+			if(passwordEncoder.matches(pwd, dbUser.getUserPassword())) {
+				log.info("변경");
+				dbUser.setUserPassword(passwordEncoder.encode(newpwd));
 				int cnt = mypageService.changePassword(dbUser);
-				model.addAttribute("user", dbUser);
-				return "mypage/modify";
+				jsonObject.put("message", "비밀번호를 변경하였습니다.");
 			} else {
-				model.addAttribute("user", dbUser);
-				return "mypage/modify";
+				jsonObject.put("message", "비밀번호가 일치하지 않습니다.");
 			}
+		
+			String json = jsonObject.toString();
+			return json;
 		}
 	}
 	
@@ -183,6 +191,15 @@ public class MypageController {
 		}
 	}
 
+	@RequestMapping("/getMarketImage")
+	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, String marketNo, String img) throws IOException {
+		List<BuildingFileDto> files = mypageService.selectImageFileByBuildingNo(marketNo);
+    	int num = Integer.parseInt(img);
+		byte[] temp = files.get(0).getImageFileData();
+		InputStream is = new ByteArrayInputStream(temp);
+		IOUtils.copy(is, res.getOutputStream());
+	}
+	
 	// ------------------------------- 찜목록 인수 ---------------------------------------
 	@RequestMapping("/prefer/buildingprefer")
 	public String buildingprefer(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, Model model) {
@@ -268,6 +285,7 @@ public class MypageController {
 			pager.setUserId(userId);
 			model.addAttribute("pager", pager);
 			List<MessageDto> rmessages = mypageService.getMessageReceiveList(pager);
+			model.addAttribute("total", totalCnt);
 			model.addAttribute("messages", rmessages);
 			return "/mypage/message/receive";
 		} 
@@ -285,6 +303,7 @@ public class MypageController {
 			pager.setUserId(userId);
 			model.addAttribute("pager", pager);
 			List<MessageDto> smessages = mypageService.getMessageSendList(pager);
+			model.addAttribute("total", totalCnt);
 			model.addAttribute("messages", smessages);
 			return "/mypage/message/send";
 		} 

@@ -104,6 +104,7 @@
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mb-5">
+                    <c:if test="${total > 0}">
 						<ul class="pagination justify-content-center mb-0">
 			               	<li class="page-item">
 								<a class="page-link" href="/mypage/message/receive?pageNo=1">First</a>
@@ -133,7 +134,8 @@
 							<li class="page-item">
 			                	<a class="page-link" href="/mypage/message/receive?pageNo=${pager.totalPageNo}">Last</a>
 			                </li>
-	                	</ul>	
+	                	</ul>
+	                </c:if>	
                     </div>
                 </div>
             </div>
