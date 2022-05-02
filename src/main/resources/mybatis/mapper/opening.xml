@@ -8,35 +8,36 @@
 	</select>
 	
 	<select id="selectKeyword" resultType="keyword" parameterType="keyword">
-		select *
+		select * 
 		from keywords
 		where 
 			1 = 1 and
 		<trim prefix="(" suffixOverrides="or" suffix=")" >
-			<if test='keyword1 == 1'>
-				keyword1 = 1 or
+			<if test='keyword1 != null'>
+				keyword1 is not null or
 			</if>
-			<if test='keyword2 == 1'>
-				keyword2 = 1 or
+			<if test='keyword2 != null'>
+				keyword2 is not null or
 			</if>
-			<if test='keyword3 == 1'>
-				keyword3 = 1 or
+			<if test='keyword3 != null'>
+				keyword3 is not null or
 			</if>
-			<if test='keyword4 == 1'>
-				keyword4 = 1 or
+			<if test='keyword4 != null'>
+				keyword4 is not null or
 			</if>
-			<if test='keyword5 == 1'>
-				keyword5 = 1 or
+			<if test='keyword5 != null'>
+				keyword5 is not null or
 			</if>
-			<if test='keyword6 == 1'>
-				keyword6 = 1 or
+			<if test='keyword6 != null'>
+				keyword6 is not null or
 			</if>
-			<if test='keyword7 == 1'>
-				keyword7 = 1 or
+			<if test='keyword7 != null'>
+				keyword7 is not null or
 			</if>
-			<if test='keyword8 == 1'>
-				keyword8 = 1 or
+			<if test='keyword8 != null'>
+				keyword8 is not null or
 			</if>
 		</trim>
+		ORDER BY keyword_no ASC
 	</select>
 </mapper>

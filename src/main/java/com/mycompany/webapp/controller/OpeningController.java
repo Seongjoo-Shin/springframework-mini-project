@@ -46,25 +46,25 @@ public class OpeningController {
 		lst.add(request.getParameter("value5") == null ? "" : request.getParameter("value5"));
 		lst.add(request.getParameter("value6") == null ? "" : request.getParameter("value6"));
 		lst.add(request.getParameter("value7") == null ? "" : request.getParameter("value7"));
-
+		
 		
 		for(String key : lst) {
 			if(key.equals("keyword1")) {
-				keyword.setKeyword1(1);
+				keyword.setKeyword1("1");
 			} else if(key.equals("keyword2")) {
-				keyword.setKeyword2(1);
+				keyword.setKeyword2("1");
 			} else if(key.equals("keyword3")) {
-				keyword.setKeyword3(1);
+				keyword.setKeyword3("1");
 			} else if(key.equals("keyword4")) {
-				keyword.setKeyword4(1);
+				keyword.setKeyword4("1");
 			} else if(key.equals("keyword5")) {
-				keyword.setKeyword5(1);
+				keyword.setKeyword5("1");
 			} else if(key.equals("keyword6")) {
-				keyword.setKeyword6(1);
+				keyword.setKeyword6("1");
 			} else if(key.equals("keyword7")) {
-				keyword.setKeyword7(1);
+				keyword.setKeyword7("1");
 			} else if(key.equals("keyword8")) {
-				keyword.setKeyword8(1);
+				keyword.setKeyword8("1");
 			}
 		}
 		
