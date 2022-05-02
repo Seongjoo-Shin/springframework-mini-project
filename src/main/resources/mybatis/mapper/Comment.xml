@@ -24,10 +24,20 @@
 		FROM (
 		  SELECT ROWNUM as rnum, free_no, comment_no, comment_writer, comment_content, comment_regist_date, comment_modify_date, comment_use_yn, upper_no, comment_depth, user_Nickname
 		  FROM (
-		    SELECT c.free_no, c.comment_no, c.comment_writer, c.comment_content, c.comment_regist_date, c.comment_modify_date, c.comment_use_yn, c.upper_no, c.comment_depth, u.user_Nickname
-		    FROM comments c, users u
-		    where c.comment_writer = u.user_id and c.free_no = #{freeNo} and c.comment_use_yn=1
-		    ORDER BY comment_no ASC
+			SELECT free_no
+			        ,comment_no
+			        ,comment_writer
+			        ,comment_content
+			        ,comment_regist_date
+			        ,comment_modify_date
+			        ,comment_use_yn
+			        ,upper_no
+			        ,comment_depth
+			        ,user_Nickname
+			FROM comments c, users u
+			where c.free_no=2 and c.comment_use_yn=1 and  c.comment_writer = u.user_id
+			START WITH c.upper_no is null
+			CONNECT BY PRIOR c.comment_no = c.upper_no
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
 		)

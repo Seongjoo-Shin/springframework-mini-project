@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,6 @@ import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.service.CommentService;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.UserService;
-import com.mycompany.webapp.service.UserService.LoginResult;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -138,7 +136,6 @@ public class CommunityController {
 		model.addAttribute("pageNo", request.getParameter("pageNo"));
 		
 		//등록된 댓글 보여주기----------------------------
-		CommentDto commentDto = new CommentDto();
 		//댓글 개수 가져오기
 		int totalCommentNum = commentService.totalCountwhenFreeNo(freeNo);
 		PagerDto pager = new PagerDto(50,10,totalCommentNum,1);
@@ -266,32 +263,37 @@ public class CommunityController {
 	
 	@PostMapping(value = "/board/bringReplyJson", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String bringReplyJson(int upperNo, String userId, int commentDepth, int freeNo, Model model) {
+	public String bringReplyJson(int upperNo, String userId, int commentDepth, int freeNo, Model model, HttpServletRequest request, HttpSession session) {
 		
 		//1. 닉네임 얻기
 		String userNickname = userService.getNickname(userId);
 		
+		log.info("@@@@@@@@@@@@@@@@@@@@ " + request.getParameter("upperNo"));
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("sessionUserNickname", userNickname);
 		jsonObject.put("upperNo", upperNo);
 		jsonObject.put("userId", userId);
 		jsonObject.put("commentDepth", commentDepth);
 		jsonObject.put("freeNo", freeNo);
-
-		jsonObject.put("result", "success");
+		
+		session.setAttribute("upperNo", upperNo);
+		
 		
 		String json = jsonObject.toString();
 		return json; 
 	}
 	
 	
-	@PostMapping("/board/registReply")
+	@PostMapping(value="/board/registReply", produces = "application/json; charset=UTF-8")
+	@ResponseBody
 	public String replyComment(
 			@RequestParam("upperNo") int upperNo,
 			@RequestParam("freeNo") int freeNo,
-			@RequestParam("commentContent") String commentContent,
-			@RequestParam("sessionUserId") String sessionUserId,
-			@RequestParam("commentDepth") int commentDepth){
+			@RequestParam("commentContext") String commentContent,
+			@RequestParam("userId") String sessionUserId,
+			@RequestParam("commentDepth") int commentDepth, HttpSession session){
+		
+		log.info("/board/registReply");
 		
 		//댓글 등록 시간
 		Date utilDate = new Date();

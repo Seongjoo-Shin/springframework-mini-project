@@ -39,40 +39,74 @@
               <div class="h6 ml-2" style="font-weight: bold;">댓글</div>
               <div id="free-board-coment">
 	              <ul>
- 	              	<c:forEach var="commentDto" items="${comments}" varStatus="status">	  
-		        		<li class="list-group-item">
-		        			<div id ="innerContainer${commentDto.commentNo}"></div>
-		        			<div id="container${commentDto.commentNo}" class="row">
-		        			<div class="col-10">
-			              		<input id="freeNo${commentDto.commentNo}" type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
-			              		<input id="commentNo${commentDto.commentNo}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
-			              		<input id="upperNo${commentDto.commentNo}" type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
-			              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
-			                     <div style="flex: 8; padding: 4px 13px;">
-		                         <p id="commentWriter${commentDto.commentNo}" style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
-		                         <div id="commentContent${commentDto.commentNo}" class="comment-text">
-		                           ${commentDto.commentContent}
-		                         </div>
-		                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>
-		                       </div>		                     		                    			
-		        			</div>
-							<div class="col-2">
-		                  		<div class="d-flex flex-column comment2" style="margin-right: 13px;">
-		                  			<button class="commentBtn" onclick="bringReplyJson('${commentDto.commentNo}')">답글</button>
-		                       		<c:if test="${sessionUserId == commentDto.commentWriter}">
-	             				       <button class="commentBtn" onclick="updateContent('${commentDto.commentNo}')">수정</button>
-	             				       <form method="post" action="commentDelete">
-	             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
-	             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
-	             				       		<button type="submit" class="commentBtn" style="width:90px;">삭제</button>
-	             				       	</form>                                 
-		                       		</c:if>
-		                      	</div>							
-							</div>
-		                  	</div>
-		                  	<div id ="replyContainer${commentDto.commentNo}"></div>
-		                  	<div id ="replyComment${commentDto.commentNo}"></div>
-		                  </li>	                  
+ 	              	<c:forEach var="commentDto" items="${comments}" varStatus="status">
+ 	              		<c:if test="${commentDto.upperNo == 0}">
+			        		<li class="list-group-item">
+			        			<div id ="innerContainer${commentDto.commentNo}"></div>
+			        			<div id="container${commentDto.commentNo}" class="row">
+			        			<div class="col-10">
+				              		<input id="freeNo${commentDto.commentNo}" type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
+				              		<input id="commentNo${commentDto.commentNo}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+				              		<input id="upperNo${commentDto.commentNo}" type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
+				              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
+				                     <div style="flex: 8; padding: 4px 13px;">
+			                         <p id="commentWriter${commentDto.commentNo}" style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
+			                         <div id="commentContent${commentDto.commentNo}" class="comment-text">
+			                           ${commentDto.commentContent}
+			                         </div>
+			                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>
+			                       </div>		                     		                    			
+			        			</div>
+								<div class="col-2">
+			                  		<div class="d-flex flex-column comment2" style="margin-right: 13px;">
+			                  			<button class="commentBtn" onclick="bringReplyJson(${commentDto.commentNo})">답글</button>
+			                       		<c:if test="${sessionUserId == commentDto.commentWriter}">
+		             				       <button class="commentBtn" onclick="updateContent(${commentDto.commentNo})">수정</button>
+		             				       <form method="post" action="commentDelete">
+		             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
+		             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+		             				       		<button type="submit" class="commentBtn" style="width:161px;">삭제</button>
+		             				       	</form>                                 
+			                       		</c:if>
+			                      	</div>							
+								</div>
+			                  	</div>
+			                  	<div id ="replyContainer${commentDto.commentNo}"></div>
+			                  </li>				 	              		
+ 	              		</c:if>
+ 	              		<c:if test="${commentDto.upperNo != 0}">
+ 	              			<li class="list-group-item">
+			        			<div id ="innerContainer${commentDto.commentNo}"></div>
+			        			<div id="container${commentDto.commentNo}" class="row pl-5">
+			        			<div class="col-10">
+				              		<input id="freeNo${commentDto.commentNo}" type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
+				              		<input id="commentNo${commentDto.commentNo}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+				              		<input id="upperNo${commentDto.commentNo}" type="hidden" name="upperNo" value="${commentDto.upperNo}"/>
+				              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
+				                     <div style="flex: 8; padding: 4px 13px;">
+			                         <p id="commentWriter${commentDto.commentNo}" style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
+			                         <div id="commentContent${commentDto.commentNo}" class="comment-text">
+			                           ${commentDto.commentContent}
+			                         </div>
+			                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>
+			                       </div>		                     		                    			
+			        			</div>
+								<div class="col-2">
+			                  		<div class="d-flex flex-column comment2" style="margin-right: 13px;">
+			                       		<c:if test="${sessionUserId == commentDto.commentWriter}">
+		             				       <button class="commentBtn" onclick="updateContent(${commentDto.commentNo})">수정</button>
+		             				       <form method="post" action="commentDelete">
+		             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
+		             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+		             				       		<button type="submit" class="commentBtn" style="width:153px;">삭제</button>
+		             				       	</form>                                 
+			                       		</c:if>
+			                      	</div>							
+								</div>
+			                  	</div>
+			                  	<div id ="replyContainer${commentDto.commentNo}"></div>
+			                  </li>	
+ 	              		</c:if>                
 	              	  </c:forEach>  
 		              <li class="list-group-item">
 		              	<form method="post" action="insertComment" id="insertComment">
@@ -98,10 +132,13 @@
     </section>
 <script>
 	function updateContent(commentNo){
+		
+		console.log(commentNo);
+		
 		var freeNo = $("#freeNo"+commentNo).val();
 		var commentContent = $("#commentDto"+commentNo).val();
 		var userNickname = $("#commentWriter"+commentNo).text();    
-		console.log("userNickname");
+
 		var userId = "${sessionUserId}";
 		$("#container"+commentNo).attr('style','display:none');
 		
@@ -118,27 +155,30 @@
 	}
 
 	function bringReplyJson(commentNo){
-		var param = {
-			upperNo : $("#upperNo"+commentNo).val(),
-			freeNo : $("#freeNo"+commentNo).val(),
-			userId : "${sessionUserId}",
-			commentDepth : $("#commentDepth"+commentNo).val()
-		}
+		console.log(commentNo);
 
+		var	upperNo = commentNo;
+		var	freeNo = $("#freeNo"+commentNo).val();
+		var	userId = "${sessionUserId}";
+		var	commentDepth = $("#commentDepth"+commentNo).val();
+
+		console.log("upperNo: " + upperNo);
+		
 		$.ajax({
 			url: "/community/board/bringReplyJson",
-			data: param,
+			data: {"upperNo":upperNo, "freeNo":freeNo, "userId":userId, "commentDepth":commentDepth},
 			method: "post"
 		
 		}).done((data)=>{
+			console.log(upperNo);
 			var html = '';
 			html +='	<div class="row pl-5" style="display: flex;">';
-			html +='		<div style="flex: 8; padding: 4px 13px;">';
-			html +='			<p style="font-weight: bold;">\''+data.sessionUserNickname+'\'</p>';
-			html +='			<textarea id="textarea\''+data.upperNo+'\'" placeholder="댓글을 입력해 주세요." style="display: block; width: 100%; height: 60px; resize: none;"></textarea>';
+			html +='		<div style="flex: 8; padding: 4px 13px;">'; 
+			html +=`			<p style="font-weight: bold;">${sessionUserNickname}</p>`;
+			html +='			<textarea id="textarea'+ data.upperNo +'" placeholder="댓글을 입력해 주세요." style="display: block; width: 100%; height: 60px; resize: none;"></textarea>';
 			html +='		</div>';
 			html +='		<div class="d-flex flex-column justify-content-end mb-3" style="margin-right: 13px;">';
-			html +='		  <button type="submit" class="commentBtn" onclick="registReply(\''+data.commentNo+'\')">등록</button>';
+			html +='		  <button type="submit" class="commentBtn" onclick="registReply(' + data.upperNo + ')">등록</button>';
 			html +='		</div>';
 			html +='	</div>';
 			
@@ -147,48 +187,24 @@
 	}
 	
 	function registReply(commentNo){
-		var resParam = {
-				upperNo : $("#upperNo"+commentNo).val(),
-				freeNo : $("#freeNo"+commentNo).val(),
-				sessionUserId : "${sessionUserId}",
-				commentDepth : $("#commentDepth"+commentNo).val(),
-				commentContext: $("#textarea"+commentNo).text()
-			}
-
-		$.ajax({
-			url: "community/board/registReply",
-			data: resParam,
-			method:"post"
-		}).done((data)=>{
-			$("#container"+commentNo).attr('style','display:none');
-			
-			var html = '';
-			html += '<div id="container\''+data.commentDto.commentNo+'\' class="row">';
-			html += '<div class="col-10">';            
-			html += '   <div style="flex: 8; padding: 4px 13px;">';
-			html += '     <p id="commentWriter\''+data.commentDto.commentNo+'\' style="font-weight: bold;">\''+data.commentDto.userDto.userNickname+'\'</p>';
-			html += '     <div id="commentContent\''+data.commentDto.commentNo+'\' class="comment-text">';
-			html += data.commentDto.commentContent;
-			html += '     </div>';
-			html += '     <p><small>'+data.commentDto.commentRegistDate+'</small></p>';
-			html += '   </div>';                    		                    			
-			html += '</div>';
-			html += '<div class="col-2">';
-			html += '	<div class="d-flex flex-column comment2" style="margin-right: 13px;">';
-			if('${sessionUserId}'==data.commentDto.commentWriter){
-				html += '	       <form method="post" action="commentDelete">';
-				html += '	       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>';
-				html += '	       		<input id="${status.index}" type="hidden" name="commentNo" value="\''+data.commentDto.commentNo+'\'/>';
-				html += '	       		<button type="submit" class="commentBtn" style="width:90px;">삭제</button>';
-				html += '	       	</form>';          		 	                                         
-			}
-			html += '     </div>	';						
-			html += '</div>';
-			html += '</div>';
-			
-			$("#container"+commentNo).html(resParam);
-		})
+		$("#replyContainer"+commentNo).attr('style','display:none');
 		
+		var	upperNo = commentNo;
+		var	freeNo = $("#freeNo"+commentNo).val();
+		var	commentDepth = $("#commentDepth"+commentNo).val();
+		var	commentContext= $("#textarea"+commentNo).val();
+		var	userId = "${sessionUserId}";
+		
+		console.log("registReply commentNo: "+commentNo);
+		console.log('${sessionUserId}');
+		console.log("commentContext: " + commentContext);
+		$.ajax({
+			url: "/community/board/registReply",
+			data: { userId,  upperNo, freeNo, commentDepth, commentContext},
+			method:"POST",
+		}).done((data)=>{
+		})
+		window.location.reload(true);
 	}
 		
 </script>
