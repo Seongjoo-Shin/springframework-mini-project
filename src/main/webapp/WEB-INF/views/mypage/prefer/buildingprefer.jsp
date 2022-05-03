@@ -20,7 +20,7 @@
 		});
 	}
 </script>
-	<section>
+	<section style="flex-grow:1;">
         <div class="container-fluid h-100 mt-5">
             <div class="row">
                 <div class="col-2">

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 
-<script>
+	<script>
 	    $(function(){
 	        getLocation();
 	    });
@@ -17,7 +17,17 @@
             }
         }
     </script>
-<section>
+    
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="width: 100%; height: 490px; border-radius: 15px;">
+    <div id="panoMap" class="mt-4">
+	</div>
+    </div>
+  </div>
+</div>
+<section style="flex-grow:1;">
 	<div class="container-fluid h-100 mt-5">
 		<div class="row mb-5">
 			<div class="col-2"></div>
@@ -244,10 +254,11 @@
                                             result = response.result; // 검색 결과의 컨테이너
                                             items = result.items.address; // 검색 결과의 배열
                                             addr = result.items[1].address;
+                                            console.log(result);
                                         });
 										setTimeout(() => {
 											var html = '';
-											html += '<div class="ml-4" style="max-width: 400px;">';
+											html += '<div class="ml-4 mt-3" style="max-width: 400px;">';
 											html += '    <p>주소 : <b>' + addr + '</b></p>';
 											if(data.keyword1 != null){
 												html += '    <span>임플란트 - ' + data.keyword1 + '</span><br>';
@@ -273,12 +284,52 @@
 											if(data.keyword8 != null){
 												html += '    <span>편의시설 - ' + data.keyword8 + '</span><br>';
 											}
+											html += '<div class="mt-2"><sapn>주변시설 - '+data.current_use+'</span></div>';
+											html += '<div class="mt-2"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
 											html += '</div>';
 											document.getElementById("msgBox").innerHTML = html;	
 										}, 100)
 									}).fail((data) => {
 										swal("서버페이지의 오류가 발생하였습니다.");
 									});
+								}
+								
+								function openPano(lat, lng){
+									var pano = null;
+										
+									var panoramaOptions = {
+									    size: new naver.maps.Size(600, 500),
+									    // panoId: "GeuHvj1YMFW56xcrravtcg==",
+									    position: new naver.maps.LatLng(lat, lng),
+									    pov: {
+									        pan: -135,
+									        tilt: 29,
+									        fov: 100
+									    },
+									    visible: true,
+									    aroundControl: true,
+									    minScale: 0,
+									    maxScale: 10,
+									    minZoom: 0,
+									    maxZoom: 4,
+									    logoControl: true,
+									    logoControlOptions: {
+									        position: naver.maps.Position.BOTTOM_RIGHT
+									    },
+									    zoomControl: true,
+									    zoomControlOptions: {
+									        position: naver.maps.Position.TOP_LEFT,
+									        style: naver.maps.ZoomControlStyle.SMALL
+									    },
+									    aroundControl: true,
+									    aroundControlOptions: {
+									        position: naver.maps.Position.TOP_RIGHT
+									    }
+									};
+									
+									naver.maps.onJSContentLoaded = function() {
+									    pano = new naver.maps.Panorama("panoMap", panoramaOptions);
+									};
 								}
                             </script>
 					</div>

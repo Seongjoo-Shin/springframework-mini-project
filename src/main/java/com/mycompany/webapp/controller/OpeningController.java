@@ -113,7 +113,7 @@ public class OpeningController {
 		if(keyword.getKeyword8() != null) {
 			jsonObject.put("keyword8", keyword.getKeyword8());
 		}
-		
+		jsonObject.put("current_use", keyword.getCurrent_use());
 		jsonObject.put("latitude", keyword.getLatitude());
 		jsonObject.put("longitude", keyword.getLongitude());
 		

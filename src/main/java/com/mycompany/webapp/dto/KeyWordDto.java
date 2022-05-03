@@ -15,4 +15,5 @@ public class KeyWordDto {
 	private String keyword8;
 	private String latitude;
 	private String longitude;
+	private String current_use;
 }
