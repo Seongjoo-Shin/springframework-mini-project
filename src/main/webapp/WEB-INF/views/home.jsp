@@ -52,49 +52,70 @@
 			    <div class="col-10 row">
 			    
 			      <div class="col-4 p-3">
-			        <div class="border p-3 bg-light rounded">
+			        <div class="border p-3 bg-light rounded h-100">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
 			            <span class="h3">&nbsp;자유 게시판</span>
 			            <a class="h3 float-right text-dark" href="/community/board/list">+</a>
 			          </div>
 			          <table>
+			          <c:if test="${freeboards.size() > 0}">
 			          <c:forEach var="freeboard" items="${freeboards}">
    			          	<tr>
 			          		<td><a class="text-dark" href="/community/market/view?freeNo=${freeboard.freeNo}">${freeboard.freeTitle }</a></td>
 			          	</tr>
 			          </c:forEach>
+			          </c:if>
+			          <c:if test="${freeboards.size() < 1}">
+			          	<tr>
+			          		<td rowspan="5">등록된 게시물이 없습니다.</td>
+			          	</tr>
+			          </c:if>
 			          </table>
 			        </div>
 			      </div>
 			      
 			      <div class="col-4 p-3">
-			        <div class="border p-3 bg-light rounded">
+			        <div class="border p-3 bg-light rounded h-100">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
 			            <span class="h3">&nbsp;거래 게시판</span>
 			            <a class="h3 float-right text-dark" href="/community/market/list">+</a>
 			          </div>
 			          <table>
+			          <c:if test="${marketboards.size() > 0}">
 			          <c:forEach var="marketboard" items="${marketboards}">
 			          	<tr>
 			          		<td><a class="text-dark" href="/community/market/view?marketNo=${marketboard.marketNo}">${marketboard.marketTitle }</a></td>
 			          	</tr>
 			          </c:forEach>
+			          </c:if>
+			          <c:if test="${marketboards.size() < 1}">
+			          	<tr>
+			          		<td rowspan="5">등록된 게시물이 없습니다.</td>
+			          	</tr>
+			          </c:if>
 			          </table>
 			        </div>
 			      </div>
 			      
 			      <div class="col-4 p-3">
-			        <div class="border p-3 bg-light rounded">
+			        <div class="border p-3 bg-light rounded h-100">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
 			            <span class="h3">&nbsp;공지사항</span>
 			            <a class="h3 float-right text-dark" href="/community/notice/list">+</a>
 			          </div>
 			          <table>
+			          <c:if test="${noticeboards.size() > 0}">
 			          <c:forEach var="noticeboards" items="${noticeboards}">
 			          	<tr>
 			          		<td><a class="text-dark" href="/community/market/view?noticeNo=${noticeboards.noticeNo}">${noticeboards.noticeTitle }</a></td>
 			          	</tr>
 			          </c:forEach>
+			          </c:if>
+			          <c:if test="${noticeboards.size() < 1}">
+			          	<tr>
+			          		<td rowspan="5">등록된 게시물이 없습니다.</td>
+			          	</tr>
+			          </c:if>
 			          </table>
 			        </div>
 			      </div>
