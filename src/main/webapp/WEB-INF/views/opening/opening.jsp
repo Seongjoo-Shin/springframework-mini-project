@@ -304,11 +304,7 @@
 									    size: new naver.maps.Size(790, 600),
 									    // panoId: "GeuHvj1YMFW56xcrravtcg==",
 									    position: new naver.maps.LatLng(lat, lng),
-									    pov: {
-									        pan: -135,
-									        tilt: 29,
-									        fov: 100
-									    },
+									    
 									});
 								}
                             </script>
