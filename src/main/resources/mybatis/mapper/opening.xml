@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.OpeningDao">
+
+	<select id="selectAllKeyword" resultType="keyword">
+		select *
+		from keywords
+	</select>
+	
+	<select id="selectKeyword" resultType="keyword" parameterType="keyword">
+		select * 
+		from keywords
+		where 
+			1 = 1 and
+		<trim prefix="(" suffixOverrides="or" suffix=")" >
+			<if test='keyword1 != null'>
+				keyword1 is not null or
+			</if>
+			<if test='keyword2 != null'>
+				keyword2 is not null or
+			</if>
+			<if test='keyword3 != null'>
+				keyword3 is not null or
+			</if>
+			<if test='keyword4 != null'>
+				keyword4 is not null or
+			</if>
+			<if test='keyword5 != null'>
+				keyword5 is not null or
+			</if>
+			<if test='keyword6 != null'>
+				keyword6 is not null or
+			</if>
+			<if test='keyword7 != null'>
+				keyword7 is not null or
+			</if>
+			<if test='keyword8 != null'>
+				keyword8 is not null or
+			</if>
+		</trim>
+		ORDER BY keyword_no ASC
+	</select>
+	
+	<select id="selectOneKeyword" parameterType="Integer" resultType="keyword">
+		select 
+			* 
+		from 
+			keywords 
+		where 
+			keyword_no = #{keywordNo}
+	</select>
+</mapper>
