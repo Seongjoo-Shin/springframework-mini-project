@@ -40,13 +40,15 @@
 	                  </div>
 	                  <div class="card-body" style="padding: 1rem;">
 	                    <p style="margin-bottom: 0px;">${marketboard.marketTitle}</p>
-	                    <p style="margin-bottom: 7px; font-weight: bold;"><span>${marketboard.marketPrice}</span>원</p>
-	                    <button id="likeBtnClick${marketboard.marketNo}" class="float-right recommentCount likeBtnClick" onclick="likeBtnClick(${marketboard.marketNo})" value="${marketboard.marketNo}">
-	                    	<img id="interImg${marketboard.marketNo}" src="/resources/images/interestBefore.png" width="16px" class="interImg">
-	                    	<span id="intCtn${marketboard.marketNo}" class="interCnt">${marketboard.marketLikeCount}</span>
-	                    </button>
+	                    <p style="margin-bottom: 7px; font-weight: bold;"><span>${marketboard.marketPrice}</span>원</p>                 
+ 	                    <div class="float-right recommentCount">
+ 	                    <!-- <img id="interImg${marketboard.marketNo}" src="/resources/images/interestBefore.png" width="16px" class="interImg"> -->
+	                    	<span>관심 </span><span> ${marketboard.marketLikeCount}</span>
+	                    	<p>조회수 <span> ${marketboard.marketHitCount}</span></p>
+	                    </div>
+	                 
 	                    <input id="marketWriter${marketboard.marketNo}" type="hidden" name="freeNo" value="${marketboard.marketWriter}"/>
-	                    <p style="margin-bottom: 0px; font-size:15px;">${marketboard.userDto.userNickname}</p>
+	                    <p style="margin-bottom: 0px; font-size:15px;">${marketboard.userDto.userNickname} </p>
 	                    <p style="margin-bottom: 0px; font-size:15px;">
 	                    	<fmt:formatDate value="${marketboard.marketRegistDate}" pattern="yyyy-MM-dd" />
 	                    </p>
@@ -120,43 +122,5 @@
         </div>
       </div>
     </section>
-    <script>
-	    function likeBtnClick(marketNo){
-	    	var likeCnt = $("#intCtn"+marketNo).text();
-	    	console.log(likeCnt);
-	    	var path = document.getElementById("interImg"+marketNo).src;
-	    	var interCnt = "interCnt"+marketNo;
-	    	console.log(interCnt);
-	    	
-	    	if(path.includes("Before")){ //누르지 않은 상태에서 클릭했을 경우!
-	    		likeCnt++;
-	    		console.log("더해졌을 때:"+ likeCnt);
-	    		$.ajax({
-	    			url: "setLikeLists",
-	    			data:{
-            			check:"before",
-            			id:`${sessionUserId}`,
-    	    			type:"market",
-    	    			marketNo:marketNo,
-    	    			likeCnt:likeCnt	    				
-	    			}
-	    		}).done((data)=>{
-	    			$("#interImg"+marketNo).attr("src", "/resources/images/interestAfter.png");
-	    			$("#intCtn"+marketNo).html(likeCnt);
-	    		});
-	    	}else{
-	    		likeCnt--;
-	    		$.ajax({
-        			check:"after",
-        			id:`${sessionUserId}`,
-	    			type:"market",
-	    			marketNo:marketNo,
-	    			likeCnt:likeCnt	   	    			
-	    		}).done((data)=>{
-	    			
-	    		});
-	    	}
-        }	    
-    </script>
-    
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

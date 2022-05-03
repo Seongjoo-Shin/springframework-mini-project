@@ -21,5 +21,6 @@ public interface MarketBoardDao {
 	//리스트에서 대표사진 보여줌.
 	public List<MarketFileDto> selectImageFileByMarketNo(int marketNo);
 	
-	
+	//like count update
+	public void updateLikeCount(MarketBoardDto marketBoardDto);
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.dao.MarketBoardDao;
 import com.mycompany.webapp.dto.BuildingDto;
 import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.CommentDto;
@@ -32,6 +33,7 @@ import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.service.CommentService;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.MarketBoardService;
+import com.mycompany.webapp.service.TakeService;
 import com.mycompany.webapp.service.UserService;
 
 import lombok.extern.log4j.Log4j2;
@@ -48,7 +50,9 @@ public class CommunityController {
 	@Resource
 	private CommentService commentService;
 	@Resource
-	private MarketBoardService marketBoardService;	
+	private MarketBoardService marketBoardService;
+	@Resource
+	private TakeService takeService; //insertlikeLists 사용하기 위해 Resource
 
 
 	// 자유게시판 - board -------------------------------------------------------------------------------------------------------------------
@@ -323,6 +327,10 @@ public class CommunityController {
 	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
 	public String marketList(@RequestParam(defaultValue = "1") int pageNo,  Model model, HttpSession session) {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		}
+
 		log.info("실행");
 		//market 게시물 개수 가져오기
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
@@ -336,6 +344,8 @@ public class CommunityController {
 		
 		//사용자 정보
 		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
+		
+		
 		
 		return "/community/market/list";
 	}
@@ -354,7 +364,7 @@ public class CommunityController {
 	
    @RequestMapping(value="/market/setLikeLists", produces = "application/json; charset=UTF-8")
    @ResponseBody
-   public void setLikeLists(String check, String id, String type, int marketNo, String likeCnt) {
+   public String setLikeLists(String check, String id, String type, int marketNo, String likeCnt) {
 	   log.info("type : " + type);
 	   log.info("id : " + id);
 	   log.info("marketNo : " + marketNo);
@@ -364,26 +374,25 @@ public class CommunityController {
 	   lld.setLikeType(type);
 	   lld.setLikeUserId(id);
 	   
-		/*	   //누르지 않은 상태일 경우
-			   if(check.equals("before")) {
-				   takeService.insertLikeLists(lld);
-			   }else { //클릭한 것을 취소할 경우
-				   takeService.deleteLikeLists(lld);
-			   }
+	   //누르지 않은 상태일 경우
+	   if(check.equals("before")) {
+		   takeService.insertLikeLists(lld);
+	   }else { //클릭한 것을 취소할 경우
+		   takeService.deleteLikeLists(lld);
+	   }
 			   
-			   BuildingDto bdt = new BuildingDto();
-			   bdt.setBuildingLikeCount(Integer.parseInt(likeCnt));
-			   bdt.setBuildingNo(Integer.parseInt(buildingNo));
+	   MarketBoardDto mdt = new MarketBoardDto();
+	   mdt.setMarketLikeCount(Integer.parseInt(likeCnt));
+	   mdt.setMarketNo(marketNo);
+
+	   //좋아요 수 업데이트
+	   marketBoardService.updateLikeCount(mdt);
 			   
-			   
-			   // 좋아요 수 업데이트
-			   takeService.updateLikeCount(bdt);
-			   
-			   String json;
-			   JSONObject jsonObject = new JSONObject();
-			   
-			   json = jsonObject.toString();
-			   return json;*/
+	   String json;
+	   JSONObject jsonObject = new JSONObject();
+	   
+	   json = jsonObject.toString();
+	   return json;
    }
 
 	// 게시판 상세 페이지

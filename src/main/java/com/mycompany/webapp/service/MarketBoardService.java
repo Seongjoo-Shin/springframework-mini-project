@@ -36,4 +36,9 @@ public class MarketBoardService {
 	public List<MarketFileDto> selectImageFileByMarketNo(int marketNo) {
 		return marketBoardDao.selectImageFileByMarketNo(marketNo);
 	}
+	
+	//update like count
+	public void updateLikeCount(MarketBoardDto marketBoardDto) {
+		marketBoardDao.updateLikeCount(marketBoardDto);
+	}
 }
