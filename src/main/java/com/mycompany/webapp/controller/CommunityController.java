@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.dao.MarketBoardDao;
 import com.mycompany.webapp.dto.BuildingDto;
@@ -345,8 +347,6 @@ public class CommunityController {
 		//사용자 정보
 		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
 		
-		
-		
 		return "/community/market/list";
 	}
 	
@@ -397,21 +397,20 @@ public class CommunityController {
 
 	// 게시판 상세 페이지
 	@GetMapping("/market/marketDetail")
-	public String marketDetail(HttpSession session) {
-		
+	public String marketDetail(HttpSession session) {	
 		log.info(session.getAttribute("sessionUserId"));
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		}
-		
 		return "/community/market/view";
 	}
 
-	@RequestMapping("/market/insert")
+	//게시판 목록에서 글쓰기 버튼 눌렀을 때
+	@RequestMapping("/market/gotoInsert")
 	public String marketInsert() {
 		return "/community/market/insert";
 	}
-
+	
 	@RequestMapping("/market/update")
 	public String marketUpdate() {
 		return "/community/market/update";
@@ -429,15 +428,49 @@ public class CommunityController {
 
 	// 글쓰기 등록 버튼
 	@PostMapping("/market/insertMarketContent")
-	public String insertMarketContent() {
-		return "redirect:/community/market/list";
-	}
+	public String insertMarketContent(HttpServletRequest request,
+    		HttpSession session,
+    		@RequestPart("attach_file") List<MultipartFile> files,
+ 		    Model model) {
+		
+	   log.info("/market/insertMarketContent 실행");
+	   log.info("id : " + session.getAttribute("sessionUserId"));
+	   String userId = (String)session.getAttribute("sessionUserId");
+	   String category = request.getParameter("category");
+	   
+	   MarketBoardDto marketBoardDto = new MarketBoardDto();
+	   marketBoardDto.setMarketCategory(category);
+	   marketBoardDto.setMarketContent(request.getParameter("content"));
+	   marketBoardDto.setMarketPrice(request.getParameter("price"));
+	   marketBoardDto.setMarketTitle(request.getParameter("title"));
+	   marketBoardDto.setMarketWriter(userId);
+	   
+	   marketBoardService.insertMarket(marketBoardDto);
+	   
+	   //첨부파일 추가
+	   if(files.size() != 0) {
+		   for(MultipartFile m : files) {
+			   String saveFilename = new Date().getTime()+"-"+m.getOriginalFilename();
 
-	// 글쓰기 취소 버튼
-	@RequestMapping("/market/insertMarketCancle")
-	public String insertMarketCancle() {
-		return "redirect:/community/market/list";
+			   MarketFileDto marketFileDto = new MarketFileDto();
+			   marketFileDto.setAttachOriginalName(m.getOriginalFilename());			   
+			   marketFileDto.setAttachSaveName(saveFilename);
+			   marketFileDto.setAttachType(m.getContentType());
+
+
+			   
+			   
+		   }
+	   }
+	   return "redirect:/community/market/list";
 	}
+	
+	// 글쓰기 취소 버튼
+    @RequestMapping("/market/marketInsertCancle")
+    public String marketInsertCancle() {
+       return "redirect:/community/market/list";
+    }
+
 
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@RequestMapping("/notice/list")

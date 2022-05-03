@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<script>
+<script style="flex-grow:1;">
         function selectAll(selectAll)  {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             

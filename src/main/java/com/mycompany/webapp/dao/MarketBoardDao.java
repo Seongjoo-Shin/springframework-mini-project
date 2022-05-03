@@ -23,4 +23,7 @@ public interface MarketBoardDao {
 	
 	//like count update
 	public void updateLikeCount(MarketBoardDto marketBoardDto);
+	
+	//게시글 등록
+	public void insertMarket(MarketBoardDto marketBoardDto);
 }

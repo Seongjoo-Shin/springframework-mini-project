@@ -41,4 +41,9 @@ public class MarketBoardService {
 	public void updateLikeCount(MarketBoardDto marketBoardDto) {
 		marketBoardDao.updateLikeCount(marketBoardDto);
 	}
+	
+	//insertMarket
+	public void insertMarket(MarketBoardDto marketBoardDto) {
+		marketBoardDao.insertMarket(marketBoardDto);
+	}
 }

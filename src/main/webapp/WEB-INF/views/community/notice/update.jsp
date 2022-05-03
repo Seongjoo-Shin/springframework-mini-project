@@ -2,7 +2,7 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-    <section>
+    <section style="flex-grow:1;">
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
         <h1 class="">거래 게시판</h1>
       </div>

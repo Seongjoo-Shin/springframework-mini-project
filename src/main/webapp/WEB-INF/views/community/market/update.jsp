@@ -2,7 +2,7 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-    <section>
+    <section style="flex-grow:1;">
       <div class="container-fluid h-100 my-5">
         <div class="row">
           <div class="col-2"></div>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-    <section>
+    <section style="flex-grow:1;">
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
         <h1 class="">거래 게시판</h1>
       </div>
@@ -59,7 +59,7 @@
 
             <!-- 글쓰기 버튼 -->
             <div class="col-12 d-flex align-content-end justify-content-end">
-              <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
+              <a href="gotoInsert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
             </div>
             
             <!-- 페이지 & 검색 -->

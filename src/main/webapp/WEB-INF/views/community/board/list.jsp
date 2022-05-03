@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-    <section>
+    <section style="flex-grow:1;">
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
         <h1 class="">자유 게시판</h1>
       </div>
