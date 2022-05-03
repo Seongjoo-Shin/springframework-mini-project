@@ -12,6 +12,7 @@ import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
+import com.mycompany.webapp.dto.MarketFileDto;
 import com.mycompany.webapp.dto.MessageDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.dto.UserDto;
@@ -50,7 +51,7 @@ public class MypageService {
 	public int deleteMyPosting(List<String> delArr) {
 		int cnt = 0;
 		for(String s : delArr) {
-			mypageDao.deleteYnMyPosting(Integer.parseInt(s));
+			cnt += mypageDao.deleteYnMyPosting(Integer.parseInt(s));
 		}
 		return cnt;
 	}
@@ -65,11 +66,8 @@ public class MypageService {
 		return mypageDao.selectAllMarketBoard(userId);
 	}
 
-	public int deleteMyMarket(List<String> delArr) {
-		int cnt = 0;
-		for(String s : delArr) {
-			mypageDao.deleteYnMyMarket(Integer.parseInt(s));
-		}
+	public int deleteMyMarket(int marketNo) {
+		int cnt = mypageDao.deleteYnMyMarket(marketNo);
 		return cnt;
 	}
 	
@@ -85,7 +83,7 @@ public class MypageService {
 	public int deleteMyBuilding(List<String> delArr) {
 		int cnt = 0;
 		for(String s : delArr) {
-			mypageDao.deleteYnMyBuilding(Integer.parseInt(s));
+			cnt += mypageDao.deleteYnMyBuilding(Integer.parseInt(s));
 		}
 		return cnt;
 	}
@@ -162,5 +160,26 @@ public class MypageService {
 
 	public int updateBuildingLikeCount(int buildingNo) {
 		return mypageDao.updateBuildingLikeCount(buildingNo);
+	}
+
+	// --------------------- 찜목록 마켓 ------------------------------
+	public List<MarketBoardDto> getLikeMarket(PagerDto pager){
+		return mypageDao.selectLikeListWithMarket(pager);
+	}
+	
+	public int getLikeMarketCnt(String userId) {
+		return mypageDao.selectLikeMarketCnt(userId);
+	}
+	
+	public int deleteLikeMarket(LikeListDto likeList) {
+		return mypageDao.deleteLikeMarket(likeList);
+	}
+
+	public int updateMarketLikeCount(int marketNo) {
+		return mypageDao.updateMarketLikeCount(marketNo);
+	}
+
+	public List<MarketFileDto> selectImageFileByMarketNo(String marketNo) {
+		return mypageDao.selectImageFileByMarketNo(marketNo);
 	}
 }

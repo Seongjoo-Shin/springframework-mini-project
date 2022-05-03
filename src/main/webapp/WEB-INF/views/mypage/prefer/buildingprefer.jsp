@@ -2,18 +2,25 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <script>
 	function fn_delete(buildingNo){
-		$.ajax({
-			url: '/mypage/deleteLikeBuilding',
-			data: {'buildingNo': buildingNo},
-			type: 'POST',
-		}).done((data) => {
-			window.reload();
-		}).fail((data) =>{
+		swal("찜목록에서 삭제하시겠습니까?", {
+			dangerMode: true,
+			buttons: true,
+		}).then((result) => {
+			if(result == true){
+				$.ajax({
+					url: '/mypage/deleteLikeBuilding',
+					data: {'buildingNo': buildingNo},
+					type: 'POST',
+				}).done((data) => {
+				}).fail((data) =>{
+				});
+				location.reload();
+			}
 			
 		});
 	}
 </script>
-	<section <c:if test="${total eq 0}">style="margin-bottom: 194px;"</c:if>>
+	<section>
         <div class="container-fluid h-100 mt-5">
             <div class="row">
                 <div class="col-2">

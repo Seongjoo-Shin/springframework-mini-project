@@ -106,8 +106,8 @@
 	
 	<!-- 유저 비밀번호 검색 -->
 	<select id="selectPassword" resultMap="userMap">
-		SELET 
-			user_password 
+		SELECT 
+			* 
 		FROM
 			users 
 		WHERE 
@@ -146,9 +146,9 @@
 		<![CDATA[
 		SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_modify_date
 		FROM (
-		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, free_modify_date
+		  SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_modify_date
 		  FROM (
-		    SELECT free_no, free_title, free_writer, free_regist_date, free_modify_date
+		    SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, free_modify_date
 		    FROM freeboards
 		    WHERE free_writer = #{userId} and free_use_yn = 1
 		    ORDER BY free_no desc

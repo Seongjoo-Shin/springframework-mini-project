@@ -27,13 +27,16 @@
         			dataType: 'json',
         			data: {delArr: arr},
         		}).done((data) => {
+        			swal(data.message).then(() => {
+    					location.reload();	
+    				});
         		}).fail((data) => {
         		});
         	}
         	location.reload();
         }
     </script>
-    <section <c:if test="${total eq 0}">style="margin-bottom: 194px;"</c:if>>
+    <section>
         <div class="container-fluid h-100 mt-5">
             <div class="row">
                 <div class="col-2">

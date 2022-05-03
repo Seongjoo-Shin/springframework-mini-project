@@ -1,9 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <script>
-
+	function fn_checkedDel(marketNo){
+		swal("삭제하시겠습니까?", {
+			dangerMode: true,
+			buttons: true,
+		}).then((result) => {
+			if(result == true){
+				$.ajax({
+					type: 'POST',
+					url: '/mypage/mymarket/delete',
+					dataType: 'json',
+					data: {marketNo},
+				}).done((data) => {
+					swal(data.message).then(() => {
+						location.reload();	
+					});
+				}).fail((data) => {
+				});				
+			}
+		});
+	}
+	
 </script>
-<section <c:if test="${total eq 0}">style="margin-bottom: 146px;"</c:if>>
+<section>
 	<div class="container-fluid h-100 mt-5">
 		<div class="row">
 			<div class="col-2">
@@ -46,10 +66,10 @@
 						<div class="ml-3 mb-2">
 							<div class="button float-right mr-2">
 								<div>
-									<a class="btn btn-outline-dark ml-3 mb-2">수정</a>
+									<a href="#lnk" class="btn btn-outline-dark ml-3 mb-2">수정</a>
 								</div>
 								<div>
-									<a class="btn btn-outline-dark ml-3 mb-2">식제</a>
+									<input type="button" onclick="fn_checkedDel('${market.marketNo}');" class="btn btn-outline-dark ml-3 mb-2" value="삭제"/>
 								</div>
 								<div>
 									<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
@@ -69,6 +89,7 @@
 					<div class="text-center m-5"><h5>작성한 게시물이 없습니다.</h5></div>
 				</c:if>
 			</div>
+			
 			<div class="col-2"></div>
 		</div>
 		<div class="row">

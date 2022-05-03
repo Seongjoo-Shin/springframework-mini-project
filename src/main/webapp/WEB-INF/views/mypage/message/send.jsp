@@ -18,26 +18,38 @@
         
         function fn_checkedDel(){
         	var cnt = $("input[name='messageNo']:checked").length;
-        	console.log(cnt);
+
+        	swal(cnt+"개의 쪽지를 삭제하시겠습니까?", {
+        		dangerMode: true,
+        		buttons: true,
+        	}).then((result) => {
+        		if(result == true){
+        			var arr = new Array();
+                	$("input[name='messageNo']:checked").each(function(){
+                		arr.push($(this).attr('id'));
+                	});
+                	if(cnt == 0){
+        				swal("선택된 게시물이 없습니다.");
+                	} else {
+                		console.log(arr);
+                		$.ajax({
+                			type: 'POST',
+                			url: '/mypage/message/sdeleteMsg',
+                			dataType: 'json',
+                			data: {delArr: arr},
+                		}).done((data) => {
+                			swal(data.messgae).then(() => {
+                				location.reload();
+                			})
+                		}).fail((data) => {
+                		});
+                	}
+        		} else {
+        			$("#allSelect").prop("checked", false);
+        			$("input[name='messageNo']:checked").prop("checked", false);
+        		}
+        	})
         	
-        	var arr = new Array();
-        	$("input[name='messageNo']:checked").each(function(){
-        		arr.push($(this).attr('id'));
-        	});
-        	if(cnt == 0){
-				swal("선택된 게시물이 없습니다.");
-        	} else {
-        		console.log(arr);
-        		$.ajax({
-        			type: 'POST',
-        			url: '/mypage/message/sdeleteMsg',
-        			dataType: 'json',
-        			data: {delArr: arr},
-        		}).done((data) => {
-        		}).fail((data) => {
-        		});
-        	}
-        	location.reload();
         }
     </script>
     <section>
@@ -72,7 +84,7 @@
                                     <th>보낸날</th>
                                     <th>받은사람</th>
                                     <th>회신여부</th>
-                                    <td><input type="checkbox" onclick="selectAll(this)"/></td>
+                                    <td><input type="checkbox" onclick="selectAll(this)" id="allSelect"/></td>
                                 </tr>
                             </thead>
                             <tbody>

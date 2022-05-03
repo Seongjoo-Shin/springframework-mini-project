@@ -1,5 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<script>
+	function fn_withdrawal(){
+		var userId = '${sessionUserId}';
+		var userPassword = $("#password").val();
+		console.log($("#password").val());
+		console.log(password);
+		if(password == null || password == ""){
+			swal("비밀번호를 입력해주세요");
+			$("#password").focus();
+		} else {
+			swal("탈퇴하시겠습니까?", {
+				dangerMode: true,
+				buttons: true,
+			}).then((result) => {
+				if(result == true){
+					$.ajax({
+						url: '/mypage/userWithdrawal',
+						method: 'POST',
+						data: {userId, userPassword},
+					}).done((data)=>{
+						if(data.status = "success"){
+							swal(data.message).then(() => {
+								$(location).attr("href", "/");
+							});
+						} else {
+							swal(data.message).then(() => {
+								$("#password").focus();
+							})
+						}
+					}).fail((data)=>{
+						
+					});
+				}
+			});
+		}
+		
+	}
+</script>
     <section>
         <div class="container-fluid mt-5">
             <div class="row">
@@ -15,11 +53,11 @@
                 <div class="col-8">
                     <h3 class="m-3">회원 탈퇴</h3>
                     <div class="d-flex justify-content-center align-items-center h-100">
-                        <form method="post" action="/mypage/userWithdrawal">
+                        <form method="post" id="frm" name="frm" action="">
                             <h4>비밀번호를 입력해주세요</h4>
                             <input type="hidden" name="userId" value="${sessionUserId}"/>
-                            <input type="password" class="mr-2" placeholder="비밀번호" name="userPassword"/>
-                            <input type="submit" value="회원탈퇴" class="btn btn-outline-dark"/>
+                            <input type="password" id="password" class="mr-2" placeholder="비밀번호" name="userPassword"/>
+                            <input type="button" value="회원탈퇴" class="btn btn-outline-dark" onclick="fn_withdrawal();"/>
                         </form>
                     </div>
                 </div>

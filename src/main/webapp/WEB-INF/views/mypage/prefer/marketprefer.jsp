@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<script>
+	function fn_delete(marketNo){
+		$.ajax({
+			url: '/mypage/deleteLikeMarket',
+			data: {'marketNo': marketNo},
+			type: 'POST',
+		}).done((data) => {
+			window.reload();
+		}).fail((data) =>{
+			
+		});
+	}
+</script>
     <section>
         <div class="container-fluid h-100 mt-5">
             <div class="row">
@@ -24,118 +37,23 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-3 float-left mb-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://via.placeholder.com/150" width="100%"/>
-                                <div class="information mr-3">
-                                    <p>마켓게시판 제목</p>
-                                    <span>작성자</span><br>
-                                    <div class="float-right"><a href="#"><img src="/resources/images/like.png" /></a></div>
-                                    <span>가격가격가격가격</span><br>
-                                    <span>2022-04-10</span><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 float-left mb-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://via.placeholder.com/150" width="100%"/>
-                                <div class="information mr-3">
-                                    <p>마켓게시판 제목</p>
-                                    <span>작성자</span><br>
-                                    <div class="float-right"><a href="#"><img src="/resources/images/like.png" /></a></div>
-                                    <span>가격가격가격가격</span><br>
-                                    <span>2022-04-10</span><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 float-left mb-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://via.placeholder.com/150" width="100%"/>
-                                <div class="information mr-3">
-                                    <p>마켓게시판 제목</p>
-                                    <span>작성자</span><br>
-                                    <div class="float-right"><a href="#"><img src="/resources/images/like.png" /></a></div>
-                                    <span>가격가격가격가격</span><br>
-                                    <span>2022-04-10</span><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 float-left mb-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://via.placeholder.com/150" width="100%"/>
-                                <div class="information mr-3">
-                                    <p>마켓게시판 제목</p>
-                                    <span>작성자</span><br>
-                                    <div class="float-right"><a href="#"><img src="/resources/images/like.png" /></a></div>
-                                    <span>가격가격가격가격</span><br>
-                                    <span>2022-04-10</span><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 float-left mb-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://via.placeholder.com/150" width="100%"/>
-                                <div class="information mr-3">
-                                    <p>마켓게시판 제목</p>
-                                    <span>작성자</span><br>
-                                    <div class="float-right"><a href="#"><img src="/resources/images/like.png" /></a></div>
-                                    <span>가격가격가격가격</span><br>
-                                    <span>2022-04-10</span><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 float-left mb-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://via.placeholder.com/150" width="100%"/>
-                                <div class="information mr-3">
-                                    <p>주소, 이름</p>
-                                    <span>임대</span><br>
-                                    <div class="float-right"><a href="#"><img src="/resources/images/like.png" /></a></div>
-                                    <span>500,000,000원</span><br>
-                                    <span>2022-04-10</span><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 float-left mb-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://via.placeholder.com/150" width="100%"/>
-                                <div class="information mr-3">
-                                    <p>마켓게시판 제목</p>
-                                    <span>작성자</span><br>
-                                    <div class="float-right"><a href="#"><img src="/resources/images/like.png" /></a></div>
-                                    <span>가격가격가격가격</span><br>
-                                    <span>2022-04-10</span><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 float-left mb-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://via.placeholder.com/150" width="100%"/>
-                                <div class="information mr-3">
-                                    <p>마켓게시판 제목</p>
-                                    <span>작성자</span><br>
-                                    <div class="float-right"><a href="#"><img src="/resources/images/like.png" /></a></div>
-                                    <span>가격가격가격가격</span><br>
-                                    <span>2022-04-10</span><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <c:forEach var="market" items="${markets}">
+                    	<div class="col-3 float-left mb-5">
+	                        <div class="card">
+	                            <div class="card-body">
+	                                <img class="border rounded" src="/mypage/getMarketImage?marketNo=${market.marketNo}&type=nomal&img=0" width="100%"/>
+	                                <div class="information mr-3">
+	                                    <p>${market.marketTitle }</p>
+	                                    <span>${market.marketWriter }</span><br>
+	                                    <div class="float-right"><a href="#" onclick="fn_delete('${market.marketNo}');"><img src="/resources/images/like.png" /></a></div>
+	                                    <span>${market.marketPrice}</span><br>
+	                                    <span><fmt:formatDate value="${market.marketRegistDate }" pattern="yyyy-MM-dd"/></span><br>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+                    </c:forEach>
+                    
                     <div class="row">
                         <div class="col-12">
                             <div class="row  d-flex justify-content-center">

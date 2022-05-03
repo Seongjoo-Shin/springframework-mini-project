@@ -11,29 +11,41 @@
         
         function fn_checkedDel(){
         	var cnt = $("input[name='freeNo']:checked").length;
-        	console.log(cnt);
-        	
-        	var arr = new Array();
-        	$("input[name='freeNo']:checked").each(function(){
-        		arr.push($(this).attr('id'));
-        	});
-        	if(cnt == 0){
-				swal("선택된 게시물이 없습니다.");
-        	} else {
-        		console.log(arr);
-        		$.ajax({
-        			type: 'POST',
-        			url: '/mypage/myboard/delete',
-        			dataType: 'json',
-        			data: {delArr: arr},
-        		}).done((data) => {
-        		}).fail((data) => {
-        		});
-        	}
-        	location.reload();
+			
+        	swal(cnt + "개의 게시물을 삭제하시겠습니까?", {
+    			dangerMode: true,
+    			buttons: true,
+    		}).then((result) => {
+    			console.log(result);
+    			if(result == true){
+    				var arr = new Array();
+                	$("input[name='freeNo']:checked").each(function(){
+                		arr.push($(this).attr('id'));
+                	});
+                	if(cnt == 0){
+        				swal("선택된 게시물이 없습니다.");
+                	} else {
+                		console.log(arr);
+                		$.ajax({
+                			type: 'POST',
+                			url: '/mypage/myboard/delete',
+                			dataType: 'json',
+                			data: {delArr: arr},
+                		}).done((data) => {
+                			swal(data.message).then(() => {
+            					location.reload();	
+            				});
+                		}).fail((data) => {
+                		});
+                	}
+    			} else {
+    				console.log("here");
+    				 $("input[name='freeNo']:checked").prop("checked", false);
+    			}
+    		});
         }
     </script>
-    <section <c:if test="${total eq 0}">style="margin-bottom: 194px;"</c:if>>
+    <section>
         <div class="container-fluid h-100 mt-5 mb-5">
             <div class="row">
                 <div class="col-2">
@@ -72,7 +84,7 @@
                             <form action="" id="frm" name="frm" method="post">
                             <c:forEach items="${boards}" var="board" varStatus="status">
                             	<tr>
-                            		<td class="text-center bg-light"><span>${board.freeNo}</span></td>
+                            		<td class="text-center bg-light"><span>${board.rnum}</span></td>
 	                                <td><a href="/community/board/boardDetail?freeNo=${board.freeNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${board.freeTitle}</a></td>
 	                                <td class="text-center"><fmt:formatDate value="${board.freeModifyDate}" pattern="yyyy-MM-dd"/></td>
 	                                <td class="text-center"><a href="/community/board/update?freeNo=${board.freeNo}&from=mypage" class="btn btn-sm btn-outline-dark">수정</a></td>

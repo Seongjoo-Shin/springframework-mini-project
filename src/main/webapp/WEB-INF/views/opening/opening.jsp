@@ -248,30 +248,30 @@
 										setTimeout(() => {
 											var html = '';
 											html += '<div class="ml-4" style="max-width: 400px;">';
-											html += '    <p>주소 : ' + addr + '</p>';
+											html += '    <p>주소 : <b>' + addr + '</b></p>';
 											if(data.keyword1 != null){
-												html += '    <span>임플란트 : ' + data.keyword1 + '</span><br>';
+												html += '    <span>임플란트 - ' + data.keyword1 + '</span><br>';
 											}
 											if(data.keyword2 != null){
-												html += '    <span>역세권 : ' + data.keyword2 + '</span><br>';
+												html += '    <span>역세권 - ' + data.keyword2 + '</span><br>';
 											}
 											if(data.keyword3 != null){
-												html += '    <span>소아치료전문 : ' + data.keyword3 + '</span><br>';
+												html += '    <span>소아치료전문 - ' + data.keyword3 + '</span><br>';
 											}
 											if(data.keyword4 != null){
-												html += '    <span>노인치료전문 : ' + data.keyword4 + '</span><br>';
+												html += '    <span>노인치료전문 - ' + data.keyword4 + '</span><br>';
 											}
 											if(data.keyword5 != null){
-												html += '    <span>교정전문 : ' + data.keyword5 + '</span><br>';
+												html += '    <span>교정전문 - ' + data.keyword5 + '</span><br>';
 											}
 											if(data.keyword6 != null){
-												html += '    <span>턱관절교정 : ' + data.keyword6 + '</span><br>';
+												html += '    <span>턱관절교정 - ' + data.keyword6 + '</span><br>';
 											}
 											if(data.keyword7 != null){
-												html += '    <span>사랑니발치 : ' + data.keyword7 + '</span><br>';
+												html += '    <span>사랑니발치 - ' + data.keyword7 + '</span><br>';
 											}
 											if(data.keyword8 != null){
-												html += '    <span>편의시설 : ' + data.keyword8 + '</span><br>';
+												html += '    <span>편의시설 - ' + data.keyword8 + '</span><br>';
 											}
 											html += '</div>';
 											document.getElementById("msgBox").innerHTML = html;	
