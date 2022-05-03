@@ -109,7 +109,8 @@
 			#{buildingTotalFloor},
 			#{buildingFloor},
 			#{buildingOption},
-			SYSDATE
+			SYSDATE,
+			'0'
 		)
 	</insert>
 	
@@ -165,10 +166,45 @@
 		where building_no = #{buildingNo}
 	</update>
 	
+	<update id="updateBuilding" parameterType="building">
+		update buildings
+		set building_name = #{buildingName},
+			building_addr = #{buildingAddr},
+			building_addr_detail = #{buildingAddrDetail},
+			building_latitude = #{buildingLatitude},
+			building_longitude = #{buildingLongitude},
+			building_trade_info = #{buildingTradeInfo},
+			building_takeover_price = #{buildingTakeoverPrice},
+			building_deposit_price = #{buildingDepositPrice},
+			building_month_rent = #{buildingMonthRent},
+			building_price = #{buildingPrice},
+			building_available_date = #{buildingAvailableDate},
+			building_detail_content = #{buildingDetailContent},
+			building_use_yn = #{buildingUseYN},
+			building_writer = #{buildingWriter},
+			building_supply_area = #{buildingSupplyArea},
+			building_dedicated_area = #{buildingDedicatedArea},
+			building_total_floor = #{buildingTotalFloor},
+			building_floor = #{buildingFloor},
+			building_option = #{buildingOption},
+			building_like_count = #{buildingLikeCount}
+		where building_no = #{buildingNo}
+	</update>
+	
 	<delete id="deleteLikeLists" parameterType="likelist">
 		delete from likelists
 		where like_type = #{likeType}
 			and like_list_no = #{likeListNo}
 			and like_user_id = #{likeUserId}
+	</delete>
+	
+	<delete id="deleteEquipments" parameterType="int">
+		delete from equipments
+		where building_no = #{buildingNo}
+	</delete>
+	
+	<delete id="deleteBuildingImagesByImageNo" parameterType="int">
+		delete from buildingfiles
+		where building_file_no = #{imgNo}
 	</delete>
 </mapper>

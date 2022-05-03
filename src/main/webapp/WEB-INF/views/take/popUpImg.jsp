@@ -30,10 +30,12 @@
     </header>
     <section style="align-items: center;">
         <div id="imagePreview" class="w-100" style="align-items: center; display: inline;">
-        	<c:forEach var="file" begin="0" end="${filesCnt}" step="1" varStatus="status">
-        		<span>
-        			<img class="border rounded p-2 m-2" src="getBuildingImage?buildingNo=${buildingNo}&type=nomal&img=${status.index}" width="500px" height="400px"/>
-        		</span>
+        	<c:forEach var="file" items="${imageFiles}" varStatus="status">
+        		<c:if test="${file.panoramaCheck eq '0'}">
+        			<span>
+	        			<img class="border rounded p-2 m-2" src="getBuildingImage?buildingNo=${buildingNo}&type=nomal&img=${status.index}" width="500px" height="400px"/>
+	        		</span>
+        		</c:if>
         	</c:forEach>
         </div>
     </section>

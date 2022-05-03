@@ -31,4 +31,10 @@ public interface TakeDao {
 	void insertLikeLists(LikeListDto lld);
 	void deleteLikeLists(LikeListDto lld);
 	void updateLikeCount(BuildingDto bdt);
+	
+	
+	void deleteEquipments(int buildingNo);
+	void deleteBuildingImagesByImageNo(int imgNo);
+	
+	void updateBuilding(BuildingDto bdt);
 }

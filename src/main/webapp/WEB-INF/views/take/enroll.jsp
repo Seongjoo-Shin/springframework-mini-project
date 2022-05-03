@@ -155,22 +155,6 @@
             		console.log("fn : " + fileNo);
             		
             	}
-            	for(var i=0; i<fileNo; i++){
-            		var file = $("img#"+i);
-            		console.log(file);
-            		//var f = new File(file.attr("src"), file.attr("data-file"));
-            		console.log(file.attr("src"));
-            		console.log(file.attr("data-file"));
-            		
-            		var file = {
-            			name : 	file.attr("data-file"),
-            			type : "image/jpeg",
-            			webkitRelativePath: ""
-            		};
-            		uploadFiles.push(file);
-            	}
-            	
-            	console.log(uploadFiles);
             }
 
         });
@@ -556,11 +540,11 @@
 	                                </div>
 	                                <div id="nomalImgField">
 	                                    <div id="nomalImgPreview" class="w-100" style="align-items: center; display: inline;">
-	                                    	<c:if test="${nomalCnt != 0}">
+	                                    	<c:if test="${not empty nomalCnt}">
 	                                    		<c:forEach var="image" items="${imageFile}" varStatus="status">
 	                                    			<c:if test="${image.panoramaCheck eq '0'}">
 	                                    				<span id="file${status.index}">
-		                                    				<img id="${status.index}" src="getImageByteArrayToFile?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=${status.index}" data-file="${image.attachOriginalName}" width="200px" height="150px" style="border: 1px solid gainsboro; padding: 10px; background-color :white;" />
+		                                    				<img id="${status.index}" name="exist" src="getImageByteArrayToFile?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=${status.index}" data-file="${image.attachOriginalName}" seq="${image.buildingFileNo}" width="200px" height="150px" style="border: 1px solid gainsboro; padding: 10px; background-color :white;" />
 		                                    				<a class="btn btn-danger" onclick="deleteImg(${status.index})" style="margin-right:8px; cursor:pointer;">X</a>
 		                                    			</span>
 	                                    			</c:if>
@@ -585,7 +569,36 @@
 	                                    <input type="file" id="chooseAroundImg"  name="chooseAroundImg" accept="image/*" style="display: none;" onchange="get360ImageFile(event)">
 	                                </div>
 	                                <div id="aroundImgField" class="d-flex">
-	                                    <div id="aroundImgPreview" class="w-100" style="align-items: center;"></div>
+	                                    <div id="aroundImgPreview" class="w-100" style="align-items: center;">
+	                                    	<c:if test="${not empty nomalCnt}">
+	                                    		<c:forEach var="image" items="${imageFile}" varStatus="status">
+	                                    			<c:if test="${image.panoramaCheck eq '1'}">
+	                                    				<div seq="${image.buildingFileNo}" name="exist" id="panorama" style="border-radius: 10px; object-fit: cover;"></div>
+	                                    				<script>
+		                                    				pannellum.viewer("panorama", {
+		                	                                    type: "equirectangular",
+		                	                                    panorama: `getImageByteArrayToFile?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=${status.index}`,
+		                	                                    autoLoad: true
+		                	                                });
+		                	                                $("#explainAround").css('display', 'none');
+		                	
+		                	                                const delete360Btn = document.createElement('span');
+		                	                                delete360Btn.setAttribute('onclick', 'delete360Img(this)');
+		                	                                delete360Btn.innerHTML = "X";
+		                	                                delete360Btn.style.padding = "10px";
+		                	                                delete360Btn.style.border = "1px solid rgb(231, 231, 236)";
+		                	                                delete360Btn.style.backgroundColor = 'white';
+		                	                                delete360Btn.style.marginRight = "8px";
+		                	                                delete360Btn.style.cursor = "pointer";
+		                	
+		                	                                aroundImgField.appendChild(delete360Btn);
+		                	
+		                	                                $("#chooseAroundImg").val("");
+	                                    				</script>
+	                                    			</c:if>
+	                                    		</c:forEach>
+	                                    	</c:if>
+	                                    </div>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -595,8 +608,14 @@
 	                        	//360도 이미지를 저장하기 위한 변수
 	                            var uploadAroundFile;
 	                        	
+	                        	//수정하는 상태일 경우, DB에 저장된 사진 중, 삭제할 것들의 seq를 저장하는 배열이다.
+	                        	var deleteDBImgBySeq = [];
+	                        	
 	                        	//첨부파일에 번호를 붙이기 위해 사용하는 변수로, id에 붙여준다.
 	                            var fileNo = 0;
+	                        	
+	                        	//만약, checkNum과 fileNo가 같아지면, 업로드되어 있는 파일이 아무것도 없게 됨!
+	                            var checkNum = 0;
 	                        	
 	                        	//장비에 번호를 붙이기 위해 사용하는 함수로, id에 붙여준다.
 	                            var equipNo = 0;
@@ -689,11 +708,22 @@
 	                            }
 	
 	                            function delete360Img(_this){
-	                                $(_this).remove();
-	                                $("#panorama").remove();
-	                                // aroundImgField.style.display = 'none';
-	                                uploadAroundFile = "";
-	                                $("#explainAround").css('display', 'block');
+	                            	if($("#panorama").attr("name") == 'exist'){
+	                            		console.log("db에 저장된 것 삭제할 경우");
+	                            		deleteDBImgBySeq.push($("#panorama").attr("seq"));
+	                            		
+	                            		$(_this).remove();
+		                                $("#panorama").remove();
+		                                $("#explainAround").css('display', 'block');
+		                                console.log(deleteDBImgBySeq);
+		                                
+	                            	}else{
+	                            		
+	                            		$(_this).remove();
+		                                $("#panorama").remove();
+		                                uploadAroundFile = "";
+		                                $("#explainAround").css('display', 'block');
+	                            	}
 	                            }
 	
 	                            function createImagePreview(e, file){
@@ -751,23 +781,30 @@
 	                            }
 	                            
 	                            function deleteImg(fnum){
-	                            	document.querySelector("#file" + fnum).remove();
-	                            	uploadFiles[fnum] = "";
-	                            	console.log("up : "+uploadFiles);
-	                            	
-	                            	var checkNum=0;
-	                            	for(f of uploadFiles){
-	                            		console.log("f : "+f);
-	                            		if(f == ""){
-	                            			checkNum++;
+	                            	if($("img#"+fnum).attr("name") == 'exist'){
+	                            		console.log("db에 저장된 것 삭제할 경우");
+	                            		deleteDBImgBySeq.push($("img#"+fnum).attr("seq"));
+	                            		document.querySelector("#file" + fnum).remove();
+	                            		
+	                            		
+	                            	}else{
+	                            		document.querySelector("#file" + fnum).remove();
+	                            		var DBImgCnt = 0;
+	                            		if(`${type}` == 'updateEnroll'){
+	                            			var DBImgCnt = `${nomalCnt}`;
+			                            	DBImgCnt++;
 	                            		}
+		                            	console.log(fnum-DBImgCnt);
+		                            	uploadFiles[fnum-DBImgCnt] = "";
+		                            	console.log(uploadFiles);
+		                            	
 	                            	}
-	                            	console.log("checkNum : "+checkNum);
-	                            	if(checkNum == fileNo){
-	                            		$("#addBtn").remove();
+	                            	console.log($("#nomalImgPreview").children().length);
+	                            	if($("#nomalImgPreview").children().length == 0){
+		                            	$("#addBtn").remove();
 	                                    $("#explainNomal").css('display', 'block');
 	                                    useYn = 0;
-	                            	}
+		                            }
 	                            }
 	                            
 	                            //공급 면적을 입력하게 되면, 알아서 m^2으로 변환한다!
@@ -885,7 +922,7 @@
 	                	<button onclick="cancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
                 	</c:if>
                 	<c:if test="${type eq 'updateEnroll'}">
-                		<button class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정 완료</button>
+                		<button onclick="submitBtnClick()" class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정 완료</button>
                 		<button onclick="history.back()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
                 		<button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
                 	</c:if>
@@ -1020,6 +1057,14 @@
             
             formData.append("optionValueList", optionValueList);
             
+            formData.append("type", `${type}`);
+            formData.append("updateBuildingNo", `${buildingInfo.buildingNo}`);
+            formData.append("buildingRegistDate", `${buildingInfo.buildingRegistDate}`);
+            formData.append("buildingLikeCount", `${buildingInfo.buildingLikeCount}`);
+            
+            //DB상에 존재하는 이미지 파일을 삭제하기 위해 시퀀스들을 저장한 배열을 append한다!
+            formData.append("deleteDBImgBySeq",deleteDBImgBySeq);
+            
             //만약, 장비 옵션을 선택하였다면 내가 추가한 장비의 데이터도 formData에 담아준다.
             var equipList = [];
             if(optionValueList.indexOf("3") != -1){
@@ -1051,10 +1096,19 @@
             	processData:false
             })
             .done((data) => {
+            	var message;
+            	if(data == 'updateEnroll'){
+            		message = "매물 수정이 완료 되었습니다.";
+            	}else{
+            		message = "매물 등록이 완료 되었습니다.";
+            	}
+            	console.log(message);
+            	console.log(data);
             	swal({
-					text: "매물이 등록되었습니다."
+					text: message
 				}).then(()=>{
-					$(location).attr("href", "enrollCancle");
+					/* $(location).attr("href", "enrollCancle"); */
+					location.href = document.referrer;
 				});
 			});
         }

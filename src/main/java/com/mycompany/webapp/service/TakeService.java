@@ -75,4 +75,16 @@ public class TakeService {
 	public void updateLikeCount(BuildingDto bdt) {
 		takeDao.updateLikeCount(bdt);
 	}
+
+	public void deleteEquipments(int buildingNo) {
+		takeDao.deleteEquipments(buildingNo);
+	}
+
+	public void deleteBuildingImagesByImageNo(int imgNo) {
+		takeDao.deleteBuildingImagesByImageNo(imgNo);
+	}
+
+	public void updateBuilding(BuildingDto bdt) {
+		takeDao.updateBuilding(bdt);
+	}
 }

@@ -1,11 +1,11 @@
 package com.mycompany.webapp.controller;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -216,8 +216,10 @@ public class TakeController {
 	  model.addAttribute("buildingNo", buildingNo);
 	  
 	  int filesCnt = takeService.buildingFilesCount(buildingNo);
+	  List<BuildingFileDto> fileDto = takeService.selectImageFileByBuildingNo(buildingNo);
 	  filesCnt--;
 	  model.addAttribute("filesCnt", filesCnt);
+	  model.addAttribute("imageFiles", fileDto);
       return "take/popUpImg";
    }
    
@@ -231,15 +233,18 @@ public class TakeController {
    }
    
    @RequestMapping("/takeoverEnroll")
+   @ResponseBody
    public String takeoverEnroll(HttpServletRequest request, 
 		   HttpSession session, 
 		   @RequestPart("attach_file") List<MultipartFile> files, 
 		   @RequestPart(value="attach_aroundFile", required=false) MultipartFile aroundFile, 
-		   Model model) throws IOException {
+		   Model model) throws IOException, ParseException {
 	   
 	   log.info("실행");
 	   log.info("id : " + session.getAttribute("sessionUserId"));
 	   String option = request.getParameter("optionValueList");
+	   
+	   String type = request.getParameter("type");
 	   
 	   BuildingDto bdt = new BuildingDto();
 	   bdt.setBuildingName(request.getParameter("buildingName"));
@@ -253,7 +258,12 @@ public class TakeController {
 	   bdt.setBuildingDepositPrice(request.getParameter("buildingDepositPrice"));
 	   bdt.setBuildingMonthRent(request.getParameter("buildingMonthRent"));
 	   bdt.setBuildingPrice(request.getParameter("buildingPrice"));
-	   bdt.setBuildingAvailableDate(new Date(request.getParameter("buildingAvailableDate")));
+	   
+	   String tempDate = request.getParameter("buildingAvailableDate");
+	   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	   Date availableDate = formatter.parse(tempDate);
+	   bdt.setBuildingAvailableDate(availableDate);
+	   
 	   bdt.setBuildingDetailContent(request.getParameter("buildingDetailContent"));
 	   bdt.setBuildingWriter(session.getAttribute("sessionUserId").toString());
 	   bdt.setBuildingSupplyArea(request.getParameter("buildingSupplyArea"));
@@ -261,16 +271,38 @@ public class TakeController {
 	   bdt.setBuildingTotalFloor(Integer.parseInt(request.getParameter("buildingTotalFloor")));
 	   bdt.setBuildingFloor(Integer.parseInt(request.getParameter("buildingFloor")));
 	   bdt.setBuildingOption(option);
-	   model.addAttribute("buildingData", bdt);
-	   
-	   System.out.println("bdt : " + bdt);
-	   
-	   model.addAttribute("option", option);
 	   
 	   List<EquipmentDto> equipmentList = new ArrayList<EquipmentDto>();
 	   
-	   //buildings 테이블안에 인수 매물 추가
-	   int buildingNo = takeService.insertBuilding(bdt);
+	   int buildingNo = 0;
+	   
+	   //수정할 경우, no, registDate 등등을 넣어준다.
+	   if(type.equals("updateEnroll")) {
+		   int updateBuildingNo = Integer.parseInt(request.getParameter("updateBuildingNo"));
+		   bdt.setBuildingNo(updateBuildingNo);
+		   
+		   int buildingLikeCount = Integer.parseInt(request.getParameter("buildingLikeCount"));
+		   bdt.setBuildingLikeCount( buildingLikeCount);
+		   takeService.updateBuilding(bdt);
+		   buildingNo = updateBuildingNo;
+		   
+		   //만약, type이 updateEnroll이라면 장비 테이블에 있는 해당 매물의 장비 정보를 지우고 다시 insert 한다!
+		   takeService.deleteEquipments(buildingNo);
+		   
+		   //해당 매물의 첨부파일을 삭제한 경우 삭제를 진행한다.
+		   String[] deleteImgNoList = request.getParameterValues("deleteDBImgBySeq");
+		   log.info(deleteImgNoList);
+		   log.info(deleteImgNoList.length);
+		   if(deleteImgNoList.length > 1) {
+			   for(String deleteImgNo : deleteImgNoList) {
+				   int imgNo = Integer.parseInt(deleteImgNo);
+				   takeService.deleteBuildingImagesByImageNo(imgNo);
+			   }
+		   }
+		   
+	   }else {
+		   buildingNo = takeService.insertBuilding(bdt);
+	   }
 	   
 	   //장비 추가
 	   if(option.contains("3")) {
@@ -281,7 +313,6 @@ public class TakeController {
 			   edo.setBuildingNo(buildingNo);
 			   edo.setEquipmentName(jsonObject.getString("name"));
 			   edo.setEquipmentCount(jsonObject.getInt("cnt"));
-//			   equipmentList.add(edo);
 			   takeService.insertEquipments(edo);
 		   }
 	   }
@@ -302,7 +333,6 @@ public class TakeController {
 			   log.info(bfd);
 			   
 			   takeService.insertBuildingFile(bfd);
-			   
 		   }
 
 	   }
@@ -318,8 +348,7 @@ public class TakeController {
 		   
 		   takeService.insertBuildingFile(bfd);
 	   }
-	   log.info("123(");
-	   return "take/list";
+	   return type;
    }
    
    @PostMapping("/message/sending")
