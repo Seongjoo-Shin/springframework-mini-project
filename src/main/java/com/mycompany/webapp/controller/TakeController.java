@@ -1,8 +1,11 @@
 package com.mycompany.webapp.controller;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,8 +19,10 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -78,7 +83,7 @@ public class TakeController {
 	   if(type.equals("nomal")) { //일반 사진만 가져와!
 		   int num = Integer.parseInt(img);
 		   if(files.get(num).getPanoramaCheck() == 1) {
-			   num++;
+			   return;
 		   }
 		   byte[] temp = files.get(num).getImageFileData();
 		   InputStream is = new ByteArrayInputStream(temp);
@@ -93,6 +98,33 @@ public class TakeController {
 			   }
 		   }
 	   }
+   }
+   
+   //바이트배열을 파일로 만들어서 출력해줌!
+   @RequestMapping("/getImageByteArrayToFile")
+   public void getImageByteArrayToFile(HttpServletRequest req, HttpServletResponse res, String buildingNo, String img, @RequestHeader("User-Agent") String userAgent) throws IOException {
+	   System.out.println(buildingNo);
+	   List<BuildingFileDto> files = takeService.selectImageFileByBuildingNo(buildingNo);
+
+	   
+	   int num = Integer.parseInt(img);
+	   
+	   String contentType = files.get(num).getAttachType();
+	   String originalFilename = files.get(num).getAttachOriginalName();
+	   
+	   res.setContentType(contentType);
+	   
+	 //다운로드할 파일명을 헤더에 추가
+		if(userAgent.contains("Trident") || userAgent.contains("MSIE")) {
+			//IE 브라우저일 경우
+			originalFilename = URLEncoder.encode(originalFilename, "UTF-8");
+		} else {
+			//크롬, 엣지, 사파리일 경우
+			originalFilename = new String(originalFilename.getBytes("UTF-8"), "ISO-8859-1");
+		}
+		res.setHeader("Content-Disposition", "attachment; filename=\"" + originalFilename + "\"");
+		
+		FileCopyUtils.copy(new ByteArrayInputStream(files.get(num).getImageFileData()), res.getOutputStream());
    }
    
    @GetMapping("/view")
@@ -132,12 +164,42 @@ public class TakeController {
    }
    
    @RequestMapping("/enroll")
-   public String enroll(HttpSession session, String type, Model model) {
+   public String enroll(HttpSession session, String type, String buildingNo, Model model) throws IOException {
 	  log.info(session.getAttribute("sessionUserId"));
 	  if(session.getAttribute("sessionUserId") == null) {
-		  model.addAttribute("type", type);
 		  return "redirect:/index/loginForm";
 	  }else {
+		  model.addAttribute("type", type);
+		  
+		  //업데이트일 경우!
+		  if(type.equals("updateEnroll")) {
+			  log.info("update : " + buildingNo);
+			  
+			  BuildingDto buildingDetailBuildingDto = takeService.selectBuildingByBuildingNo(buildingNo);
+			  List<EquipmentDto> equipDto = takeService.selectEquipmentByBuildingNo(buildingNo);
+			  List<BuildingFileDto> fileDto = takeService.selectImageFileByBuildingNo(buildingNo);
+			  
+			  int panoCnt = 0;
+			  int nomalCnt = 0;
+			  for(BuildingFileDto f : fileDto) {
+				  if(f.getPanoramaCheck() == 1) {
+					  panoCnt++;
+				  }else {
+					  nomalCnt++;
+				  }
+			  }
+			  panoCnt--;
+			  nomalCnt--;
+			  
+			  log.info(panoCnt + nomalCnt);
+			  
+			  model.addAttribute("buildingInfo", buildingDetailBuildingDto);
+			  model.addAttribute("equipments", equipDto);
+			  
+			  model.addAttribute("imageFile", fileDto);
+			  model.addAttribute("panoCnt", panoCnt);
+			  model.addAttribute("nomalCnt", nomalCnt);
+		  }
 		  return "take/enroll";
 	  }
       
@@ -169,7 +231,12 @@ public class TakeController {
    }
    
    @RequestMapping("/takeoverEnroll")
-   public String takeoverEnroll(HttpServletRequest request, HttpSession session, @RequestPart("attach_file") List<MultipartFile> files, @RequestPart(value="attach_aroundFile", required=false) MultipartFile aroundFile, Model model) throws IOException {
+   public String takeoverEnroll(HttpServletRequest request, 
+		   HttpSession session, 
+		   @RequestPart("attach_file") List<MultipartFile> files, 
+		   @RequestPart(value="attach_aroundFile", required=false) MultipartFile aroundFile, 
+		   Model model) throws IOException {
+	   
 	   log.info("실행");
 	   log.info("id : " + session.getAttribute("sessionUserId"));
 	   String option = request.getParameter("optionValueList");
@@ -187,7 +254,6 @@ public class TakeController {
 	   bdt.setBuildingMonthRent(request.getParameter("buildingMonthRent"));
 	   bdt.setBuildingPrice(request.getParameter("buildingPrice"));
 	   bdt.setBuildingAvailableDate(new Date(request.getParameter("buildingAvailableDate")));
-	   
 	   bdt.setBuildingDetailContent(request.getParameter("buildingDetailContent"));
 	   bdt.setBuildingWriter(session.getAttribute("sessionUserId").toString());
 	   bdt.setBuildingSupplyArea(request.getParameter("buildingSupplyArea"));
@@ -236,9 +302,7 @@ public class TakeController {
 			   log.info(bfd);
 			   
 			   takeService.insertBuildingFile(bfd);
-//			   
-//			   File file = new File("C:/Temp/uploadfiles/" + bfd.getAttachSaveName());
-//			   m.transferTo(file);
+			   
 		   }
 
 	   }

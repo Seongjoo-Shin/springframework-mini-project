@@ -111,7 +111,7 @@
 	                                    	<h3>인수 매물 목록</h3>
 	                               		</div>
 	                                    <div class="p-1 flex-grow-1 ">
-	                                    	<a href="enroll?type='newEnroll'" class="border rounded p-2 float-right" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none; font-size: 18px">매물 등록</a>
+	                                    	<a href="enroll?type=newEnroll" class="border rounded p-2 float-right" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none; font-size: 18px">매물 등록</a>
 	                                   	</div>
 	                                </div>
 	                                <div style="width:100%;height:555px; border: 1px solid rgb(192, 191, 191); padding: 15px; overflow:auto;">

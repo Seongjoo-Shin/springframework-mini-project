@@ -6,6 +6,80 @@
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<<style>
+ .ui-widget-header { border: 0px solid #dddddd; background: #fff; } 
+
+ .ui-datepicker-calendar>thead>tr>th { font-size: 14px !important; } 
+
+ .ui-datepicker .ui-datepicker-header { position: relative; padding: 10px 0; } 
+
+ .ui-state-default,
+ .ui-widget-content .ui-state-default,
+ .ui-widget-header .ui-state-default,
+ .ui-button,
+ html .ui-button.ui-state-disabled:hover,
+ html .ui-button.ui-state-disabled:active { border: 0px solid #c5c5c5; background-color: transparent; font-weight: normal; color: #454545; text-align: center; } 
+
+ .ui-datepicker .ui-datepicker-title { margin: 0 0em; line-height: 16px; text-align: center; font-size: 14px; padding: 0px; font-weight: bold; } 
+
+ .ui-datepicker { display: none; background-color: #fff; border-radius: 4px; margin-top: 10px; margin-left: 0px; margin-right: 0px; padding: 20px; padding-bottom: 10px; width: 300px; box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1); } 
+
+ .ui-widget.ui-widget-content { border: 1px solid #eee; } 
+
+ #datepicker:focus>.ui-datepicker { display: block; } 
+
+ .ui-datepicker-prev,
+ .ui-datepicker-next { cursor: pointer; } 
+
+ .ui-datepicker-next { float: right; } 
+
+ .ui-state-disabled { cursor: auto; color: hsla(0, 0%, 80%, 1); } 
+
+ .ui-datepicker-title { text-align: center; padding: 10px; font-weight: 100; font-size: 20px; } 
+
+ .ui-datepicker-calendar { width: 100%; } 
+
+ .ui-datepicker-calendar>thead>tr>th { padding: 5px; font-size: 20px; font-weight: 400; } 
+
+ .ui-datepicker-calendar>tbody>tr>td>a { color: #000; font-size: 12px !important; font-weight: bold !important; text-decoration: none;}
+
+ .ui-datepicker-calendar>tbody>tr>.ui-state-disabled:hover { cursor: auto; background-color: #fff; } 
+
+ .ui-datepicker-calendar>tbody>tr>td { border-radius: 100%; width: 44px; height: 30px; cursor: pointer; padding: 5px; font-weight: 100; text-align: center; font-size: 12px; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:hover { background-color: transparent; opacity: 0.6; } 
+
+ .ui-state-hover,
+ .ui-widget-content .ui-state-hover,
+ .ui-widget-header .ui-state-hover,
+ .ui-state-focus,
+ .ui-widget-content .ui-state-focus,
+ .ui-widget-header .ui-state-focus,
+ .ui-button:hover,
+ .ui-button:focus { border: 0px solid #cccccc; background-color: transparent; font-weight: normal; color: #2b2b2b; } 
+
+ .ui-widget-header .ui-icon { background-image: url('${pageContext.request.contextPath}/resources/images/btns.png'); } 
+
+ .ui-icon-circle-triangle-e { background-position: -20px 0px; background-size: 36px; } 
+
+ .ui-icon-circle-triangle-w { background-position: -0px -0px; background-size: 36px; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:first-child a { color: red !important; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:last-child a { color: #0099ff !important; } 
+
+ .ui-datepicker-calendar>thead>tr>th:first-child { color: red !important; } 
+
+ .ui-datepicker-calendar>thead>tr>th:last-child { color: #0099ff !important; } 
+
+ .ui-state-highlight,
+ .ui-widget-content .ui-state-highlight,
+ .ui-widget-header .ui-state-highlight { border: 0px; background: #f1f1f1; border-radius: 50%; padding-top: 10px; padding-bottom: 10px; } 
+
+ .inp { padding: 10px 10px; background-color: #f1f1f1; border-radius: 4px; border: 0px; } 
+
+ .inp:focus { outline: none; background-color: #eee; } 
+</style>
 
 	<script>
         $(function() {
@@ -13,9 +87,7 @@
             $("#buildingAvailableDate").datepicker({
                 dateFormat: 'yy-mm-dd' //달력 날짜 형태
                 ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-                ,changeYear: true //option값 년 선택 가능
-                ,changeMonth: true //option값  월 선택 가능                
+                ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서                
                 ,showOn: "button" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
                 ,buttonImage: "${pageContext.request.contextPath}/resources/images/dateImg.png" //버튼 이미지 경로
                 ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
@@ -25,18 +97,81 @@
                 ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
                 ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
                 ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
-                ,minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                ,minDate: "+1D" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                 ,maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
             });                    
             
-            //초기값을 오늘 날짜로 설정해줘야 합니다.
-            $('#buildingAvailableDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
-            // $('img.ui-datepicker-trigger').attr('width', '10px');
-            // $('#datepicker').css("padding", "8px");    
+            //만약, 수정하는 것이라면 데이트피커 날짜를 설정해준다.
+            if(`${buildingInfo.buildingAvailableDate}` != ""){
+            	var date = `<fmt:formatDate value="${buildingInfo.buildingAvailableDate}" pattern="yyyy-MM-dd" />`;
+                console.log(date);
+                console.log(new Date(date));
+                
+                var tempDate = new Date(date);
+                
+                console.log(tempDate.getFullYear());
+                
+                var availableDate = new Date(tempDate.getFullYear(), tempDate.getMonth() , tempDate.getDate(), 0, 0, 0 ,0);
+                var today = new Date();
+                
+                //만약, 설정된 날짜가 현재 날짜보다 앞이라면, 현재 날짜로 설정해준다.
+                if(availableDate < today){
+                	$('#buildingAvailableDate').datepicker('setDate', 'today');
+                }else{
+                	$('#buildingAvailableDate').datepicker('setDate', availableDate);
+                }
+                
+                
+            }else{
+            	$('#buildingAvailableDate').datepicker('setDate', 'today');
+            }
+               
             $('#buildingAvailableDate').addClass("p-2");
             $('#buildingAvailableDate').addClass("mt-2 mr-1");  
             $('#buildingAvailableDate').css("font-size", "20px");
 
+            //update하는 경우!
+            if(`${type}` == 'updateEnroll'){
+            	console.log(`${type}`);
+            	setAddr(`${buildingInfo.buildingAddr}`);
+            	if(`${buildingInfo.buildingTradeInfo}` == '매매'){
+            		tradeBtnClick();
+            	}
+            	
+            	//옵션을 설정해준다.
+            	setOptions();
+            	
+            	//getImageFile();
+            	
+            	//만약 사진에 뭐가 있다면! 일단 미리보기에 사진 띄우기
+            	if($("#nomalImgPreview").children().length != 0){
+            		$("#explainNomal").css('display', 'none');
+            		
+            		const btn = createBtn();
+                    const nomalImgField = document.getElementById("nomalImgField");
+                    nomalImgField.appendChild(btn);
+            		useYn = 1;
+            		fileNo = $("#nomalImgPreview").children().length;
+            		console.log("fn : " + fileNo);
+            		
+            	}
+            	for(var i=0; i<fileNo; i++){
+            		var file = $("img#"+i);
+            		console.log(file);
+            		//var f = new File(file.attr("src"), file.attr("data-file"));
+            		console.log(file.attr("src"));
+            		console.log(file.attr("data-file"));
+            		
+            		var file = {
+            			name : 	file.attr("data-file"),
+            			type : "image/jpeg",
+            			webkitRelativePath: ""
+            		};
+            		uploadFiles.push(file);
+            	}
+            	
+            	console.log(uploadFiles);
+            }
 
         });
 
@@ -88,6 +223,38 @@
                 btn.name = "";
             }
         }
+        
+        //수정할 경우, DB에 저장된 옵션들을 가져와 설정해준다.
+        function setOptions(){
+        	var optionsList = `${buildingInfo.buildingOption}`.split(",");
+        	console.log(optionsList);
+        	
+        	for(option of optionsList){
+        		$(".optionBtn[value=" + option + "]").trigger('click');
+        	}
+        	
+        	//만약 optionsList안에 3을 포함하고 있다면..!
+        	if(optionsList.indexOf("3") != -1){
+        		<c:forEach var="equip" items="${equipments}" varStatus="status">
+        			equipmentSave(`${equip.equipmentName}`, `${equip.equipmentCount}`);
+	        	</c:forEach>
+        	}
+        }
+        
+        //DB에서 가져온 이미지를 파일로 저장하기 위함!
+        function getImageFile(img){
+        	var buildingNo = `${buildingInfo.buildingNo}`;
+        	$.ajax({
+        		method: 'POST',
+            	url:'getImageByteArrayToFile',
+            	data:{
+            		buildingNo,
+            		img
+            	},
+        	}).done((res)=>{
+        		console.log(res);
+        	});
+        }
     </script>
     <style>
     	.error::placeholder{color:red;}
@@ -129,7 +296,7 @@
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">이름</h4>
-	                    <input id="buildingName" name="buildingName" type="text" class="p-2 border rounded" style="font-size: 20px; border-color: transparent; width: 100%;"placeholder="등록하려는 매물의 이름을 입력해주세요."/>
+	                    <input id="buildingName" name="buildingName" type="text" class="p-2 border rounded" style="font-size: 20px; border-color: transparent; width: 100%;"placeholder="등록하려는 매물의 이름을 입력해주세요." value="${buildingInfo.buildingName}"/>
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">위치 정보</h4>
@@ -142,10 +309,10 @@
 	                        <div class="m-4 d-flex flex-column justify-content-center">
 	                            <div class="mb-2">* 도로명, 건물명, 지번에 대해 통합 검색이 가능합니다.</div>
 	                            <div class="mb-2">
-	                                <input class="p-2" type="text" id="buildingAddr" name="buildingAddr" placeholder="주소" style="width: 300px;">
+	                                <input class="p-2" type="text" id="buildingAddr" name="buildingAddr" placeholder="주소" style="width: 300px;" value="${buildingInfo.buildingAddr}">
 	                                <input class="p-2" type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
 	                            </div>
-	                            <input id="buildingAddrDetail" name="buildingAddrDetail" class="p-2" placeholder="상세 주소를 입력해주세요."/>
+	                            <input id="buildingAddrDetail" name="buildingAddrDetail" class="p-2" placeholder="상세 주소를 입력해주세요." value="${buildingInfo.buildingAddrDetail}"/>
 	                            
 	                        </div>
 	                        <div class="border-left d-flex justify-content-center flex-grow-1">
@@ -163,6 +330,7 @@
 	                                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	                                    mapOption = {
 	                                        center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+	                                        draggable: false,
 	                                        level: 5 // 지도의 확대 레벨
 	                                    };
 	    
@@ -222,6 +390,34 @@
 	                                        }
 	                                    }).open(); //주소검색을 클릭하게 되면 주소를 검색할 수 있는 팝업창을 열기 때문에 open!
 	                                }
+	                                
+	                                //수정할 때, 지도에 해주는 작업
+	                                function setAddr(addr){
+                                        // 주소 정보를 해당 필드에 넣는다.
+                                        document.getElementById("buildingAddr").value = addr;
+                                        // 주소로 상세 정보를 검색
+                                        geocoder.addressSearch(addr, function(results, status) {
+                                            // 정상적으로 검색이 완료됐으면
+                                            if (status === daum.maps.services.Status.OK) {
+
+                                                var result = results[0]; //첫번째 결과의 값을 활용
+
+                                                // 해당 주소에 대한 좌표를 받아서 변수에 저장합니다.
+                                                var coords = new daum.maps.LatLng(result.y, result.x);
+                                                buildingLat = result.y;
+                                                buildingLng = result.x;
+                                                
+                                                // 지도를 보여줍니다.
+                                                mapContainer.style.display = "block";
+                                                $("#addrDes").css("display","none");
+                                                map.relayout();
+                                                // 지도 중심을 검색한 위치로 변경합니다.
+                                                map.setCenter(coords);
+                                                // 마커를 결과값으로 받은 위치로 옮깁니다.
+                                                marker.setPosition(coords)
+                                            }
+                                        });
+	                                }
 	                            </script>
 	                        </div>
 	                    </div>
@@ -241,20 +437,20 @@
 	                                </div>
 	                                <div class="pl-3 d-flex flex-column m-2">
 	                                    <div class="d-flex m-2">
-	                                        <input id="buildingTakeoverPrice" name="buildingTakeoverPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="인수 비용을 입력해주세요."/>
+	                                        <input id="buildingTakeoverPrice" name="buildingTakeoverPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="인수 비용을 입력해주세요." value="${buildingInfo.buildingTakeoverPrice}"/>
 	                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 	                                    </div>
 	                                    <div id="leaseDiv" style="display: block;">
 		                                    <div class="d-flex m-2" >
-		                                        <input id="buildingDepositPrice" name="buildingDepositPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="보증금"/>
+		                                        <input id="buildingDepositPrice" name="buildingDepositPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="보증금" value="${buildingInfo.buildingDepositPrice}"/>
 		                                        <div style="font-size: 30px;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
-		                                        <input id="buildingMonthRent" name="buildingMonthRent" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="월세"/>
+		                                        <input id="buildingMonthRent" name="buildingMonthRent" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="월세" value="${buildingInfo.buildingMonthRent}"/>
 		                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 		                                    </div>
 	                                    </div>
 	                                    <div id="tradeDiv" style="display:none;">
 	                                    	<div class="d-flex m-2" >
-		                                        <input id="buildingPrice" name="buildingPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="매매가"/>
+		                                        <input id="buildingPrice" name="buildingPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="매매가" value="${buildingInfo.buildingPrice}"/>
 		                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 		                                    </div>
 	                                    </div>
@@ -272,13 +468,13 @@
 	                        <div class="p-2 d-flex flex-column mr-6">
 	                            <div class="d-flex m-2">
 	                                <div class="m-2">공급 면적</div>
-	                                <span><input onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="공급면적"/>&nbsp;&nbsp;&nbsp;평</span>
+	                                <span><input onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="공급면적" value="${buildingInfo.buildingSupplyArea}"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingSupplyAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
 	                            <div class="border-bottom"></div>
 	                            <div class="d-flex m-2 mt-3">
 	                                <div class="m-2">전용 면적</div>
-	                                <span><input onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="전용면적"/>&nbsp;&nbsp;&nbsp;평</span>
+	                                <span><input onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="전용면적" value="${buildingInfo.buildingDedicatedArea}"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingDedicatedAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
 	                        </div>
@@ -288,12 +484,12 @@
 	                        <div class="p-2 d-flex flex-column mr-6">
 	                            <div class="d-flex m-2 mb-1">
 	                                <div class="m-2 p-1 pr-2">건물 층수</div>
-	                                <input type="number" id="buildingTotalFloor" name="buildingTotalFloor" class="p-1 border" style="border-color: transparent;" placeholder="건물 층수 입력"/>
+	                                <input type="number" id="buildingTotalFloor" name="buildingTotalFloor" class="p-1 border" style="border-color: transparent;" placeholder="건물 층수 입력" value="${buildingInfo.buildingTotalFloor}"/>
 	                            </div>
 	                            <div class="border-bottom"></div>
 	                            <div class="d-flex m-2 mt-3">
 	                                <div class="m-2 p-1 pr-2">해당 층수</div>
-	                                <input type="number" id="buildingFloor" name="buildingFloor" class="p-1 border" style="border-color: transparent;" placeholder="해당 층수 입력"/>
+	                                <input type="number" id="buildingFloor" name="buildingFloor" class="p-1 border" style="border-color: transparent;" placeholder="해당 층수 입력" value="${buildingInfo.buildingFloor}"/>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -318,8 +514,8 @@
 	                            </div>
 	                            <div class="border rounded d-flex flex-column ml-2 flex-grow-1">
 	                                <div class="p-2">
-	                                    <input id="equipmentName" class="p-2" type="text" placeholder="가지고 있는 장비를 추가해주세요!" style="width: 270px;"/>
-	                                    <input id="equipmentCnt" class="p-2" type="number"  placeholder="장비 개수" style="width: 110px;"/>
+	                                    <input id="equipmentName" class="p-2 rounded border" type="text" placeholder="가지고 있는 장비를 추가해주세요!" style="width: 270px;"/>
+	                                    <input id="equipmentCnt" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
 	                                    <button type="button" onclick="equipmentSave()" class="btn btn-info mb-1">+</button>
 	                                </div>
 	                                <div id="equipmentList" class="m-2">
@@ -331,11 +527,11 @@
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">입주 가능일</h4>
-	                    <input type="text" id="buildingAvailableDate" name="buildingAvailableDate">
+	                    <input type="text" class="border rounded" id="buildingAvailableDate" name="buildingAvailableDate" value="${buildingInfo.buildingAvailableDate}">
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">상세 설명</h4>
-	                    <textarea id="buildingDetailContent" name="buildingDetailContent" class="border rounded w-100" style="resize:none; height: 300px; font-size: 20px;" maxlength="500" placeholder=' [상세 설명 작성 주의 사항]&#13;&#10;&#13;&#10; - 매물 정보와 관련이 없는 홍보성 정보는 입력할 수 없습니다.&#13;&#10; - 비속어를 입력할 수 없습니다.&#13;&#10;&#13;&#10; ** 위 주의 사항을 위반할 경우, 해당 매물이 삭제될 수 있습니다.'></textarea>
+	                    <textarea id="buildingDetailContent" name="buildingDetailContent" class="border rounded w-100" style="resize:none; height: 300px; font-size: 20px;" maxlength="500" placeholder=' [상세 설명 작성 주의 사항]&#13;&#10;&#13;&#10; - 매물 정보와 관련이 없는 홍보성 정보는 입력할 수 없습니다.&#13;&#10; - 비속어를 입력할 수 없습니다.&#13;&#10;&#13;&#10; ** 위 주의 사항을 위반할 경우, 해당 매물이 삭제될 수 있습니다.'>${buildingInfo.buildingDetailContent}</textarea>
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">사진 등록</h4>
@@ -353,13 +549,23 @@
 	                            </div>
 	                            <div class="border rounded m-2" style="background-color: rgb(231, 231, 236);">
 	                                <div id="explainNomal" class="p-5 text-center">
-	                                    <img src="${pageContext.request.contextPath}/resources/images/mascot.png" width="100px"/>
+	                                    <img id="mas" src="${pageContext.request.contextPath}/resources/images/mascot.png" width="100px"/>
 	                                    <h6>최소 2장 이상 등록해야 하며, 가로 사진을 권장합니다.</h6>
 	                                    <label for="chooseNomalImg" class="btn btn-info m-2">사진 등록</label>
 	                                    <input type="file" id="chooseNomalImg"  name="chooseNomalImg" accept="image/*" style="display: none;" onchange="getImageFiles(event)" multiple>
 	                                </div>
 	                                <div id="nomalImgField">
 	                                    <div id="nomalImgPreview" class="w-100" style="align-items: center; display: inline;">
+	                                    	<c:if test="${nomalCnt != 0}">
+	                                    		<c:forEach var="image" items="${imageFile}" varStatus="status">
+	                                    			<c:if test="${image.panoramaCheck eq '0'}">
+	                                    				<span id="file${status.index}">
+		                                    				<img id="${status.index}" src="getImageByteArrayToFile?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=${status.index}" data-file="${image.attachOriginalName}" width="200px" height="150px" style="border: 1px solid gainsboro; padding: 10px; background-color :white;" />
+		                                    				<a class="btn btn-danger" onclick="deleteImg(${status.index})" style="margin-right:8px; cursor:pointer;">X</a>
+		                                    			</span>
+	                                    			</c:if>
+	                                    		</c:forEach>
+	                                    	</c:if>
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -409,6 +615,7 @@
 	                            function getImageFiles(e) {
 	                            	//첨부된 이미지 파일들을 가져온다.
 	                                const files = e.currentTarget.files;
+	                            	console.log(files);
 	                            	
 	                            	//이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 15개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 15개를 넘어가게 되면 업로드할 수 없다!(최대 15장이기 때문에)
 	                                if(nomalImgPreview.childElementCount > 15 || (nomalImgPreview.childElementCount + files.length) > 15){
@@ -578,9 +785,21 @@
 								}
 	                            
 	                            //장비를 추가를 위해 + 버튼을 클릭했을 때 실행되는 함수(equipNo)
-	                            function equipmentSave() {
-									var equipmentName = $("#equipmentName").val();
-									var equipmentCnt = $("#equipmentCnt").val();
+	                            function equipmentSave(equipName, equipCnt) {
+	                            	//만약, 수정할 경우, 옵션을 추가해줘야 하기 때문에..!
+	                            	
+	                            	var equipmentName;
+									var equipmentCnt;
+	                            	
+	                            	if(equipName != null){
+	                            		console.log(equipName);
+	                            		equipmentName = equipName;
+	                            		equipmentCnt = equipCnt;
+	                            		
+	                            	}else{
+	                            		equipmentName = $("#equipmentName").val();
+										equipmentCnt = $("#equipmentCnt").val();
+	                            	}
 									
 									if(equipmentName === ""){
 										swal({
@@ -661,10 +880,15 @@
 	                </div>
                 </form>
                 <div class="d-flex justify-content-center mt-5 mb-4">
-	                <button onclick="submitBtnClick()" class="btn border rounded m-2 p-2 btn-info" style="font-size: 25px; width: 130px;">등록</button>
-	                <button onclick="cancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
-	                <button class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
-	                <button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+                	<c:if test="${type eq 'newEnroll'}">
+                		<button onclick="submitBtnClick()" class="btn border rounded m-2 p-2 btn-info" style="font-size: 25px; width: 130px;">등록</button>
+	                	<button onclick="cancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
+                	</c:if>
+                	<c:if test="${type eq 'updateEnroll'}">
+                		<button class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정 완료</button>
+                		<button onclick="history.back()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
+                		<button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+                	</c:if>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -688,6 +912,7 @@
         function cancle() {
         	$(location).attr("href", "enrollCancle");
 		}
+        
         function alertShow(){
         	swal({
 				title:"입력되지 않은 곳이 존재합니다.",
@@ -766,6 +991,7 @@
 				return;
             }else{
             	for (var i = 0; i < uploadFiles.length; i++) {
+            		
                     // 삭제되지 않은 파일만 폼데이터에 담기
                     if (uploadFiles[i] != "") {
                         formData.append("attach_file", uploadFiles[i]);
@@ -827,12 +1053,9 @@
             .done((data) => {
             	swal({
 					text: "매물이 등록되었습니다."
+				}).then(()=>{
+					$(location).attr("href", "enrollCancle");
 				});
-            	
-            	//5뒤에 자동으로 인수맵으로 이동함!
-            	setTimeout(function () {
-            		$(location).attr("href", "enrollCancle");
-           		}, 5000);
 			});
         }
         $('input').keydown(function() {

@@ -261,7 +261,7 @@
                	</div>
                 <div class="d-flex justify-content-center mt-5 mb-4">
                 	<c:if test="${sessionUserId eq buildingInfo.buildingWriter}">
-                		<button class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</button>
+                		<a href="enroll?type=updateEnroll&buildingNo=${buildingInfo.buildingNo}" class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</a>
                 	</c:if>
                     <c:if test="${from ne 'mypage'}">
 						<button onclick="viewCancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</button>
@@ -314,6 +314,11 @@
 	    			text:"해당 게시물의 작성자입니다! \n 본인한테 메일을 보낼 수 없습니다."
 	    		});
 	    		return;
+	    	}else if(`${sessionUserId}` == ""){
+	    		swal({
+	    			text:"로그인해야 이용할 수 있는 기능입니다. 로그인을 해주세요."
+	    		});
+	    		return;
 	    	}
 	        var url = "<%=request.getContextPath() %>/messageSend?receiver="+receiver;
 	        var option = "width = 300, height = 350, top = 100, left = 200, location = no";
@@ -322,6 +327,13 @@
 	    
 	    function likeBtnClick(img){
             var path = document.getElementById("interImg").src;
+            
+            if(`${sessionUserId}` == ""){
+	    		swal({
+	    			text:"로그인해야 이용할 수 있는 기능입니다. 로그인을 해주세요."
+	    		});
+	    		return;
+	    	}
             
 			if(path.includes("Before")){ //누르지 않은 상태에서 클릭했을 경우!
 				likeCnt++;
