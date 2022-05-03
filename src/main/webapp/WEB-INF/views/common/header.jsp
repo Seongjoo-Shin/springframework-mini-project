@@ -135,7 +135,7 @@
             			<a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark">마이페이지</a>
             		</c:if>
                 </span>
-                <span id="alarm" class="btn area" onclick="visibleAlarmContent()">
+                <%-- <span id="alarm" class="btn area" onclick="visibleAlarmContent()">
                 	<c:if test="${sessionUserId != null}">
             			<img id="alarmImg" class="pb-1 area" src="${pageContext.request.contextPath}/resources/images/alarmUse.png" width="35px"/>
             		</c:if>
@@ -148,7 +148,7 @@
 	            	<a href="#">🧡 '장갑 팔아..'게시물에 하트가 달렸어요</a>
 	            	<a href="#">💬 '요즘 장사가..'게시물에 댓글이 달렸어요</a>
             	</div>
-          	</div>
+          	</div> --%>
           </nav>
     </header>
 <script>
