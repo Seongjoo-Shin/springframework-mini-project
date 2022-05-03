@@ -20,12 +20,16 @@
     
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content" style="width: 100%; height: 490px; border-radius: 15px;">
-    <div id="panoMap" class="mt-4">
-	</div>
-    </div>
-  </div>
+	<div class="modal-dialog modal-lg">
+    	<div class="modal-content bg-light">
+    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="float-right mr-1" style="z-index:-123;">&times;</span>
+        </button>
+    	<h3 class="text-center m-2 bg-light">로드뷰 보기</h3>
+    		<div id="pano" style="width: 99%; height: 490px; border-radius: 5px; margin:0 auto;" class="text-center">
+			</div>
+    	</div>
+  	</div>
 </div>
 <section style="flex-grow:1;">
 	<div class="container-fluid h-100 mt-5">
@@ -285,7 +289,7 @@
 												html += '    <span>편의시설 - ' + data.keyword8 + '</span><br>';
 											}
 											html += '<div class="mt-2"><sapn>주변시설 - '+data.current_use+'</span></div>';
-											html += '<div class="mt-2"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
+											html += '<div class="mt-3"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
 											html += '</div>';
 											document.getElementById("msgBox").innerHTML = html;	
 										}, 100)
@@ -295,10 +299,9 @@
 								}
 								
 								function openPano(lat, lng){
-									var pano = null;
-										
-									var panoramaOptions = {
-									    size: new naver.maps.Size(600, 500),
+									
+									var pano = new naver.maps.Panorama(document.getElementById("pano"), {
+									    size: new naver.maps.Size(790, 600),
 									    // panoId: "GeuHvj1YMFW56xcrravtcg==",
 									    position: new naver.maps.LatLng(lat, lng),
 									    pov: {
@@ -306,30 +309,7 @@
 									        tilt: 29,
 									        fov: 100
 									    },
-									    visible: true,
-									    aroundControl: true,
-									    minScale: 0,
-									    maxScale: 10,
-									    minZoom: 0,
-									    maxZoom: 4,
-									    logoControl: true,
-									    logoControlOptions: {
-									        position: naver.maps.Position.BOTTOM_RIGHT
-									    },
-									    zoomControl: true,
-									    zoomControlOptions: {
-									        position: naver.maps.Position.TOP_LEFT,
-									        style: naver.maps.ZoomControlStyle.SMALL
-									    },
-									    aroundControl: true,
-									    aroundControlOptions: {
-									        position: naver.maps.Position.TOP_RIGHT
-									    }
-									};
-									
-									naver.maps.onJSContentLoaded = function() {
-									    pano = new naver.maps.Panorama("panoMap", panoramaOptions);
-									};
+									});
 								}
                             </script>
 					</div>
