@@ -21,6 +21,6 @@
 		<typeAlias type="com.mycompany.webapp.dto.NoticeFileDto" alias="noticefile" />
 		<typeAlias type="com.mycompany.webapp.dto.PagerDto" alias="pager" />
 		<typeAlias type="com.mycompany.webapp.dto.UserDto" alias="user" />
-		<typeAlias type="com.mycompany.webapp.dto.InteriorDto" alias="interior" />
+		<typeAlias type="com.mycompany.webapp.dto.WishListDto" alias="wishlist" />
    </typeAliases>
 </configuration>

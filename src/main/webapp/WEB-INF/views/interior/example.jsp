@@ -2,7 +2,7 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-	<section>
+<section style="flex-grow:1;">
 	<div class="container-fluid h-100 mt-5 mb-5">
 	<div class="row">
       <div class="col-2">
@@ -71,6 +71,6 @@
       <div class="col-2"></div>
       </div>
       </div>
-    </section>
+</section>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

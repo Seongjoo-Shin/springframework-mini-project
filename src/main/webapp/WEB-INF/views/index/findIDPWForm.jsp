@@ -96,8 +96,8 @@
 	
  	
 </script>
-
-<div class="d-flex justify-content-center align-items-center vh-100">
+<section  style="flex-grow:1;">
+	<div class="d-flex justify-content-center align-items-center vh-100">
     <div class="d-flex flex-column justify-content-center col-md-3">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -303,5 +303,7 @@
           </div>
     </div>
 </div>
+</section>
+
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

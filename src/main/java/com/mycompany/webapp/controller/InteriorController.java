@@ -1,7 +1,20 @@
 package com.mycompany.webapp.controller;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.mycompany.webapp.dto.WishListDto;
+import com.mycompany.webapp.service.UserService;
+import com.mycompany.webapp.service.WishListService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -9,6 +22,11 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/interior")
 public class InteriorController {
+	
+	@Resource
+	private WishListService wishListService;
+	private UserService userService;
+	
 	@RequestMapping("/example")
 	public String example() {
 		log.info("실행");
@@ -34,8 +52,75 @@ public class InteriorController {
 	}
 	
 	@RequestMapping("/simulator")
-	public String simulator() {
+	public String simulator(Model model, HttpSession session) {
 		log.info("실행");
+		String userId = (String)session.getAttribute("sessionUserId");
+		
+		if(userId!=null) {
+			List<WishListDto> wishLists = wishListService.getWishList(userId);
+			model.addAttribute("wishLists",wishLists);
+			log.info(wishLists.toString());
+		}
+		
 		return "/interior/simulator";
 	}
+	
+	@PostMapping(value = "/addWishList", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String addWishList(WishListDto wishList, HttpSession session) {
+		log.info(session.getAttribute("sessionUserId"));
+		log.info(wishList);
+		String userId = (String)session.getAttribute("sessionUserId");
+		JSONObject jsonObject = new JSONObject();
+		
+		if(userId==null||userId.equals("")) {
+			jsonObject.put("result", "noId");
+		} else {
+			log.info(wishList);
+			wishList.setUserId(userId);
+			WishListDto item = wishListService.findPictureById(wishList.getPictureName()); 
+			if(item == null) {
+				log.info("1");
+				wishListService.addItemToWishList(wishList);
+				jsonObject.put("result", "success");
+			} else {
+				jsonObject.put("result", "hasItem");
+			}
+			
+		}
+		
+		
+		String json = jsonObject.toString();
+		return json;
+	}
+	
+	@PostMapping(value = "/deleteItem", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String deleteItem(int wishListNo) {
+		int result = wishListService.deleteItem(wishListNo);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("result", result);
+		
+		
+		String json = jsonObject.toString();
+		return json;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.WishListDao">
+	<resultMap id="wishListMap" type="wishlist">
+		<result property="wishListNo" column="wishlist_no"/>
+		<result property="userId" column="user_id"/>
+		<result property="buildingNo" column="buildng_no"/>
+		<result property="interiorName" column="interior_name"/>
+		<result property="interiorPrice" column="interior_price"/>
+		<result property="pictureName" column="picture_name"/>
+	</resultMap>
+	
+	<select id="selectByPicturName" parameterType="String" resultMap="wishListMap">
+		select * from wishlists
+		where picture_name=#{pictureName}
+	</select>
+	
+	<select id="selectByUserId" parameterType="String" resultMap="wishListMap">
+		select * from wishlists
+		where user_id=#{userId}
+	</select>
+	
+	<!-- =============================================================== -->
+	<insert id="insertItem" parameterType="wishlist">
+		<selectKey keyProperty="wishListNo" resultType="int" order="BEFORE"> <!-- order = BEFORE : 아래 insert이전에 얘를 먼저 실행하겠다! -->
+			select wishlists_seq.nextval from dual
+		</selectKey>
+		
+		insert into wishlists
+		values( #{wishListNo}, #{userId}, #{buildingNo}, #{interiorName}, #{interiorPrice}, #{pictureName})
+	</insert>
+	
+	<!-- =============================================================== -->
+	<delete id="deleteByWishListNo" parameterType="int">
+		delete from wishlists where wishlist_no=#{wishListNo}
+	</delete>
+</mapper> 
+
