@@ -3,6 +3,7 @@ package com.mycompany.webapp.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -403,12 +404,34 @@ public class CommunityController {
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		}
+
+		//조회수 증가
+		marketBoardService.setUpdateHitCount(marketNo);
 		
-		//marketNo에 맞는 게시물 정보 가져오기
-		marketBoardService.getMarketBoard(marketNo);
-		marketBoardService.selectImageFileByMarketNo(marketNo);
+		//marketBoardDto 내용 가져오기
+		MarketBoardDto marketBoardDto = marketBoardService.getMarketBoard(marketNo); 
+		log.info(marketBoardDto.toString());
 		
-		//
+		//게시물 내용 개행 처리 
+		String tempContent = marketBoardDto.getMarketContent();
+		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
+		tempContent = tempContent.replaceAll("\n", "<br/>");
+		marketBoardDto.setMarketContent(tempContent);
+		
+		//가격에 , 처리
+		String price = marketBoardDto.getMarketPrice();
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		price = formatter.format(Integer.parseInt(price));
+		marketBoardDto.setMarketPrice(price);
+		
+		//marketBoardDto 내용 model에 싣기
+		model.addAttribute("marketBoardDto", marketBoardDto);
+		
+		//marketFileDto 내용 model에 싣기
+		List<MarketFileDto> marketFileList = marketBoardService.selectImageFileByMarketNo(marketNo);
+		model.addAttribute("marketFileList", marketFileList);
+		
+		//현재 로그인한 사용자 id 얻기
 		
 		
 		return "/community/market/view";
@@ -469,7 +492,6 @@ public class CommunityController {
 			   marketFileDto.setImageFileData(m.getBytes());
 			   
 			   marketBoardService.insertMarketFile(marketFileDto);
-			   
 		   }
 	   }
 	   return "redirect:/community/market/list";

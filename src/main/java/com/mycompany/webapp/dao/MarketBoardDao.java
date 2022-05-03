@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.mycompany.webapp.dto.BuildingFileDto;
+
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
 import com.mycompany.webapp.dto.PagerDto;
@@ -31,6 +31,8 @@ public interface MarketBoardDao {
 	public void insertMarketFile(MarketFileDto marketFileDto);
 	
 	//view 페이지에 들어갈 marketBord정보 가져오기
-	public MarketBoardDto selectMarketBoardByMarketNo(int marketNo);	
+	public MarketBoardDto selectMarketBoardByMarketNo(int marketNo);
+
+	public int updateHitCount(int marketNo);	
 	
 }

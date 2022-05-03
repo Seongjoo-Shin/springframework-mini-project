@@ -54,9 +54,14 @@ public class MarketBoardService {
 	}
 	
 	//view 페이지에 들어갈 marketBord정보 가져오기
-	public void getMarketBoard(int marketNo) {
+	public MarketBoardDto getMarketBoard(int marketNo) {
 		// TODO Auto-generated method stub
-		marketBoardDao.selectMarketBoardByMarketNo(marketNo);
+		return marketBoardDao.selectMarketBoardByMarketNo(marketNo);
+	}
+
+	public int setUpdateHitCount(int marketNo) {
+		// TODO Auto-generated method stub
+		return marketBoardDao.updateHitCount(marketNo);
 	}
 
 }

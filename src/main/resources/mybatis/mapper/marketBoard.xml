@@ -55,6 +55,7 @@
 		SELECT  m.market_no
 				,m.market_title
 		        ,m.market_writer
+		        ,m.market_content
 		        ,m.market_category
 		        ,m.market_regist_date
 		        ,m.market_modify_date
@@ -124,6 +125,20 @@
 			INSERT INTO MARKETFILES (ATTACH_ORIGINAL_NAME, ATTACH_SAVE_NAME, ATTACH_TYPE, MARKET_NO, MARKET_FILE_NO, MARKET_IMAGE_FILE_DATA)
 			VALUES(#{attachOriginalName}, #{attachSaveName}, #{attachType}, #{marketNo}, MARKETFILES_SEQ.nextval, #{imageFileData})
 	</insert>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		update marketboards
+		set market_hit_count = market_hit_count + 1
+		where market_no = #{marketNo}
+	</update>
+	
+	<!-- 좋아요 증가 -->
+	<update id="updateLikeCount" parameterType="Integer">
+		update marketboards
+		set market_like_count = market_like_count + 1
+		where market_no = #{marketNo}	
+	</update>
 </mapper>
 
 
