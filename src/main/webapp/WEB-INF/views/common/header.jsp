@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 
     </script>
 </head>
-<body>
+<body style="height: 100%; display: flex; flex-direction: column;">
     <header>
         <nav class="navbar navbar-light" style="border-bottom: 1px solid rgb(242, 101, 45);">
             <a class="navbar-brand" href="/">

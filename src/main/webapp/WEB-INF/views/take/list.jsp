@@ -51,7 +51,7 @@
         
 </script>
 
-    <section class="m-5">
+    <section class="m-5" style="flex-grow: 1;">
     	<div class="container-fluid">
     		<div class="row">
 	            <div class="col-1"></div>
