@@ -25,5 +25,12 @@ public interface MarketBoardDao {
 	public void updateLikeCount(MarketBoardDto marketBoardDto);
 	
 	//게시글 등록
-	public void insertMarket(MarketBoardDto marketBoardDto);
+	public int insertMarket(MarketBoardDto marketBoardDto);
+
+	//게시물의 파일 등록
+	public void insertMarketFile(MarketFileDto marketFileDto);
+	
+	//view 페이지에 들어갈 marketBord정보 가져오기
+	public MarketBoardDto selectMarketBoardByMarketNo(int marketNo);	
+	
 }

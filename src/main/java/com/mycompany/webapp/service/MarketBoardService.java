@@ -32,7 +32,7 @@ public class MarketBoardService {
 		return marketBoardDao.selectByPage(pagerDto);
 	}
 	
-	//리스트에서 대표사진 보여줌.
+	//리스트에서 대표사진 보여줄 때, view 페이지에서 marketfile정보 가져올 때
 	public List<MarketFileDto> selectImageFileByMarketNo(int marketNo) {
 		return marketBoardDao.selectImageFileByMarketNo(marketNo);
 	}
@@ -43,7 +43,20 @@ public class MarketBoardService {
 	}
 	
 	//insertMarket
-	public void insertMarket(MarketBoardDto marketBoardDto) {
-		marketBoardDao.insertMarket(marketBoardDto);
+	public int insertMarket(MarketBoardDto marketBoardDto) {
+		int marketNo = marketBoardDao.insertMarket(marketBoardDto);
+		return marketNo;
 	}
+	
+	//insertMarketFile
+	public void insertMarketFile(MarketFileDto marketFileDto) {
+		marketBoardDao.insertMarketFile(marketFileDto);
+	}
+	
+	//view 페이지에 들어갈 marketBord정보 가져오기
+	public void getMarketBoard(int marketNo) {
+		// TODO Auto-generated method stub
+		marketBoardDao.selectMarketBoardByMarketNo(marketNo);
+	}
+
 }

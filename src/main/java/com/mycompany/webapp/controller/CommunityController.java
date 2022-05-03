@@ -314,6 +314,7 @@ public class CommunityController {
 
 		
 		int commentNo = commentService.insertReplyComment(commentDto);
+		log.info(commentNo + "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		commentDto.setCommentNo(commentNo);
 		
 		JSONObject jsonObject = new JSONObject();
@@ -351,7 +352,7 @@ public class CommunityController {
 	}
 	
 	//리스트에서 대표사진 보여줌
-	@RequestMapping("/getMarketImage")
+	@RequestMapping("/market/getMarketImage")
 	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
 		List<MarketFileDto> files = marketBoardService.selectImageFileByMarketNo(marketNo);
    	    	
@@ -397,11 +398,19 @@ public class CommunityController {
 
 	// 게시판 상세 페이지
 	@GetMapping("/market/marketDetail")
-	public String marketDetail(HttpSession session) {	
+	public String marketDetail(HttpSession session, int marketNo, Model model) {	
 		log.info(session.getAttribute("sessionUserId"));
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		}
+		
+		//marketNo에 맞는 게시물 정보 가져오기
+		marketBoardService.getMarketBoard(marketNo);
+		marketBoardService.selectImageFileByMarketNo(marketNo);
+		
+		//
+		
+		
 		return "/community/market/view";
 	}
 
@@ -431,7 +440,7 @@ public class CommunityController {
 	public String insertMarketContent(HttpServletRequest request,
     		HttpSession session,
     		@RequestPart("attach_file") List<MultipartFile> files,
- 		    Model model) {
+ 		    Model model) throws IOException {
 		
 	   log.info("/market/insertMarketContent 실행");
 	   log.info("id : " + session.getAttribute("sessionUserId"));
@@ -445,8 +454,8 @@ public class CommunityController {
 	   marketBoardDto.setMarketTitle(request.getParameter("title"));
 	   marketBoardDto.setMarketWriter(userId);
 	   
-	   marketBoardService.insertMarket(marketBoardDto);
-	   
+	   int marketNo = marketBoardService.insertMarket(marketBoardDto);
+	   log.info("---------marketNo-----------------" + marketNo);
 	   //첨부파일 추가
 	   if(files.size() != 0) {
 		   for(MultipartFile m : files) {
@@ -456,9 +465,10 @@ public class CommunityController {
 			   marketFileDto.setAttachOriginalName(m.getOriginalFilename());			   
 			   marketFileDto.setAttachSaveName(saveFilename);
 			   marketFileDto.setAttachType(m.getContentType());
-
-
+			   marketFileDto.setMarketNo(marketNo);
+			   marketFileDto.setImageFileData(m.getBytes());
 			   
+			   marketBoardService.insertMarketFile(marketFileDto);
 			   
 		   }
 	   }

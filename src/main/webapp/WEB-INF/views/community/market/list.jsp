@@ -34,15 +34,14 @@
 	              <div class="col-3 float-left mb-5">
 	                <div class="card">
 	                  <div class="embed-responsive embed-responsive-4by3">
-	                    <a href="marketDetail">
-	                    	<img src="/community/market/getMarketImage?marketNo=${marketboard.marketNo}&type=nomal&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>
+	                    <a href="marketDetail?marketNo=${marketboard.marketNo}">
+	                    	<img src="/community/market/getMarketImage?marketNo=${marketboard.marketNo}&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>
 	                    </a>
 	                  </div>
 	                  <div class="card-body" style="padding: 1rem;">
 	                    <p style="margin-bottom: 0px;">${marketboard.marketTitle}</p>
 	                    <p style="margin-bottom: 7px; font-weight: bold;"><span>${marketboard.marketPrice}</span>원</p>                 
  	                    <div class="float-right recommentCount">
- 	                    <!-- <img id="interImg${marketboard.marketNo}" src="/resources/images/interestBefore.png" width="16px" class="interImg"> -->
 	                    	<span>관심 </span><span> ${marketboard.marketLikeCount}</span>
 	                    	<p>조회수 <span> ${marketboard.marketHitCount}</span></p>
 	                    </div>
