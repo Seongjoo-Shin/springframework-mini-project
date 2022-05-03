@@ -71,6 +71,9 @@
 	    <result property="messageSender" column="message_sender"/>
 	    <result property="messageReceiver" column="message_receiver"/>
 	    <result property="messageReplyYN" column="message_reply_yn"/>
+	    <result property="messageSendDel" column="message_send_del"/>
+	    <result property="messageReceiveDel" column="message_receive_del"/>
+	    
 	</resultMap>
 	
 	<resultMap type="buildingfile" id="buildingFileDtoResult">
@@ -233,13 +236,13 @@
 	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 쪽지함 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 	<select id="selectReceiveMessageList" parameterType="pager" resultMap="messageMap">
 		<![CDATA[
-		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn, message_send_del, message_receive_del
 		FROM (
-		  SELECT ROWNUM as rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		  SELECT ROWNUM as rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn, message_send_del, message_receive_del
 		  FROM (
-		    SELECT message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		    SELECT message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn, message_send_del, message_receive_del
 		    FROM messages
-		    WHERE message_receiver = #{userId}
+		    WHERE message_receiver = #{userId} and message_receive_del = 1
 		    ORDER BY message_no desc
 		  )
 		  WHERE ROWNUM <= #{endRowNo}
@@ -250,13 +253,13 @@
 	
 	<select id="selectSendMessageList" parameterType="pager" resultMap="messageMap">
 		<![CDATA[
-		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		SELECT rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn, message_send_del, message_receive_del
 		FROM (
-		  SELECT ROWNUM as rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		  SELECT ROWNUM as rnum, message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn, message_send_del, message_receive_del
 		  FROM (
-		    SELECT message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn
+		    SELECT message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn, message_send_del, message_receive_del
 		    FROM messages
-		    WHERE message_sender = #{userId}
+		    WHERE message_sender = #{userId} and message_send_del = 1
 		    ORDER BY message_no desc
 		  )
 		  WHERE ROWNUM <= #{endRowNo}
@@ -271,7 +274,7 @@
 		FROM 
 			messages 
 		WHERE
-			message_receiver = #{userId}
+			message_receiver = #{userId} and message_receive_del = 1
 	</select>
 	
 	<select id="selectSendMessageAll" resultType="Integer" parameterType="String">
@@ -280,13 +283,26 @@
 		FROM 
 			messages 
 		WHERE
-			message_sender = #{userId}
+			message_sender = #{userId} and message_send_del = 1
 	</select>
 	
-	<delete id="deleteMyMessage" parameterType="Integer">
-		DELETE FROM messages 
-		WHERE message_no = #{messageNo}
-	</delete>
+	<update id="deleteMySendMessage" parameterType="Integer">
+		UPDATE
+			messages 
+		SET
+			message_send_del = 0
+		WHERE
+			message_no = #{messageNo}
+	</update>
+	
+	<update id="deleteMyReceiveMessage" parameterType="Integer">
+		UPDATE
+			messages 
+		SET
+			message_receive_del = 0
+		WHERE
+			message_no = #{messageNo}
+	</update>
 	
 	<select id="selectMessageByNo" parameterType="Integer" resultMap="messageMap">
 		SELECT
@@ -307,7 +323,9 @@
 			sysdate, 
 			#{messageSender}, 
 			#{messageReceiver}, 
-			0
+			0,
+			1,
+			1
 		)
 	</insert>
 	

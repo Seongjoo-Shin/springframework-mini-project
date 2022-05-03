@@ -108,10 +108,18 @@ public class MypageService {
 		return mypageDao.selectSendMessageAll(userId);
 	}
 	
-	public int deleteMyMessage(List<String> delArr) {
+	public int deleteMySendMessage(List<String> delArr) {
 		int cnt = 0;
 		for(String s : delArr) {
-			cnt = mypageDao.deleteMyMessage(Integer.parseInt(s));
+			cnt = mypageDao.deleteMySendMessage(Integer.parseInt(s));
+		}
+		return cnt;	
+	}
+	
+	public int deleteMyReceiveMessage(List<String> delArr) {
+		int cnt = 0;
+		for(String s : delArr) {
+			cnt = mypageDao.deleteMyReceiveMessage(Integer.parseInt(s));
 		}
 		return cnt;	
 	}

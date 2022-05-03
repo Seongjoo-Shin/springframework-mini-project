@@ -46,7 +46,8 @@ public interface MypageDao {
 	public int updateMessageStatus(int messageNo); // 회신여부 설정
 	public int selectReceiveMessageAll(String userId);
 	public int selectSendMessageAll(String userId);
-	public int deleteMyMessage(int parseInt);
+	public int deleteMySendMessage(int messageNo);
+	public int deleteMyReceiveMessage(int messageNo);
 	public List<MessageDto> selectMessageByNo(int messageNo);
 	public int insertMessage(MessageDto message);
 	public int updateReplyYN(int changeNo);

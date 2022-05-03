@@ -144,7 +144,9 @@
 			sysdate, 
 			#{messageSender},
 			#{messageReceiver},
-			0
+			0,
+			1,
+			1
 		)
 	</insert>
 	

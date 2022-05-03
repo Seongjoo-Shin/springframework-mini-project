@@ -13,4 +13,6 @@ public class MessageDto {
 	private String messageSender;
 	private String messageReceiver;
 	private int messageReplyYN;
+	private int messageSendDel;
+	private int messageReceiveDel;
 }

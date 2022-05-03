@@ -316,7 +316,7 @@ public class MypageController {
 			return "redirect:/index/loginForm";
 		} else {
 			log.info(delArr);
-			int cnt = mypageService.deleteMyMessage(delArr);
+			int cnt = mypageService.deleteMyReceiveMessage(delArr);
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");
 			String json = jsonObject.toString();
@@ -332,7 +332,7 @@ public class MypageController {
 			return "redirect:/index/loginForm";
 		} else {
 			log.info(delArr);
-			int cnt = mypageService.deleteMyMessage(delArr);
+			int cnt = mypageService.deleteMySendMessage(delArr);
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");
 			String json = jsonObject.toString();
