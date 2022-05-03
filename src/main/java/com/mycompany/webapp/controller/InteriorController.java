@@ -55,6 +55,7 @@ public class InteriorController {
 	public String simulator(Model model, HttpSession session) {
 		log.info("실행");
 		String userId = (String)session.getAttribute("sessionUserId");
+		model.addAttribute("modelId",userId);
 		
 		if(userId!=null) {
 			List<WishListDto> wishLists = wishListService.getWishList(userId);

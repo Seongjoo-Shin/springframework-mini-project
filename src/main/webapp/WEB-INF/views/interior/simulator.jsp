@@ -29,12 +29,6 @@
 	var sofa3ImageName="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa3.png";
 	var sofa3CheckedImageName="${pageContext.request.contextPath}/resources/images/interior/sofa/checkedSofa3.png";
 	
-	
-	function addPic(imgName,divId){
-	    const content1 = document.getElementById("content1");
-	    content1.innerHTML = "<img src='${pageContext.request.contextPath}/resources/images/" + imgName +"' width = '100%' height = '500px'/>";
-	}
-	
 	function checkImg(imgName){
 		if(imgName == bed1ImageName){
 			$('#bed1').attr("src", bed1CheckedImageName);
@@ -192,89 +186,107 @@
 <section class="container-fluid mb-5" style="flex-grow:1;">
     <div class="col-2"></div>
     <div class="col-8" style="margin:0 auto">
-    	<h4 class="p-3 mt-3">나만의 인테리어 만들기</h4>  
-        <div class="row m-3">
-          <button class="btn btn-sm text-dark ml-2" onclick="addPic('troom1.jpg','div1')" style="border: 1px solid;">진료실A</button>
-          <button class="btn btn-sm text-dark ml-2" onclick="addPic('troom2.jpg','div2')" style="border: 1px solid;">진료실B</button>
-          <button class="btn btn-sm text-dark ml-2" onclick="addPic('doctorRoom1.jpg','div3')" style="border: 1px solid;">원장실</button>
-          <button class="btn btn-sm text-dark ml-2" onclick="addPic('lobby1.jpg','div4')" style="border: 1px solid;">로비</button>
-        </div>
-        
+    	<h4 class="p-3 mt-3">나만의 인테리어 만들기</h4>
         <div class="row">
-          <div id = content1 class="col-8">
-               <img src = "${pageContext.request.contextPath}/resources/images/troom1.jpg" width="100%" height="500px" style = "border-radius:5px"/>
-          </div>
-          <div class="col-4" style=" height:500px; overflow-y: auto; border: 1px solid black; border-radius: 5px; display: inline-block; " >
-              <ul class="ml-3">
-                  치과베드
-                  <li>
-                      <img id="bed1" onClick="checkImg($('#bed1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed1.png" width="80px" height="80px"/>
-                      <img id="bed2" onClick="checkImg($('#bed2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed2.png" width="80px" height="80px"/>
-                      <img id="bed3" onClick="checkImg($('#bed3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed3.png" width="80px" height="80px"/>
-                  </li>
-                  <div id="bed1Div" class="mt-2" style="display:none;">
-                  	<img id ="bedDetailimage" src="" width="100%"/>
-                  	<p>제품명 : <span id="bedinteriorName"></span></p>
-                  	<p>가격 : <span id="bedinteriorPrice"></span></p>
-                  	<button onClick="addWishList($('#bedinteriorName').text(), $('#bedinteriorPrice').text(), $('#bedDetailimage').attr('src'))" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
-                  </div>
-                  
-                  의자
-                  <li>
-                      <img id="chair1" onClick="checkImg($('#chair1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair1.jpg" width="80px" height="80px"/>
-                      <img id="chair2" onClick="checkImg($('#chair2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair2.jpg" width="80px" height="80px"/>
-                      <img id="chair3" onClick="checkImg($('#chair3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair3.jpg" width="80px" height="80px"/>
-                  </li>
-                  <div id="chair1Div" class="mt-2" style="display:none;">
-	                  <img id ="chairDetailimage" src="" width="100%"/>
-	                  <p>제품명 : <span id="chairinteriorName"></span></p>
-	                  <p>가격 : <span id="chairinteriorPrice"></span></p>
-	                  <button onClick="addWishList($('#chairinteriorName').text(), $('#chairinteriorPrice').text(), $('#chairDetailimage').attr('src'))" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
+        	<div class="col-8">
+	        	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+	              <div id = "div" class="carousel-inner">
+	                <div class="carousel-item active" >
+	                  <img src="${pageContext.request.contextPath}/resources/images/troom1.jpg" class="d-block w-100" style = "height: 500px; border-radius: 5px;">
+	                </div>
+	                <div class="carousel-item">
+	                  <img src="${pageContext.request.contextPath}/resources/images/troom2.jpg" class="d-block w-100" style = "height: 500px; border-radius: 5px;">
+	                </div>
+	                <div class="carousel-item">
+	                  <img src="${pageContext.request.contextPath}/resources/images/lobby1.jpg" class="d-block w-100" style = "height: 500px; border-radius: 5px;">
+	                </div>
+	                <div class="carousel-item">
+	                  <img src="${pageContext.request.contextPath}/resources/images/doctorRoom1.jpg" class="d-block w-100" style = "height: 500px; border-radius: 5px;">
+	                </div>
 	              </div>
-                  쇼파
-                  <li>
-                      <img id="sofa1" onClick="checkImg($('#sofa1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa1.jpg" width="80px" height="80px"/>
-                      <img id="sofa2" onClick="checkImg($('#sofa2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa2.jpg" width="80px" height="80px"/>
-                      <img id="sofa3" onClick="checkImg($('#sofa3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa3.png" width="80px" height="80px"/>
-                  </li>
-                  <div id="sofa1Div" class="mt-2" style="display:none;">
-                  	<img id ="sofaDetailimage" src="" width="100%"/>
-                  	<p>제품명 : <span id="sofainteriorName"></span></p>
-                  	<p>가격 : <span id="sofainteriorPrice"></span></p>
-                  	<button onClick="addWishList($('#sofainteriorName').text(), $('#sofainteriorPrice').text(), $('#sofaDetailimage').attr('src'))" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
-                  </div>
-              </ul>
-          </div>
+	              <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+	                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	                  <span class="sr-only">Previous</span>
+	              </button>
+	              <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+	                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	                  <span class="sr-only">Next</span>
+	              </button>
+	            </div>
+        	</div>
+          
+            <div class="col-4" style=" height:500px; overflow-y: auto; border: 1px solid black; border-radius: 5px; display: inline-block; " >
+                <ul class="ml-3">
+                    치과베드
+                    <li>
+                       <img id="bed1" onClick="checkImg($('#bed1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed1.png" width="80px" height="80px"/>
+                       <img id="bed2" onClick="checkImg($('#bed2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed2.png" width="80px" height="80px"/>
+                       <img id="bed3" onClick="checkImg($('#bed3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed3.png" width="80px" height="80px"/>
+                    </li>
+                    <div id="bed1Div" class="mt-2" style="display:none;">
+                  	   <img id ="bedDetailimage" src="" width="100%"/>
+                  	   <p>제품명 : <span id="bedinteriorName"></span></p>
+                  	   <p>가격 : <span id="bedinteriorPrice"></span></p>
+                  	   <button onClick="addWishList($('#bedinteriorName').text(), $('#bedinteriorPrice').text(), $('#bedDetailimage').attr('src'))" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
+                    </div>
+                    의자
+                    <li>
+                       <img id="chair1" onClick="checkImg($('#chair1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair1.jpg" width="80px" height="80px"/>
+                       <img id="chair2" onClick="checkImg($('#chair2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair2.jpg" width="80px" height="80px"/>
+                       <img id="chair3" onClick="checkImg($('#chair3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair3.jpg" width="80px" height="80px"/>
+                    </li>
+                    <div id="chair1Div" class="mt-2" style="display:none;">
+	                   <img id ="chairDetailimage" src="" width="100%"/>
+	                   <p>제품명 : <span id="chairinteriorName"></span></p>
+	                   <p>가격 : <span id="chairinteriorPrice"></span></p>
+	                   <button onClick="addWishList($('#chairinteriorName').text(), $('#chairinteriorPrice').text(), $('#chairDetailimage').attr('src'))" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
+	                </div>
+                    쇼파
+                    <li>
+                       <img id="sofa1" onClick="checkImg($('#sofa1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa1.jpg" width="80px" height="80px"/>
+                       <img id="sofa2" onClick="checkImg($('#sofa2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa2.jpg" width="80px" height="80px"/>
+                       <img id="sofa3" onClick="checkImg($('#sofa3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa3.png" width="80px" height="80px"/>
+                    </li>
+                    <div id="sofa1Div" class="mt-2" style="display:none;">
+                  	   <img id ="sofaDetailimage" src="" width="100%"/>
+                  	   <p>제품명 : <span id="sofainteriorName"></span></p>
+                  	   <p>가격 : <span id="sofainteriorPrice"></span></p>
+                  	   <button onClick="addWishList($('#sofainteriorName').text(), $('#sofainteriorPrice').text(), $('#sofaDetailimage').attr('src'))" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
+                    </div>
+                </ul>
+            </div>
     	</div>
     	
-	    <h3 class="ml-3">위시리스트</h3>
-	    <div class="row col-12 d-flex ml-1" style="overflow-y: auto; height:450px; border: 1px solid black; border-radius: 5px; display: inline-block;">
-	   		<c:forEach var="wishList" items="${wishLists}">
-	   			<div class="card m-3" style="width: 15rem;">
-	   			  <img src="${wishList.pictureName}" class="card-img-top">
-				  <div class="card-body">
-				    <h5 class="card-title">제품명 : ${wishList.interiorName}</h5>
-				    <p class="card-text">가격 : ${wishList.interiorPrice}</p>
-				    <button onClick="deleteItem(${wishList.wishListNo})" class="btn btn-sm" style="background-color:rgb(242, 101, 45); color: white;">삭제</button>
-				  </div>
-				</div>
-	   		</c:forEach>
-	   		<script>
-	   			function deleteItem(number){
-	   				var wishListNo = number
-	   				$.ajax({
-	   					url: "deleteItem",
-	   					data: {wishListNo},
-	   					method:"post"
-	   				})
-	   				.done((data)=>{
-	   					if(data.result==1){
-	   						$(location).attr("href","/interior/simulator");
-	   					}
-	   				})
-	   			}
-	   		</script>
-	    </div>
+    	<c:if test="${modelId  != null}">
+    		<h3 class="ml-3">위시리스트</h3>
+		    <div class="row col-12 d-flex ml-1" style="overflow-y: auto; height:450px; border: 1px solid black; border-radius: 5px; display: inline-block;">
+		   		<c:forEach var="wishList" items="${wishLists}">
+		   			<div class="card m-3" style="width: 15rem;">
+		   			  <img src="${wishList.pictureName}" class="card-img-top">
+					  <div class="card-body">
+					    <h5 class="card-title">제품명 : ${wishList.interiorName}</h5>
+					    <p class="card-text">가격 : ${wishList.interiorPrice}</p>
+					    <button onClick="deleteItem(${wishList.wishListNo})" class="btn btn-sm" style="background-color:rgb(242, 101, 45); color: white;">삭제</button>
+					  </div>
+					</div>
+		   		</c:forEach>
+		   		<script>
+		   			function deleteItem(number){
+		   				var wishListNo = number
+		   				$.ajax({
+		   					url: "deleteItem",
+		   					data: {wishListNo},
+		   					method:"post"
+		   				})
+		   				.done((data)=>{
+		   					if(data.result==1){
+		   						$(location).attr("href","/interior/simulator");
+		   					}
+		   				})
+		   			}
+		   		</script>
+		    </div>
+    	</c:if>
     </div>
     <div class="col-2"></div>
 </section>
