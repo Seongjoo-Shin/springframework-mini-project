@@ -58,6 +58,7 @@
             pannellum.viewer("panorama", {
               type: "equirectangular",
               panorama: "${pageContext.request.contextPath}/resources/images/pano2.jpg",
+              autoLoad:true
             });
           </script>
           </div>
