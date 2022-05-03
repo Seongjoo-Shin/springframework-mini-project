@@ -44,13 +44,13 @@
 		WHERE rnum &gt;= #{startRowNo}
  	</select>
  	
- 	<select id="count" parameterType="int" resultType="Integer">
+ 	<select id="count" parameterType="Integer" resultType="Integer">
  		select count(*) from comments where free_no=#{freeNo}
  	</select>
  	
 
 	<insert id="insertComment" parameterType="Map">
-		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="commentNo" resultType="Integer" order="BEFORE">
 			select COMMENTS_SEQ.nextval from dual
 		</selectKey>
 		insert into comments (
@@ -76,7 +76,7 @@
 	</insert>
 	
 	<!-- 댓글 삭제 -->
-	<update id="deleteComment" parameterType="int">
+	<update id="deleteComment" parameterType="Integer">
 		update comments 
 		set comment_use_yn = 0
 		where comment_no = #{commentNo}
@@ -99,7 +99,7 @@
 	
 	<!-- 대댓글 insert -->
 	<insert id="insertReplyComment" parameterType="Map">
-		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="commentNo" resultType="Integer" order="BEFORE">
 			select COMMENTS_SEQ.nextval from dual
 		</selectKey>
 		insert into comments (

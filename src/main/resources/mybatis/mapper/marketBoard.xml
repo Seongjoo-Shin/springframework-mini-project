@@ -49,7 +49,7 @@
 		WHERE rnum &gt;= #{startRowNo}
  	</select>
  	
- 	<select id="totalCount" resultType="int">
+ 	<select id="totalCount" resultType="Integer">
 		SELECT count(*) FROM marketboards
 	</select>
 	
@@ -67,7 +67,7 @@
 	    <result property="marketLikeCount" column="market_like_count"/>
 	</resultMap>	
 	
-	<select id="selectImageFileByMarketNo" parameterType="int" resultMap="marketboardMap">
+	<select id="selectImageFileByMarketNo" parameterType="Integer" resultMap="marketboardMap">
 		select * from marketboards
 		where market_no = #{marketNo}
 	</select>

@@ -58,10 +58,15 @@
 			            <a class="h3 float-right text-dark" href="/community/board/list">+</a>
 			          </div>
 			          <table>
+			          <colgroup>
+			          	<col width="60%"/>
+			          	<col width="40%"/>
+			          </colgroup>
 			          <c:if test="${freeboards.size() > 0}">
 			          <c:forEach var="freeboard" items="${freeboards}">
    			          	<tr>
 			          		<td><a class="text-dark" href="/community/market/view?freeNo=${freeboard.freeNo}">${freeboard.freeTitle }</a></td>
+			          		<td><small class="ml-3"><fmt:formatDate value="${freeboard.freeRegistDate}" pattern="yyyy-MM-dd"/></small></td>
 			          	</tr>
 			          </c:forEach>
 			          </c:if>
@@ -81,10 +86,15 @@
 			            <a class="h3 float-right text-dark" href="/community/market/list">+</a>
 			          </div>
 			          <table>
+			          <colgroup>
+			          	<col width="60%"/>
+			          	<col width="40%"/>
+			          </colgroup>
 			          <c:if test="${marketboards.size() > 0}">
 			          <c:forEach var="marketboard" items="${marketboards}">
 			          	<tr>
 			          		<td><a class="text-dark" href="/community/market/view?marketNo=${marketboard.marketNo}">${marketboard.marketTitle }</a></td>
+			          		<td><small class="ml-3"><fmt:formatDate value="${marketboard.marketRegistDate}" pattern="yyyy-MM-dd"/></small></td>
 			          	</tr>
 			          </c:forEach>
 			          </c:if>
@@ -104,16 +114,21 @@
 			            <a class="h3 float-right text-dark" href="/community/notice/list">+</a>
 			          </div>
 			          <table>
+			          <colgroup>
+			          	<col width="60%"/>
+			          	<col width="40%"/>
+			          </colgroup>
 			          <c:if test="${noticeboards.size() > 0}">
 			          <c:forEach var="noticeboards" items="${noticeboards}">
 			          	<tr>
 			          		<td><a class="text-dark" href="/community/market/view?noticeNo=${noticeboards.noticeNo}">${noticeboards.noticeTitle }</a></td>
+			          		<td><small class="ml-3"><fmt:formatDate value="${noticeboards.noticeRegistDate}" pattern="yyyy-MM-dd"/></small></td>
 			          	</tr>
 			          </c:forEach>
 			          </c:if>
 			          <c:if test="${noticeboards.size() < 1}">
 			          	<tr>
-			          		<td rowspan="5">등록된 게시물이 없습니다.</td>
+			          		<td colspan="2">등록된 게시물이 없습니다.</td>
 			          	</tr>
 			          </c:if>
 			          </table>
