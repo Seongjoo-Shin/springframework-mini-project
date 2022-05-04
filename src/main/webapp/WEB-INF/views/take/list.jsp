@@ -7,46 +7,146 @@
         });
 
         var price;
+        var tradeInfo = "";
 
-        function priceBtn(){
-            if($("#dropDownMenu").css("display") === "none"){
-                $("#dropDownMenu").show();
-                $("#priceDiv").css("border", "1px solid rgb(242, 101, 45)");
+        function priceBtn() {
+        	if(tradeInfo == ""){
+        		swal({
+        			text : "임대 / 매매를 선택해주세요."
+        		});
+        		return;
+        	}
+        	
+        	//창이 나와있지 않은 경우!
+        	if($("#leaseDropDownMenu").css("display") === "none" && $("#tradeDropDownMenu").css("display") === "none"){
+        		if(tradeInfo == '임대'){
+            		$("#leaseDropDownMenu").show();
+            		$("#tradeDropDownMenu").hide();
+            	}else{
+            		$("#tradeDropDownMenu").show();
+            		$("#leaseDropDownMenu").hide();
+            	}
+        		$("#priceDiv").css("border", "1px solid rgb(242, 101, 45)");
                 $("#priceBtn").css("color","rgb(242, 101, 45)");
-            }else{
-                $("#dropDownMenu").hide();
-                $("#priceDiv").css("border", "1px solid rgb(192, 191, 191)");
+        	}else {
+        		if(tradeInfo == '임대'){
+            		$("#leaseDropDownMenu").hide();
+            	}else{
+            		$("#tradeDropDownMenu").hide();
+            	}
+        		$("#priceDiv").css("border", "1px solid rgb(192, 191, 191)");
                 $("#priceBtn").css("color","black");
-            }
+        	}
             
         }
+        
+      	//임대 버튼을 클릭하면 실행되는 함수
+        function leaseBtnClick(){
+      		
+      		//이미 임대라고 설정이 되어 있다는 것은, 이미 한번 클릭한 상태라는 의미이므로, 클릭한 것을 취소할 수 도 있어야 한다!
+        	if(tradeInfo == "임대"){
+        		$("#leaseBtn").css("background-color","");
+                $("#leaseBtn").css("color","black");
+                tradeInfo = "";
+                $("#priceBtnText").text("");
+                $("#leaseDropDownMenu").hide();
+                $("#priceDiv").css("border", "1px solid rgb(192, 191, 191)");
+                $("#priceBtn").css("color","black");
+                
+        	}else{
+        		$("#leaseBtn").css("background-color", "rgb(242, 101, 45)");
+                $("#leaseBtn").css("color", "white");
+                $("#priceBtnText").text("월세");
 
-        function setValue(range){
+                $("#tradeBtn").css("background-color","");
+                $("#tradeBtn").css("color","");
+                tradeInfo = "임대";
+        	}
+            
+            //임대 버튼을 클릭했는데 만약, 매매의 가격을 설정할 수 있는 레인지가 떠있을 경우!
+            if($("#tradeDropDownMenu").css("display") != "none"){
+            	$("#leaseDropDownMenu").show();
+        		$("#tradeDropDownMenu").hide();
+        	}
+        }
+
+        //매매 버튼을 클릭하면 실행되는 함수
+        function tradeBtnClick(){
+        	
+        	if(tradeInfo == "매매"){
+        		$("#tradeBtn").css("background-color","");
+                $("#tradeBtn").css("color","");
+                tradeInfo = "";
+                $("#priceBtnText").text("");
+                $("#tradeDropDownMenu").hide();
+                $("#priceDiv").css("border", "1px solid rgb(192, 191, 191)");
+                $("#priceBtn").css("color","black");
+        	}else{
+        		$("#tradeBtn").css("background-color", "rgb(242, 101, 45)");
+                $("#tradeBtn").css("color", "white");
+                $("#priceBtnText").text("매매가");
+
+                $("#leaseBtn").css("background-color","");
+                $("#leaseBtn").css("color","black");
+                
+                tradeInfo = "매매";
+        	}
+        	
+          	//매매 버튼을 클릭했는데 만약, 임대의 가격을 설정할 수 있는 레인지가 떠있을 경우!
+            if($("#leaseDropDownMenu").css("display") != "none"){
+            	$("#tradeDropDownMenu").show();
+        		$("#leaseDropDownMenu").hide();
+        	}
+        }
+
+        function setPriceValue(range){
             price = range.value;
-            if(range.value >= 1000){
-                $("#priceRange").attr("step", "500");
-                $("#priceText").text(range.value + "만");
-            }
-            if(range.value >= 10000){
-                val = `${range.value}`;
+            console.log(price);
+            if(price >= 1000 && price < 10000){
+            	console.log("냥");
+                $("#tradePriceRange").attr("step", "500");
+                $("#tradePriceText").text(range.value + "만");
+            } else if(range.value >= 10000){
+            	console.log("냥2");
+                val = price;
+                
+                console.log("val : " + val);
                 val = val.replace("0", "");
                 val = val.replace("0", "");
                 val = val.replace("0", "");
 
                 val2 = val.slice(-1);
-                console.log("val2 : "+val2);
-                if(val >= 100){
+                
+                console.log("val : "+val);
+                
+                if(val >= 100 && val < 1000){
                     val = val.slice(0, 2);
-                }else{
+                    console.log("100 : " + val);
+                }else if(val < 100){
                     val = val.slice(0, 1);
+                    console.log("10 : " + val);
+                }else{
+                	val = val.slice(0, 3);
+                	console.log("1000 : " + val);
                 }
                 console.log("val : "+val);
-                $("#priceRange").attr("step", "1000");
-                $("#priceText").text(val + "억" + val2 + "000 만");
+                $("#tradePriceRange").attr("step", "1000");
+                $("#tradePriceText").text(val + "억" + val2 + "000 만");
                 // $("#priceText").text(range.value);
             }else{
-                $("#priceText").text(range.value + "만");
+                $("#tradePriceText").text(range.value + "만");
+                //$("#tradePriceRange").attr("step", "100");
             }
+        }
+        
+        //보증금의 range를 움직일 때 변하는 가격을 설정하기 위한 함수
+        function setDepositPriceValue(range){
+        	
+        }
+        
+        //월세의 range를 움직일 때 변하는 가격을 설정하기 위한 함수
+        function setMonthPriceValue(range){
+        	
         }
         
 </script>
@@ -66,7 +166,7 @@
 	                                        <div class="p-1" style="border: 1px solid rgb(192, 191, 191);">
 	                                            <input id="searchInput" type="text" class="p-2" style="font-size: 18px; border-color: transparent;" placeholder="주소를 입력해주세요."/>
 	                                            <div class="float-right">
-	                                                <input id="leaseBtn" type="button" class="p-2 mr-1 rounded" style="margin-top:1px; border-color: transparent; background-color: rgb(242, 101, 45); color: white;" value="임대" onclick="leaseBtnClick()"/>
+	                                                <input id="leaseBtn" type="button" class="p-2 mr-1 rounded" style="border-color: transparent;" value="임대" onclick="leaseBtnClick()"/>
 	                                                <input id="tradeBtn" type="button" class="p-2 mr-1 rounded" style="border-color: transparent;" value="매매" onclick="tradeBtnClick()"/>
 	                                            </div>
 	                                            
@@ -75,18 +175,43 @@
 	                                    <div class="col-2 p-0 pl-2">
 	                                        <div id="priceDiv" style="border: 1px solid rgb(192, 191, 191);">
 	                                            <button id="priceBtn" type="button" onclick="priceBtn()" class="bg-white w-100" style="border-color: transparent; background-color: transparent; font-size: 18px; padding: 10px;">
-	                                                <span id="priceBtnText">월세</span>
-	                                                <img class="ml-3" src="${pageContext.request.contextPath}/resources/images/arrowBtn1.png" width="30px" />
+	                                                <span style="font-size: 15px;" id="priceBtnText">&nbsp;</span>
+	                                                <img class="ml-2" src="${pageContext.request.contextPath}/resources/images/arrowBtn1.png" width="30px" />
 	                                            </button>
 	                                        </div>
-	                                        <div id="dropDownMenu" class="border bg-white mt-1 p-3 text-center" style="position:absolute; display: none; z-index: 2;">
+	                                        <div id="leaseDropDownMenu" class="border bg-white mt-1 p-3 text-center" style="position:absolute; display: none; z-index: 2;">
 	                                            <div class="p-2" style="font-size: 20px;">
-	                                                <span>가격 : 0 &nbsp;~ &nbsp;</span>
-	                                                <span id="priceText"></span>
+	                                                <span>0 &nbsp;~ &nbsp;</span>
+	                                                <span id="leasePriceText"></span>
 	                                                <span> 원</span>
 	                                            </div>
 	                                            <div>
-	                                                <input type="range" id="priceRange" value ="0" min="0" max="100000" oninput="setValue(this)" step="100" style="width: 300px;"/>
+	                                                보증금 <input type="range" id="depositPriceRange" value ="0" min="0" max="1000000" oninput="setValue(this)" step="100" style="width: 350px;"/>
+	                                            </div>
+	                                            <div>
+	                                                월세 <input type="range" id="monthPriceRange" value ="0" min="0" max="1000000" oninput="setValue(this)" step="100" style="width: 350px;"/>
+	                                            </div>
+	                                        </div>
+	                                        <div id="tradeDropDownMenu" class="border bg-white mt-1 p-3 text-center" style="position:absolute; display: none; z-index: 2;">
+	                                            <div class="p-2" style="font-size: 20px;">
+	                                                <span>0 &nbsp;~ &nbsp;</span>
+	                                                <span id="tradePriceText"></span>
+	                                                <span> 원</span>
+	                                            </div>
+	                                            <div>
+	                                                <input type="range" id="tradePriceRange" value ="0" min="0" max="1000000" oninput="setPriceValue(this)" step="1000" style="width: 350px;"/>
+	                                                <datalist id="tickmarks">
+													<option value="1000" ></option>
+													<option value="2000"></option>
+													<option value="3000"></option>
+													<option value="4000"></option>
+													<option value="5000"></option>
+													<option value="6000"></option>
+													<option value="7000"></option>
+													<option value="8000"></option>
+													<option value="9000"></option>
+													<option value="10000"></option>
+													</datalist>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -106,7 +231,7 @@
 	                        </div>
 	                        <div class="col-6" style="width:100%;height:600px;">
 	                            <div class="d-flex flex-column" style="z-index: 1;">
-	                                <div class="mb-2 mt-3 d-flex">
+	                                <div class="mb-2 mt-1 d-flex">
 	                                    <div class="flex-grow-1">
 	                                    	<h3>인수 매물 목록</h3>
 	                               		</div>
@@ -114,7 +239,7 @@
 	                                    	<a href="enroll?type=newEnroll" class="border rounded p-2 float-right" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none; font-size: 18px">매물 등록</a>
 	                                   	</div>
 	                                </div>
-	                                <div style="width:100%;height:555px; border: 1px solid rgb(192, 191, 191); padding: 15px; overflow:auto;">
+	                                <div style="width:100%;height:562px; border: 1px solid rgb(192, 191, 191); padding: 15px; overflow:auto;">
 	                                    <ul id="saleList" class="overflow-auto" style="list-style:none;">
 	                                    	<c:forEach var="building" items="${buildings}" varStatus="status">
 	                                    		<li id="" name="building${building.buildingNo}" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
@@ -156,7 +281,7 @@
         <script>
 	    	let markers = new Array();
 	    	let infoWindows = new Array();
-	    	let map;
+	    	var map;
 	    	var marker;
 	    	var curMarker;
 	    	
@@ -206,6 +331,7 @@
                 };
                 
                 curMarker = new naver.maps.Marker(markerOptions);
+                
                 initMap();
             }
             
@@ -273,26 +399,52 @@
             //검색 버튼을 클릭하면 실행되는 함수이다.
             function searchMap(){
             	var addr = $("#searchInput").val();
+            	if(addr == ""){
+            		swal({
+            			text : "검색할 주소를 입력해주십시오."
+            		});
+            		return;
+            	}
             	naver.maps.Service.geocode({address: addr}, function(status, response) {
 
                     if (status !== naver.maps.Service.Status.OK) {
-                        return alert(myaddress + '의 검색 결과가 없거나 기타 네트워크 에러');
+                    	swal({
+                    		text: myaddress + "의 검색 결과가 없거나 기타 네트워크 에러"
+                    	});
+                        return;
                     }
                  
                     var result = response.result;
+                    
+                    //검색한 것이 좌표로 변환할 수 없을 경우, 지역명으로 입력해달라고 팝업창을 띄워준다.
+                    if(result.items[0] == null){
+                    	swal({
+                    		text: "지역명으로 검색해주셔야 합니다."
+                    	});
+                    	return;
+                    }
                     var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
                     
-                    console.log("myaddr : "+myaddr);
                     curMarker.setPosition(myaddr);
                     
                     var location = new naver.maps.LatLng(myaddr);
                     map.panTo(location);
                 });
+            	
+            	//목록에서도 검색하기 위한 것
+            	
             }
             
             //리셋버튼을 클릭하면 실행되는 함수로, 현재 사용자가 위치하는 곳으로 돌아온다.------------------------------------------------------------
             function resetMap(){
             	navigator.geolocation.getCurrentPosition(resetPosition);
+            	tradeInfo = "";
+            	
+            	$("#tradeBtn").css("background-color","");
+                $("#tradeBtn").css("color","");
+                
+                $("#leaseBtn").css("background-color","");
+                $("#leaseBtn").css("color","black");
             }
             
             function resetPosition(position) {
@@ -332,26 +484,16 @@
                 var currentLoc = new naver.maps.LatLng(curPosition.y, curPosition.x);
                 map.panTo(currentLoc);
             }
-
-            //임대 버튼을 클릭하면 실행되는 함수
-            function leaseBtnClick(){
-                $("#leaseBtn").css("background-color", "rgb(242, 101, 45)");
-                $("#leaseBtn").css("color", "white");
-                $("#priceBtnText").text("월세");
-
-                $("#tradeBtn").css("background-color","");
-                $("#tradeBtn").css("color","");
-            }
-
-            //매매 버튼을 클릭하면 실행되는 함수
-            function tradeBtnClick(){
-                $("#tradeBtn").css("background-color", "rgb(242, 101, 45)");
-                $("#tradeBtn").css("color", "white");
-                $("#priceBtnText").text("전세");
-
-                $("#leaseBtn").css("background-color","");
-                $("#leaseBtn").css("color","black");
-            }
+            
+            /* map.Event.addListener("mousemove", function(e) {
+            	var bounds = map.getBounds(),
+                southWest = bounds.getSW(),
+                northEast = bounds.getNE(),
+                lngSpan = northEast.lng() - southWest.lng(),
+                latSpan = northEast.lat() - southWest.lat();
+                
+                console.log("b : " + bounds);
+            }); */
             
         </script>
     </section>

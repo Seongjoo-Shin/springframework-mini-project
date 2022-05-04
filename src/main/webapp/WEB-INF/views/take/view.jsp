@@ -26,7 +26,7 @@
         });
     </script>
     
-    <section class="container-fluid">
+    <section class="container-fluid" style="flex-grow:1;">
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
@@ -248,7 +248,7 @@
                   		<div class="mb-4 mt-5 font-weight-bold" style="font-size: 23px;">
                         	상세 설명
                     	</div>
-                  		<textarea class="p-2 mb-5" style="border-radius: 10px; resize:none; width:100%; height: 300px; font-size: 20px;" maxlength="500" color: rgb(97, 97, 100); disabled="disabled">상세 설명칸 입니다!</textarea>
+                  		<textarea class="p-2 mb-5" style="border-radius: 10px; resize:none; width:100%; height: 300px; font-size: 20px;" maxlength="500" color: rgb(97, 97, 100); disabled="disabled">${buildingInfo.buildingDetailContent}</textarea>
                   	</div>
                   	<div class="flex-grow-1 m-2">
                   		<div class="mb-4 mt-5 font-weight-bold" style="font-size: 23px;">

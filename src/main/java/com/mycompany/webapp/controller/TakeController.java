@@ -236,7 +236,7 @@ public class TakeController {
    @ResponseBody
    public String takeoverEnroll(HttpServletRequest request, 
 		   HttpSession session, 
-		   @RequestPart("attach_file") List<MultipartFile> files, 
+		   @RequestPart(value="attach_file", required=false) List<MultipartFile> files, 
 		   @RequestPart(value="attach_aroundFile", required=false) MultipartFile aroundFile, 
 		   Model model) throws IOException, ParseException {
 	   
@@ -320,7 +320,7 @@ public class TakeController {
 	   List<BuildingFileDto> mm = new ArrayList<BuildingFileDto>();
 	   
 	   //첨부파일 추가
-	   if(files.size() != 0) {
+	   if(files != null) {
 		   for(MultipartFile m : files) {
 			   
 			   BuildingFileDto bfd = new BuildingFileDto();
@@ -334,7 +334,6 @@ public class TakeController {
 			   
 			   takeService.insertBuildingFile(bfd);
 		   }
-
 	   }
 	   if(aroundFile != null) {
 		   

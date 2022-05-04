@@ -6,7 +6,7 @@
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<<style>
+<style>
  .ui-widget-header { border: 0px solid #dddddd; background: #fff; } 
 
  .ui-datepicker-calendar>thead>tr>th { font-size: 14px !important; } 
@@ -269,7 +269,7 @@
         }
     </style>
     
-    <section class="p-3 mt-4 container-fluid">
+    <section class="p-3 mt-4 container-fluid" style="flex-grow:1;">
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
