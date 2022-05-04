@@ -16,6 +16,7 @@
 	    <result property="marketHitCount" column="market_hit_count"/>
 	    <result property="marketPrice" column="market_price"/>
 	    <result property="marketLikeCount" column="market_like_count"/>
+	    <result property="marketSaleYN" column="market_sale_yn"/> <!-- 판매중 1 , 판매완료 0 -->
 		<association property="userDto" javaType="com.mycompany.webapp.dto.UserDto">
 			<result column="user_id" property="userId"/>
 			<result column="user_nickname" property="userNickname"/>
@@ -25,10 +26,10 @@
  	<!-- list에서 page당 가져오는 정보 -->
  	 <select id="selectByPage" parameterType="pager" resultMap="marketBoardWithUserResultMap">
  		SELECT rnum, market_no, market_title, market_writer, market_category
- 				, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, user_nickname
+ 				, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn, user_nickname
 		FROM (
 		  SELECT ROWNUM as rnum, market_no, market_title, market_writer, market_category
-		  					, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, user_nickname
+		  					, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn, user_nickname
 		  FROM (
 			SELECT  m.market_no
 					,m.market_title
@@ -40,6 +41,7 @@
 			        ,m.market_hit_count
 			        ,m.market_price
 			        ,m.market_like_count
+			        ,m.market_sale_yn
 			        ,u.user_nickname
 			FROM marketboards m, users u
 			where m.market_writer = u.user_id and market_use_yn = 1
@@ -63,6 +65,7 @@
 		        ,m.market_hit_count
 		        ,m.market_price
 		        ,m.market_like_count
+		        ,m.market_sale_yn
 		        ,u.user_nickname
 		FROM marketboards m, users u
 		where m.market_writer = u.user_id and market_no =#{marketNo} and market_use_yn = 1	
@@ -84,6 +87,7 @@
 	    <result property="marketHitCount" column="market_hit_count"/>
 	    <result property="marketPrice" column="market_price"/>
 	    <result property="marketLikeCount" column="market_like_count"/>
+	    <result property="marketSaleYN" column="market_sale_yn"/>
 	</resultMap>
 	
 	<resultMap type="marketfile" id="marketFileDtoResult">
@@ -113,8 +117,8 @@
 			select MARKETBOARDS_SEQ.nextval from dual
 		</selectKey>
 			INSERT INTO marketboards (market_no, market_title, market_content, market_writer, market_category, market_regist_date,
-										 market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count)
-			VALUES(#{marketNo}, #{marketTitle}, #{marketContent}, #{marketWriter}, #{marketCategory}, SYSDATE, SYSDATE, 1, 0, #{marketPrice}, 0)							 
+										 market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn)
+			VALUES(#{marketNo}, #{marketTitle}, #{marketContent}, #{marketWriter}, #{marketCategory}, SYSDATE, SYSDATE, 1, 0, #{marketPrice}, 0, 1)							 
 	</insert>
 	
 	<!-- 게시글 파일 DB 저장 -->
@@ -139,6 +143,13 @@
 		set market_like_count = market_like_count + 1
 		where market_no = #{marketNo}	
 	</update>
+	
+	<!-- 판매 완료 -->
+	<update id="updateSaleYn" parameterType="Integer">
+		update marketboards
+		set market_sale_yn = 0
+		where market_no = #{marketNo}	
+	</update>	
 </mapper>
 
 

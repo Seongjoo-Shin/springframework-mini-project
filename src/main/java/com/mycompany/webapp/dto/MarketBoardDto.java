@@ -17,6 +17,8 @@ public class MarketBoardDto {
 	private int marketHitCount;
 	private String marketPrice;
 	private int marketLikeCount;
+	private int marketSaleYN;
+	
 	private UserDto userDto;
 	private MarketFileDto marketFileDto;
 }

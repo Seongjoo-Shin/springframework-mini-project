@@ -477,26 +477,25 @@ public class CommunityController {
 	   marketBoardDto.setMarketTitle(request.getParameter("title"));
 	   marketBoardDto.setMarketWriter(userId);
 	   
-	   int marketNo = marketBoardService.insertMarket(marketBoardDto);
-	   log.info("---------marketNo-----------------" + marketNo);
-	   //첨부파일 추가
-	   if(files.size() != 0) {
-		   for(MultipartFile m : files) {
-			   String saveFilename = new Date().getTime()+"-"+m.getOriginalFilename();
+	    int cnt = marketBoardService.insertMarket(marketBoardDto);
+	    //첨부파일 추가
+	    if(cnt > 0) {
+	       if(files.size() != 0) {
+	          for(MultipartFile m : files) {
+	             String saveFilename = new Date().getTime()+"-"+m.getOriginalFilename();
 
-			   MarketFileDto marketFileDto = new MarketFileDto();
-			   marketFileDto.setAttachOriginalName(m.getOriginalFilename());			   
-			   marketFileDto.setAttachSaveName(saveFilename);
-			   marketFileDto.setAttachType(m.getContentType());
-			   marketFileDto.setMarketNo(marketNo);
-			   marketFileDto.setImageFileData(m.getBytes());
-			   
-			   marketBoardService.insertMarketFile(marketFileDto);
-		   }
-	   }
+	             MarketFileDto marketFileDto = new MarketFileDto();
+	             marketFileDto.setAttachOriginalName(m.getOriginalFilename());            
+	             marketFileDto.setAttachSaveName(saveFilename);
+	             marketFileDto.setAttachType(m.getContentType());
+	             marketFileDto.setImageFileData(m.getBytes());
+	             marketBoardService.insertMarketFile(marketFileDto);
+	          }
+	       }   
+	    }
 	   return "redirect:/community/market/list";
 	}
-	
+
 	// 글쓰기 취소 버튼
     @RequestMapping("/market/marketInsertCancle")
     public String marketInsertCancle() {

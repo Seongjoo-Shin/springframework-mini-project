@@ -33,6 +33,9 @@ public interface MarketBoardDao {
 	//view 페이지에 들어갈 marketBord정보 가져오기
 	public MarketBoardDto selectMarketBoardByMarketNo(int marketNo);
 
-	public int updateHitCount(int marketNo);	
+	public int updateHitCount(int marketNo);
+	
+	//판매 완료 표시
+	public void updateSaleYn(int marketNo);
 	
 }
