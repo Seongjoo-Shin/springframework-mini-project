@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<script style="flex-grow:1;">
+	<script style="flex-grow:1;">
         function selectAll(selectAll)  {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             
@@ -10,36 +10,15 @@
             })
         }
 
-        function changeImg(img){
-            var path = document.getElementById("interImg").src;
-            var cntInter = document.getElementById("interCnt").innerHTML;
-
-            if(path.includes("Before")){
-                $("#interImg").attr("src", "/resources/images/interestAfter.png");
-                document.getElementById("interCnt").innerHTML = Number(cntInter) + 1;
-            } else {
-                $("#interImg").attr("src", "/resources/images/interestBefore.png");
-                document.getElementById("interCnt").innerHTML = Number(cntInter) - 1;
-            }
-            
-        }
-
         function openMsgForm(){
             var url = "<%=request.getContextPath() %>/message";
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);
         }
         
-        function showPopUp(a){
-            var url = "<%=request.getContextPath() %>/take/popUpImg";
-            var name = "test";
-            console.log(url);
-            var option = "width = 900, height = 900, top = 100, left = 200, location = no"
-            window.open(url, name, option);
-        }
-        
-        $( document ).ready(function() {
+        $(document).ready(function() {
         	showLikeCount();
+        	console.log("showLikeCount() 실행되니??")
         });
     </script>
     <section>
@@ -95,12 +74,17 @@
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
                         <a class="btn btn-outline-dark mr-3" style="width:100px; height:50px;" href="marketViewtoList">목록</a>
-                        <button class="btn btn-outline-dark ml-3" style="width:100px;" onclick="changeImg(this);"><img id="interImg" class="mr-2" src="/resources/images/interestBefore.png" width="30px;"/><span id="interCnt">12</span></button>
+                        <button class="btn btn-outline-dark ml-3" style="width:100px;" onclick="likeBtnClick(this);">
+                        	<img id="interImg" class="mr-2" src="" width="30px;"/>
+                        	<span id="interCnt">${marketBoardDto.marketLikeCount}</span>
+                        </button>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
-                        <a class="btn btn-outline-dark mr-3" style="width:100px;" href="marketViewtoList">수정</a>
-                        <a class="btn btn-outline-dark mr-3" style="width:100px;" href="marketViewtoList">삭제</a>
-                        <a class="btn btn-outline-dark mr" style="width:100px;" href="marketViewtoList">판매완료</a>
+                    	<c:if test="${sessionUserId == marketBoardDto.marketWriter}">
+	                    	<a class="btn btn-outline-dark mr-3" style="width:100px;" href="marketViewtoList">수정</a>
+	                        <a class="btn btn-outline-dark mr-3" style="width:100px;" href="marketViewtoList">삭제</a>
+	                        <a class="btn btn-outline-dark mr" style="width:100px;" href="marketViewtoList">판매완료</a>
+                    	</c:if>
                     </div>
                 </div>
                 <div class="col-2">
@@ -108,6 +92,71 @@
             </div>
         </div>
     </section>
-	
+    <script>
+		var likeCnt = `${marketBoardDto.marketLikeCount}`;
+		var marketNo = `${marketBoardDto.marketNo}`;
+    
+	   function showLikeCount(){
+	   	$.ajax({
+	   		url: "checkLike",
+	   		data:{
+	   			id:`${sessionUserId}`,
+	   			type:"market",
+    			marketNo:`${marketBoardDto.marketNo}`
+	   		}
+	   	}).done((data) => {
+	   		if(data.likeCheck == 'like'){
+	   			$("#interImg").attr("src", "/resources/images/interestAfter.png");
+	   		}else{
+	   			$("#interImg").attr("src", "/resources/images/interestBefore.png");
+	   		}
+	   	});
+	   }
+
+		function likeBtnClick(img){
+	        var path = document.getElementById("interImg").src;
+	        
+	        if(`${sessionUserId}` == ""){
+	    		swal({
+	    			text:"로그인해야 이용할 수 있는 기능입니다. 로그인을 해주세요."
+	    		});
+	    		return;
+	    	}
+	        
+			if(path.includes("Before")){ //누르지 않은 상태에서 클릭했을 경우!
+				likeCnt++;
+	        	$.ajax({
+	        		url : "setLikeLists",
+	        		data : {
+	        			check:"before",
+	        			id:`${sessionUserId}`,
+		    			type:"market",
+		    			marketNo:marketNo,
+		    			likeCnt:likeCnt
+	        		}
+	        	}).done((data) => {
+	    			$("#interImg").attr("src", "/resources/images/interestAfter.png");
+	    			document.getElementById("interCnt").innerHTML = likeCnt;
+	    		});
+	        } else {//이미 클릭한 상태에서 클릭했을 경우
+	        	likeCnt--;
+	        	$.ajax({
+	        		url : "setLikeLists",
+	        		data : {
+	        			check:"after",
+	        			id:`${sessionUserId}`,
+		    			type:"market",
+		    			marketNo:marketNo,
+		    			likeCnt:likeCnt
+	        		}
+	        	}).done((data) => {
+	    			$("#interImg").attr("src", "/resources/images/interestBefore.png");
+	    			document.getElementById("interCnt").innerHTML = likeCnt;
+	    		});
+	        }
+	    }    
+    </script>
+
+	    	
     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

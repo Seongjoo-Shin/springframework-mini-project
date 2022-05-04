@@ -24,9 +24,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mycompany.webapp.dao.MarketBoardDao;
-import com.mycompany.webapp.dto.BuildingDto;
-import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
@@ -364,6 +361,32 @@ public class CommunityController {
    	    
 	}
 	
+   @RequestMapping(value="/market/checkLike", produces = "application/json; charset=UTF-8")
+   @ResponseBody
+   public String checkLike(String id, String type, String marketNo) {
+	   log.info("type : " + type);
+	   log.info("id : " + id);
+	   log.info("bn : " + marketNo);
+	   LikeListDto lld = new LikeListDto();
+	   
+	   lld.setLikeListNo(Integer.parseInt(marketNo));
+	   lld.setLikeType(type);
+	   lld.setLikeUserId(id);
+	   
+	   String json;
+	   JSONObject jsonObject = new JSONObject();
+	   int check = takeService.selectLikeListByBuildingNo(lld);
+	   
+	   if(check == 1) {
+		   jsonObject.put("likeCheck", "like");
+	   }else {
+		   jsonObject.put("likeCheck", "noLike");
+	   }
+	   json = jsonObject.toString();
+	   return json;
+   }
+   
+	
    @RequestMapping(value="/market/setLikeLists", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String setLikeLists(String check, String id, String type, int marketNo, String likeCnt) {
@@ -431,9 +454,11 @@ public class CommunityController {
 		List<MarketFileDto> marketFileList = marketBoardService.selectImageFileByMarketNo(marketNo);
 		model.addAttribute("marketFileList", marketFileList);
 		
-		//현재 로그인한 사용자 id 얻기
-		
-		
+		//현재 로그인한 사용자 id model에 싣기
+		String SessionUserid = (String) session.getAttribute("sessionUserId");
+		model.addAttribute("sessionUserId", SessionUserid);		
+		log.info("boardDetail 실행");
+
 		return "/community/market/view";
 	}
 
