@@ -6,7 +6,7 @@
 	<resultMap id="wishListMap" type="wishlist">
 		<result property="wishListNo" column="wishlist_no"/>
 		<result property="userId" column="user_id"/>
-		<result property="buildingNo" column="buildng_no"/>
+		<result property="buildingNo" column="building_no"/>
 		<result property="interiorName" column="interior_name"/>
 		<result property="interiorPrice" column="interior_price"/>
 		<result property="pictureName" column="picture_name"/>
@@ -17,9 +17,9 @@
 		where picture_name=#{pictureName}
 	</select>
 	
-	<select id="selectByUserId" parameterType="String" resultMap="wishListMap">
+	<select id="selectByUserIdAndBuildingNo" parameterType="wishlist" resultMap="wishListMap">
 		select * from wishlists
-		where user_id=#{userId}
+		where user_id=#{userId} and building_no=#{buildingNo}
 	</select>
 	
 	<!-- =============================================================== -->

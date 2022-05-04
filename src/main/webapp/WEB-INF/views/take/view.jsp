@@ -272,7 +272,7 @@
 					<c:if test="${sessionUserId eq buildingInfo.buildingWriter}">
 						<button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
 					</c:if>
-                    
+                    <a href="/interior/simulator?buildingNo=${buildingInfo.buildingNo}" class="btn btn-warning border rounded m-2 p-2" style="font-size: 25px;">인테리어 만들기</a>
                 </div>
             </div>
             <div class="col-2"></div>

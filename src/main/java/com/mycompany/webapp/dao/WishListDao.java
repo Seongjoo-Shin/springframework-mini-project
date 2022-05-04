@@ -12,7 +12,7 @@ public interface WishListDao {
 
 	public int insertItem(WishListDto wishList);
 
-	public List<WishListDto> selectByUserId(String userId);
+	public List<WishListDto> selectByUserIdAndBuildingNo(WishListDto wishlist);
 
 	public int deleteByWishListNo(int wishListNo);
 }

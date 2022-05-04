@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.WishListDto;
@@ -52,14 +53,22 @@ public class InteriorController {
 	}
 	
 	@RequestMapping("/simulator")
-	public String simulator(Model model, HttpSession session) {
+	public String simulator(@RequestParam(defaultValue ="0") int buildingNo, Model model, HttpSession session) {
 		log.info("실행");
 		String userId = (String)session.getAttribute("sessionUserId");
-		model.addAttribute("modelId",userId);
+		String buildingNo1 = buildingNo + "";
+		WishListDto wishlist=new WishListDto();
+		wishlist.setUserId(userId);
+		wishlist.setBuildingNo(buildingNo);
+		log.info(userId);
+		log.info(buildingNo);
+		model.addAttribute("modelId", userId);
+		model.addAttribute("buildingNo", buildingNo);
 		
 		if(userId!=null) {
-			List<WishListDto> wishLists = wishListService.getWishList(userId);
+			List<WishListDto> wishLists = wishListService.getWishList(wishlist);
 			model.addAttribute("wishLists",wishLists);
+			log.info("55");
 			log.info(wishLists.toString());
 		}
 		
