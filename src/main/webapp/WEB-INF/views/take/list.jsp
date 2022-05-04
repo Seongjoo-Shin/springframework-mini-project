@@ -7,13 +7,13 @@
         });
 
         //매매가
-        var tradePrice;
+        var tradePrice = 0;
         
         //보증금
-        var depositPrice;
+        var depositPrice = 0;
         
         //월세
-        var monthPrice;
+        var monthPrice = 0;
         
         var tradeInfo = "";
 
@@ -536,6 +536,7 @@
 		        				//월세
 		        				var v2 = Number(monthPrice);
 		        				
+		        				console.log(v1 + " : " + v2);
 		        				var buildingDep = Number(`${building.buildingDepositPrice}`);
 		        				var buildingMonth = Number(`${building.buildingMonthRent}`);
 		        				
@@ -544,6 +545,8 @@
 		        					if(buildingMonth <= v2){
 		        						$("li#"+${status.index}).show();
 		        					}
+		        				}else if(v1 == 0){
+		        					$("li#"+${status.index}).show();
 		        				}
 	        				}
 	        			}else if(tradeInfo == '매매'){
@@ -552,6 +555,8 @@
 		        				var buildingPrice = Number(`${building.buildingPrice}`);
 		        				
 		        				if(buildingPrice <= v3){
+		        					$("li#"+${status.index}).show();
+		        				}else if(v3 == 0){
 		        					$("li#"+${status.index}).show();
 		        				}
 	        				}
