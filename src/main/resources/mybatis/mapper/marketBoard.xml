@@ -42,7 +42,7 @@
 			        ,m.market_like_count
 			        ,u.user_nickname
 			FROM marketboards m, users u
-			where m.market_writer = u.user_id
+			where m.market_writer = u.user_id and market_use_yn = 1
 			ORDER BY market_no DESC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
