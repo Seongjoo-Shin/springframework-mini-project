@@ -33,7 +33,7 @@
                     <div class="card">
                         <div class="card-body" style="margin:0 120px;">
                             <div class="h4">
-                                <span>글쓴이 : </span><span>${marketBaordDto.userDto.userNickname}</span>
+                                <span>글쓴이 : </span><span>${marketBoardDto.userDto.userNickname}</span>
                                 <a class="btn btn-outline-dark ml-2" onclick="openMsgForm()">쪽지보내기</a>
                                 <span class="date float-right mr-5">
                                 	<fmt:formatDate value="${marketBoardDto.marketRegistDate}" pattern="yyyy-MM-dd"/>
@@ -44,15 +44,15 @@
                             </div>
 							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 							  <div class="carousel-inner">
-							  	<c:forEach var="img" items="${marketFileList}" varStatus="status">
+							  	<c:forEach var="file" items="${marketFileList}" varStatus="status">
 							  		<c:if test="${status.index == 0}">
 									    <div class="carousel-item active">
-									      <img class="d-block w-100" src="..." alt="First slide">
+									      <img class="d-block w-100 h-50" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="First slide">
 									    </div>							  			
 							  		</c:if>
 							  		<c:if test="${status.index != 0}">
 							  			<div class="carousel-item">
-									      <img class="d-block w-100" src="..." alt="First slide">
+									      <img class="d-block w-100 h-50" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="other slide">
 									    </div>	
 							  		</c:if>
 							  	</c:forEach>

@@ -352,8 +352,8 @@ public class CommunityController {
 	//리스트에서 대표사진 보여줌
 	@RequestMapping("/market/getMarketImage")
 	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
+		log.info("marketNo" + marketNo +"img" + img);
 		List<MarketFileDto> files = marketBoardService.selectImageFileByMarketNo(marketNo);
-   	    	
 		int num = Integer.parseInt(img);
 		byte[] temp = files.get(num).getImageFileData();
 		InputStream is = new ByteArrayInputStream(temp);
@@ -457,7 +457,6 @@ public class CommunityController {
 		//현재 로그인한 사용자 id model에 싣기
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
 		model.addAttribute("sessionUserId", SessionUserid);		
-		log.info("boardDetail 실행");
 
 		return "/community/market/view";
 	}
