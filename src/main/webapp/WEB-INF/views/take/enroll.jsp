@@ -293,7 +293,7 @@
 	                        <div class="m-4 d-flex flex-column justify-content-center">
 	                            <div class="mb-2">* 도로명, 건물명, 지번에 대해 통합 검색이 가능합니다.</div>
 	                            <div class="mb-2">
-	                                <input class="p-2" type="text" id="buildingAddr" name="buildingAddr" placeholder="주소" style="width: 300px;" value="${buildingInfo.buildingAddr}">
+	                                <input class="p-2" type="text" id="buildingAddr" name="buildingAddr" placeholder="주소" style="width: 300px;" value="${buildingInfo.buildingAddr}" disabled="disabled">
 	                                <input class="p-2" type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
 	                            </div>
 	                            <input id="buildingAddrDetail" name="buildingAddrDetail" class="p-2" placeholder="상세 주소를 입력해주세요." value="${buildingInfo.buildingAddrDetail}"/>
@@ -421,20 +421,20 @@
 	                                </div>
 	                                <div class="pl-3 d-flex flex-column m-2">
 	                                    <div class="d-flex m-2">
-	                                        <input id="buildingTakeoverPrice" name="buildingTakeoverPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="인수 비용을 입력해주세요." value="${buildingInfo.buildingTakeoverPrice}"/>
+	                                        <input type="number" id="buildingTakeoverPrice" name="buildingTakeoverPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="인수 비용을 입력해주세요." value="${buildingInfo.buildingTakeoverPrice}"/>
 	                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 	                                    </div>
 	                                    <div id="leaseDiv" style="display: block;">
 		                                    <div class="d-flex m-2" >
-		                                        <input id="buildingDepositPrice" name="buildingDepositPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="보증금" value="${buildingInfo.buildingDepositPrice}"/>
+		                                        <input type="number" id="buildingDepositPrice" name="buildingDepositPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="보증금" value="${buildingInfo.buildingDepositPrice}"/>
 		                                        <div style="font-size: 30px;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
-		                                        <input id="buildingMonthRent" name="buildingMonthRent" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="월세" value="${buildingInfo.buildingMonthRent}"/>
+		                                        <input type="number" id="buildingMonthRent" name="buildingMonthRent" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="월세" value="${buildingInfo.buildingMonthRent}"/>
 		                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 		                                    </div>
 	                                    </div>
 	                                    <div id="tradeDiv" style="display:none;">
 	                                    	<div class="d-flex m-2" >
-		                                        <input id="buildingPrice" name="buildingPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="매매가" value="${buildingInfo.buildingPrice}"/>
+		                                        <input type="number" id="buildingPrice" name="buildingPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="매매가" value="${buildingInfo.buildingPrice}"/>
 		                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 		                                    </div>
 	                                    </div>
@@ -452,13 +452,13 @@
 	                        <div class="p-2 d-flex flex-column mr-6">
 	                            <div class="d-flex m-2">
 	                                <div class="m-2">공급 면적</div>
-	                                <span><input onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="공급면적" value="${buildingInfo.buildingSupplyArea}"/>&nbsp;&nbsp;&nbsp;평</span>
+	                                <span><input type="number" onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="공급면적" value="${buildingInfo.buildingSupplyArea}"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingSupplyAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
 	                            <div class="border-bottom"></div>
 	                            <div class="d-flex m-2 mt-3">
 	                                <div class="m-2">전용 면적</div>
-	                                <span><input onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="전용면적" value="${buildingInfo.buildingDedicatedArea}"/>&nbsp;&nbsp;&nbsp;평</span>
+	                                <span><input type="number" onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="전용면적" value="${buildingInfo.buildingDedicatedArea}"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingDedicatedAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
 	                        </div>
@@ -511,7 +511,7 @@
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">입주 가능일</h4>
-	                    <input type="text" class="border rounded" id="buildingAvailableDate" name="buildingAvailableDate" value="${buildingInfo.buildingAvailableDate}">
+	                    <input type="text" class="border rounded" id="buildingAvailableDate" name="buildingAvailableDate" value="${buildingInfo.buildingAvailableDate}" >
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">상세 설명</h4>

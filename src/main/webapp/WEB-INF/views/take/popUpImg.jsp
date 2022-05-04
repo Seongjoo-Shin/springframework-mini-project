@@ -22,21 +22,22 @@
          }
     </style>    
 </head>
-<body>
+<body style="height: 100%; display: flex; flex-direction: column;">
     <header>
         <div>
             <h3 class="bg-light border rounded p-5 text-center">모든 사진 보기</h3>
         </div>
     </header>
-    <section style="align-items: center;">
+    <section style="align-items: center; flex-grow: 1;">
         <div id="imagePreview" class="w-100" style="align-items: center; display: inline;">
         	<c:forEach var="file" items="${imageFiles}" varStatus="status">
         		<c:if test="${file.panoramaCheck eq '0'}">
-        			<span>
+        			<div style="display:inline-block;">
 	        			<img class="border rounded p-2 m-2" src="getBuildingImage?buildingNo=${buildingNo}&type=nomal&img=${status.index}" width="500px" height="400px"/>
-	        		</span>
+	        		</div>
         		</c:if>
         	</c:forEach>
         </div>
     </section>
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+</body>
+</html>

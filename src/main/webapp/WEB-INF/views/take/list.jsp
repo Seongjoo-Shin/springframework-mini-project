@@ -279,12 +279,44 @@
 					                                    		<div class="p-1 m-1">
 					                                    			<span class="border rounded p-1 text-center" style="background-color: rgb(164, 180, 235); color: white; width:60px;">${building.buildingTradeInfo}</span>
 					                                    			<c:if test="${building.buildingTradeInfo eq '임대'}">
-					                                    				<span class="m-1">월세</span>
+					                                    				<span class="m-1">보증금 / 월세 : </span>
+					                                    				<span>${building.buildingDepositPrice}&nbsp;</span>
+					                                    				<span>/&nbsp;</span>
 					                                    				<span>${building.buildingMonthRent}&nbsp;만원</span>
 					                                    			</c:if>
 					                                    			<c:if test="${building.buildingTradeInfo eq '매매'}">
 					                                    				<span class="m-1">매매가</span>
-					                                    				<span>${building.buildingPrice}&nbsp;만원</span>
+					                                    				<span id="price${status.index}"></span>
+					                                    				<span >원</span>
+					                                    				<script>
+					                                    					var price = `${building.buildingPrice}`;
+					                                    					if(price > 10000){
+					                                    						pVal = price;
+					                                    						
+					                                    		                if(price >= 1000 && price < 10000){
+					                                    		                	$("#price${status.index}").text(price + "만");
+					                                    		                } else if(price >= 10000){
+					                                    		                    pVal = price;
+					                                    		                    pVal = pVal.replace("0", "");
+					                                    		                    pVal = pVal.replace("0", "");
+					                                    		                    pVal = pVal.replace("0", "");
+
+					                                    		                    pVal2 = pVal.slice(-1);
+					                                    		                    
+					                                    		                    if(pVal >= 100 && pVal < 1000){
+					                                    		                    	pVal = pVal.slice(0, 2);
+					                                    		                    }else if(pVal < 100){
+					                                    		                    	pVal = pVal.slice(0, 1);
+					                                    		                    }else{
+					                                    		                    	pVal = pVal.slice(0, 3);
+					                                    		                    }
+					                                    		                    var t = pVal + "억" + pVal2 + "000 만";
+					                                    		                    $("#price${status.index}").text(t);
+					                                    		                }else{
+					                                    		                    $("#price${status.index}").text(price + "만");
+					                                    		                }
+					                                    					}
+					                                    				</script>
 					                                    			</c:if>
 					                                    		</div>
 			                                    			</div>
@@ -486,15 +518,48 @@
             	console.log("b : " + bounds);
             	
             	$("li").css("display", "none");
-            	var num = 0;
-            	for(var temp of areaArr){
-            		var addrPoint = new naver.maps.Point(temp.lon, temp.lat);
-            		console.log("areaArr : " + bounds.hasPoint(addrPoint));
-            		if(bounds.hasPoint(addrPoint)){
-            			$("li#"+num).show();
-            		}
-            		num++;
-            	}
+            	
+            	$("#leaseDropDownMenu").css("display", "none");
+            	$("#tradeDropDownMenu").css("display", "none");
+            	$("#priceDiv").css("border", "1px solid rgb(192, 191, 191)");
+                $("#priceBtn").css("color","black");
+            	
+            	<c:forEach var="building" items="${buildings}" varStatus="status">
+	            	var addrPoint = new naver.maps.Point(${building.buildingLongitude}, ${building.buildingLatitude});
+	            	console.log("areaArr : " + bounds.hasPoint(addrPoint));
+	            	
+	        		if(bounds.hasPoint(addrPoint)){
+	        			if(tradeInfo == '임대'){
+	        				if(`${building.buildingTradeInfo}` == '임대'){
+		        				//보증금
+		        				var v1 = Number(depositPrice);
+		        				//월세
+		        				var v2 = Number(monthPrice);
+		        				
+		        				var buildingDep = Number(`${building.buildingDepositPrice}`);
+		        				var buildingMonth = Number(`${building.buildingMonthRent}`);
+		        				
+		        				if(buildingDep <= v1){
+		        					console.log(v1);
+		        					if(buildingMonth <= v2){
+		        						$("li#"+${status.index}).show();
+		        					}
+		        				}
+	        				}
+	        			}else if(tradeInfo == '매매'){
+	        				if(`${building.buildingTradeInfo}` == '매매'){
+	        					var v3 = Number(tradePrice);
+		        				var buildingPrice = Number(`${building.buildingPrice}`);
+		        				
+		        				if(buildingPrice <= v3){
+		        					$("li#"+${status.index}).show();
+		        				}
+	        				}
+	        			}else{
+	        				$("li#"+${status.index}).show();
+	        			}
+	        		}
+            	</c:forEach>
             	
 			}
             
@@ -502,6 +567,12 @@
             function resetMap(){
             	navigator.geolocation.getCurrentPosition(resetPosition);
             	tradeInfo = "";
+            	
+            	$("#leaseDropDownMenu").css("display", "none");
+            	$("#tradeDropDownMenu").css("display", "none");
+            	$("#priceDiv").css("border", "1px solid rgb(192, 191, 191)");
+                $("#priceBtn").css("color","black");
+                $("#searchInput").val("");
             	
             	$("#tradeBtn").css("background-color","");
                 $("#tradeBtn").css("color","");
