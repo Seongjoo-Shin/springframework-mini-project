@@ -6,7 +6,7 @@
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
         <h1>공 지&nbsp;&nbsp;&nbsp;사 항</h1>
       </div>
-      <div class="container-fluid h-100 my-5">
+      <div class="container-fluid my-5">
         <div class="row">
           <div class="col-2"></div>
           <div class="col-8">

@@ -6,7 +6,7 @@
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
         <h1 class="">공지사항</h1>
       </div>
-      <div class="container-fluid h-100">
+      <div class="container-fluid ">
         <div class="row">
           <div class="col-2"></div>
           <div class="col-8">

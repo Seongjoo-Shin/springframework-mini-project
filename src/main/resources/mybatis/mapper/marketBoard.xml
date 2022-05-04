@@ -144,6 +144,13 @@
 		where market_no = #{marketNo}	
 	</update>
 	
+	<!-- 좋아요 감소 -->
+	<update id="updateLikeCountDown" parameterType="Integer">
+		update marketboards
+		set market_like_count = market_like_count - 1
+		where market_no = #{marketNo}	
+	</update>
+	
 	<!-- 판매 완료 -->
 	<update id="updateSaleYn" parameterType="Integer">
 		update marketboards

@@ -376,20 +376,20 @@ public class CommunityController {
 	   lld.setLikeType(type);
 	   lld.setLikeUserId(id);
 	   
-	   //누르지 않은 상태일 경우
-	   if(check.equals("before")) {
-		   takeService.insertLikeLists(lld);
-	   }else { //클릭한 것을 취소할 경우
-		   takeService.deleteLikeLists(lld);
-	   }
-			   
 	   MarketBoardDto mdt = new MarketBoardDto();
 	   mdt.setMarketLikeCount(Integer.parseInt(likeCnt));
 	   mdt.setMarketNo(marketNo);
-
-	   //좋아요 수 업데이트
-	   marketBoardService.updateLikeCount(mdt);
-			   
+	   
+	   //누르지 않은 상태일 경우
+	   if(check.equals("before")) {
+		   takeService.insertLikeLists(lld);
+		   marketBoardService.updateLikeCount(marketNo); //좋아요 수 업데이트
+		   
+	   }else { //클릭한 것을 취소할 경우
+		   takeService.deleteLikeLists(lld);
+		   marketBoardService.updateLikeCountDown(marketNo); //좋아요 수 업데이트
+	   }
+			
 	   String json;
 	   JSONObject jsonObject = new JSONObject();
 	   

@@ -22,7 +22,10 @@ public interface MarketBoardDao {
 	public List<MarketFileDto> selectImageFileByMarketNo(int marketNo);
 	
 	//like count update
-	public void updateLikeCount(MarketBoardDto marketBoardDto);
+	public void updateLikeCount(int marketNo);
+	
+	//like count update
+	public void updateLikeCountDown(int marketNo);
 	
 	//게시글 등록
 	public int insertMarket(MarketBoardDto marketBoardDto);

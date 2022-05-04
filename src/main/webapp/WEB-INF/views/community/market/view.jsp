@@ -37,9 +37,13 @@
             var option = "width = 900, height = 900, top = 100, left = 200, location = no"
             window.open(url, name, option);
         }
+        
+        $( document ).ready(function() {
+        	showLikeCount();
+        });
     </script>
     <section>
-        <div class="container-fluid h-100 mb-5">
+        <div class="container-fluid mb-5">
             <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
                 <h1 class="">거래 게시판</h1>
             </div>
@@ -73,6 +77,7 @@
 									    </div>	
 							  		</c:if>
 							  	</c:forEach>
+							  	</div>
 							  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
 							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							    <span class="sr-only">Previous</span>
@@ -103,6 +108,6 @@
             </div>
         </div>
     </section>
-
+	
     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
