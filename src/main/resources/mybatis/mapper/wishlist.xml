@@ -33,8 +33,8 @@
 	</insert>
 	
 	<!-- =============================================================== -->
-	<delete id="deleteByWishListNo" parameterType="int">
-		delete from wishlists where wishlist_no=#{wishListNo}
+	<delete id="deleteByWishListNo" parameterType="wishlist">
+		delete from wishlists where wishlist_no=#{wishListNo} and building_no=#{buildingNo}
 	</delete>
 </mapper> 
 

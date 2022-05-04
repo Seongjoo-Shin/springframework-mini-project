@@ -32,8 +32,8 @@ public class WishListService {
 		int row = wishListDao.insertItem(wishList);
 	}
 
-	public int deleteItem(int wishListNo) {
-		int row = wishListDao.deleteByWishListNo(wishListNo);
+	public int deleteItem(WishListDto wishList) {
+		int row = wishListDao.deleteByWishListNo(wishList);
 		
 		return row;
 	}
