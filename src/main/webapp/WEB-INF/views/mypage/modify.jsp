@@ -1,27 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<script>
-	function fn_changePwd(){	
-
-		var pwd = document.getElementById("password").value;
-		var newPwd = document.getElementById("newPwd").value;
-		var chkNewPwd = document.getElementById("chkNewPwd").value;
-		if(newPwd == chkNewPwd){
-			$.ajax({
-				url: '/mypage/updatepassword',
-				data: {'pwd':pwd, 'newPwd':newPwd, 'chkNewPwd': chkNewPwd},
-				method: 'POST',
-			}).done((data, status) => {
-				swal(data.message).then(() => {
-					location.reload();
-				});	
-			});
-		} else {
-			swal("새로운 비밀번호가 일치하지 않습니다.").then(() => {
-				location.reload();				
-			});
+		function fn_changePwd(){	
+			var pwd = document.getElementById("password").value;
+			var newPwd = document.getElementById("newPwd").value;
+			var chkNewPwd = document.getElementById("chkNewPwd").value;
+			if(newPwd == chkNewPwd){
+				$.ajax({
+					url: '/mypage/updatepassword',
+					data: {'pwd':pwd, 'newPwd':newPwd, 'chkNewPwd': chkNewPwd},
+					method: 'POST',
+				}).done((data, status) => {
+					swal(data.message).then(() => {
+						location.reload();
+					});	
+				});
+			} else {
+				swal("새로운 비밀번호가 일치하지 않습니다.").then(() => {
+					location.reload();				
+				});
+			}
 		}
-	}
 	</script>
     <section style="flex-grow:1;">
         <div class="container-fluid h-100 mt-5 mb-5">
@@ -84,6 +83,6 @@
             </div>
         </div>
     </section>
-    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
     
     

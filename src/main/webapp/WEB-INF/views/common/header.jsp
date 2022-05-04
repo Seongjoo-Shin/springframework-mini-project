@@ -151,17 +151,17 @@
           	</div> --%>
           </nav>
     </header>
-<script>
-	//이미지 보이기
-	function visibleAlarmContent(){
-		$("#alarmContent").css("visibility","visible");
-	}
-
-	//이미지 사라지기
-  	$('body').click(function(e){
-		if(!$(e.target).hasClass("area")){
-			$("#alarmContent").css("visibility","hidden");
-			$("#alarmImg").attr("src","${pageContext.request.contextPath}/resources/images/alarmNo.png");
+	<script>
+		//이미지 보이기
+		function visibleAlarmContent(){
+			$("#alarmContent").css("visibility","visible");
 		}
-	});
-</script>
+	
+		//이미지 사라지기
+	  	$('body').click(function(e){
+			if(!$(e.target).hasClass("area")){
+				$("#alarmContent").css("visibility","hidden");
+				$("#alarmImg").attr("src","${pageContext.request.contextPath}/resources/images/alarmNo.png");
+			}
+		});
+	</script>

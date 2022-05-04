@@ -16,7 +16,6 @@
 				});
 				location.reload();
 			}
-			
 		});
 	}
 </script>

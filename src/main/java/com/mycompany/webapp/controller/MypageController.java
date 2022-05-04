@@ -76,7 +76,7 @@ public class MypageController {
 			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			if(passwordEncoder.matches(pwd, dbUser.getUserPassword())) { // ajax로 넘어온 비밀번호와, db에 저장되어 있는 비밀번호가 일치한다면
 				dbUser.setUserPassword(passwordEncoder.encode(newpwd)); // 새로운 비밀번호를 패스워드 인코딩하여 
-				int cnt = mypageService.changePassword(dbUser); // 비밀번호를 변경한다
+				mypageService.changePassword(dbUser); // 비밀번호를 변경한다
 				jsonObject.put("message", "비밀번호를 변경하였습니다.");
 			} else {
 				jsonObject.put("message", "비밀번호가 일치하지 않습니다.");
@@ -305,7 +305,6 @@ public class MypageController {
 	// ------------------------------
 	@PostMapping("/deleteLikeMarket")
 	public String deleteLikeMarket(HttpServletRequest request, HttpSession session) {
-		
 		log.info("실행");
 		String userId = (String) session.getAttribute("sessionUserId");
 		int marketNo = Integer.parseInt(request.getParameter("marketNo"));
@@ -313,8 +312,6 @@ public class MypageController {
 		likeList.setLikeListNo(marketNo);
 		likeList.setLikeType("market");
 		likeList.setLikeUserId(userId);
-		
-		log.info(likeList);
 		
 		mypageService.deleteLikeMarket(likeList);
 		mypageService.updateMarketLikeCount(marketNo);
@@ -365,7 +362,6 @@ public class MypageController {
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		} else {
-			log.info(delArr);
 			int cnt = mypageService.deleteMyReceiveMessage(delArr);
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");
@@ -381,7 +377,6 @@ public class MypageController {
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		} else {
-			log.info(delArr);
 			int cnt = mypageService.deleteMySendMessage(delArr);
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");
@@ -393,11 +388,8 @@ public class MypageController {
 	
 	@PostMapping("/message/sending")
 	public String messageSend(MessageDto message, HttpSession session, HttpServletRequest request, @RequestParam("changeMsgNo") int changeNo) {
-		String userId = (String) session.getAttribute("sessionUserId");
-		int result = mypageService.sendMessage(message);
-		int res = mypageService.checkReceivedMsg(changeNo);
-		
-		
+		mypageService.sendMessage(message);
+		mypageService.checkReceivedMsg(changeNo);
 		return "redirect:/mypage/message/test";
 	}
 	
@@ -424,7 +416,7 @@ public class MypageController {
 			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			JSONObject jsonObject = new JSONObject();
 			if(passwordEncoder.matches(user.getUserPassword(), chkPwd.getUserPassword())) {
-				int cnt = mypageService.userWithdrawal(user);
+				mypageService.userWithdrawal(user);
 				session.removeAttribute("sessionUserId");
 				jsonObject.put("message", "회원탈퇴하셨습니다");
 				jsonObject.put("status", "success");
@@ -432,7 +424,6 @@ public class MypageController {
 				jsonObject.put("message", "비밀번호를 확인해주세요");
 				jsonObject.put("status", "fail");
 			}
-			
 			String json = jsonObject.toString();
 			
 			return json;

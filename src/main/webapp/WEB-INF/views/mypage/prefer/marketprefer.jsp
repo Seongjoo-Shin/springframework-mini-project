@@ -69,7 +69,6 @@
                      	</div>
                      </c:if>
                     </div>
-                    
                     <div class="row mb-5">
                         <div class="col-12">
                             <div class="row  d-flex justify-content-center">

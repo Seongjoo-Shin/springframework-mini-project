@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <script>
-    	
-    	var msgForm;
-    	
 	    function selectAll(selectAll)  {
 	        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 	        

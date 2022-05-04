@@ -81,7 +81,6 @@
                                 <th>수정</th>
                                 <td><input type="checkbox" onclick="selectAll(this)"></td>
                             </tr>
-                            <form action="" id="frm" name="frm" method="post">
                             <c:forEach items="${boards}" var="board" varStatus="status">
                             	<tr>
                             		<td class="text-center bg-light"><span>${board.freeNo}</span></td>
@@ -91,7 +90,6 @@
 	                                <td class="text-center"><input type="checkbox" class="delete" name="freeNo" class="delete_box" id="${board.freeNo}"></td>
                             	</tr>
                             </c:forEach>
-                            </form>
                             <c:if test="${total eq 0 }">
                             	<tr>
                             		<td colspan="5" class="text-center"><h5>작성한 게시물이 없습니다.</h5></td>

@@ -23,7 +23,7 @@
 	}
 	
 	function fn_sales(marketNo){
-		swal("판매완료하시겠습니까?", {
+		swal("판매를 완료하시겠습니까?", {
 			dangerMode: true,
 			buttons: true,
 		}).then((result) => {
@@ -49,8 +49,7 @@
 			<div class="col-2">
 				<div class="p-5 justify-content-center">
 					<div class="mt-5">
-						<a href="/mypage/modify" class="btn btn-outline-dark w-100 p-2">내
-							정보 수정</a>
+						<a href="/mypage/modify" class="btn btn-outline-dark w-100 p-2">내정보 수정</a>
 					</div>
 					<div class="mt-2">
 						<a href="/mypage/myboard/board"
