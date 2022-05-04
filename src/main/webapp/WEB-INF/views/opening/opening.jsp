@@ -22,12 +22,11 @@
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
     	<div class="modal-content bg-light">
-    	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" class="float-right mr-1" style="z-index:-123;">&times;</span>
-        </button>
-    	<h3 class="text-center m-2 bg-light">로드뷰 보기</h3>
-    		<div id="pano" style="width: 99%; height: 490px; border-radius: 5px; margin:0 auto;" class="text-center">
-			</div>
+	    	<button type="button" class="close inline-block" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true" class="float-right mr-1" style="z-index:-123;">&times;</span>
+	        </button>
+    		<h3 class="text-center mb-3 bg-light">로드뷰 보기</h3>
+    		<div id="pano" style="width: 99%; height: 490px; border-radius: 5px; margin:0 auto;" class="text-center"></div>
     	</div>
   	</div>
 </div>
@@ -154,7 +153,7 @@
 	                                			}
 	                                	 	});
 	                                	 	infoWindow = new naver.maps.InfoWindow({
-	                                            content: '<form method="get" action="/take/list"><div class="p-2 gotoTake" style="width:200px;"><div class="text-center w-100"><input type="hidden" value="' + positions[i].lat + '" name="latitude"/><input type="hidden" value="' + positions[i].lng+'" name="longitude"/><input type="submit" class="btn btn-sm btn-outline-dark w-100" value="주변매물 보러가기" /></div></div></form>',
+	                                            content: '<form method="get" action="/take/list"><div class="p-2 gotoTake" style="width:200px;"><div class="text-center w-100"><input type="hidden" value="' + positions[i].lat + '" name="latitude"/><input type="hidden" value="' + positions[i].lng+'" name="longitude"/><input type="submit" class="btn btn-sm btn-outline-dark w-100" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none;" value="주변매물 보러가기" /></div></div></form>',
 												
 	                                	 	});
 	                                	 	markers.push(marker);
@@ -274,7 +273,7 @@
 												html += '    <span>편의시설 - ' + data.keyword8 + '</span><br>';
 											}
 											html += '<div class="mt-2"><sapn>주변시설 - '+data.current_use+'</span></div>';
-											html += '<div class="mt-3"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" class="btn btn-outline-dark" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
+											html += '<div class="mt-4"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none;" class="btn text-center" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
 											html += '</div>';
 											document.getElementById("msgBox").innerHTML = html;	
 										}, 100)

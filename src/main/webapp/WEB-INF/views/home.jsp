@@ -68,7 +68,7 @@
 			          <c:if test="${freeboards.size() > 0}">
 			          <c:forEach var="freeboard" items="${freeboards}">
    			          	<tr>
-			          		<td><a class="text-dark" href="/community/market/view?freeNo=${freeboard.freeNo}" style="font-size:20px;">${freeboard.freeTitle }</a></td>
+			          		<td><a class="text-dark" href="/community/board/boardDetail?freeNo=${freeboard.freeNo}" style="font-size:20px;">${freeboard.freeTitle }</a></td>
 			          		<td><small class="ml-3"><fmt:formatDate value="${freeboard.freeRegistDate}" pattern="yyyy-MM-dd"/></small></td>
 			          	</tr>
 			          </c:forEach>
@@ -96,7 +96,7 @@
 			          <c:if test="${marketboards.size() > 0}">
 			          <c:forEach var="marketboard" items="${marketboards}">
 			          	<tr>
-			          		<td><a class="text-dark" href="/community/market/view?marketNo=${marketboard.marketNo}" style="font-size:20px;">${fn:substring(marketboard.marketTitle,0, 15)}</a></td>
+			          		<td><a class="text-dark" href="/community/market/marketDetail?marketNo=${marketboard.marketNo}" style="font-size:20px;">${fn:substring(marketboard.marketTitle,0, 15)}</a></td>
 			          		<td><small class="ml-3"><fmt:formatDate value="${marketboard.marketRegistDate}" pattern="yyyy-MM-dd"/></small></td>
 			          	</tr>
 			          </c:forEach>

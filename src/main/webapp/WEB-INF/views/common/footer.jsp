@@ -11,9 +11,9 @@
             </div>
             <div class="col-4 mt-auto p-1" >
                 <div style="float:right;">
-                    <img class="border rounded p-2" src="${pageContext.request.contextPath}/resources/images/kosa.png" width="100px"/>
-                    <img class="border rounded p-3" src="${pageContext.request.contextPath}/resources/images/osstem_ci.png" width="100px"/>
-                    <div class="font-weight-bold ml-5 p-2" style="color: rgb(88, 90, 95);">Project Github<img src="${pageContext.request.contextPath}/resources/images/gitLogo.png" width="30px"/></div>
+                    <a href="https://www.sw.or.kr/site/sw/main.do"><img class="border rounded p-2" src="${pageContext.request.contextPath}/resources/images/kosa.png" width="100px"/></a>
+                    <a href="https://www.osstem.com/main/index.do"><img class="border rounded p-3" src="${pageContext.request.contextPath}/resources/images/osstem_ci.png" width="100px"/></a>
+                    <div class="font-weight-bold ml-5 p-2" style="color: rgb(88, 90, 95);"><a href="https://github.com/sumsum531/springframework-mini-project" style="color: black; text-decoration:none;">Project Github<img src="${pageContext.request.contextPath}/resources/images/gitLogo.png" width="30px"/></a></div>
                 </div>
             </div>
         </div>
