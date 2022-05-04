@@ -179,7 +179,11 @@ public class MypageService {
 		return mypageDao.updateMarketLikeCount(marketNo);
 	}
 
-	public List<MarketFileDto> selectImageFileByMarketNo(String marketNo) {
+	public List<MarketFileDto> selectImageFileByMarketNo(int marketNo) {
 		return mypageDao.selectImageFileByMarketNo(marketNo);
+	}
+
+	public int changeSalesStatus(int marketNo) {
+		return mypageDao.updateSalesYN(marketNo);
 	}
 }

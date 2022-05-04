@@ -40,24 +40,25 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class MypageController {
 	
+	// MypageService 객체 주입
 	@Resource
 	private MypageService mypageService;
 	
+	// modify 매핑
 	@RequestMapping("/modify")
 	public String modify(HttpSession session, Model model) {
-		if(session.getAttribute("sessionUserId") == null) {
-			return "redirect:/index/loginForm";
+		if(session.getAttribute("sessionUserId") == null) { // sessionUserId에 저장되어있는 값이 없다면
+			return "redirect:/index/loginForm"; // index/loginFom으로 redirect 
 		} else {
-			String userId = (String) session.getAttribute("sessionUserId");
-			UserDto user = mypageService.getUser(userId);
-			// user가 검색되지 않는 경우 처리
-			model.addAttribute("user", user);
-			return "/mypage/modify";	
+			String userId = (String) session.getAttribute("sessionUserId"); // sessionUserId에 값을 userId에 저장
+			UserDto user = mypageService.getUser(userId); // userId를 통해 db에 저장되어있는 유저 정보를 얻어온다
+			model.addAttribute("user", user); // 검색된 유저정보를 model에 담는다
+			return "/mypage/modify"; // mypage/modify로 리턴
 		}
 	}
 	// 비밀번호 수정
-	@PostMapping(value="/updatepassword", produces="application/json; charset=UTF-8")
-	@ResponseBody
+	@PostMapping(value="/updatepassword", produces="application/json; charset=UTF-8") // json형태로 리턴해주기 위해 produces를 설정
+	@ResponseBody // json형태로 리턴해주기 위해 ResponseBody어노테이션 작성
 	public String updatePassword(HttpSession session, UserDto user, Model model, HttpServletRequest request) {
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
@@ -65,15 +66,17 @@ public class MypageController {
 			String userId = (String) session.getAttribute("sessionUserId");
 			UserDto dbUser = mypageService.getUser(userId);
 			
+			// ajax의 data로 넘어온 현재 패스워드와, 새롭게 바뀔 패스워드를 pwd, newpwd로 저장
 			String pwd = request.getParameter("pwd");
 			String newpwd = request.getParameter("newPwd");
 			
 			JSONObject jsonObject = new JSONObject();
 			
+			// 패스워드 인코더 사용
 			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-			if(passwordEncoder.matches(pwd, dbUser.getUserPassword())) {
-				dbUser.setUserPassword(passwordEncoder.encode(newpwd));
-				int cnt = mypageService.changePassword(dbUser);
+			if(passwordEncoder.matches(pwd, dbUser.getUserPassword())) { // ajax로 넘어온 비밀번호와, db에 저장되어 있는 비밀번호가 일치한다면
+				dbUser.setUserPassword(passwordEncoder.encode(newpwd)); // 새로운 비밀번호를 패스워드 인코딩하여 
+				int cnt = mypageService.changePassword(dbUser); // 비밀번호를 변경한다
 				jsonObject.put("message", "비밀번호를 변경하였습니다.");
 			} else {
 				jsonObject.put("message", "비밀번호가 일치하지 않습니다.");
@@ -91,11 +94,11 @@ public class MypageController {
 			return "redirect:/index/loginForm";
 		} else {
 			String userId = (String) session.getAttribute("sessionUserId");
-			int totalCnt = mypageService.getTotalFreeboardCount(userId);
-			PagerDto pager = new PagerDto(10, 10, totalCnt, pageNo);
+			int totalCnt = mypageService.getTotalFreeboardCount(userId); // userId로 작성된 자유게시판 게시물의 총 개수를 totalCnt에 저장
+			PagerDto pager = new PagerDto(10, 10, totalCnt, pageNo); // 페이징 처리를위한 pager 설정
 			pager.setUserId(userId);
-			model.addAttribute("pager", pager);
-			List<FreeBoardDto> boards = mypageService.getMyFreeBoardList(pager);
+			model.addAttribute("pager", pager); // pager를 모델에 담는다
+			List<FreeBoardDto> boards = mypageService.getMyFreeBoardList(pager); // pager에 저장된 정보를 바탕으로 자유게시판 게시물을 가져와 List에 담는다
 			model.addAttribute("total", totalCnt);
 			model.addAttribute("boards", boards);
 			return "/mypage/myboard/board";
@@ -105,10 +108,11 @@ public class MypageController {
 	@PostMapping(value="/myboard/delete", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String myboardDelete(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		// 삭제할 게시물의 게시물 번호를 delArr List로 넘겨받는다
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		} else {
-			int cnt = mypageService.deleteMyPosting(delArr);
+			int cnt = mypageService.deleteMyPosting(delArr); // List를 통째로 Service로 넘겨 처리한다
 			JSONObject jsonObject = new JSONObject();
 			if(cnt > 0) {
 				jsonObject.put("message", cnt + "개를 삭제하였습니다.");	
@@ -117,7 +121,6 @@ public class MypageController {
 			}
 			
 			String json = jsonObject.toString();
-			
 			return json;
 		}
 	}
@@ -199,14 +202,27 @@ public class MypageController {
 	}
 
 	@RequestMapping("/getMarketImage")
-	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, String marketNo, String img) throws IOException {
+	public void getMarketImage(HttpServletRequest request, HttpServletResponse response, int marketNo) throws IOException {
 		List<MarketFileDto> files = mypageService.selectImageFileByMarketNo(marketNo);
-    	int num = Integer.parseInt(img);
 		byte[] temp = files.get(0).getImageFileData();
 		InputStream is = new ByteArrayInputStream(temp);
-		IOUtils.copy(is, res.getOutputStream());
+		IOUtils.copy(is, response.getOutputStream());
 	}
 	
+	@PostMapping(value="/mymarket/saleComplete", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String saleComplete(int marketNo) {
+		
+		int cnt = mypageService.changeSalesStatus(marketNo);
+		JSONObject jsonObject = new JSONObject();
+		if(cnt > 0) {
+			jsonObject.put("message", "판매완료");
+		} else {
+			jsonObject.put("message", "데이터베이스 문제");
+		}
+		String json = jsonObject.toString();
+		return json;
+	}
 	// ------------------------------- 찜목록 인수 ---------------------------------------
 	@RequestMapping("/prefer/buildingprefer")
 	public String buildingprefer(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, Model model) {
@@ -270,14 +286,23 @@ public class MypageController {
 	
 	// ------------------------------- 찜목록 거래---------------------------------------
 	@RequestMapping("/prefer/marketprefer")
-	public String marketprefer(HttpSession session) {
+	public String marketprefer(HttpSession session, Model model, @RequestParam(defaultValue = "1") int pageNo) {
 		log.info("실행");
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
-		} 
-		return "/mypage/prefer/marketprefer";
+		} else {
+			String userId = (String) session.getAttribute("sessionUserId");
+			int totalCnt = mypageService.getLikeMarketCnt(userId);
+			PagerDto pager = new PagerDto(8, 10, totalCnt, pageNo);
+			pager.setUserId(userId);
+			model.addAttribute("pager", pager);
+			List<MarketBoardDto> markets = mypageService.getLikeMarket(pager);
+			model.addAttribute("total", totalCnt);
+			model.addAttribute("markets", markets);
+			return "/mypage/prefer/marketprefer";			
+		}
 	}
-	
+	// ------------------------------
 	@PostMapping("/deleteLikeMarket")
 	public String deleteLikeMarket(HttpServletRequest request, HttpSession session) {
 		
@@ -395,19 +420,15 @@ public class MypageController {
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		} else {
-			log.info(user);
 			UserDto chkPwd = mypageService.getPassword(user.getUserId());
 			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-			log.info("2222");
 			JSONObject jsonObject = new JSONObject();
 			if(passwordEncoder.matches(user.getUserPassword(), chkPwd.getUserPassword())) {
-				log.info("1234");
 				int cnt = mypageService.userWithdrawal(user);
 				session.removeAttribute("sessionUserId");
 				jsonObject.put("message", "회원탈퇴하셨습니다");
 				jsonObject.put("status", "success");
 			} else {
-				log.info("4321");
 				jsonObject.put("message", "비밀번호를 확인해주세요");
 				jsonObject.put("status", "fail");
 			}

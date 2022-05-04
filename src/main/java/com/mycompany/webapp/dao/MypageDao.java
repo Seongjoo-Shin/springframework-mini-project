@@ -33,6 +33,7 @@ public interface MypageDao {
 	public List<MarketBoardDto> selectMarketBoardList(PagerDto pager); // 본인이 작성항 거래게시판 검색
 	public int selectAllMarketBoard(String userId);
 	public int deleteYnMyMarket(int marketNo);
+	public int updateSalesYN(int marketNo);
 	// 인수/매물
 	public List<BuildingDto> selectBuildingList(PagerDto pager); // 본인이 작성한 공지사항 게시물 검색
 	public int selectAllBuilding(String userId);
@@ -63,7 +64,7 @@ public interface MypageDao {
 
 	public List<MarketBoardDto> selectLikeListWithMarket(PagerDto pager);
 	public int selectLikeMarketCnt(String userId);
-	public List<MarketFileDto> selectImageFileByMarketNo(String marketNo);
+	public List<MarketFileDto> selectImageFileByMarketNo(int marketNo);
 	public int deleteLikeMarket(LikeListDto likeList);
 	public int updateMarketLikeCount(int marketNo);
 	
@@ -72,6 +73,7 @@ public interface MypageDao {
 	
 	// 회원 탈퇴
 	public int userWithdrawal(UserDto user);
+
 
 	
 

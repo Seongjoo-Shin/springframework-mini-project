@@ -2,13 +2,20 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <script>
 	function fn_delete(marketNo){
-		$.ajax({
-			url: '/mypage/deleteLikeMarket',
-			data: {'marketNo': marketNo},
-			type: 'POST',
-		}).done((data) => {
-			window.reload();
-		}).fail((data) =>{
+		swal("찜목록에서 삭제하시겠습니까?", {
+			dangerMode: true,
+			buttons: true,
+		}).then((result) => {
+			if(result == true){
+				$.ajax({
+					url: '/mypage/deleteLikeMarket',
+					data: {'marketNo': marketNo},
+					type: 'POST',
+				}).done((data) => {
+				}).fail((data) =>{
+				});
+				location.reload();
+			}
 			
 		});
 	}
@@ -37,13 +44,14 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="row">
                     <c:forEach var="market" items="${markets}">
                     	<div class="col-3 float-left mb-5">
 	                        <div class="card">
 	                            <div class="card-body">
-	                                <img class="border rounded" src="/mypage/getMarketImage?marketNo=${market.marketNo}&type=nomal&img=0" width="100%"/>
-	                                <div class="information mr-3">
-	                                    <p>${market.marketTitle }</p>
+	                                <img class="border rounded" src="/mypage/getMarketImage?marketNo=${market.marketNo}" width="250px" height="200px"/>
+	                                <div class="information">
+	                                    <a class="text-dark" href="/community/market/marketDetail?marketNo=${market.marketNo}&from=mypage">${market.marketTitle }</a><br>
 	                                    <span>${market.marketWriter }</span><br>
 	                                    <div class="float-right"><a href="#" onclick="fn_delete('${market.marketNo}');"><img src="/resources/images/like.png" /></a></div>
 	                                    <span>${market.marketPrice}</span><br>
@@ -53,12 +61,13 @@
 	                        </div>
 	                    </div>
                     </c:forEach>
+                    </div>
                     
-                    <div class="row">
+                    <div class="row mb-5">
                         <div class="col-12">
                             <div class="row  d-flex justify-content-center">
                                 <c:if test="${total > 0}">
-	                            <ul class="pagination justify-content-center mb-0">
+	                            <ul class="pagination justify-content-center mb-5">
 					               	<li class="page-item">
 										<a class="page-link" href="/mypage/prefer/marketprefer?pageNo=1">First</a>
 									</li>

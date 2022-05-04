@@ -11,29 +11,36 @@
         
         function fn_checkedDel(){
         	var cnt = $("input[name='buildingNo']:checked").length;
-        	console.log(cnt);
         	
-        	var arr = new Array();
-        	$("input[name='buildingNo']:checked").each(function(){
-        		arr.push($(this).attr('id'));
-        	});
-        	if(cnt == 0){
-				swal("선택된 게시물이 없습니다.");
-        	} else {
-        		console.log(arr);
-        		$.ajax({
-        			type: 'POST',
-        			url: '/mypage/mybuilding/delete',
-        			dataType: 'json',
-        			data: {delArr: arr},
-        		}).done((data) => {
-        			swal(data.message).then(() => {
-    					location.reload();	
-    				});
-        		}).fail((data) => {
-        		});
-        	}
-        	location.reload();
+        	swal(cnt + "개의 게시물을 삭제하시겠습니까?", {
+    			dangerMode: true,
+    			buttons: true,
+    		}).then((result) => {
+    			if(result == true){
+    				var arr = new Array();
+    				$("input[name='buildingNo']:checked").each(function(){
+    	        		arr.push($(this).attr('id'));
+    	        	});
+                	if(cnt == 0){
+        				swal("선택된 게시물이 없습니다.");
+                	} else {
+                		$.ajax({
+                			type: 'POST',
+                			url: '/mypage/mybuilding/delete',
+                			dataType: 'json',
+                			data: {delArr: arr},
+                		}).done((data) => {
+                			swal(data.message).then(() => {
+            					location.reload();	
+            				});
+                		}).fail((data) => {
+                		});
+                	}
+    			} else {
+    				console.log("here");
+    				 $("input[name='buildingNo']:checked").prop("checked", false);
+    			}
+    		});
         }
     </script>
     <section style="flex-grow:1;">
@@ -83,8 +90,8 @@
 	                                <td><a href="/take/view?buildingNo=${building.buildingNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${building.buildingName}</a></td>
 	                                <td class="text-center">${building.buildingTradeInfo }</td>
 	                                <td class="text-center">${building.buildingSupplyArea}</td>
-	                                <td class="text-center">${building.buildingRegistDate}</td>
-	                                <td><button class="btn btn-sm btn-outline-dark">수정</button></td>
+	                                <td class="text-center"><fmt:formatDate value="${building.buildingRegistDate}" pattern="yyyy-MM-dd"/></td>
+	                                <td><a class="btn btn-sm btn-outline-dark" href="/take/enroll?type=updateEnroll&buildingNo=${building.buildingNo}">수정</a></td>
 	                                <td class="text-center"><input type="checkbox" class="delete" name="buildingNo" class="delete_box" id="${building.buildingNo}"></td>
 	                            </tr>
 							</c:forEach>
@@ -99,7 +106,7 @@
                     <div class="row float-right">
                         <div class="mr-3">
                         <c:if test="${total > 0}">
-                            <input type="button" value="삭제" class="float-right"/>
+                            <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-danger" onclick="fn_checkedDel();"/>
                         </c:if>
                         </div>
                     </div>

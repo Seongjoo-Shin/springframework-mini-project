@@ -192,11 +192,9 @@
                                     var keyword = new Object();
                                     var jsonObject;
                                     document.querySelector("#msgBox").innerHTML = "";
-                                    
                                     for(var i=0; i<elements.length; i++){
                                     	keyword["value"+i] = elements[i].id;
                                     	jsonObject = JSON.stringify(keyword);
-                                    	//document.querySelector("#msgBox").innerHTML += "<li class='ml-5'>" + elements[i].innerHTML +"</li>";
                                     } 
                                 	callAjax(jsonObject);
                                 }
@@ -209,33 +207,21 @@
                                 		data: JSON.parse(json),
                                 	}).done((data) => {
                                 		positions = [];
-                                		
                                 		for(var i=0; i<markers.length; i++){
                                 			markers[i].setMap(null);
                                 			infoWindows[i].setMap(null);
                                 		}
-										
 										setTimeout(() => {
 											for(var i=0; i<data.keywordsLength; i++){
 	                                			positions.push(
 	                                				{
 	                                					keywordNo: data.keywords[i].keyword_no,
-	                                					location: juso[i],
 	                                					lat: data.keywords[i].latitude, 
 	                                					lng: data.keywords[i].longitude,
-	                                					keyword1: data.keywords[i].keyword1,
-	                                					keyword2: data.keywords[i].keyword2,
-	                                					keyword3: data.keywords[i].keyword3,
-	                                					keyword4: data.keywords[i].keyword4,
-	                                					keyword5: data.keywords[i].keyword5,
-	                                					keyword6: data.keywords[i].keyword6,
-	                                					keyword7: data.keywords[i].keyword7,
-	                                					keyword8: data.keywords[i].keyword8,
 	                                				},
 	                                			);
 	                                		}	
 										}, 1000);
-                            			
                                 		initMap();
                                 	}).fail((data) => {
                                 		console.log(data);
@@ -258,7 +244,6 @@
                                             result = response.result; // 검색 결과의 컨테이너
                                             items = result.items.address; // 검색 결과의 배열
                                             addr = result.items[1].address;
-                                            console.log(result);
                                         });
 										setTimeout(() => {
 											var html = '';
@@ -289,7 +274,7 @@
 												html += '    <span>편의시설 - ' + data.keyword8 + '</span><br>';
 											}
 											html += '<div class="mt-2"><sapn>주변시설 - '+data.current_use+'</span></div>';
-											html += '<div class="mt-3"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
+											html += '<div class="mt-3"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" class="btn btn-outline-dark" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
 											html += '</div>';
 											document.getElementById("msgBox").innerHTML = html;	
 										}, 100)
@@ -302,7 +287,6 @@
 									
 									var pano = new naver.maps.Panorama(document.getElementById("pano"), {
 									    size: new naver.maps.Size(790, 600),
-									    // panoId: "GeuHvj1YMFW56xcrravtcg==",
 									    position: new naver.maps.LatLng(lat, lng),
 									    
 									});

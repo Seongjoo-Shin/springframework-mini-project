@@ -22,6 +22,26 @@
 		});
 	}
 	
+	function fn_sales(marketNo){
+		swal("판매완료하시겠습니까?", {
+			dangerMode: true,
+			buttons: true,
+		}).then((result) => {
+			if(result == true){
+				$.ajax({
+					type: 'POST',
+					url: '/mypage/mymarket/saleComplete',
+					dataType: 'json',
+					data: {marketNo},
+				}).done((data) => {
+					swal(data.message).then(() => {
+						location.reload();	
+					});
+				}).fail((data) => {
+				});		
+			}
+		});
+	}
 </script>
 <section style="flex-grow:1;">
 	<div class="container-fluid h-100 mt-5">
@@ -58,10 +78,10 @@
 					</ul>
 				</div>
 				<c:forEach var="market" items="${markets}">
-					<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important; width:300px;">
+					<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important; height: 390px; width:300px;">
 						<div class="card-body">
-							<img src="http://via.placeholder.com/250X200"/>
-							<%-- <a href="/community/market/marketDetail?marketNo=${market.marketNo}&from=mypage"><img src="" width="200px" height="250px"/></a> --%>
+							<!-- <img src="http://via.placeholder.com/250X200"/> -->
+							<a href="/community/market/marketDetail?marketNo=${market.marketNo}&from=mypage"><img src="/mypage/getMarketImage?marketNo=${market.marketNo}" width="250px" height="200px"/></a>
 						</div>
 						<div class="ml-3 mb-2">
 							<div class="button float-right mr-2">
@@ -72,13 +92,29 @@
 									<input type="button" onclick="fn_checkedDel('${market.marketNo}');" class="btn btn-outline-dark ml-3 mb-2" value="삭제"/>
 								</div>
 								<div>
-									<button class="btn btn-outline-dark ml-3 mb-2">거래완료</button>
+								<c:if test="${market.marketSaleYN eq 1}">
+									<button class="btn btn-outline-dark ml-3 mb-2" onclick="fn_sales('${market.marketNo}')">거래완료</button>
+								</c:if>
+								<c:if test="${market.marketSaleYN ne 1}">
+									<span>거래가 완료된 상품</span>
+								</c:if>
 								</div>
 							</div>
 							<div class="float-left">
-								<p>${market.marketTitle}</p><br>
+								<a class="text-dark" href="/community/market/marketDetail?marketNo=${market.marketNo}&from=mypage">${market.marketTitle}</a><br>
 								<span><img src="${pageContext.request.contextPath}/resources/images/like.png"/>&nbsp;&nbsp;${market.marketLikeCount }</span><br>
-								<span>${market.marketCategory}</span><br> 
+								<c:if test="${market.marketCategory eq '1'}">
+									<span>장비</span><br> 
+								</c:if>
+								<c:if test="${market.marketCategory eq '2'}">
+									<span>가구</span><br>
+								</c:if>
+								<c:if test="${market.marketCategory eq '3'}">
+									<span>소모품</span><br>
+								</c:if>
+								<c:if test="${market.marketCategory eq '4'}">
+									<span>기타</span><br>
+								</c:if>
 								<span>${market.marketPrice}</span><br> 
 								<span><fmt:formatDate value="${market.marketRegistDate}" pattern="yyyy-MM-dd"/></span>
 							</div>

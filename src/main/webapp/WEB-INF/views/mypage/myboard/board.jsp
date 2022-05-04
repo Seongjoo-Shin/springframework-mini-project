@@ -84,7 +84,7 @@
                             <form action="" id="frm" name="frm" method="post">
                             <c:forEach items="${boards}" var="board" varStatus="status">
                             	<tr>
-                            		<td class="text-center bg-light"><span>${board.rnum}</span></td>
+                            		<td class="text-center bg-light"><span>${board.freeNo}</span></td>
 	                                <td><a href="/community/board/boardDetail?freeNo=${board.freeNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${board.freeTitle}</a></td>
 	                                <td class="text-center"><fmt:formatDate value="${board.freeModifyDate}" pattern="yyyy-MM-dd"/></td>
 	                                <td class="text-center"><a href="/community/board/update?freeNo=${board.freeNo}&from=mypage" class="btn btn-sm btn-outline-dark">수정</a></td>

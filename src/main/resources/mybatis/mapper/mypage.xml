@@ -37,6 +37,7 @@
 	    <result property="marketHitCount" column="market_hit_count"/>
 	    <result property="marketPrice" column="market_price"/>
 	    <result property="marketLikeCount" column="market_like_count"/>
+	    <result property="marketSaleYN" column="market_sale_yn"/>
 	</resultMap>
 	
 	<resultMap id="buildingMap" type="building">
@@ -181,11 +182,11 @@
 	
 	<select id="selectMarketBoardList" parameterType="pager" resultMap="marketboardMap">
 		<![CDATA[
-		SELECT rnum, market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		SELECT rnum, market_no, market_title, market_content, market_writer, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn
 		FROM (
-		  SELECT ROWNUM as rnum, market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		  SELECT ROWNUM as rnum, market_no, market_title, market_content, market_writer, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn
 		  FROM (
-		    SELECT market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		    SELECT market_no, market_title, market_content, market_writer, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn
 		    FROM marketboards
 		    WHERE market_writer = #{userId} and market_use_yn = 1
 		    ORDER BY market_no desc
@@ -202,6 +203,15 @@
 		SET 
 		    MARKET_USE_YN = 0   
 		WHERE    
+			market_no = #{marketNo}
+	</update>
+	
+	<update id="updateSalesYN" parameterType="Integer">
+		UPDATE
+			marketboards
+		SET
+			market_sale_yn = 0
+		WHERE
 			market_no = #{marketNo}
 	</update>
 	
@@ -365,7 +375,7 @@
 		  FROM (
 		    SELECT building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
 		    FROM buildings b, likelists l
-		    WHERE b.building_no = l.like_list_no and l.like_user_id = #{userId}
+		    WHERE b.building_no = l.like_list_no and l.like_user_id = #{userId} and l.like_type = 'building'
 		    ORDER BY b.building_no desc
 		  )
 		  WHERE ROWNUM <= #{endRowNo}
@@ -405,13 +415,13 @@
 	
 	<select id="selectLikeListWithMarket" parameterType="pager" resultMap="marketboardMap">
 		<![CDATA[
-		SELECT rnum, market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		SELECT rnum, market_no, market_title, market_content, market_writer, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn
 		FROM (
-		  SELECT ROWNUM as rnum, market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		  SELECT ROWNUM as rnum, market_no, market_title, market_content, market_writer, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn
 		  FROM (
-		    SELECT market_no, market_title, market_content, market_writer, market_file_seq, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count
+		    SELECT market_no, market_title, market_content, market_writer, market_category, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn
 		    FROM marketboards m, likelists l
-		    WHERE m.market_no = l.like_list_no and l.like_user_id = #{userId}
+		    WHERE m.market_no = l.like_list_no and l.like_user_id = #{userId} and l.like_type = 'market'
 		    ORDER BY m.market_no desc
 		  )
 		  WHERE ROWNUM <= #{endRowNo}
@@ -420,7 +430,7 @@
 		]]>
 	</select>
 	
-	<select id="selectImageFileByMarketNo" parameterType="String" resultMap="marketFileDtoResult">
+	<select id="selectImageFileByMarketNo" parameterType="int" resultMap="marketFileDtoResult">
 		select * from marketfiles
 		where market_no = #{marketNo}
 	</select>
