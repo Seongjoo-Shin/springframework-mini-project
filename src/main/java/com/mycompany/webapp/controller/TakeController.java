@@ -134,10 +134,6 @@ public class TakeController {
 	  
 	  //매물 정보
 	  BuildingDto buildingDetailBuildingDto = takeService.selectBuildingByBuildingNo(buildingNo);
-	  String temp = buildingDetailBuildingDto.getBuildingDetailContent();
-	  temp = temp.replace("\r\n", "<br>");
-	  buildingDetailBuildingDto.setBuildingDetailContent(temp);
-	  log.info(buildingDetailBuildingDto);
 	  
 	  //해당 매물의 장비들 가져오기
 	  List<EquipmentDto> equipDto = takeService.selectEquipmentByBuildingNo(buildingNo);
