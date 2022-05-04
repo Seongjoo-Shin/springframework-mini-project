@@ -11,23 +11,20 @@
             })
         }
 
-        function openMsgForm(){
-            var url = "<%=request.getContextPath() %>/message";
+        function openMsgForm(marketWriter){
+            var url = "<%=request.getContextPath() %>/message?receiver="+marketWriter;
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);
         }
         
         $(document).ready(function() {
         	showLikeCount();
-        	console.log("showLikeCount() 실행되니??")
         });
     </script>
     <style>
 		.top-content { width: 100%;}
-
 		.top-content .carousel-control-prev { left: -100px; border-bottom: 0; font-size: 40px; color: #444; }
 		.top-content .carousel-control-next { right: -100px; border-bottom: 0; font-size: 40px; color: #444; }
-		
 		.top-content .carousel-caption .carousel-caption-description { color: #fff; color: rgba(255, 255, 255, 0.8); }
     </style>
     <section>
@@ -39,17 +36,15 @@
                 <div class="col-2">
                 </div>
                 <div class="col-8 mt-5">
+                	<div class="h5 ml-3 mr-3 mt-3">
+	                    <span>글쓴이 : </span><span>${marketBoardDto.userDto.userNickname}</span>
+	                    <a class="btn btn-outline-dark ml-2" onclick="openMsgForm('${marketBoardDto.marketWriter}')">쪽지보내기</a>
+	                    <span class="date float-right mr-3"><fmt:formatDate value="${marketBoardDto.marketRegistDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+					</div>
                     <div class="card">
-                        <div class="card-body">
-                            <div class="h4">
-                                <span>글쓴이 : </span><span>${marketBoardDto.userDto.userNickname}</span>
-                                <a class="btn btn-outline-dark ml-2" onclick="openMsgForm()">쪽지보내기</a>
-                                <span class="date float-right mr-5">
-                                	<fmt:formatDate value="${marketBoardDto.marketRegistDate}" pattern="yyyy-MM-dd"/>
-                                </span>
-                            </div>
-                            <div class="title h5 mt-5 mb-3">
-                                <span>${marketBoardDto.marketTitle}</span>
+                        <div class="card-body p-3">
+                            <div class="title mb-3">
+                                <span class="h4">${marketBoardDto.marketTitle}</span>
                             </div>							
 							<!-- Top content -->
 					        <div class="top-content px-5">
@@ -93,10 +88,12 @@
 							
 							
 							
-                            <div class="price h5 mt-4">
+                            <div class="price h5 mt-4 p-3 ml-2">
                                 <span>가격: </span> ${marketBoardDto.marketPrice} <span> 원</span>
                             </div>
-                            <div style="width:100%" class="mt-5">${marketBoardDto.marketContent}</div>
+                            <div class="p-3">
+                            	<textarea name="content" class="form-control mt-3 bg-white" style="height: 300px; resize:none" disabled>${marketBoardDto.marketContent}</textarea>	
+                            </div>
                         </div>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
