@@ -123,15 +123,17 @@ public class InteriorController {
 		} else {
 			wishList.setUserId(userId);
 			WishListDto item = wishListService.findPictureById(wishList); 
+			//위시리스트에 없는 제품일때
 			if(item == null) {
 				log.info("추가성공");
 				wishListService.addItemToWishList(wishList);
 				jsonObject.put("result", "success");
-			} else {
-				log.info("추가실패");
+			} else { //위시리스트에 있는 제품일 경우 수량바꾸기
+				log.info("이미 위시리스트에 존재");
+				item.setCount(wishList.getCount());
+				wishListService.updateItemCount(item);
 				jsonObject.put("result", "hasItem");
 			}
-			
 		}
 		
 		

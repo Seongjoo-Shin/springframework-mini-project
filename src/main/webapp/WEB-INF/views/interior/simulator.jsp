@@ -37,7 +37,7 @@
 			
 			$('#bedDetailimage').attr('src', imgName);
 			$('#bedinteriorName').text('치과베드 A타입');
-			$('#bedinteriorPrice').text('960,000');
+			$('#bedinteriorPrice').text('960000');
 			
 			$('#bed1Div').css('display','inline-block');
 		} else if(imgName == bed1CheckedImageName){
@@ -51,7 +51,7 @@
 			
 			$('#bedDetailimage').attr('src', imgName);
 			$('#bedinteriorName').text('치과베드 B타입');
-			$('#bedinteriorPrice').text('720,000');
+			$('#bedinteriorPrice').text('720000');
 			
 			$('#bed1Div').css('display','inline-block');
 		} else if(imgName == bed2CheckedImageName){
@@ -64,7 +64,7 @@
 	 		
 	 		$('#bedDetailimage').attr('src', imgName);
 			$('#bedinteriorName').text('치과베드 C타입');
-			$('#bedinteriorPrice').text('1,200,000');
+			$('#bedinteriorPrice').text('1200000');
 			
 			$('#bed1Div').css('display','inline-block');
 			
@@ -79,7 +79,7 @@
 	 		
 	 		$('#chairDetailimage').attr('src', imgName);
 			$('#chairinteriorName').text('의자 A타입');
-			$('#chairinteriorPrice').text('210,000');
+			$('#chairinteriorPrice').text('210000');
 			
 			$('#chair1Div').css('display','inline-block');
 		} else if(imgName == chair1CheckedImageName){
@@ -92,7 +92,7 @@
 	 		
 	 		$('#chairDetailimage').attr('src', imgName);
 			$('#chairinteriorName').text('의자 B타입');
-			$('#chairinteriorPrice').text('270,000');
+			$('#chairinteriorPrice').text('270000');
 			
 			$('#chair1Div').css('display','inline-block');
 		} else if(imgName == chair2CheckedImageName){
@@ -105,7 +105,7 @@
 	 		
 	 		$('#chairDetailimage').attr('src', imgName);
 			$('#chairinteriorName').text('의자 C타입');
-			$('#chairinteriorPrice').text('170,000');
+			$('#chairinteriorPrice').text('170000');
 			
 			$('#chair1Div').css('display','inline-block');
 		} else if(imgName == chair3CheckedImageName){
@@ -119,7 +119,7 @@
 	 		
 	 		$('#sofaDetailimage').attr('src', imgName);
 			$('#sofainteriorName').text('쇼파 A타입');
-			$('#sofainteriorPrice').text('240,000');
+			$('#sofainteriorPrice').text('240000');
 			
 			$('#sofa1Div').css('display','inline-block');
 		} else if(imgName == sofa1CheckedImageName){
@@ -132,7 +132,7 @@
 	 		
 	 		$('#sofaDetailimage').attr('src', imgName);
 			$('#sofainteriorName').text('쇼파 B타입');
-			$('#sofainteriorPrice').text('240,000');
+			$('#sofainteriorPrice').text('240000');
 			
 			$('#sofa1Div').css('display','inline-block');
 		} else if(imgName == sofa2CheckedImageName){
@@ -145,7 +145,7 @@
 	 		
 	 		$('#sofaDetailimage').attr('src', imgName);
 			$('#sofainteriorName').text('쇼파 C타입');
-			$('#sofainteriorPrice').text('320,000');
+			$('#sofainteriorPrice').text('320000');
 			
 			$('#sofa1Div').css('display','inline-block');
 		} else if(imgName == sofa1CheckedImageName){
@@ -155,7 +155,7 @@
 		
 	}
 	
-	function addWishList(addName, addPrice, addPictureName, nowBuildingNo){
+	function addWishList(addName, addPrice, addPictureName, nowBuildingNo, itemCount){
 		var interiorName = addName;
 		console.log(interiorName);
 		var interiorPrice = addPrice;
@@ -164,9 +164,11 @@
 		console.log(pictureName);
 		var buildingNo = nowBuildingNo;
 		console.log(buildingNo);
+		var count = itemCount;
+		console.log(count);
 		$.ajax({
 				url: "/interior/addWishList",
-				data: {interiorName,interiorPrice,pictureName, buildingNo},
+				data: {interiorName,interiorPrice,pictureName, buildingNo, count},
 				method:"post"
 			})
 			.done((data)=>{
@@ -243,7 +245,8 @@
                   	   <img id ="bedDetailimage" src="" width="100%"/>
                   	   <p>제품명 : <span id="bedinteriorName"></span></p>
                   	   <p>가격 : <span id="bedinteriorPrice"></span></p>
-                  	   <button onClick="addWishList($('#bedinteriorName').text(), $('#bedinteriorPrice').text(), $('#bedDetailimage').attr('src'),${buildingNo})" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
+                  	   <input id="bedItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
+                  	   <button onClick="addWishList($('#bedinteriorName').text(), $('#bedinteriorPrice').text(), $('#bedDetailimage').attr('src'),${buildingNo}, $('#bedItemCnt').val())" class="btn btn-sm col-3 float-right" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
                     </div>
                     <h5 class="mt-2">의자</h5>
                     <li>
@@ -255,7 +258,8 @@
 	                   <img id ="chairDetailimage" src="" width="100%"/>
 	                   <p>제품명 : <span id="chairinteriorName"></span></p>
 	                   <p>가격 : <span id="chairinteriorPrice"></span></p>
-	                   <button onClick="addWishList($('#chairinteriorName').text(), $('#chairinteriorPrice').text(), $('#chairDetailimage').attr('src'),${buildingNo})" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
+	                   <input id="chairItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
+	                   <button onClick="addWishList($('#chairinteriorName').text(), $('#chairinteriorPrice').text(), $('#chairDetailimage').attr('src'),${buildingNo},$('#chairItemCnt').val())" class="btn btn-sm col-3 float-right" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
 	                </div>
                     <h5 class="mt-2">쇼파</h5>
                     <li>
@@ -267,7 +271,8 @@
                   	   <img id ="sofaDetailimage" src="" width="100%"/>
                   	   <p>제품명 : <span id="sofainteriorName"></span></p>
                   	   <p>가격 : <span id="sofainteriorPrice"></span></p>
-                  	   <button onClick="addWishList($('#sofainteriorName').text(), $('#sofainteriorPrice').text(), $('#sofaDetailimage').attr('src'),${buildingNo})" class="btn btn-sm col-3" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
+                  	   <input id="sofaItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
+                  	   <button onClick="addWishList($('#sofainteriorName').text(), $('#sofainteriorPrice').text(), $('#sofaDetailimage').attr('src'),${buildingNo},$('#sofaItemCnt').val())" class="btn btn-sm col-3 float-right" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
                     </div>
                 </ul>
             </div>
@@ -275,35 +280,82 @@
     	<hr/>
     	<c:if test="${modelId != null}">
     		<h3 class="ml-3">위시리스트</h3>
-		    <div class="row col-12 d-flex ml-1" style="overflow-y: auto; height:400px; border: 1px solid black; border-radius: 5px; display: inline-block; background-color: rgb(248,244,239);">
-		   		<c:forEach var="wishList" items="${wishLists}">
-		   			<div class="card m-3" style="width: 12rem;">
-		   			  <img src="${wishList.pictureName}" class="card-img-top" style="height:12rem;">
-					  <div class="card-body">
-					    <h5 class="card-title">제품명 : ${wishList.interiorName}</h5>
-					    <p class="card-text">가격 : ${wishList.interiorPrice}</p>
-					    <button onClick="deleteItem(${wishList.wishListNo},${buildingNo})" class="btn btn-sm" style="background-color:rgb(242, 101, 45); color: white;">삭제</button>
-					  </div>
-					</div>
-		   		</c:forEach>
-		   		<script>
-		   			function deleteItem(number,nowBuildingNo){
-		   				var wishListNo = number
-		   				var buildingNo = nowBuildingNo;
-		   				$.ajax({
-		   					url: "deleteItem",
-		   					data: {wishListNo, buildingNo},
-		   					method:"post"
-		   				})
-		   				.done((data)=>{
-		   					if(data.result==1){
-		   						$(location).attr("href","/interior/simulator?buildingNo=${buildingNo}");
-		   					}
-		   				})
-		   			}
-		   		</script>
-		    </div>
+    		<div class="row">
+    			<div class="col-8 d-flex" style="overflow-x: scroll; height:450px; border: 1px solid black; border-radius: 5px; display: inline-block; background-color: rgb(248,244,239);">
+			   		<c:forEach var="wishList" items="${wishLists}">
+			   			<li style="list-style:none;">
+				   			<div class="card m-3" style="width: 200px;">
+				   			  <img src="${wishList.pictureName}" class="card-img-top" style="height:12rem;">
+							  <div class="card-body">
+							    <h5 class="card-title">제품명 : ${wishList.interiorName}</h5>
+							    <p class="card-text">가격 : ${wishList.interiorPrice}</p> 
+							    <p class="card-text">수량 : ${wishList.count}</p>
+							    <button onClick="deleteItem(${wishList.wishListNo},${buildingNo})" class="btn btn-sm" style="background-color:rgb(242, 101, 45); color: white;">삭제</button>
+							  </div>
+							</div>
+						</li>
+			   		</c:forEach>
+			   		<script>
+			   			function deleteItem(number,nowBuildingNo){
+			   				var wishListNo = number
+			   				var buildingNo = nowBuildingNo;
+			   				$.ajax({
+			   					url: "deleteItem",
+			   					data: {wishListNo, buildingNo},
+			   					method:"post"
+			   				})
+			   				.done((data)=>{
+			   					if(data.result==1){
+			   						$(location).attr("href","/interior/simulator?buildingNo=${buildingNo}");
+			   					}
+			   				})
+			   			}
+			   		</script>
+			    </div>
+			    <div class="col-4 border" style="height:450px">
+			    	<table class="table">
+			    		<thead>
+			    			<th scope="col" style="text-align: center;">상품명</th>
+			    			<th scope="col" style="text-align: center;">가격</th>
+			    			<th scope="col" style="text-align: center;">수량</th>
+			    		</thead>
+			    		<tbody id="cage">
+			    			<c:forEach var="wishList" items="${wishLists}">
+			    				<tr>
+				    				<td style="text-align: center;">${wishList.interiorName}</th>
+				    				<td style="text-align: center;">${wishList.interiorPrice}</td>
+				    				<td style="text-align: center;">${wishList.count}</td>
+			    				</tr>
+			   				</c:forEach>
+			    		</tbody>
+			    	</table>
+			    	<div style="position:absolute;bottom:0px; width:95%;">
+			    	<div class="float-right">
+			    		<span class="float-left">합계 : </span>
+			    		<span class="float-right" id="totalResult"></span>
+			    	</div>
+			    	</div>
+			    	<script>
+			    		var total = 0;
+			    		$(document).ready(function(){
+			    			var table=document.getElementById('cage');
+			    			for(let i = 0; i<table.rows.length; i++){
+			    				var price = parseInt(table.rows[i].cells[1].innerHTML);
+			    				var count = parseInt(table.rows[i].cells[2].innerHTML);
+			    				var sum = price * count;
+			    				console.log(price);
+			    				console.log(count);
+			    				total += sum;
+			    			}
+			    			$('#totalResult').text(total);
+			    		})
+			    	</script>
+			    </div>
+    		</div>
     	</c:if>
+    	<div class="row col-12 d-flex justify-content-center">
+    		<a href="/interior/example" class="btn border mt-3">예시목록</a>
+    	</div>
     </div>
     <div class="col-2"></div>
 </section>

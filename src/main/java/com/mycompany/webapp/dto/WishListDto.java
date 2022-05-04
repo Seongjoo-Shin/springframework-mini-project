@@ -10,4 +10,5 @@ public class WishListDto {
 	private String interiorName;
 	private String interiorPrice;
 	private String pictureName;
+	private int count;
 }

@@ -38,6 +38,10 @@ public class WishListService {
 		return row;
 	}
 
+	public void updateItemCount(WishListDto item) {
+		wishListDao.updateCount(item);
+	}
+
 	
 
 }

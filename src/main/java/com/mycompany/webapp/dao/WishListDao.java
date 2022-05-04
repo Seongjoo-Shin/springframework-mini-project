@@ -15,4 +15,6 @@ public interface WishListDao {
 	public List<WishListDto> selectByUserIdAndBuildingNo(WishListDto wishlist);
 
 	public int deleteByWishListNo(WishListDto wishList);
+
+	public void updateCount(WishListDto item);
 }

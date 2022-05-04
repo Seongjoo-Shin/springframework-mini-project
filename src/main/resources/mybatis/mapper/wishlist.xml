@@ -29,8 +29,18 @@
 		</selectKey>
 		
 		insert into wishlists
-		values( #{wishListNo}, #{userId}, #{buildingNo}, #{interiorName}, #{interiorPrice}, #{pictureName})
+		values( #{wishListNo}, #{userId}, #{buildingNo}, #{interiorName}, #{interiorPrice}, #{pictureName}, #{count})
 	</insert>
+	
+	<!-- =============================================================== -->
+	<update id="updateCount">
+		update
+			wishlists
+		set
+			count=#{count}
+		where
+			user_id=#{userId} and building_no=#{buildingNo} and picture_name=#{pictureName}
+	</update>
 	
 	<!-- =============================================================== -->
 	<delete id="deleteByWishListNo" parameterType="wishlist">
