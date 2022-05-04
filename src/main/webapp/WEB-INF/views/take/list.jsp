@@ -6,7 +6,15 @@
             getLocation();
         });
 
-        var price;
+        //매매가
+        var tradePrice;
+        
+        //보증금
+        var depositPrice;
+        
+        //월세
+        var monthPrice;
+        
         var tradeInfo = "";
 
         function priceBtn() {
@@ -100,53 +108,80 @@
         }
 
         function setPriceValue(range){
-            price = range.value;
-            console.log(price);
-            if(price >= 1000 && price < 10000){
-            	console.log("냥");
-                $("#tradePriceRange").attr("step", "500");
-                $("#tradePriceText").text(range.value + "만");
-            } else if(range.value >= 10000){
-            	console.log("냥2");
-                val = price;
-                
-                console.log("val : " + val);
+        	tradePrice = range.value;
+            console.log(tradePrice);
+            if(tradePrice >= 1000 && tradePrice < 10000){
+                $("#tradePriceText").text(tradePrice + "만");
+            } else if(tradePrice >= 10000){
+                val = tradePrice;
                 val = val.replace("0", "");
                 val = val.replace("0", "");
                 val = val.replace("0", "");
 
                 val2 = val.slice(-1);
                 
-                console.log("val : "+val);
-                
                 if(val >= 100 && val < 1000){
                     val = val.slice(0, 2);
-                    console.log("100 : " + val);
                 }else if(val < 100){
                     val = val.slice(0, 1);
-                    console.log("10 : " + val);
                 }else{
                 	val = val.slice(0, 3);
-                	console.log("1000 : " + val);
                 }
-                console.log("val : "+val);
                 $("#tradePriceRange").attr("step", "1000");
                 $("#tradePriceText").text(val + "억" + val2 + "000 만");
-                // $("#priceText").text(range.value);
             }else{
-                $("#tradePriceText").text(range.value + "만");
-                //$("#tradePriceRange").attr("step", "100");
+                $("#tradePriceText").text(tradePrice + "만");
             }
         }
         
         //보증금의 range를 움직일 때 변하는 가격을 설정하기 위한 함수
         function setDepositPriceValue(range){
+        	depositPrice = range.value;
+        	
+        	if(depositPrice >= 1000 && depositPrice < 10000){
+                $("#depositPriceText").text(depositPrice + "만");
+            } else if(depositPrice >= 10000){
+            	depositPriceVal = depositPrice;
+            	depositPriceVal = depositPriceVal.replace("0", "");
+            	depositPriceVal = depositPriceVal.replace("0", "");
+            	depositPriceVal = depositPriceVal.replace("0", "");
+
+            	depositPriceVal2 = depositPriceVal.slice(-1);
+                
+                if(depositPriceVal >= 100 && depositPriceVal < 1000){
+                	depositPriceVal = depositPriceVal.slice(0, 2);
+                }else if(depositPriceVal < 100){
+                	depositPriceVal = depositPriceVal.slice(0, 1);
+                }
+                $("#depositPriceRange").attr("step", "1000");
+                $("#depositPriceText").text(depositPriceVal + "억" + depositPriceVal2 + "000 만");
+            }else{
+                $("#depositPriceText").text(depositPrice + "만");
+            }
         	
         }
         
         //월세의 range를 움직일 때 변하는 가격을 설정하기 위한 함수
         function setMonthPriceValue(range){
+        	monthPrice = range.value;
         	
+        	if(monthPrice < 10000){
+        		$("#monthPriceText").text(monthPrice + "만");
+        	}else{
+        		monthPriceVal = monthPrice;
+        		monthPriceVal = monthPriceVal.replace("0", "");
+        		monthPriceVal = monthPriceVal.replace("0", "");
+        		monthPriceVal = monthPriceVal.replace("0", "");
+
+        		monthPriceVal2 = monthPriceVal.slice(-1);
+        		
+        		console.log("m : " + monthPriceVal);
+        		console.log("m2 : " + monthPriceVal2);
+        		
+        		monthPriceVal = monthPriceVal.slice(0, 1);
+        		
+        		$("#monthPriceText").text(monthPriceVal + "억" + monthPriceVal2 + "000 만");
+        	}
         }
         
 </script>
@@ -181,15 +216,20 @@
 	                                        </div>
 	                                        <div id="leaseDropDownMenu" class="border bg-white mt-1 p-3 text-center" style="position:absolute; display: none; z-index: 2;">
 	                                            <div class="p-2" style="font-size: 20px;">
-	                                                <span>0 &nbsp;~ &nbsp;</span>
-	                                                <span id="leasePriceText"></span>
+	                                                <span>보증금 : 0 &nbsp;~ &nbsp;</span>
+	                                                <span id="depositPriceText"></span>
 	                                                <span> 원</span>
 	                                            </div>
 	                                            <div>
-	                                                보증금 <input type="range" id="depositPriceRange" value ="0" min="0" max="1000000" oninput="setValue(this)" step="100" style="width: 350px;"/>
+	                                                <input type="range" id="depositPriceRange" value ="0" min="0" max="100000" oninput="setDepositPriceValue(this)" step="1000" style="width: 350px;"/>
+	                                            </div>
+	                                            <div class="p-2" style="font-size: 20px;">
+	                                                <span>월세 : 0 &nbsp;~ &nbsp;</span>
+	                                                <span id="monthPriceText"></span>
+	                                                <span> 원</span>
 	                                            </div>
 	                                            <div>
-	                                                월세 <input type="range" id="monthPriceRange" value ="0" min="0" max="1000000" oninput="setValue(this)" step="100" style="width: 350px;"/>
+	                                                <input type="range" id="monthPriceRange" value ="0" min="0" max="10000" oninput="setMonthPriceValue(this)" step="100" style="width: 350px;"/>
 	                                            </div>
 	                                        </div>
 	                                        <div id="tradeDropDownMenu" class="border bg-white mt-1 p-3 text-center" style="position:absolute; display: none; z-index: 2;">
@@ -200,18 +240,6 @@
 	                                            </div>
 	                                            <div>
 	                                                <input type="range" id="tradePriceRange" value ="0" min="0" max="1000000" oninput="setPriceValue(this)" step="1000" style="width: 350px;"/>
-	                                                <datalist id="tickmarks">
-													<option value="1000" ></option>
-													<option value="2000"></option>
-													<option value="3000"></option>
-													<option value="4000"></option>
-													<option value="5000"></option>
-													<option value="6000"></option>
-													<option value="7000"></option>
-													<option value="8000"></option>
-													<option value="9000"></option>
-													<option value="10000"></option>
-													</datalist>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -285,6 +313,8 @@
 	    	var marker;
 	    	var curMarker;
 	    	
+	    	var areaArr = new Array();
+	    	
             let lat;
             let lon; 
             
@@ -315,7 +345,7 @@
                     scaleControl: false,
                     mapDataContorol:false,
                     location,
-                    zoom: 17
+                    zoom: 16
                 };
                 map = new naver.maps.Map('map', mapOptions); // id와 option
                 
@@ -336,7 +366,6 @@
             }
             
             function initMap(){ //처음에 병원 마커를 생성하는 함수
-            	var areaArr = new Array();
             	var num = 0;
             	<c:forEach items="${buildings}" var="buildingInfo">
             		var temp = new Object();
@@ -399,6 +428,8 @@
             //검색 버튼을 클릭하면 실행되는 함수이다.
             function searchMap(){
             	var addr = $("#searchInput").val();
+            	var bounds;
+            	
             	if(addr == ""){
             		swal({
             			text : "검색할 주소를 입력해주십시오."
@@ -424,16 +455,48 @@
                     	return;
                     }
                     var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
+                    console.log(myaddr);
                     
                     curMarker.setPosition(myaddr);
                     
                     var location = new naver.maps.LatLng(myaddr);
-                    map.panTo(location);
+
+                    map.setCenter(location);
+                    console.log(map.center);
+                    
+                    bounds = map.getBounds(),
+                    southWest = bounds.getSW(),
+                    northEast = bounds.getNE(),
+                    lngSpan = northEast.lng() - southWest.lng(),
+                    latSpan = northEast.lat() - southWest.lat();
+                    
+                    console.log("h : " + bounds.hasPoint(myaddr));
+                    
+                  	//목록에서도 검색하기 위한 것
+                    searchList(bounds);
                 });
-            	
-            	//목록에서도 검색하기 위한 것
-            	
             }
+            
+            function searchList(bounds) {
+            	var southWest = bounds.getSW(), //좌표의 남서쪽의 위경도 좌표를 반환한다.
+                northEast = bounds.getNE(), 	//좌표의 북동쪽의 위경도 좌표를 반환한다.
+                lngSpan = northEast.lng() - southWest.lng(),
+                latSpan = northEast.lat() - southWest.lat();
+            	
+            	console.log("b : " + bounds);
+            	
+            	$("li").css("display", "none");
+            	var num = 0;
+            	for(var temp of areaArr){
+            		var addrPoint = new naver.maps.Point(temp.lon, temp.lat);
+            		console.log("areaArr : " + bounds.hasPoint(addrPoint));
+            		if(bounds.hasPoint(addrPoint)){
+            			$("li#"+num).show();
+            		}
+            		num++;
+            	}
+            	
+			}
             
             //리셋버튼을 클릭하면 실행되는 함수로, 현재 사용자가 위치하는 곳으로 돌아온다.------------------------------------------------------------
             function resetMap(){
@@ -445,6 +508,8 @@
                 
                 $("#leaseBtn").css("background-color","");
                 $("#leaseBtn").css("color","black");
+                
+                $("li").show();
             }
             
             function resetPosition(position) {
@@ -458,7 +523,7 @@
             	console.log("resetPosition : " + resetPosition);
 
             	var resetLocation = new naver.maps.LatLng(resetPosition);
-                map.panTo(resetLocation);
+                map.setCenter(resetLocation);
                 
             	console.log(curMarker);
             	console.log(resetLocation);
@@ -482,18 +547,8 @@
                 e.preventDefault();
                 var curPosition = curMarker.position;
                 var currentLoc = new naver.maps.LatLng(curPosition.y, curPosition.x);
-                map.panTo(currentLoc);
+                map.setCenter(currentLoc);
             }
-            
-            /* map.Event.addListener("mousemove", function(e) {
-            	var bounds = map.getBounds(),
-                southWest = bounds.getSW(),
-                northEast = bounds.getNE(),
-                lngSpan = northEast.lng() - southWest.lng(),
-                latSpan = northEast.lat() - southWest.lat();
-                
-                console.log("b : " + bounds);
-            }); */
             
         </script>
     </section>

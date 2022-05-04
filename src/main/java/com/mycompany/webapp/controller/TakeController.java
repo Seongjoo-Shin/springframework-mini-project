@@ -58,9 +58,6 @@ public class TakeController {
 	   }
 	   model.addAttribute("buildings", buildingInfo);
 	   
-	   List<BuildingFileDto> buildingFiles = takeService.selectBuildingFiles();
-	   model.addAttribute("buildingFiles",buildingFiles);
-	   
 	   if(latitude != null) { //만약, 개원에서 넘어왔다면 null이 아닐 것임!
 		   model.addAttribute("latitude", latitude);
 		   model.addAttribute("longitude",longitude);
