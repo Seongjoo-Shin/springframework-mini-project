@@ -49,7 +49,7 @@
 	                    <div class="col-3 float-left mb-5">
 	                        <div class="card" style="height:386px;">
 	                            <div class="card-body">
-	                                <img class="border rounded" src="/mypage/getBuildingImage?buildingNo=${building.buildingNo}&type=nomal&img=0" width="100%"/>
+	                                <a href="/take/view?buildingNo=${building.buildingNo}"><img class="border rounded" src="/mypage/getBuildingImage?buildingNo=${building.buildingNo}&type=nomal&img=0" width="100%"/></a>
 	                                <div class="information mr-3">
 	                                    <p>${building.buildingName}</p>
 	                                    <p>${building.buildingAddr}</p>
@@ -71,6 +71,11 @@
 	                        </div>
 	                    </div>
 	                </c:forEach>
+	                <c:if test="${total < 1}">
+                     	<div class="row text-center" style="margin:0 auto;">
+                     	<h5>찜한 인수 매물이 존재하지 않습니다.</h5>
+                     	</div>
+                     </c:if>
                     </div>
                     <div class="row mb-5">
                         <div class="col-12">

@@ -45,6 +45,7 @@
                         </ul>
                     </div>
                     <div class="row">
+                    <c:if test="${total > 0}">
                     <c:forEach var="market" items="${markets}">
                     	<div class="col-3 float-left mb-5">
 	                        <div class="card">
@@ -61,6 +62,12 @@
 	                        </div>
 	                    </div>
                     </c:forEach>
+                    </c:if>
+                     <c:if test="${total < 1}">
+                     	<div class="row text-center" style="margin:0 auto;">
+                     	<h5>찜한 거래 게시물이 존재하지 않습니다.</h5>
+                     	</div>
+                     </c:if>
                     </div>
                     
                     <div class="row mb-5">
