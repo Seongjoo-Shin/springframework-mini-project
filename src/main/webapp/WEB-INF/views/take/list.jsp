@@ -377,7 +377,7 @@
                     scaleControl: false,
                     mapDataContorol:false,
                     location,
-                    zoom: 16
+                    zoom: 15
                 };
                 map = new naver.maps.Map('map', mapOptions); // id와 option
                 

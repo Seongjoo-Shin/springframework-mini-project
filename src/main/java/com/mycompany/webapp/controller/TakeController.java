@@ -50,12 +50,6 @@ public class TakeController {
 	   List<BuildingDto> buildings = takeService.selectBuildingList();
 	   
 	   List<BuildingDto> buildingInfo = new ArrayList<BuildingDto>();
-	   for(BuildingDto b : buildings) {
-		   String temp = b.getBuildingDetailContent();
-		   temp = temp.replace("\r\n", "<br>");
-		   b.setBuildingDetailContent(temp);
-		   buildingInfo.add(b);
-	   }
 	   model.addAttribute("buildings", buildingInfo);
 	   
 	   if(latitude != null) { //만약, 개원에서 넘어왔다면 null이 아닐 것임!
@@ -72,16 +66,10 @@ public class TakeController {
    //img는, 상세보기에서 미리보기로 2개 띄울 때, 넘어오는 파라미터!
    @RequestMapping("/getBuildingImage")
    public void getBuildingImage(HttpServletRequest req, HttpServletResponse res, String buildingNo, String type, String img) throws IOException {
-	   System.out.println(buildingNo);
 	   List<BuildingFileDto> files = takeService.selectImageFileByBuildingNo(buildingNo);
-	   
-	   log.info("type : " + type);
 	   
 	   if(type.equals("nomal")) { //일반 사진만 가져와!
 		   int num = Integer.parseInt(img);
-		   if(files.get(num).getPanoramaCheck() == 1) {
-			   return;
-		   }
 		   byte[] temp = files.get(num).getImageFileData();
 		   InputStream is = new ByteArrayInputStream(temp);
 		   IOUtils.copy(is, res.getOutputStream());
@@ -100,9 +88,7 @@ public class TakeController {
    //바이트배열을 파일로 만들어서 출력해줌!
    @RequestMapping("/getImageByteArrayToFile")
    public void getImageByteArrayToFile(HttpServletRequest req, HttpServletResponse res, String buildingNo, String img, @RequestHeader("User-Agent") String userAgent) throws IOException {
-	   System.out.println(buildingNo);
 	   List<BuildingFileDto> files = takeService.selectImageFileByBuildingNo(buildingNo);
-
 	   
 	   int num = Integer.parseInt(img);
 	   
@@ -127,21 +113,30 @@ public class TakeController {
    @GetMapping("/view")
    public String view(String buildingNo, Model model, HttpServletRequest request, HttpSession session) {
 	  log.info("실행");
-	  log.info(buildingNo);
 	  
 	  //매물 정보
 	  BuildingDto buildingDetailBuildingDto = takeService.selectBuildingByBuildingNo(buildingNo);
 	  
 	  //해당 매물의 장비들 가져오기
 	  List<EquipmentDto> equipDto = takeService.selectEquipmentByBuildingNo(buildingNo);
-	  log.info(equipDto);
 	  
 	  //매물의 첨부파일에 대한 정보를 가져오기
 	  List<BuildingFileDto> fileDto = takeService.selectImageFileByBuildingNo(buildingNo);
 	  
+	  int panoCnt = 0;
+	  int nomalCnt = 0;
+	  for(BuildingFileDto f : fileDto) {
+		  if(f.getPanoramaCheck() == 1) {
+			  panoCnt++;
+		  }else {
+			  nomalCnt++;
+		  }
+	  }
+	  
 	  model.addAttribute("buildingInfo", buildingDetailBuildingDto);
 	  model.addAttribute("equipments", equipDto);
 	  model.addAttribute("imageFile", fileDto);
+	  model.addAttribute("panoCnt", panoCnt);
 	  model.addAttribute("from", request.getParameter("from"));
 	  model.addAttribute("pageNo", request.getParameter("pageNo"));
 	  
@@ -210,8 +205,7 @@ public class TakeController {
 	  
 	  int filesCnt = takeService.buildingFilesCount(buildingNo);
 	  List<BuildingFileDto> fileDto = takeService.selectImageFileByBuildingNo(buildingNo);
-	  filesCnt--;
-	  model.addAttribute("filesCnt", filesCnt);
+	  
 	  model.addAttribute("imageFiles", fileDto);
       return "take/popUpImg";
    }
@@ -220,7 +214,6 @@ public class TakeController {
    public String popUp360Img(String buildingNo, Model model) {
 	   log.info("실행");
 	   model.addAttribute("buildingNo", buildingNo);
-	   
 	   
       return "take/popUp360Img";
    }
@@ -284,8 +277,6 @@ public class TakeController {
 		   
 		   //해당 매물의 첨부파일을 삭제한 경우 삭제를 진행한다.
 		   String[] deleteImgNoList = request.getParameterValues("deleteDBImgBySeq");
-		   log.info(deleteImgNoList);
-		   log.info(deleteImgNoList.length);
 		   if(deleteImgNoList.length > 1) {
 			   for(String deleteImgNo : deleteImgNoList) {
 				   int imgNo = Integer.parseInt(deleteImgNo);
@@ -323,7 +314,6 @@ public class TakeController {
 			   bfd.setAttachSaveName(new Date().getTime() + "-" + m.getOriginalFilename());
 			   bfd.setImageFileData(m.getBytes());
 			   bfd.setPanoramaCheck(0);
-			   log.info(bfd);
 			   
 			   takeService.insertBuildingFile(bfd);
 		   }
@@ -352,9 +342,6 @@ public class TakeController {
    @RequestMapping(value="/checkLike", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String checkLike(String id, String type, String buildingNo) {
-	   log.info("type : " + type);
-	   log.info("id : " + id);
-	   log.info("bn : " + buildingNo);
 	   LikeListDto lld = new LikeListDto();
 	   
 	   lld.setLikeListNo(Integer.parseInt(buildingNo));
@@ -376,9 +363,6 @@ public class TakeController {
    @RequestMapping(value="/setLikeLists", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String setLikeLists(String check, String id, String type, String buildingNo, String likeCnt) {
-	   log.info("type : " + type);
-	   log.info("id : " + id);
-	   log.info("bn : " + buildingNo);
 	   LikeListDto lld = new LikeListDto();
 	   
 	   lld.setLikeListNo(Integer.parseInt(buildingNo));
@@ -405,5 +389,11 @@ public class TakeController {
 	   
 	   json = jsonObject.toString();
 	   return json;
+   }
+   
+   @RequestMapping("/deleteBuilding")
+   public String deleteBuilding(int buildingNo) {
+	   takeService.deleteBuildingByNo(buildingNo);
+	   return "redirect:/take/list";
    }
 }

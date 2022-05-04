@@ -87,4 +87,8 @@ public class TakeService {
 	public void updateBuilding(BuildingDto bdt) {
 		takeDao.updateBuilding(bdt);
 	}
+
+	public void deleteBuildingByNo(int buildingNo) {
+		takeDao.deleteBuildingByNo(buildingNo);
+	}
 }

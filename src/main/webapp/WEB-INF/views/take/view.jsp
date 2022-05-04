@@ -7,15 +7,19 @@
             var url;
             var name = "test";
             var option;
-            console.log(a);
             if(a.name === 'allImg'){
                 url = "<%=request.getContextPath() %>/take/popUpImg?buildingNo=${buildingInfo.buildingNo}";
                 option = "width = 900, height = 900, top = 100, left = 200, location = no";
             }else{
+            	if(`${panoCnt}` == 0){
+            		swal({
+            			text:"업로드된 360도 사진이 존재하지 않습니다."
+            		});
+            		return;
+            	}
                 url = "<%=request.getContextPath() %>/take/popUp360Img?buildingNo=${buildingInfo.buildingNo}";
                 option = "width = 900, height = 550, top = 100, left = 200, location = no"
             }
-            console.log(url);
             window.open(url, name, option);
         }
         
@@ -36,10 +40,10 @@
                 <div>
                     <div class="col-12 row d-flex justify-content-center" style="padding-right: 0;">
                         <div class="col-6 d-flex justify-content-center row-cols-sm-1">
-                            <img class="rounded" width="550px" height="400px" src="getBuildingImage?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=0">
+                            <img class="border" style="border-radius: 10px" width="550px" height="400px" src="getBuildingImage?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=0">
                         </div>
                         <div class="col-6 d-flex justify-content-center row-cols-sm-1">
-                            <img class="rounded" width="550px" height="400px" src="getBuildingImage?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=1">
+                            <img class="border" style="border-radius: 10px" width="550px" height="400px" src="getBuildingImage?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=1">
                         </div>
                     </div>
                     <div class="mt-1 mr-4 p-2 float-right">
@@ -270,9 +274,12 @@
 						<a href="/mypage/myboard/building?pageNo=${pageNo}" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</a>
 					</c:if>
 					<c:if test="${sessionUserId eq buildingInfo.buildingWriter}">
-						<button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+						<a href="deleteBuilding?buildingNo=${buildingInfo.buildingNo}" class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</a>
 					</c:if>
-                    <a href="/interior/simulator?buildingNo=${buildingInfo.buildingNo}" class="btn btn-warning border rounded m-2 p-2" style="font-size: 25px;">인테리어 만들기</a>
+					<c:if test="${sessionUserId ne buildingInfo.buildingWriter}">
+						<a href="/interior/simulator?buildingNo=${buildingInfo.buildingNo}" class="btn btn-warning border rounded m-2 p-2" style="font-size: 25px;">인테리어 만들기</a>
+					</c:if>
+                    
                 </div>
             </div>
             <div class="col-2"></div>

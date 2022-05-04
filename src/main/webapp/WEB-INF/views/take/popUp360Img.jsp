@@ -26,6 +26,14 @@
       -ms-transform-origin: top left;
       transform-origin: top left;
     }
+    
+    @font-face {
+         src : url("${pageContext.request.contextPath}/resources/font/EliceDigitalBaeum_TTF/EliceDigitalBaeum_Regular.ttf"); 
+         font-family: "elice";
+     }
+      *{
+          font-family: "elice";
+      }
   </style>
 </head>
 <body>
@@ -37,11 +45,17 @@
   <section class="d-flex justify-content-center align-content-around">
       <div class="m-3" id="panorama" style="border-radius: 10px"></div>
       <script>
+      	var d="";
           pannellum.viewer("panorama", {
               type: "equirectangular",
               panorama: "getBuildingImage?buildingNo=${buildingNo}&type=pano",
-              autoLoad: true
+              autoLoad: true,
+              error:d
           });
+          console.log(d);
+          
+          
       </script>
   </section>
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+</body>
+</html>

@@ -207,4 +207,9 @@
 		delete from buildingfiles
 		where building_file_no = #{imgNo}
 	</delete>
+	
+	<delete id="deleteBuildingByNo" parameterType="int">
+		delete from buildings
+		where building_no = #{buildingNo}
+	</delete>
 </mapper>
