@@ -33,7 +33,7 @@
 <body class="bg-light">
     <div style="width:300px; height:200px;" class="p-2">
         <div class="container text-center">
-        <form id="frm" method="post" name="frm" action="/mypage/message/sending">
+        <form id="frm" method="post" name="frm" action="${pageContext.request.contextPath}/mypage/message/sending">
 	        <input type="hidden" name="messageSender" value="${sessionUserId}"/>
 	        <input type="hidden" name="changeMsgNo" value='<%=request.getParameter("messagedNo") %>' />
             <div class="row justify-content-center p-2">

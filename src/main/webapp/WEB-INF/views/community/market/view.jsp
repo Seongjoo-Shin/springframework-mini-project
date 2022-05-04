@@ -12,7 +12,7 @@
         }
 
         function openMsgForm(marketWriter){
-            var url = "<%=request.getContextPath() %>/message?receiver="+marketWriter;
+            var url = "<%=request.getContextPath() %>/messageSend?receiver="+marketWriter;
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);
         }

@@ -43,15 +43,27 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/message")
-	public String message(HttpServletRequest request, Model model) {
-		model.addAttribute("receiver", request.getParameter("receiver"));
-		return "common/message";
+	public String message(HttpServletRequest request, Model model, HttpSession session) {
+		String userId = (String) session.getAttribute("sessionUserId");
+		String receiver = request.getParameter("receiver");
+		if(userId.equals(receiver)){
+			return "common/nomessage";
+		} else {
+			model.addAttribute("receiver", receiver);
+			return "common/message";	
+		}
 	}
 	
 	@RequestMapping("/messageSend")
-	public String messageSend(HttpServletRequest request, Model model) {
-		model.addAttribute("receiver", request.getParameter("receiver"));
-		return "common/messageSend";
+	public String messageSend(HttpServletRequest request, Model model, HttpSession session) {
+		String userId = (String) session.getAttribute("sessionUserId");
+		String receiver = request.getParameter("receiver");
+		if(userId.equals(receiver)){
+			return "common/nomessage";
+		} else {
+			model.addAttribute("receiver", receiver);
+			return "common/messageSend";	
+		}
 	}
 	
 	@GetMapping("/messageView")

@@ -388,6 +388,7 @@ public class MypageController {
 	
 	@PostMapping("/message/sending")
 	public String messageSend(MessageDto message, HttpSession session, HttpServletRequest request, @RequestParam("changeMsgNo") int changeNo) {
+		log.info("123");
 		mypageService.sendMessage(message);
 		mypageService.checkReceivedMsg(changeNo);
 		return "redirect:/mypage/message/test";
