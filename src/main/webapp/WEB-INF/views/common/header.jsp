@@ -98,6 +98,21 @@
 		    -webkit-transform-origin: center right;
 		    transform-origin: center right;
 		}
+		
+		::-webkit-scrollbar {
+		    width: 13px;  /* 스크롤바의 너비 */
+		}
+		
+		::-webkit-scrollbar-thumb {
+		    height: 17%; /* 스크롤바의 길이 */
+		    background: #adb5bd; /* 스크롤바의 색상 */
+		    
+		    border-radius: 3px;
+		}
+		
+		::-webkit-scrollbar-track {
+		    background: #e9ecef;  /*스크롤바 뒷 배경 색상*/
+		}
 		      	
     </style> 
 </head>
