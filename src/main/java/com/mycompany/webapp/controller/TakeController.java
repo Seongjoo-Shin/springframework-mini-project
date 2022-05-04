@@ -49,8 +49,7 @@ public class TakeController {
    public String list(@RequestParam(required = false) String latitude,@RequestParam(required = false) String longitude, Model model) {
 	   List<BuildingDto> buildings = takeService.selectBuildingList();
 	   
-	   List<BuildingDto> buildingInfo = new ArrayList<BuildingDto>();
-	   model.addAttribute("buildings", buildingInfo);
+	   model.addAttribute("buildings", buildings);
 	   
 	   if(latitude != null) { //만약, 개원에서 넘어왔다면 null이 아닐 것임!
 		   model.addAttribute("latitude", latitude);
@@ -68,8 +67,13 @@ public class TakeController {
    public void getBuildingImage(HttpServletRequest req, HttpServletResponse res, String buildingNo, String type, String img) throws IOException {
 	   List<BuildingFileDto> files = takeService.selectImageFileByBuildingNo(buildingNo);
 	   
+	   log.info("type : " + type);
+	   
 	   if(type.equals("nomal")) { //일반 사진만 가져와!
 		   int num = Integer.parseInt(img);
+		   if(files.get(num).getPanoramaCheck() == 1) {
+			   return;
+		   }
 		   byte[] temp = files.get(num).getImageFileData();
 		   InputStream is = new ByteArrayInputStream(temp);
 		   IOUtils.copy(is, res.getOutputStream());
@@ -113,12 +117,14 @@ public class TakeController {
    @GetMapping("/view")
    public String view(String buildingNo, Model model, HttpServletRequest request, HttpSession session) {
 	  log.info("실행");
+	  log.info(buildingNo);
 	  
 	  //매물 정보
 	  BuildingDto buildingDetailBuildingDto = takeService.selectBuildingByBuildingNo(buildingNo);
 	  
 	  //해당 매물의 장비들 가져오기
 	  List<EquipmentDto> equipDto = takeService.selectEquipmentByBuildingNo(buildingNo);
+	  log.info(equipDto);
 	  
 	  //매물의 첨부파일에 대한 정보를 가져오기
 	  List<BuildingFileDto> fileDto = takeService.selectImageFileByBuildingNo(buildingNo);
@@ -136,7 +142,7 @@ public class TakeController {
 	  model.addAttribute("buildingInfo", buildingDetailBuildingDto);
 	  model.addAttribute("equipments", equipDto);
 	  model.addAttribute("imageFile", fileDto);
-	  model.addAttribute("panoCnt", panoCnt);
+	  model.addAttribute("panoCnt", fileDto);
 	  model.addAttribute("from", request.getParameter("from"));
 	  model.addAttribute("pageNo", request.getParameter("pageNo"));
 	  
@@ -205,7 +211,8 @@ public class TakeController {
 	  
 	  int filesCnt = takeService.buildingFilesCount(buildingNo);
 	  List<BuildingFileDto> fileDto = takeService.selectImageFileByBuildingNo(buildingNo);
-	  
+	  filesCnt--;
+	  model.addAttribute("filesCnt", filesCnt);
 	  model.addAttribute("imageFiles", fileDto);
       return "take/popUpImg";
    }
@@ -214,6 +221,7 @@ public class TakeController {
    public String popUp360Img(String buildingNo, Model model) {
 	   log.info("실행");
 	   model.addAttribute("buildingNo", buildingNo);
+	   
 	   
       return "take/popUp360Img";
    }
@@ -277,6 +285,8 @@ public class TakeController {
 		   
 		   //해당 매물의 첨부파일을 삭제한 경우 삭제를 진행한다.
 		   String[] deleteImgNoList = request.getParameterValues("deleteDBImgBySeq");
+		   log.info(deleteImgNoList);
+		   log.info(deleteImgNoList.length);
 		   if(deleteImgNoList.length > 1) {
 			   for(String deleteImgNo : deleteImgNoList) {
 				   int imgNo = Integer.parseInt(deleteImgNo);
@@ -314,6 +324,7 @@ public class TakeController {
 			   bfd.setAttachSaveName(new Date().getTime() + "-" + m.getOriginalFilename());
 			   bfd.setImageFileData(m.getBytes());
 			   bfd.setPanoramaCheck(0);
+			   log.info(bfd);
 			   
 			   takeService.insertBuildingFile(bfd);
 		   }
@@ -342,6 +353,9 @@ public class TakeController {
    @RequestMapping(value="/checkLike", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String checkLike(String id, String type, String buildingNo) {
+	   log.info("type : " + type);
+	   log.info("id : " + id);
+	   log.info("bn : " + buildingNo);
 	   LikeListDto lld = new LikeListDto();
 	   
 	   lld.setLikeListNo(Integer.parseInt(buildingNo));
@@ -363,6 +377,9 @@ public class TakeController {
    @RequestMapping(value="/setLikeLists", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String setLikeLists(String check, String id, String type, String buildingNo, String likeCnt) {
+	   log.info("type : " + type);
+	   log.info("id : " + id);
+	   log.info("bn : " + buildingNo);
 	   LikeListDto lld = new LikeListDto();
 	   
 	   lld.setLikeListNo(Integer.parseInt(buildingNo));
