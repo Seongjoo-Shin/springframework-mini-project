@@ -8,7 +8,7 @@ import com.mycompany.webapp.dto.WishListDto;
 
 @Mapper
 public interface WishListDao {
-	public WishListDto selectByPicturName(String pictureName);
+	public WishListDto selectByPicturName(WishListDto wishList);
 
 	public int insertItem(WishListDto wishList);
 

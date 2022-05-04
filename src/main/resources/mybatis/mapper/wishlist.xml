@@ -12,9 +12,9 @@
 		<result property="pictureName" column="picture_name"/>
 	</resultMap>
 	
-	<select id="selectByPicturName" parameterType="String" resultMap="wishListMap">
+	<select id="selectByPicturName" parameterType="wishlist" resultMap="wishListMap">
 		select * from wishlists
-		where picture_name=#{pictureName}
+		where user_id=#{userId} and building_no=#{buildingNo} and picture_name=#{pictureName}
 	</select>
 	
 	<select id="selectByUserIdAndBuildingNo" parameterType="wishlist" resultMap="wishListMap">

@@ -114,7 +114,6 @@ public class InteriorController {
 	@PostMapping(value = "/addWishList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String addWishList(WishListDto wishList, HttpSession session) {
-		log.info(session.getAttribute("sessionUserId"));
 		log.info(wishList);
 		String userId = (String)session.getAttribute("sessionUserId");
 		JSONObject jsonObject = new JSONObject();
@@ -122,14 +121,14 @@ public class InteriorController {
 		if(userId==null||userId.equals("")) {
 			jsonObject.put("result", "noId");
 		} else {
-			log.info(wishList);
 			wishList.setUserId(userId);
-			WishListDto item = wishListService.findPictureById(wishList.getPictureName()); 
+			WishListDto item = wishListService.findPictureById(wishList); 
 			if(item == null) {
-				log.info("1");
+				log.info("추가성공");
 				wishListService.addItemToWishList(wishList);
 				jsonObject.put("result", "success");
 			} else {
+				log.info("추가실패");
 				jsonObject.put("result", "hasItem");
 			}
 			

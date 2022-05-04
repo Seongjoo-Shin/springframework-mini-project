@@ -163,6 +163,7 @@
 		var pictureName = addPictureName;
 		console.log(pictureName);
 		var buildingNo = nowBuildingNo;
+		console.log(buildingNo);
 		$.ajax({
 				url: "/interior/addWishList",
 				data: {interiorName,interiorPrice,pictureName, buildingNo},
@@ -274,10 +275,10 @@
     	<hr/>
     	<c:if test="${modelId != null}">
     		<h3 class="ml-3">위시리스트</h3>
-		    <div class="row col-12 d-flex ml-1" style="overflow-y: auto; height:450px; border: 1px solid black; border-radius: 5px; display: inline-block;">
+		    <div class="row col-12 d-flex ml-1" style="overflow-y: auto; height:400px; border: 1px solid black; border-radius: 5px; display: inline-block; background-color: rgb(248,244,239);">
 		   		<c:forEach var="wishList" items="${wishLists}">
 		   			<div class="card m-3" style="width: 12rem;">
-		   			  <img src="${wishList.pictureName}" class="card-img-top">
+		   			  <img src="${wishList.pictureName}" class="card-img-top" style="height:12rem;">
 					  <div class="card-body">
 					    <h5 class="card-title">제품명 : ${wishList.interiorName}</h5>
 					    <p class="card-text">가격 : ${wishList.interiorPrice}</p>

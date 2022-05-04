@@ -18,8 +18,8 @@ public class WishListService {
 	@Resource
 	private WishListDao wishListDao;
 	
-	public WishListDto findPictureById(String pictureName) {
-		WishListDto dbWishList = wishListDao.selectByPicturName(pictureName);
+	public WishListDto findPictureById(WishListDto wishList) {
+		WishListDto dbWishList = wishListDao.selectByPicturName(wishList);
 		
 		return dbWishList;
 	}
