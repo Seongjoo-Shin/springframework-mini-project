@@ -349,7 +349,7 @@ public class CommunityController {
 		return "/community/market/list";
 	}
 	
-	//리스트에서 대표사진 보여줌
+	//리스트에서 대표사진 보여줌, 리스트의 index에 해당하는 사진 불러와줌
 	@RequestMapping("/market/getMarketImage")
 	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
 		log.info("marketNo" + marketNo +"img" + img);
@@ -361,6 +361,7 @@ public class CommunityController {
    	    
 	}
 	
+	//view페이지에서 하트 개수 불러옴.
    @RequestMapping(value="/market/checkLike", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String checkLike(String id, String type, String marketNo) {
@@ -387,6 +388,7 @@ public class CommunityController {
    }
    
 	
+   //하트 누르거나 취소했을 때 수정됨. 
    @RequestMapping(value="/market/setLikeLists", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String setLikeLists(String check, String id, String type, int marketNo, String likeCnt) {
@@ -525,7 +527,9 @@ public class CommunityController {
     public String marketInsertCancle() {
        return "redirect:/community/market/list";
     }
-
+    
+    //글 삭제 버튼
+    
 
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@RequestMapping("/notice/list")

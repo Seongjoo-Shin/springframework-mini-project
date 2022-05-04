@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<script src="https://kit.fontawesome.com/748830bbae.js" crossorigin="anonymous"></script>
 	<script style="flex-grow:1;">
         function selectAll(selectAll)  {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -21,6 +22,14 @@
         	console.log("showLikeCount() 실행되니??")
         });
     </script>
+    <style>
+		.top-content { width: 100%;}
+
+		.top-content .carousel-control-prev { left: -100px; border-bottom: 0; font-size: 40px; color: #444; }
+		.top-content .carousel-control-next { right: -100px; border-bottom: 0; font-size: 40px; color: #444; }
+		
+		.top-content .carousel-caption .carousel-caption-description { color: #fff; color: rgba(255, 255, 255, 0.8); }
+    </style>
     <section>
         <div class="container-fluid mb-5">
             <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
@@ -31,7 +40,7 @@
                 </div>
                 <div class="col-8 mt-5">
                     <div class="card">
-                        <div class="card-body" style="margin:0 120px;">
+                        <div class="card-body">
                             <div class="h4">
                                 <span>글쓴이 : </span><span>${marketBoardDto.userDto.userNickname}</span>
                                 <a class="btn btn-outline-dark ml-2" onclick="openMsgForm()">쪽지보내기</a>
@@ -41,31 +50,49 @@
                             </div>
                             <div class="title h5 mt-5 mb-3">
                                 <span>${marketBoardDto.marketTitle}</span>
-                            </div>
-							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-							  <div class="carousel-inner">
-							  	<c:forEach var="file" items="${marketFileList}" varStatus="status">
-							  		<c:if test="${status.index == 0}">
-									    <div class="carousel-item active">
-									      <img class="d-block w-100 h-50" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="First slide">
-									    </div>							  			
-							  		</c:if>
-							  		<c:if test="${status.index != 0}">
-							  			<div class="carousel-item">
-									      <img class="d-block w-100 h-50" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="other slide">
-									    </div>	
-							  		</c:if>
-							  	</c:forEach>
-							  	</div>
-							  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							    <span class="sr-only">Previous</span>
-							  </a>
-							  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-							    <span class="sr-only">Next</span>
-							  </a>
-							</div>
+                            </div>							
+							<!-- Top content -->
+					        <div class="top-content px-5">
+					        	<div class="container px-5">
+					        		<div class="row px-5">
+					        			<div class="col">
+								            <!-- Carousel -->
+								            <div id="carousel-example" class="carousel slide" data-ride="carousel">
+								
+								                <div class="carousel-inner">
+												  	<c:forEach var="file" items="${marketFileList}" varStatus="status">
+												  		<c:if test="${status.index == 0}">
+														    <div class="carousel-item active">
+														      <img class="d-block w-100" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="First slide" style="height: 450px">
+														    </div>							  			
+												  		</c:if>
+												  		<c:if test="${status.index != 0}">
+												  			<div class="carousel-item">
+														      <img class="d-block w-100" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="other slide" style="height: 450px">
+														    </div>	
+												  		</c:if>
+												  	</c:forEach>
+								                </div>
+								
+								                <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+								                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+								                    <span class="sr-only">Previous</span>
+								                </a>
+								                <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+								                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+								                    <span class="sr-only">Next</span>
+								                </a>
+								            </div>
+								            <!-- End carousel -->
+					            
+					            		</div>
+					            	</div>
+					            </div>
+					        </div>
+							
+							
+							
+							
                             <div class="price h5 mt-4">
                                 <span>가격: </span> ${marketBoardDto.marketPrice} <span> 원</span>
                             </div>
