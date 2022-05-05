@@ -142,7 +142,7 @@ public class TakeController {
 	  model.addAttribute("buildingInfo", buildingDetailBuildingDto);
 	  model.addAttribute("equipments", equipDto);
 	  model.addAttribute("imageFile", fileDto);
-	  model.addAttribute("panoCnt", fileDto);
+	  model.addAttribute("panoCnt", panoCnt);
 	  model.addAttribute("from", request.getParameter("from"));
 	  model.addAttribute("pageNo", request.getParameter("pageNo"));
 	  
