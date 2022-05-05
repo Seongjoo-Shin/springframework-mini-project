@@ -69,17 +69,17 @@
 			</div>
 			<div class="col-8">
 				<h3 class="m-3">작성글</h3>
-				<div class="row nav-tabs">
-					<ul class="nav">
+				<div class="row" style="border-bottom: 1px solid black;">
+					<ul class="nav nav-tabs">
 						<li class="nav-item"><a class="nav-link h5 text-dark" href="/mypage/myboard/board">자유게시판</a></li>
 						<li class="nav-item"><a class="active nav-link h5 text-dark" href="/mypage/myboard/market">거래게시판</a></li>
 						<li class="nav-item"><a class="nav-link h5 text-dark" href="/mypage/myboard/building">인수/매물</a></li>
 					</ul>
 				</div>
+				<div class="row mt-3">
 				<c:forEach var="market" items="${markets}">
 					<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important; height: 390px; width:300px;">
 						<div class="card-body">
-							<!-- <img src="http://via.placeholder.com/250X200"/> -->
 							<a href="/community/market/marketDetail?marketNo=${market.marketNo}&from=mypage"><img src="/mypage/getMarketImage?marketNo=${market.marketNo}" width="250px" height="200px"/></a>
 						</div>
 						<div class="ml-3 mb-2">
@@ -123,6 +123,7 @@
 				<c:if test="${total eq 0}">
 					<div class="text-center m-5"><h5>작성한 게시물이 없습니다.</h5></div>
 				</c:if>
+				</div>
 			</div>
 			
 			<div class="col-2"></div>

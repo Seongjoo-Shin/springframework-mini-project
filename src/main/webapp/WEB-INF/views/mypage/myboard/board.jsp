@@ -2,30 +2,25 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <script>
         function selectAll(selectAll)  {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            
-            checkboxes.forEach((checkbox) => {
+            document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
                 checkbox.checked = selectAll.checked
             })
         }
         
         function fn_checkedDel(){
-        	var cnt = $("input[name='freeNo']:checked").length;
-			
+        	var cnt = document.querySelectorAll("input[name='freeNo']:checked").length;
         	swal(cnt + "개의 게시물을 삭제하시겠습니까?", {
     			dangerMode: true,
     			buttons: true,
     		}).then((result) => {
-    			console.log(result);
     			if(result == true){
     				var arr = new Array();
-                	$("input[name='freeNo']:checked").each(function(){
-                		arr.push($(this).attr('id'));
-                	});
+    				document.querySelectorAll("input[name='freeNo']:checked").forEach(function(v, i) {
+    					arr.push(v.id)
+    				})
                 	if(cnt == 0){
         				swal("선택된 게시물이 없습니다.");
                 	} else {
-                		console.log(arr);
                 		$.ajax({
                 			type: 'POST',
                 			url: '/mypage/myboard/delete',
@@ -39,8 +34,9 @@
                 		});
                 	}
     			} else {
-    				console.log("here");
-    				 $("input[name='freeNo']:checked").prop("checked", false);
+    				document.querySelectorAll(".delete:checked").forEach(function(v, i) {
+    				    v.checked = false;
+    				});
     			}
     		});
         }
@@ -59,7 +55,7 @@
                 </div>
                 <div class="col-8">
                     <h3 class="m-3">작성글</h3>
-                    <div class="row">
+                    <div class="row" style="border-bottom: 1px solid black;">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active h5 text-dark" href="/mypage/myboard/board">자유게시판</a>
@@ -79,7 +75,7 @@
                                 <th>제목</th>
                                 <th>날짜</th>
                                 <th>수정</th>
-                                <td><input type="checkbox" onclick="selectAll(this)"></td>
+                                <td><input type="checkbox" class="delete" onclick="selectAll(this)"></td>
                             </tr>
                             <c:forEach items="${boards}" var="board" varStatus="status">
                             	<tr>

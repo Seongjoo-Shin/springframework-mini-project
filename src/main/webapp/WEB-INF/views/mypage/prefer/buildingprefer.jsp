@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-8">
                     <h3 class="m-3">찜 목록</h3>
-                    <div class="row">
+                    <div class="row <c:if test='${total < 1}'>mb-5</c:if>" style="border-bottom: 1px solid black;">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active h5 text-dark" href="/mypage/prefer/buildingprefer">인수</a>
@@ -43,7 +43,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="row">
+                    <div class="row mt-3">
                     <c:forEach var="building" items="${buildings}">
 	                    <div class="col-3 float-left mb-5">
 	                        <div class="card" style="height:386px;">
@@ -71,7 +71,7 @@
 	                    </div>
 	                </c:forEach>
 	                <c:if test="${total < 1}">
-                     	<div class="row text-center" style="margin:0 auto;">
+                     	<div class="row text-center mt-5" style="margin:0 auto;">
                      	<h5>찜한 인수 매물이 존재하지 않습니다.</h5>
                      	</div>
                      </c:if>

@@ -9,13 +9,6 @@
 	        var btn = document.getElementById(id);
 	        btn.classList.toggle("active");
 	    }
-
-        function resetKeyword(){
-            if(document.querySelectorAll("table .active").length > 0){
-                $(".searchBtn").removeClass("active");
-                document.querySelector("#msgBox").innerHTML = "";
-            }
-        }
     </script>
     
 
@@ -35,7 +28,9 @@
 		<div class="row mb-5">
 			<div class="col-2"></div>
 			<div class="col-8">
+				<div class="row ml-2">
 				<h4>개원 장소 키워드 추천</h4>
+				</div>
 				<div class="row">
 					<div class="col-6 mt-3">
 							<div class="row d-flex justify-content-between flex-column" style="margin: 0 auto;">
@@ -72,14 +67,14 @@
 							
 								<div class="mr-5">
 									<span class="text-dark pr-2 float-left ml-5">* 중복 선택이가능합니다.</span>
-									<a href="#" class="float-right"><img src="/resources/images/resetBtn.png" width="40px" onclick="location.reload();" /> </a>
-									<a href="javascript:keywordAjax();"class=" pr-4 float-right"><img src="/resources/images/searchBtn1.png" width="40px"/></a>
+									<a href="#" class="float-right"><img src="${pageContext.request.contextPath}/resources/images/reset.png" width="40px" onclick="location.reload();" /> </a>
+									<a href="javascript:keywordAjax();"class=" pr-4 float-right"><img src="${pageContext.request.contextPath}/resources/images/search.png" width="40px"/></a>
 								</div>
 							</div>
-						<div class="row d-flex mt-5 ml-4">
-							<img src="/resources/images/mascot.png" width="70px" height="70px" style="margin-top: auto;" />
-							<div class="ml-3 mr-3" style="width: 450px; height: 300px; border-radius: 15px;">
-								<img src="/resources/images/messageBox.png" width="480px" height="300px" class="float-right" style="z-index: -100000" />
+						<div class="row d-flex mt-5">
+							<img src="/resources/images/mascot.png" width="100px" height="100px" style="margin-top: auto;" />
+							<div class="ml-4 mr-3" style="width: 450px; height: 300px; border-radius: 15px;">
+								<img src="/resources/images/messageBox.png" width="480px" height="300px" class="float-right ml-1" style="z-index: -100000" />
 								<ul class="mt-3" id="msgBox" style="position: absolute;">
 								</ul>
 							</div>
@@ -101,6 +96,7 @@
                                 var positions = new Array();
                                 var juso = new Array();
                                 var infoWindow;
+                                var contentFlag = false;
                                 
                                 function getLocation() {
                                     if (navigator.geolocation) {
@@ -146,7 +142,7 @@
 	                                			map: map,
 	                                			position: new naver.maps.LatLng(positions[i].lat, positions[i].lng),
 	                                			icon: {
-	                                				content: '<a onclick="innerInfo(\''+positions[i].keywordNo+'\');"><img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 32px; height: 32px; left: 0px; top: 0px;"></a>',
+	                                				content: '<a onclick="innerInfo(\''+positions[i].keywordNo+'\');"><img src="<c:url value="/resources/images/hospitalMark.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; left: 0px; top: 0px;"></a>',
 	                                                size: new naver.maps.Size(20, 27),
 	                                                origin: new naver.maps.Point(0, 0),
 	                                                anchor: new naver.maps.Point(16, 32),
@@ -178,8 +174,12 @@
                                 		var marker = markers[seq],
                                 			infoWindow = infoWindows[seq];
                                 		if(infoWindow.getMap()){
+                                			contentFlag = false;
+                                			console.log(contentFlag);
                                 			infoWindow.close();
                                 		}else {
+                                			contentFlag = true;
+                                			console.log(contentFlag);
                                             infoWindow.open(map, marker); // 표출
                                         }
                                 	}
@@ -275,7 +275,11 @@
 											html += '<div class="mt-2"><sapn>주변시설 - '+data.current_use+'</span></div>';
 											html += '<div class="mt-4"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none;" class="btn text-center" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
 											html += '</div>';
-											document.getElementById("msgBox").innerHTML = html;	
+											if(contentFlag == true){
+												document.getElementById("msgBox").innerHTML = html;	
+											} else {
+												document.getElementById("msgBox").innerHTML = '';
+											}
 										}, 100)
 									}).fail((data) => {
 										swal("서버페이지의 오류가 발생하였습니다.");

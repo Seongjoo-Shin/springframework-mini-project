@@ -2,15 +2,13 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <script>
         function selectAll(selectAll)  {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            
-            checkboxes.forEach((checkbox) => {
+            document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
                 checkbox.checked = selectAll.checked
             })
         }
         
         function fn_checkedDel(){
-        	var cnt = $("input[name='buildingNo']:checked").length;
+        	var cnt = document.querySelectorAll("input[name='buildingNo']:checked").length;
         	
         	swal(cnt + "개의 게시물을 삭제하시겠습니까?", {
     			dangerMode: true,
@@ -18,9 +16,9 @@
     		}).then((result) => {
     			if(result == true){
     				var arr = new Array();
-    				$("input[name='buildingNo']:checked").each(function(){
-    	        		arr.push($(this).attr('id'));
-    	        	});
+    				document.querySelectorAll("input[name='buildingNo']:checked").forEach(function(v, i) {
+    					arr.push(v.id)
+    				})
                 	if(cnt == 0){
         				swal("선택된 게시물이 없습니다.");
                 	} else {
@@ -37,8 +35,9 @@
                 		});
                 	}
     			} else {
-    				console.log("here");
-    				 $("input[name='buildingNo']:checked").prop("checked", false);
+    				document.querySelectorAll(".delete:checked").forEach(function(v, i) {
+    				    v.checked = false;
+    				});
     			}
     		});
         }
@@ -57,7 +56,7 @@
                 </div>
                 <div class="col-8">
                     <h3 class="m-3">작성글</h3>
-                    <div class="row">
+                    <div class="row" style="border-bottom: 1px solid black;">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link h5 text-dark" href="/mypage/myboard/board">자유게시판</a>
@@ -80,7 +79,7 @@
                                 <th>전용면적</th>
                                 <th>등록날짜</th>
                                 <th></th>
-                                <td><input type="checkbox" onclick="selectAll(this)"></td>
+                                <td><input type="checkbox" class="delete" onclick="selectAll(this)"></td>
                             </tr>
                             </thead>
                             <tbody>

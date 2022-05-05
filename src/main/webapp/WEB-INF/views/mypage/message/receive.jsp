@@ -2,13 +2,11 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <script>
 	    function selectAll(selectAll)  {
-	        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-	        
-	        checkboxes.forEach((checkbox) => {
+	    	document.querySelectorAll('input[type="checkbox"]');.forEach((checkbox) => {
 	            checkbox.checked = selectAll.checked
 	        })
 	    }
-
+	    
 	    function openMsgForm(receiver, messageNo){
 	    	console.log(name);
             var url = "<%=request.getContextPath() %>/message?receiver="+receiver+"&messagedNo="+messageNo;
@@ -23,7 +21,7 @@
         }
 	    
 	    function fn_checkedDel(){
-        	var cnt = $("input[name='messageNo']:checked").length;
+	    	var cnt = document.querySelectorAll("input[name='messageNo']:checked").length;
 
         	swal(cnt+"개의 쪽지를 삭제하시겠습니까?", {
         		dangerMode: true,
@@ -31,9 +29,9 @@
         	}).then((result) => {
         		if(result == true){
         			var arr = new Array();
-                	$("input[name='messageNo']:checked").each(function(){
-                		arr.push($(this).attr('id'));
-                	});
+        			document.querySelectorAll("input[name='messageNo']:checked").forEach(function(v, i) {
+    					arr.push(v.id)
+    				});
                 	if(cnt == 0){
         				swal("선택된 게시물이 없습니다.");
                 	} else {
@@ -51,8 +49,9 @@
                 		});
                 	}
         		} else {
-        			$("#allSelect").prop("checked", false);
-        			$("input[name='messageNo']:checked").prop("checked", false);
+        			document.querySelectorAll(".delete:checked").forEach(function(v, i) {
+    				    v.checked = false;
+    				});
         		}
         	})
         	
@@ -73,7 +72,7 @@
                 </div>
                 <div class="col-8">
                     <h3 class="m-3">쪽지함</h3>
-                    <div class="row">
+                    <div class="row" style="border-bottom: 1px solid black;">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active h5 text-dark" href="/mypage/message/receive">받은쪽지함</a>
@@ -91,7 +90,7 @@
                                     <th>받은날</th>
                                     <th>보낸사람</th>
                                     <th>답장여부</th>
-                                    <td><input type="checkbox" onclick="selectAll(this)" id="allSelect"/></td>
+                                    <td><input type="checkbox" onclick="selectAll(this)" id="allSelect" class="delete" /></td>
                                 </tr>
                             </thead>
                             <tbody>
