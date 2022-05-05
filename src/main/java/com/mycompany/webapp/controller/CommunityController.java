@@ -3,6 +3,8 @@ package com.mycompany.webapp.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -17,14 +19,17 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
@@ -269,8 +274,7 @@ public class CommunityController {
 		
 		//1. 닉네임 얻기
 		String userNickname = userService.getNickname(userId);
-		
-		log.info("@@@@@@@@@@@@@@@@@@@@ " + request.getParameter("upperNo"));
+
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("sessionUserNickname", userNickname);
 		jsonObject.put("upperNo", upperNo);
@@ -311,9 +315,7 @@ public class CommunityController {
 		commentDto.setCommentModifyDate(sqlDate);
 		commentDto.setCommentRegistDate(sqlDate);
 
-		
 		int commentNo = commentService.insertReplyComment(commentDto);
-		log.info(commentNo + "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		commentDto.setCommentNo(commentNo);
 		
 		JSONObject jsonObject = new JSONObject();
@@ -447,7 +449,7 @@ public class CommunityController {
 		//가격에 , 처리
 		String price = marketBoardDto.getMarketPrice();
 		DecimalFormat formatter = new DecimalFormat("###,###");
-		price = formatter.format(Integer.parseInt(price));
+		price = formatter.format(Long.parseLong(price));
 		marketBoardDto.setMarketPrice(price);
 		
 		//marketBoardDto 내용 model에 싣기
@@ -470,18 +472,6 @@ public class CommunityController {
 		return "/community/market/insert";
 	}
 	
-	/*	//리스트에서 대표사진 보여줌, 리스트의 index에 해당하는 사진 불러와줌, img의미 인덱스
-		@RequestMapping("/market/getMarketImage")
-		public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
-			log.info("marketNo" + marketNo +"img" + img);
-			List<MarketFileDto> files = marketBoardService.selectImageFileByMarketNo(marketNo);
-			int num = Integer.parseInt(img);
-			byte[] temp = files.get(num).getImageFileData();
-			InputStream is = new ByteArrayInputStream(temp);
-			IOUtils.copy(is, res.getOutputStream());
-	    
-		}*/
-	
 	@GetMapping("/market/update")
 	public String marketUpdate(int marketNo, Model model, HttpSession session, HttpServletRequest req, HttpServletRequest res) {
 		//수정 할 마켓 정보 가져오기
@@ -501,7 +491,31 @@ public class CommunityController {
 		return "/community/market/update";
 	}
 
-	
+	//바이트배열을 파일로 만들어서 출력해줌!
+	@RequestMapping("/market/getImageByteArrayToFile")
+	public void getImageByteArrayToFile(HttpServletRequest req, HttpServletResponse res, int marketNo, int img, 
+			@RequestHeader("User-Agent") String userAgent) throws IOException {
+		List<MarketFileDto> marketFiles = marketBoardService.selectImageFileByMarketNo(marketNo);
+		
+		//img는 marketFiles의 index이다.
+		
+		String contentType = marketFiles.get(img).getAttachType();
+		String originalFilename = marketFiles.get(img).getAttachOriginalName();
+		
+		res.setContentType(contentType);
+		
+		//다운로드할 파일명을 헤더에 추가
+		if(userAgent.contains("Trident") || userAgent.contains("MSIE")) {
+			//IE 브라우저일 경우
+			originalFilename = URLEncoder.encode(originalFilename, "UTF-8");
+		} else {
+			//크롬, 엣지, 사파리일 경우
+			originalFilename = new String(originalFilename.getBytes("UTF-8"), "ISO-8859-1");
+		}
+		res.setHeader("Content-Disposition", "attachment; filename=\"" + originalFilename + "\"");
+		
+		FileCopyUtils.copy(new ByteArrayInputStream(marketFiles.get(img).getImageFileData()), res.getOutputStream());		
+	}
 	
 	@RequestMapping("/market/view")
 	public String marketView() {
@@ -533,6 +547,7 @@ public class CommunityController {
 	   marketBoardDto.setMarketWriter(userId);
 	   
 	    int cnt = marketBoardService.insertMarket(marketBoardDto);
+	    
 	    //첨부파일 추가
 	    if(cnt > 0) {
 	       if(files.size() != 0) {
@@ -544,11 +559,71 @@ public class CommunityController {
 	             marketFileDto.setAttachSaveName(saveFilename);
 	             marketFileDto.setAttachType(m.getContentType());
 	             marketFileDto.setImageFileData(m.getBytes());
+	             marketFileDto.setMarketNo(cnt);
 	             marketBoardService.insertMarketFile(marketFileDto);
+	             
 	          }
 	       }   
 	    }
 	   return "redirect:/community/market/list";
+	}
+	
+	// 글쓰기 수정 버튼
+   @RequestMapping("/market/updateMarketContent")
+   @ResponseBody
+	public String updateMarketContent(HttpServletRequest request,
+			@RequestPart(value="attach_file", required=false) List<MultipartFile> files,
+ 		    Model model,
+ 		    @RequestParam(value="deleteDBImgBySeq") String deleteDb) throws IOException {
+	   
+	   		String result ="판매 상품이 수정되었습니다.";
+		
+		   log.info("/market/updateMarketContent 실행");
+		   String category = request.getParameter("category");
+		   int marketNo = Integer.parseInt(request.getParameter("marketNo"));
+		   
+		   MarketBoardDto marketBoardDto = new MarketBoardDto();
+		   marketBoardDto.setMarketCategory(category);
+		   marketBoardDto.setMarketNo(marketNo);
+		   marketBoardDto.setMarketTitle(request.getParameter("title"));
+		   marketBoardDto.setMarketPrice(request.getParameter("price"));
+		   marketBoardDto.setMarketContent(request.getParameter("content"));
+
+		   
+		   String[] deleteImgNoList = deleteDb.split(",");
+		   log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		   log.info("deleteDb"+deleteDb);
+		   log.info("deleteImgNoList: " + deleteImgNoList.length);
+		   
+		   
+		   if((!deleteDb.equals(""))) {
+			   for(String deleteImgNo : deleteImgNoList) {
+				   log.info("deleteImgNoList요소: "+deleteImgNo);
+				   int imgNo = Integer.parseInt(deleteImgNo);
+				   marketBoardService.deleteImageByFileNo(imgNo);
+			   }
+		   }
+
+		   //수정내용 업데이트(아직 파일은 업데이트 되지 않음.)
+		   marketBoardService.updateMarketBoard(marketBoardDto);
+		   
+			//첨부파일 추가
+			if(files != null) {
+			   for(MultipartFile m : files) {
+			      String saveFilename = new Date().getTime()+"-"+m.getOriginalFilename();
+			
+			      MarketFileDto marketFileDto = new MarketFileDto();
+			      marketFileDto.setAttachOriginalName(m.getOriginalFilename());            
+			      marketFileDto.setAttachSaveName(saveFilename);
+			      marketFileDto.setAttachType(m.getContentType());
+			      marketFileDto.setImageFileData(m.getBytes());
+			      marketFileDto.setMarketNo(marketNo);
+			      
+			      //DB marketFiles에 file 추가
+			      marketBoardService.insertMarketFile(marketFileDto);
+			   }
+			}
+		return result;
 	}
 
 	// 글쓰기 취소 버튼

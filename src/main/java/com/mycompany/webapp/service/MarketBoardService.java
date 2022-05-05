@@ -49,8 +49,7 @@ public class MarketBoardService {
 	
 	//insertMarket
 	public int insertMarket(MarketBoardDto marketBoardDto) {
-		int marketNo = marketBoardDao.insertMarket(marketBoardDto);
-		return marketNo;
+		return marketBoardDao.insertMarket(marketBoardDto);
 	}
 	
 	//insertMarketFile
@@ -67,6 +66,18 @@ public class MarketBoardService {
 	public int setUpdateHitCount(int marketNo) {
 		// TODO Auto-generated method stub
 		return marketBoardDao.updateHitCount(marketNo);
+	}
+
+	//수정내용 업데이트(아직 파일은 업데이트 되지 않음.)
+	public void updateMarketBoard(MarketBoardDto marketBoardDto) {
+		// TODO Auto-generated method stub
+		marketBoardDao.updateMarketBoard(marketBoardDto);
+	}
+
+	public void deleteImageByFileNo(int marketFileNo) {
+		// TODO Auto-generated method stub
+		marketBoardDao.deleteImageByFileNo(marketFileNo);
+		
 	}
 
 }

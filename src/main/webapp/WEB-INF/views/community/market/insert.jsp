@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
     <section style="flex-grow:1;">
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
         <h1 class="">거래 게시판</h1>
@@ -48,7 +47,7 @@
       </div>
       </div>
     </section>
-
+		
     <script>
   		//이미지 첨부파일을 저장하기 위한 배열
 	    var uploadFiles = [];
@@ -69,7 +68,7 @@
 	        const files = e.currentTarget.files;
 	        console.log(files);
 	        
-	        //이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 15개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 15개를 넘어가게 되면 업로드할 수 없다!(최대 15장이기 때문에)
+	        //이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 6개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 6개를 넘어가게 되면 업로드할 수 없다!(최대 6장이기 때문에)
 	        console.log(nomalImgPreview.childElementCount + files.length);
 	        if(nomalImgPreview.childElementCount > 6 || (nomalImgPreview.childElementCount + files.length) > 6){
             	swal({

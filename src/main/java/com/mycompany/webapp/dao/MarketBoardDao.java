@@ -40,5 +40,11 @@ public interface MarketBoardDao {
 	
 	//판매 완료 표시
 	public void updateSaleYn(int marketNo);
+
+	//수정내용 업데이트(아직 파일은 업데이트 되지 않음.)
+	public void updateMarketBoard(MarketBoardDto marketBoardDto);
+	
+	//수정시 사진 지움
+	public void deleteImageByFileNo(int marketFileNo);
 	
 }

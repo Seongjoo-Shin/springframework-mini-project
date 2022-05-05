@@ -2,9 +2,19 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<script>
-        $(document).ready(function() {
-        	
-        });
+	$(function(){
+    	//만약 사진에 뭐가 있다면! 일단 미리보기에 사진 띄우기
+    	if($("#nomalImgPreview").children().length != 0){
+    		$("#explainNomal").css('display', 'none');
+    		
+    		const btn = createBtn();
+            const nomalImgField = document.getElementById("nomalImgField");
+            nomalImgField.appendChild(btn);
+    		useYn = 1;
+    		fileNo = $("#nomalImgPreview").children().length;
+    		console.log("fn : " + fileNo);
+    	}
+	});
     </script>
     <section style="flex-grow:1;">
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
@@ -16,7 +26,7 @@
           <div class="col-8">
             <div class="h3 border-bottom mb-3"><img class="mr-2" src="${pageContext.request.contextPath}/resources/images/writing.png">글쓰기</div>
 	            <div class="mb-5"><!-- action="insertMarketContent"  -->
-	              <form method="post" id="marketInsertForm" action="" enctype="multipart/form-data">
+	              <form method="POST" id="marketInsertForm" enctype="multipart/form-data">
 					<select id="category" name="category" class="form-select-lg" aria-label=".form-select-lg example">
 					  <option value="0">카테고리 선택</option>
 					  <option value="1" <c:if test="${marketBoardDto.marketCategory eq '1'}">selected</c:if>>장비</option>
@@ -24,6 +34,8 @@
 					  <option value="3" <c:if test="${marketBoardDto.marketCategory eq '3'}">selected</c:if>>소모품</option>
 					  <option value="4" <c:if test="${marketBoardDto.marketCategory eq '4'}">selected</c:if>>기타</option>
 					</select>
+					<input type="hidden" name="marketNo" value="${marketBoardDto.marketNo}"/>
+					
 	                <input type="text" name="title" class="form-control my-3" value="${marketBoardDto.marketTitle}"/>
 	                <div class="border rounded" style="background-color: rgb(231, 231, 236);">
 		                <div id="explainNomal" class="p-3 text-center">
@@ -38,8 +50,8 @@
                               	<c:if test="${not empty marketFilesSize}">
                               		<c:forEach var="marketFile" items="${marketFiles}" varStatus="status">
                           				<span id="file${status.index}">
-                            				<img id="${status.index}" name="exist" src="getImageByteArrayToFile?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=${status.index}" data-file="${image.attachOriginalName}" seq="${image.buildingFileNo}" width="200px" height="150px" style="border: 1px solid gainsboro; padding: 10px; background-color :white;" />
-                            				<a class="btn btn-danger" onclick="deleteImg(${status.index})" style="margin-right:8px; cursor:pointer;">X</a>
+                            				<img id="img${status.index}" name="exist" src="getImageByteArrayToFile?marketNo=${marketBoardDto.marketNo}&img=${status.index}" data-file="${marketFile.attachOriginalName}" seq="${marketFile.marketFileNo}" width="200px" height="150px" style="border: 1px solid gainsboro; padding: 10px; background-color :white;" />
+                            				<a class="btn" onclick="deleteImg(${status.index})" style="margin-right:8px; cursor:pointer;">X</a>
                            				</span>
                               		</c:forEach>
                               	</c:if>                           	
@@ -52,7 +64,7 @@
 	                <textarea name="content" class="form-control mt-3" style="height: 300px; overflow-y:scroll; resize:none">${marketBoardDto.marketContent}</textarea>
 	              </form>
 	              	<div class="pagination justify-content-center mb-0">
-	                   	<button onclick="submitBtnClick()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">수&nbsp;&nbsp;&nbsp;정</button>
+	                   	<button onclick="updateBtnClick()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">수&nbsp;&nbsp;&nbsp;정</button>
 	                   	<button onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>
 	                </div>              
 	            </div>            
@@ -67,6 +79,9 @@
   		
     	//첨부파일에 번호를 붙이기 위해 사용하는 변수로, id에 붙여준다.
         var fileNo = 0;
+    	
+    	//만약, checkNum과 fileNo가 같아지면, 업로드되어 있는 파일이 아무것도 없게 됨!
+        var checkNum = 0;    	
   		
         //이미지를 등록하게 되면 미리보기를 보여주는 엘리먼트를 id로 가져온다.
 	    const nomalImgPreview = document.getElementById("nomalImgPreview");
@@ -74,6 +89,8 @@
 	  	//이미지를 추가하는 버튼을 제어하기 위한 변수
 	    var useYn = 0;
 	  	
+    	//수정하는 상태일 경우, DB에 저장된 사진 중, 삭제할 것들의 seq를 저장하는 배열이다.
+    	var deleteDBImgBySeq = [];
 	  	
 	  	//일반 사진을 등록할 때 실행되는 함수이다.
 	    function getImageFiles(e) {
@@ -83,7 +100,7 @@
 	        const files = e.currentTarget.files;
 	        console.log(files);
 	        
-	        //이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 15개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 15개를 넘어가게 되면 업로드할 수 없다!(최대 15장이기 때문에)
+	        //이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 6개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 6개를 넘어가게 되면 업로드할 수 없다!(최대 6장이기 때문에)
 	        console.log(nomalImgPreview.childElementCount + files.length);
 	        if(nomalImgPreview.childElementCount > 6 || (nomalImgPreview.childElementCount + files.length) > 6){
             	swal({
@@ -138,16 +155,21 @@
 	        img.style.padding = '10px';
 	        img.style.backgroundColor = 'white';
 	
-	        deleteBtn.setAttribute('onclick', 'deleteImg(this)');
+            deleteBtn.setAttribute("class", "btn btn-danger");
+            deleteBtn.setAttribute('onclick', 'deleteImg(' + fileNo + ')');
 	        deleteBtn.innerHTML = "X";
 	        deleteBtn.style.padding = "10px";
 	        deleteBtn.style.border = "1px solid rgb(231, 231, 236)";
 	        deleteBtn.style.backgroundColor = 'white';
 	        deleteBtn.style.marginRight = "8px";
 	        deleteBtn.style.cursor = "pointer";
-	
+
+            span.setAttribute("id","file" + fileNo);
 	        span.appendChild(img);
 	        span.appendChild(deleteBtn);
+	        
+            fileNo++;
+            
 	        return span;
 	    }
 	    
@@ -174,16 +196,35 @@
 	        span.appendChild(addBtnLabel);
 	        return span;
 	    }
-	
+	        
 	    //이미지 미리보기에서 x버튼 눌러서 그림 삭제할 때
-	    function deleteImg(_this){
-	        $(_this).parent('span').remove();
-	        if(nomalImgPreview.childElementCount === 0){
-	            $("#addBtn").remove();
-	            $("#explainNomal").css('display', 'block');
-	            useYn = 0;
-	        }
-	    }
+        function deleteImg(fnum){
+        	if($('#img'+fnum).attr("name") == 'exist'){
+        		console.log("db에 저장된 것 삭제할 경우");
+        		deleteDBImgBySeq.push($('#img'+fnum).attr("seq"));
+        		console.log("--"+$('#img'+fnum).attr("seq"));
+        		document.querySelector("#file" + fnum).remove();
+        		
+        		
+        	}else{
+        		document.querySelector("#file" + fnum).remove();
+        		var DBImgCnt = 0;
+        		if(`${type}` == 'updateEnroll'){
+        			var DBImgCnt = `${nomalCnt}`;
+                	DBImgCnt++;
+        		}
+            	console.log(fnum-DBImgCnt);
+            	uploadFiles[fnum-DBImgCnt] = "";
+            	console.log(uploadFiles);
+            	
+        	}
+        	console.log($("#nomalImgPreview").children().length);
+        	if($("#nomalImgPreview").children().length == 0){
+            	$("#addBtn").remove();
+                $("#explainNomal").css('display', 'block');
+                useYn = 0;
+            }
+        }
     
 		var input = document.getElementById("price");
 		
@@ -215,8 +256,8 @@
 			}
 		};
 		
-		//등록 버튼을 눌렀을 때
-		function submitBtnClick(){
+		//수정 버튼을 눌렀을 때
+		function updateBtnClick(){
 			
 			//폼 태그안의 input태그들은 name값으로 접근 가능하다.
         	var form = document.querySelector("form");
@@ -248,17 +289,25 @@
                 }
             }//이미지 첨부파일 formData에 담기 끝
 
+            //DB상에 존재하는 이미지 파일을 삭제하기 위해 시퀀스들을 저장한 배열을 append한다!
+            formData.append("deleteDBImgBySeq",deleteDBImgBySeq);
+           	for(var i=0; i<deleteDBImgBySeq.length; i++){
+           		console.log(i+"번째 요소->>"+deleteDBImgBySeq[i]);
+           	}
+            
+            
             $.ajax({
             	method:'POST',
-            	url: 'insertMarketContent',
+            	url: 'updateMarketContent',
             	data: formData,
             	contentType: false,
             	processData:false
             }).done((data)=>{
+            	var result = data;
             	swal({
-					text: "판매 상품이 등록되었습니다."
+					text: "수정 되었습니다."
 				}).then(()=>{
-					$(location).attr("href", "marketInsertCancle");
+					location.href = document.referrer;
 				});
             })
 		}
