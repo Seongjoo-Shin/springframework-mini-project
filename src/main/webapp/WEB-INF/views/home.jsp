@@ -28,7 +28,7 @@
                 	<img class="border rounded" src="resources/images/mainMap.png" class="img-responsive centor-block m-3" style="height: 550px;"/>
                 </a>
             </div>
-            <div data-aos="fade-up" class="d-flex flex-row justify-content-center align-items-center mt-5 mb-4">
+            <div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-row justify-content-center align-items-center mt-5 mb-4">
             	<a href="${pageContext.request.contextPath}/take/list">
             		<img src = "resources/images/main2_img.png" style="width:700px; height: 400px;"/>
             	</a>
@@ -39,7 +39,7 @@
                     <span class="hometext">정보를 얻으세요!&nbsp;<span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span></span>
                 </div>
             </div>
-            <div data-aos="fade-up" class="d-flex flex-column justify-content-center align-items-center mt-5" style="height: 400px;">
+            <div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-column justify-content-center align-items-center mt-5" style="height: 400px;">
                 <div>
 	                <a href = "/interior/example" style="text-decoration: none;">
 	                	<img class="m-2 border rounded" src = "resources/images/mainHos1.jpg" width="550px" height="400px"/>
@@ -51,7 +51,7 @@
                     <span style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
                 </div>
             </div>
-            <div data-aos="fade-up" class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; margin-top:150px;">
+            <div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; margin-top:150px;">
 			  <div class="container-fluid row" style="height: 250px;">
 			    <div class="col-1"></div>
 			    <div class="col-10 row mb-3">
