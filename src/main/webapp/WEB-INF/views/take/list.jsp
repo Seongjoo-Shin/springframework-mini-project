@@ -542,7 +542,11 @@
 		        						$("li#"+${status.index}).show();
 		        					}
 		        				}else if(v1 == 0){
-		        					$("li#"+${status.index}).show();
+		        					if(buildingMonth <= v2){
+		        						$("li#"+${status.index}).show();
+		        					}else if(v2 == 0){
+		        						$("li#"+${status.index}).show();
+		        					}
 		        				}
 	        				}
 	        			}else if(tradeInfo == '매매'){
@@ -567,6 +571,8 @@
             //리셋버튼을 클릭하면 실행되는 함수로, 현재 사용자가 위치하는 곳으로 돌아온다.------------------------------------------------------------
             function resetMap(){
             	navigator.geolocation.getCurrentPosition(resetPosition);
+            	map.setZoom(16);
+            	$("#priceBtnText").text("");
             	tradeInfo = "";
             	
             	$("#leaseDropDownMenu").css("display", "none");
@@ -620,6 +626,7 @@
                 var curPosition = curMarker.position;
                 var currentLoc = new naver.maps.LatLng(curPosition.y, curPosition.x);
                 map.setCenter(currentLoc);
+                map.setZoom(16);
             }
             
         </script>
