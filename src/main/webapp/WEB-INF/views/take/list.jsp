@@ -415,11 +415,8 @@
             		
             		var card = $("li[name='building${buildingInfo.buildingNo}']");
             		card.attr("id", num);
-            		console.log(card);
             		num++;
             	</c:forEach>
-            	
-            	console.log(areaArr);
             	
             	for(var i=0; i< areaArr.length; i++){
             		marker = new naver.maps.Marker({
@@ -440,7 +437,6 @@
             		infoWindows.push(infoWindow);
             		
             	}
-            	console.log(markers[0]);
             	for(var i=0, ii=markers.length; i<ii; i++) {
                     naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
                 }
@@ -499,15 +495,13 @@
                     var location = new naver.maps.LatLng(myaddr);
 
                     map.setCenter(location);
-                    console.log(map.center);
+                    map.setZoom(16);
                     
                     bounds = map.getBounds(),
                     southWest = bounds.getSW(),
                     northEast = bounds.getNE(),
                     lngSpan = northEast.lng() - southWest.lng(),
                     latSpan = northEast.lat() - southWest.lat();
-                    
-                    console.log("h : " + bounds.hasPoint(myaddr));
                     
                   	//목록에서도 검색하기 위한 것
                     searchList(bounds);
@@ -520,8 +514,6 @@
                 lngSpan = northEast.lng() - southWest.lng(),
                 latSpan = northEast.lat() - southWest.lat();
             	
-            	console.log("b : " + bounds);
-            	
             	$("li").css("display", "none");
             	
             	$("#leaseDropDownMenu").css("display", "none");
@@ -531,7 +523,6 @@
             	
             	<c:forEach var="building" items="${buildings}" varStatus="status">
 	            	var addrPoint = new naver.maps.Point(${building.buildingLongitude}, ${building.buildingLatitude});
-	            	console.log("areaArr : " + bounds.hasPoint(addrPoint));
 	            	
 	        		if(bounds.hasPoint(addrPoint)){
 	        			if(tradeInfo == '임대'){
