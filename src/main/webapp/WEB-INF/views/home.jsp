@@ -6,8 +6,11 @@
 		font-size: 20px;
 	}
 </style>
+	<script> 
+        AOS.init(); 
+    </script>
 	<div class="d-flex flex-column">
-            <div class="d-flex flex-row justify-content-center align-items-center mt-5 mb-5" style="animation: fadeInDown 2s;">
+            <div class="d-flex flex-row justify-content-center align-items-center mb-5" style="margin-top:100px;">
                 <div class="d-flex flex-column mr-5">
                     <div>
                         <span style="font-size: 30px; font-weight: bold;">START</span>
@@ -15,19 +18,17 @@
                         <span style="font-size: 30px; font-weight: bold">EN</span>
                         <span style="font-size: 30px;">은</span>
                     </div>
-                    <span class="hometext">START DENTIST들과 함께</span>
-                    <span class="hometext">합니다.</span>
-                    <span class="hometext">자신만의 병원을</span>
+                    <span class="hometext">START DENTIST들과 함께 합니다.</span>
                     <div>
-                        <span class="hometext">찾아보세요</span>
-                        <span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
+                    	<span class="hometext">자신만의 병원을 찾아보세요.</span>
+                    	<span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
                     </div>
                 </div>
                 <a href="${pageContext.request.contextPath}/opening/opening">
-                	<img class="border rounded" src="resources/images/main1_1.png" class="img-responsive centor-block m-3" style="height: 400px;"/>
+                	<img class="border rounded" src="resources/images/mainMap.png" class="img-responsive centor-block m-3" style="height: 550px;"/>
                 </a>
             </div>
-            <div class="d-flex flex-row justify-content-center align-items-center mt-5 mb-4">
+            <div data-aos="fade-up" class="d-flex flex-row justify-content-center align-items-center mt-5 mb-4">
             	<a href="${pageContext.request.contextPath}/take/list">
             		<img src = "resources/images/main2_img.png" style="width:700px; height: 400px;"/>
             	</a>
@@ -38,7 +39,7 @@
                     <span class="hometext">정보를 얻으세요!&nbsp;<span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span></span>
                 </div>
             </div>
-            <div class="d-flex flex-column justify-content-center align-items-center mt-5" style="height: 400px;">
+            <div data-aos="fade-up" class="d-flex flex-column justify-content-center align-items-center mt-5" style="height: 400px;">
                 <div>
 	                <a href = "/interior/example" style="text-decoration: none;">
 	                	<img class="m-2 border rounded" src = "resources/images/mainHos1.jpg" width="550px" height="400px"/>
@@ -50,7 +51,7 @@
                     <span style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
                 </div>
             </div>
-            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; margin-top:150px;">
+            <div data-aos="fade-up" class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; margin-top:150px;">
 			  <div class="container-fluid row" style="height: 250px;">
 			    <div class="col-1"></div>
 			    <div class="col-10 row mb-3">

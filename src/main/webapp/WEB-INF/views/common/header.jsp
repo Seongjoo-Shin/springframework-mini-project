@@ -18,6 +18,9 @@
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=lt1xd5ne5c&submodules=geocoder"></script>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=lt1xd5ne5c&submodules=panorama"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
         @font-face {
             src : url("${pageContext.request.contextPath}/resources/font/EliceDigitalBaeum_TTF/EliceDigitalBaeum_Regular.ttf"); 
@@ -118,9 +121,9 @@
 </head>
 <body style="height: 100%; display: flex; flex-direction: column;">
     <header>
-        <nav class="navbar navbar-light" style="border-bottom: 1px solid rgb(242, 101, 45);">
+        <nav class="navbar navbar-light" style="border-bottom: 1px solid rgb(242, 101, 34); margin-top:15px;">
             <a class="navbar-brand" href="/">
-              <img src="${pageContext.request.contextPath}/resources/images/logo.png" width="250px"/>
+              <img src="${pageContext.request.contextPath}/resources/images/startden.png"/>
             </a>
             <a href="${pageContext.request.contextPath}/opening/opening" class="text-dark h3 font-weight-bold" style="text-decoration: none;">개원</a>
             <a href="${pageContext.request.contextPath}/take/list" class="text-dark h3 font-weight-bold" style="text-decoration: none;">인수</a>
