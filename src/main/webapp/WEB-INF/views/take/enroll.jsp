@@ -293,7 +293,7 @@
 	                        <div class="m-4 d-flex flex-column justify-content-center">
 	                            <div class="mb-2">* 도로명, 건물명, 지번에 대해 통합 검색이 가능합니다.</div>
 	                            <div class="mb-2">
-	                                <input class="p-2" type="text" id="buildingAddr" name="buildingAddr" placeholder="주소" style="width: 300px;" value="${buildingInfo.buildingAddr}" disabled="disabled">
+	                                <input class="p-2" type="text" id="buildingAddr" name="buildingAddr" placeholder="주소" style="width: 300px;" value="${buildingInfo.buildingAddr}" readonly>
 	                                <input class="p-2" type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
 	                            </div>
 	                            <input id="buildingAddrDetail" name="buildingAddrDetail" class="p-2" placeholder="상세 주소를 입력해주세요." value="${buildingInfo.buildingAddrDetail}"/>
@@ -511,7 +511,7 @@
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">입주 가능일</h4>
-	                    <input type="text" class="border rounded" id="buildingAvailableDate" name="buildingAvailableDate" value="${buildingInfo.buildingAvailableDate}" >
+	                    <input type="text" class="border rounded" id="buildingAvailableDate" name="buildingAvailableDate" value="${buildingInfo.buildingAvailableDate}" readonly>
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">상세 설명</h4>
