@@ -10,7 +10,7 @@
         AOS.init(); 
     </script>
 	<div class="d-flex flex-column">
-            <div class="d-flex flex-row justify-content-center align-items-center mb-5" style="margin-top:100px;">
+            <div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-row justify-content-center align-items-center mb-5" style="margin-top:100px;">
                 <div class="d-flex flex-column mr-5">
                     <div>
                         <span style="font-size: 30px; font-weight: bold;">START</span>
