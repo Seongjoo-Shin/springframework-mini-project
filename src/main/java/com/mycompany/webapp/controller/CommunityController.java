@@ -3,6 +3,7 @@ package com.mycompany.webapp.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
@@ -143,7 +144,7 @@ public class CommunityController {
 		//게시물 내용 개행 처리
 		String tempContent = freeBoardDto.getFreeContent();
 		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
-		tempContent = tempContent.replaceAll("\n", "<br/>");
+		tempContent = tempContent.replaceAll("<br/>", "\n");
 		freeBoardDto.setFreeContent(tempContent);
 		
 		//현재 로그인한 사용자 id model에 싣기
@@ -440,7 +441,7 @@ public class CommunityController {
 		//게시물 내용 개행 처리 
 		String tempContent = marketBoardDto.getMarketContent();
 		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
-		tempContent = tempContent.replaceAll("\n", "<br/>");
+		tempContent = tempContent.replaceAll("<br/>", "\n");
 		marketBoardDto.setMarketContent(tempContent);
 		
 		//가격에 , 처리
@@ -469,11 +470,39 @@ public class CommunityController {
 		return "/community/market/insert";
 	}
 	
-	@RequestMapping("/market/update")
-	public String marketUpdate() {
+	/*	//리스트에서 대표사진 보여줌, 리스트의 index에 해당하는 사진 불러와줌, img의미 인덱스
+		@RequestMapping("/market/getMarketImage")
+		public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
+			log.info("marketNo" + marketNo +"img" + img);
+			List<MarketFileDto> files = marketBoardService.selectImageFileByMarketNo(marketNo);
+			int num = Integer.parseInt(img);
+			byte[] temp = files.get(num).getImageFileData();
+			InputStream is = new ByteArrayInputStream(temp);
+			IOUtils.copy(is, res.getOutputStream());
+	    
+		}*/
+	
+	@GetMapping("/market/update")
+	public String marketUpdate(int marketNo, Model model, HttpSession session, HttpServletRequest req, HttpServletRequest res) {
+		//수정 할 마켓 정보 가져오기
+		MarketBoardDto marketBoardDto = marketBoardService.getMarketBoard(marketNo);
+		List<MarketFileDto> marketFiles = marketBoardService.selectImageFileByMarketNo(marketNo);
+		
+		//가져온 데이터 model에 넣어서 jsp에서 활용
+		model.addAttribute("marketBoardDto", marketBoardDto);
+		model.addAttribute("marketFiles", marketFiles);
+		model.addAttribute("marketFilesSize", marketFiles.size());
+		
+		for(int i=0; i<marketFiles.size(); i++) {
+			byte[] temp = marketFiles.get(i).getImageFileData();
+			InputStream is = new ByteArrayInputStream(temp);
+		}
+		
 		return "/community/market/update";
 	}
 
+	
+	
 	@RequestMapping("/market/view")
 	public String marketView() {
 		return "/community/market/view";

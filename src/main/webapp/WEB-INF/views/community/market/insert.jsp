@@ -18,7 +18,7 @@
 					  <option value="1">장비</option>
 					  <option value="2">가구</option>
 					  <option value="3">소모품</option>
-					  <option value="3">기타</option>
+					  <option value="4">기타</option>
 					</select>
 	                <input type="text" name="title" class="form-control my-3" placeholder="제목을 입력하세요"></input>
 	                <div class="border rounded" style="background-color: rgb(231, 231, 236);">

@@ -2,7 +2,7 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <script src="https://kit.fontawesome.com/748830bbae.js" crossorigin="anonymous"></script>
-	<script style="flex-grow:1;">
+	<script>
         function selectAll(selectAll)  {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             
@@ -12,7 +12,7 @@
         }
 
         function openMsgForm(marketWriter){
-            var url = "<%=request.getContextPath() %>/messageSend?receiver="+marketWriter;
+            var url = "<%=request.getContextPath() %>/message?receiver="+marketWriter;
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);
         }
@@ -21,7 +21,7 @@
         	showLikeCount();
         });
     </script>
-    <style>
+    <style style="flex-grow:1;">
 		.top-content { width: 100%;}
 		.top-content .carousel-control-prev { left: -100px; border-bottom: 0; font-size: 40px; color: #444; }
 		.top-content .carousel-control-next { right: -100px; border-bottom: 0; font-size: 40px; color: #444; }
@@ -84,10 +84,7 @@
 					            	</div>
 					            </div>
 					        </div>
-							
-							
-							
-							
+
                             <div class="price h5 mt-4 p-3 ml-2">
                                 <span>가격: </span> ${marketBoardDto.marketPrice} <span> 원</span>
                             </div>
@@ -105,7 +102,7 @@
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
                     	<c:if test="${sessionUserId == marketBoardDto.marketWriter}">
-	                    	<a class="btn btn-outline-dark mr-3" style="width:100px;" href="marketViewtoList">수정</a>
+	                    	<a class="btn btn-outline-dark mr-3" style="width:100px;" href="update?marketNo=${marketBoardDto.marketNo}">수정</a>
 	                        <a class="btn btn-outline-dark mr-3" style="width:100px;" href="marketViewtoList">삭제</a>
 	                        <a class="btn btn-outline-dark mr" style="width:100px;" href="marketViewtoList">판매완료</a>
                     	</c:if>
