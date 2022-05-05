@@ -148,7 +148,7 @@
 			$('#sofainteriorPrice').text('320000');
 			
 			$('#sofa1Div').css('display','inline-block');
-		} else if(imgName == sofa1CheckedImageName){
+		} else if(imgName == sofa3CheckedImageName){
 			$('#sofa3').attr("src", sofa3ImageName);
 			$('#sofa1Div').css('display','none');
 		}
@@ -281,7 +281,7 @@
     	<c:if test="${modelId != null}">
     		<h3 class="ml-3">위시리스트</h3>
     		<div class="row">
-    			<div class="col-8 d-flex" style="overflow-x: scroll; height:450px; border: 1px solid black; border-radius: 5px; display: inline-block; background-color: rgb(248,244,239);">
+    			<div class="col-8 d-flex" style="overflow-x: auto; height:450px; border: 1px solid black; border-radius: 5px; display: inline-block; background-color: rgb(248,244,239);">
 			   		<c:forEach var="wishList" items="${wishLists}">
 			   			<li style="list-style:none;">
 				   			<div class="card m-3" style="width: 200px;">
@@ -312,7 +312,7 @@
 			   			}
 			   		</script>
 			    </div>
-			    <div class="col-4 border" style="height:450px">
+			    <div class="col-4" style="height:450px">
 			    	<table class="table">
 			    		<thead>
 			    			<th scope="col" style="text-align: center;">상품명</th>
