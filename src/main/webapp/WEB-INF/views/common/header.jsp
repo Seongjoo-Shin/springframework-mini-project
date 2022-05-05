@@ -122,11 +122,11 @@
             <a class="navbar-brand" href="/">
               <img src="${pageContext.request.contextPath}/resources/images/logo.png" width="250px"/>
             </a>
-            <a href="${pageContext.request.contextPath}/opening/opening" class="text-dark h3 font-weight-bold">개원</a>
-            <a href="${pageContext.request.contextPath}/take/list" class="text-dark h3 font-weight-bold">인수</a>
-            <a href="${pageContext.request.contextPath}/interior/example" class="text-dark h3 font-weight-bold">인테리어</a>
+            <a href="${pageContext.request.contextPath}/opening/opening" class="text-dark h3 font-weight-bold" style="text-decoration: none;">개원</a>
+            <a href="${pageContext.request.contextPath}/take/list" class="text-dark h3 font-weight-bold" style="text-decoration: none;">인수</a>
+            <a href="${pageContext.request.contextPath}/interior/example" class="text-dark h3 font-weight-bold" style="text-decoration: none;">인테리어</a>
             <div class="dropdown">
-	             <a class="text-dark h3 dropdown font-weight-bold" data-toggle="dropdown">커뮤니티</a>
+	             <a class="text-dark h3 dropdown font-weight-bold" data-toggle="dropdown" style="text-decoration: none;">커뮤니티</a>
 	             <div class="dropdown-menu mr-5" style="z-index: 1001;">
 	                 <a class="dropdown-item" href="${pageContext.request.contextPath}/community/notice/list">공지사항</a>
 	                 <a class="dropdown-item" href="${pageContext.request.contextPath}/community/board/list">자유게시판</a>
@@ -136,18 +136,18 @@
             <div class="myinfo">
             	<span class="logout pr-3 font-weight-bold">
             		<c:if test="${sessionUserId == null}">
-            			<a href = "${pageContext.request.contextPath}/index/loginForm" class ="text-dark">로그인</a> 
+            			<a href = "${pageContext.request.contextPath}/index/loginForm" class ="text-dark" style="text-decoration: none;">로그인</a> 
             		</c:if>
                 </span>
                 <span class="logout pr-3 font-weight-bold">
                 	<c:if test="${sessionUserId != null}">
-            			<a href = "${pageContext.request.contextPath}/index/logout" class ="text-dark">로그아웃</a> 
+            			<a href = "${pageContext.request.contextPath}/index/logout" class ="text-dark" style="text-decoration: none;">로그아웃</a> 
             		</c:if>
                     
                 </span>
                 <span class="mypage pr-3 font-weight-bold">
                 	<c:if test="${sessionUserId != null}">
-            			<a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark">마이페이지</a>
+            			<a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark" style="text-decoration: none;">마이페이지</a>
             		</c:if>
                 </span>
                 <%-- <span id="alarm" class="btn area" onclick="visibleAlarmContent()">

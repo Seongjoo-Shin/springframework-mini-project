@@ -7,11 +7,11 @@
 	}
 </style>
 	<div class="d-flex flex-column">
-            <div class="d-flex flex-row justify-content-center align-items-center">
+            <div class="d-flex flex-row justify-content-center align-items-center mt-5 mb-5" style="animation: fadeInDown 2s;">
                 <div class="d-flex flex-column mr-5">
                     <div>
                         <span style="font-size: 30px; font-weight: bold;">START</span>
-                        <span style="font-size: 30px; font-weight: bold;">:D</span>
+                        <span style="font-size: 30px; font-weight: bold; color: rgb(242, 101, 45);">:D</span>
                         <span style="font-size: 30px; font-weight: bold">EN</span>
                         <span style="font-size: 30px;">은</span>
                     </div>
@@ -24,36 +24,36 @@
                     </div>
                 </div>
                 <a href="${pageContext.request.contextPath}/opening/opening">
-                	<img src="resources/images/main1_1.png" class="img-responsive centor-block m-3" style="height: 400px;"/>
+                	<img class="border rounded" src="resources/images/main1_1.png" class="img-responsive centor-block m-3" style="height: 400px;"/>
                 </a>
             </div>
-            <div class="d-flex flex-row justify-content-center align-items-center">
+            <div class="d-flex flex-row justify-content-center align-items-center mt-5 mb-4">
             	<a href="${pageContext.request.contextPath}/take/list">
             		<img src = "resources/images/main2_img.png" style="width:700px; height: 400px;"/>
             	</a>
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column ml-5">
                     <span class="hometext">병원을 인수하고</span>
                     <span class="hometext">싶으시다고요?</span>
                     <span class="hometext">이곳에서 인수에 대한</span>
                     <span class="hometext">정보를 얻으세요!&nbsp;<span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span></span>
                 </div>
             </div>
-            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 400px;">
+            <div class="d-flex flex-column justify-content-center align-items-center mt-5" style="height: 400px;">
                 <div>
-	                <a href = "/interior/example">
-	                	<img src = "resources/images/main3_img.png" width="400px"/>
-	                    <img src = "resources/images/main4_img.jpg" width="400px"/>
+	                <a href = "/interior/example" style="text-decoration: none;">
+	                	<img class="m-2 border rounded" src = "resources/images/mainHos1.jpg" width="550px" height="400px"/>
+	                    <img class="m-2 border rounded" src = "resources/images/mainHos2.jpg" width="550px" height="400px"/>
 	                </a>
                 </div>
-                <div style="font-size: 30px;" class="mt-2">
-                    <span>자신만의 병원을 찾아보세요</span>
+                <div style="font-size: 30px;" class="mt-2 mb-1">
+                    <span>자신만의 병원을 인테리어 해보세요.</span>
                     <span style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
                 </div>
             </div>
-            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; ">
+            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; margin-top:150px;">
 			  <div class="container-fluid row" style="height: 250px;">
 			    <div class="col-1"></div>
-			    <div class="col-10 row">
+			    <div class="col-10 row mb-3">
 			      <div class="col-4">
 			        <div class="border p-3 bg-light rounded h-100">
 			          <div style="border-bottom: solid 2px rgb(138, 138, 138)" class="pb-2 mb-2">
@@ -141,8 +141,8 @@
 			    </div>
 			  	<div class="col-1"></div>
 			  </div>
-			  <div style="font-size: 30px" class="mt-3">
-			    <span>여러사람들과 소통하고 즐기세요</span>
+			  <div style="font-size: 25px; margin-bottom:150px;" class="mt-5">
+			    <span class="p-2">여러사람들과 소통하고, 정보를 얻을 수 있어요.</span>
 			    <span style="font-weight: bold; color: rgb(242, 101, 45)">:D</span>
 			  </div>
 			</div>

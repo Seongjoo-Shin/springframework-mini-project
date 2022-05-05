@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<style>
+	#searchInput:focus{
+		outline:none;
+	}
+</style>
 <script>
         $(function(){
             getLocation();
@@ -199,7 +204,7 @@
 	                                <div class="row">
 	                                    <div class="col-7 p-0">
 	                                        <div class="p-1" style="border: 1px solid rgb(192, 191, 191);">
-	                                            <input id="searchInput" type="text" class="p-2" style="font-size: 18px; border-color: transparent;" placeholder="주소를 입력해주세요."/>
+	                                            <input id="searchInput" type="text" class="p-2" style="font-size: 18px; border-color: transparent; width:290px;" placeholder="주소를 입력해주세요."/>
 	                                            <div class="float-right">
 	                                                <input id="leaseBtn" type="button" class="p-2 mr-1 rounded" style="border-color: transparent;" value="임대" onclick="leaseBtnClick()"/>
 	                                                <input id="tradeBtn" type="button" class="p-2 mr-1 rounded" style="border-color: transparent;" value="매매" onclick="tradeBtnClick()"/>
@@ -264,7 +269,7 @@
 	                                    	<h3>인수 매물 목록</h3>
 	                               		</div>
 	                                    <div class="p-1 flex-grow-1 ">
-	                                    	<a href="enroll?type=newEnroll" class="border rounded p-2 float-right" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none; font-size: 18px">매물 등록</a>
+	                                    	<a href="enroll?type=newEnroll" class="btn border rounded p-2 float-right" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none; font-size: 18px">매물 등록</a>
 	                                   	</div>
 	                                </div>
 	                                <div style="width:100%;height:562px; border: 1px solid rgb(192, 191, 191); padding: 15px; overflow:auto;">
@@ -421,7 +426,7 @@
         				position: new naver.maps.LatLng(areaArr[i].lat, areaArr[i].lon),
                         map: map,
                         icon: {
-                            content: '<img src="<c:url value="/resources/images/hosMarker.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 35px; height: 50px; left: 0px; top: 0px;">',
+                            content: '<img src="<c:url value="/resources/images/hospitalMark.png"/>" alt="marker" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; left: 0px; top: 0px;">',
                              size: new naver.maps.Size(35, 30),
                              origin: new naver.maps.Point(0, 0),
                              anchor: new naver.maps.Point(16, 32)

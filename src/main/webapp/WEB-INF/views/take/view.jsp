@@ -47,8 +47,8 @@
                         </div>
                     </div>
                     <div class="mt-1 mr-4 p-2 float-right">
-                            <span><button class="btn border rounded p-2" name="allImg" style="text-decoration: none; color:black;" onclick="showPopUp(this)">모든 사진 보기 →</button></span>
-                            <span class="ml-1"><button class="btn border rounded p-2" name="360Img" style="text-decoration: none; color:black;" onclick="showPopUp(this)">360도 사진 보기 →</button></span>
+                            <span><button class="btn btn-outline-secondary border rounded p-2" name="allImg" style="text-decoration: none;" onclick="showPopUp(this)">모든 사진 보기 →</button></span>
+                            <span class="ml-1"><button class="btn btn-outline-secondary border rounded p-2" name="360Img" style="text-decoration: none;" onclick="showPopUp(this)">360도 사진 보기 →</button></span>
                     </div>
                 </div>
                 <div class="ml-2" style="margin-top: 100px;">
@@ -265,19 +265,19 @@
                	</div>
                 <div class="d-flex justify-content-center mt-5 mb-4">
                 	<c:if test="${sessionUserId eq buildingInfo.buildingWriter}">
-                		<a href="enroll?type=updateEnroll&buildingNo=${buildingInfo.buildingNo}" class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</a>
+                		<a href="enroll?type=updateEnroll&buildingNo=${buildingInfo.buildingNo}" class="btn btn-outline-primary border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정</a>
                 	</c:if>
                     <c:if test="${from ne 'mypage'}">
-						<button onclick="viewCancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</button>
+						<button onclick="viewCancle()" class="btn btn-outline-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</button>
 					</c:if>
 					<c:if test="${from eq 'mypage'}">
 						<a href="/mypage/myboard/building?pageNo=${pageNo}" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</a>
 					</c:if>
 					<c:if test="${sessionUserId eq buildingInfo.buildingWriter}">
-						<a href="deleteBuilding?buildingNo=${buildingInfo.buildingNo}" class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</a>
+						<a href="deleteBuilding?buildingNo=${buildingInfo.buildingNo}" class="btn btn-outline-danger border rounded m-2 p-2" style="font-size: 25px; width: 130px;">삭제</a>
 					</c:if>
 					<c:if test="${sessionUserId ne buildingInfo.buildingWriter}">
-						<a href="/interior/simulator?buildingNo=${buildingInfo.buildingNo}" class="btn btn-warning border rounded m-2 p-2" style="font-size: 25px;">인테리어 만들기</a>
+						<a href="/interior/simulator?buildingNo=${buildingInfo.buildingNo}" class="btn btn-outline-dark border rounded m-2 p-2" style="font-size: 25px;">인테리어 만들기</a>
 					</c:if>
                     
                 </div>
