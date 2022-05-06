@@ -127,9 +127,10 @@
 	
 	<!-- 유저 탈퇴 -->
 	<update id="userWithdrawal" parameterType="user">
-		update 
-			users set user_enabled = 0 
-		where user_id = #{userId}
+		DELETE FROM
+			users
+		WHERE
+			user_id = #{userId}
 	</update>
 	
 	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 작성글 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
@@ -161,14 +162,12 @@
 	</select>
 
 	
-	<update id="deleteYnMyPosting" parameterType="Integer">
-		UPDATE
-		    freeboards   
-		SET 
-		    free_use_yn = 0   
-		WHERE    
+	<delete id="deleteYnMyPosting" parameterType="Integer">
+		DELETE FROM 
+			freeboards 
+		WHERE 
 			free_no = #{freeNo}
-	</update>	
+	</delete>	
 	
 	<!-- 거래게시판 -->
 	<select id="selectAllMarketBoard" resultType="Integer" parameterType="String">
@@ -197,14 +196,12 @@
 		]]>
 	</select>
 	
-	<update id="deleteYnMyMarket" parameterType="Integer">
-		UPDATE
-		    marketboards   
-		SET 
-		    MARKET_USE_YN = 0   
-		WHERE    
+	<delete id="deleteYnMyMarket" parameterType="Integer">
+		DELETE FROM 
+			marketboards 
+		WHERE 
 			market_no = #{marketNo}
-	</update>
+	</delete>
 	
 	<update id="updateSalesYN" parameterType="Integer">
 		UPDATE
@@ -243,14 +240,12 @@
 	</select>
 
 	
-	<update id="deleteYnMyBuilding" parameterType="Integer">
-		UPDATE
-		    buildings   
-		SET 
-		    building_use_yn = 0   
-		WHERE    
+	<delete id="deleteYnMyBuilding" parameterType="Integer">
+		DELETE FROM 
+			buildings 
+		WHERE 
 			building_no = #{buildingNo}
-	</update>
+	</delete>
 	
 	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 쪽지함 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 	<select id="selectReceiveMessageList" parameterType="pager" resultMap="messageMap">

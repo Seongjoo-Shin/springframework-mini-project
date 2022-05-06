@@ -6,7 +6,7 @@
             </div>
             <div class="col-4 mt-5 text-center">
                 <div>
-                    <img src="${pageContext.request.contextPath}/resources/images/logo.png" width="350px"/>
+                    <img src="${pageContext.request.contextPath}/resources/images/startden.png" width="350px"/>
                 </div>
             </div>
             <div class="col-4 mt-auto p-1" >

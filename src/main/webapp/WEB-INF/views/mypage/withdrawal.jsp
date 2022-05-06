@@ -54,10 +54,10 @@
                     <h3 class="m-3">회원 탈퇴</h3>
                     <div class="d-flex justify-content-center h-100">
                         <div class="align-items-center" style="margin: auto 0;">
-	                        <h4>비밀번호를 입력해주세요</h4>
+	                        <h4 style="margin-bottom: 20px;">비밀번호를 입력해주세요</h4>
 		                    <input type="hidden" name="userId" value="${sessionUserId}"/>
-		                    <input type="password" id="password" class="mr-2" placeholder="비밀번호" name="userPassword"/>
-		                    <input type="button" value="회원탈퇴" class="btn btn-outline-dark" onclick="fn_withdrawal();"/>
+		                    <input type="password" id="password" class="mr-2" placeholder="비밀번호" name="userPassword" style="padding: 0.35rem!important;"/>
+		                    <input type="button" value="회원탈퇴" class="btn btn-outline-dark mb-2" onclick="fn_withdrawal();" style="margin-bottom: 5px;"/>
 	                    </div>
                     </div>
                 </div>
