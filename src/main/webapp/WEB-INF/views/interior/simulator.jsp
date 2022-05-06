@@ -34,12 +34,21 @@
 			$('#bed1').attr("src", bed1CheckedImageName);
 	 		$('#bed2').attr("src", bed2ImageName);
 	 		$('#bed3').attr("src", bed3ImageName);
+	 		$('#chair1').attr('src', chair1ImageName);
+			$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr("src", chair3ImageName);
+	 		$('#sofa1').attr('src', sofa1ImageName);
+			$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr("src", sofa3ImageName);
 			
 			$('#bedDetailimage').attr('src', imgName);
 			$('#bedinteriorName').text('치과베드 A타입');
 			$('#bedinteriorPrice').text('960000');
 			
 			$('#bed1Div').css('display','inline-block');
+			$('#sofa1Div').css('display','none');
+			$('#chair1Div').css('display','none');
+			
 		} else if(imgName == bed1CheckedImageName){
 			$('#bed1').attr('src',bed1ImageName);
 			$('#bed1Div').css('display','none');
@@ -47,6 +56,12 @@
 			$('#bed2').attr("src", bed2CheckedImageName);
 	 		$('#bed1').attr("src", bed1ImageName);
 	 		$('#bed3').attr("src", bed3ImageName);
+	 		$('#chair1').attr('src', chair1ImageName);
+			$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr("src", chair3ImageName);
+	 		$('#sofa1').attr('src', sofa1ImageName);
+			$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr("src", sofa3ImageName);
 	 		
 			
 			$('#bedDetailimage').attr('src', imgName);
@@ -54,6 +69,9 @@
 			$('#bedinteriorPrice').text('720000');
 			
 			$('#bed1Div').css('display','inline-block');
+			$('#sofa1Div').css('display','none');
+			$('#chair1Div').css('display','none');
+			
 		} else if(imgName == bed2CheckedImageName){
 			$('#bed2').attr('src', bed2ImageName);
 			$('#bed1Div').css('display','none');
@@ -61,12 +79,20 @@
 			$('#bed3').attr("src", bed3CheckedImageName);
 	 		$('#bed1').attr("src", bed1ImageName);
 	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#chair1').attr('src', chair1ImageName);
+			$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr("src", chair3ImageName);
+	 		$('#sofa1').attr('src', sofa1ImageName);
+			$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr("src", sofa3ImageName);
 	 		
 	 		$('#bedDetailimage').attr('src', imgName);
 			$('#bedinteriorName').text('치과베드 C타입');
 			$('#bedinteriorPrice').text('1200000');
 			
 			$('#bed1Div').css('display','inline-block');
+			$('#sofa1Div').css('display','none');
+			$('#chair1Div').css('display','none');
 			
 		} else if(imgName == bed3CheckedImageName){
 			$('#bed3').attr('src', bed3ImageName);
@@ -76,12 +102,21 @@
 			$('#chair1').attr('src', chair1CheckedImageName);
 			$('#chair2').attr("src", chair2ImageName);
 	 		$('#chair3').attr("src", chair3ImageName);
+			$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
+	 		$('#sofa1').attr('src', sofa1ImageName);
+			$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr("src", sofa3ImageName);
+	 		
 	 		
 	 		$('#chairDetailimage').attr('src', imgName);
 			$('#chairinteriorName').text('의자 A타입');
 			$('#chairinteriorPrice').text('210000');
 			
 			$('#chair1Div').css('display','inline-block');
+			$('#bed1Div').css('display','none');
+			$('#sofa1Div').css('display','none');
 		} else if(imgName == chair1CheckedImageName){
 			$('#chair1').attr('src', chair1ImageName);
 			$('#chair1Div').css('display','none');
@@ -89,12 +124,20 @@
 			$('#chair2').attr('src', chair2CheckedImageName);
 			$('#chair1').attr("src", chair1ImageName);
 	 		$('#chair3').attr("src", chair3ImageName);
+	 		$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
+	 		$('#sofa1').attr('src', sofa1ImageName);
+			$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr("src", sofa3ImageName);
 	 		
 	 		$('#chairDetailimage').attr('src', imgName);
 			$('#chairinteriorName').text('의자 B타입');
 			$('#chairinteriorPrice').text('270000');
 			
 			$('#chair1Div').css('display','inline-block');
+			$('#bed1Div').css('display','none');
+			$('#sofa1Div').css('display','none');
 		} else if(imgName == chair2CheckedImageName){
 			$('#chair2').attr('src', chair2ImageName);
 			$('#chair1Div').css('display','none');
@@ -102,12 +145,20 @@
 			$('#chair3').attr('src', chair3CheckedImageName);
 			$('#chair1').attr("src", chair1ImageName);
 	 		$('#chair2').attr("src", chair2ImageName);
+	 		$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
+	 		$('#sofa1').attr('src', sofa1ImageName);
+			$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr("src", sofa3ImageName);
 	 		
 	 		$('#chairDetailimage').attr('src', imgName);
 			$('#chairinteriorName').text('의자 C타입');
 			$('#chairinteriorPrice').text('170000');
 			
 			$('#chair1Div').css('display','inline-block');
+			$('#bed1Div').css('display','none');
+			$('#sofa1Div').css('display','none');
 		} else if(imgName == chair3CheckedImageName){
 			$('#chair3').attr('src', chair3ImageName);
 			$('#chair1Div').css('display','none');
@@ -116,12 +167,20 @@
 			$('#sofa1').attr('src', sofa1CheckedImageName);
 			$('#sofa2').attr("src", sofa2ImageName);
 	 		$('#sofa3').attr("src", sofa3ImageName);
+			$('#chair1').attr("src", chair1ImageName);
+	 		$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr('src', chair3ImageName);
+	 		$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
 	 		
 	 		$('#sofaDetailimage').attr('src', imgName);
 			$('#sofainteriorName').text('쇼파 A타입');
 			$('#sofainteriorPrice').text('240000');
 			
 			$('#sofa1Div').css('display','inline-block');
+			$('#bed1Div').css('display','none');
+			$('#chair1Div').css('display','none');
 		} else if(imgName == sofa1CheckedImageName){
 			$('#sofa1').attr("src", sofa1ImageName);
 			$('#sofa1Div').css('display','none');
@@ -129,12 +188,20 @@
 			$('#sofa2').attr('src', sofa2CheckedImageName);
 			$('#sofa1').attr("src", sofa1ImageName);
 	 		$('#sofa3').attr("src", sofa3ImageName);
+	 		$('#chair1').attr("src", chair1ImageName);
+	 		$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr('src', chair3ImageName);
+	 		$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
 	 		
 	 		$('#sofaDetailimage').attr('src', imgName);
 			$('#sofainteriorName').text('쇼파 B타입');
 			$('#sofainteriorPrice').text('240000');
 			
 			$('#sofa1Div').css('display','inline-block');
+			$('#bed1Div').css('display','none');
+			$('#chair1Div').css('display','none');
 		} else if(imgName == sofa2CheckedImageName){
 			$('#sofa2').attr("src", sofa2ImageName);
 			$('#sofa1Div').css('display','none');
@@ -142,12 +209,20 @@
 			$('#sofa3').attr('src', sofa3CheckedImageName);
 			$('#sofa1').attr("src", sofa1ImageName);
 	 		$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#chair1').attr("src", chair1ImageName);
+	 		$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr('src', chair3ImageName);
+	 		$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
 	 		
 	 		$('#sofaDetailimage').attr('src', imgName);
 			$('#sofainteriorName').text('쇼파 C타입');
 			$('#sofainteriorPrice').text('320000');
 			
 			$('#sofa1Div').css('display','inline-block');
+			$('#bed1Div').css('display','none');
+			$('#chair1Div').css('display','none');
 		} else if(imgName == sofa3CheckedImageName){
 			$('#sofa3').attr("src", sofa3ImageName);
 			$('#sofa1Div').css('display','none');

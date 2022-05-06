@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en" style="height: 100%;">
 <head>
@@ -116,14 +117,14 @@
 		::-webkit-scrollbar-track {
 		    background: #e9ecef;  /*스크롤바 뒷 배경 색상*/
 		}
-		
 		.nav-link.active[aria-selected="true"]{
-			border-color: gray; 
-			border-bottom-color: transparent;
-		}
-		.nav-link[aria-selected="false"]{
-			border-bottom-color: gray;
-		}
+	         border-color: gray; 
+	         border-bottom-color: transparent;
+	      }
+	      .nav-link[aria-selected="false"]{
+	         border-bottom-color: gray;
+	      }
+		
 		      	
     </style> 
 </head>
@@ -145,22 +146,29 @@
 	             </div>
             </div>
             <div class="myinfo">
-            	<span class="logout pr-3 font-weight-bold">
-            		<c:if test="${sessionUserId == null}">
-            			<a href = "${pageContext.request.contextPath}/index/loginForm" class ="text-dark" style="text-decoration: none;">로그인</a> 
-            		</c:if>
-                </span>
-                <span class="logout pr-3 font-weight-bold">
-                	<c:if test="${sessionUserId != null}">
-            			<a href = "${pageContext.request.contextPath}/index/logout" class ="text-dark" style="text-decoration: none;">로그아웃</a> 
-            		</c:if>
-                    
-                </span>
-                <span class="mypage pr-3 font-weight-bold">
-                	<c:if test="${sessionUserId != null}">
-            			<a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark" style="text-decoration: none;">마이페이지</a>
-            		</c:if>
-                </span>
+	            <sec:authorize access="isAnonymous()">
+	            	<span class="logout pr-3 font-weight-bold">
+	            			<a href = "${pageContext.request.contextPath}/index/loginForm" class ="text-dark" style="text-decoration: none;">로그인</a> 
+	                </span>
+	            </sec:authorize>
+            	<sec:authorize access="isAuthenticated()">
+            		<form id="logoutForm" method="post" action="${pageContext.request.contextPath}/logout">
+		            	<span class="logout pr-3 font-weight-bold">
+		            		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		            		<a onClick="logout1()" type = "submit" class ="text-dark" style="">로그아웃</a> 
+		                </span>
+		                <span class="mypage pr-3 font-weight-bold">
+	            			<a href="${pageContext.request.contextPath}/mypage/modify" class="text-dark" style="text-decoration: none;">마이페이지</a>
+	                	</span>
+	                </form>
+	                <script>
+	                	function logout1(){
+	                		document.getElementById('logoutForm').submit();
+	                	}
+	                </script>
+	                
+            	</sec:authorize>
+               
                 <%-- <span id="alarm" class="btn area" onclick="visibleAlarmContent()">
                 	<c:if test="${sessionUserId != null}">
             			<img id="alarmImg" class="pb-1 area" src="${pageContext.request.contextPath}/resources/images/alarmUse.png" width="35px"/>

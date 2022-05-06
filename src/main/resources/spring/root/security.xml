@@ -24,13 +24,13 @@
 			success-handler-ref="logoutSuccessHandler"/>
 			
 		<!-- 사이트간 요청 위조 방지 비활성 -->
-		<security:csrf disabled ="true"/>
+		<!-- <security:csrf disabled ="true"/> -->
 		
 		<!-- 요청 URL 권한 설정 -->
-		<security:intercept-url pattern="/ch17/admin*" access="hasRole('ROLE_ADMIN')"/>
+		<!-- <security:intercept-url pattern="/ch17/admin*" access="hasRole('ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/ch17/manager*" access="hasRole('ROLE_MANAGER')"/>
 		<security:intercept-url pattern="/ch17/user*" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/**" access="permitAll"/>
+		<security:intercept-url pattern="/**" access="permitAll"/>  -->
 		
 		<!-- 권한 없을 경우 보여줄 페이지 설정 -->
 		<!-- <security:access-denied-handler error-page="/ch17/error403"/> -->

@@ -40,7 +40,7 @@ public class IndexController {
 		return "/index/loginForm";
 	}
 	
-	@PostMapping("/login")
+	/*@PostMapping("/login")
 	public String login(UserDto user, HttpSession session, Model model) {
 		log.info(user);
 		LoginResult result = userService.login(user);
@@ -56,7 +56,7 @@ public class IndexController {
 			model.addAttribute("error", "패스워드가 틀립니다.");
 			return "/index/loginForm";
 		}
-	}
+	}*/
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {

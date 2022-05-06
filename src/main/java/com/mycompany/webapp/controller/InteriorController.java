@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.WishListDto;
+import com.mycompany.webapp.security.UserCustom;
 import com.mycompany.webapp.service.TakeService;
 import com.mycompany.webapp.service.UserService;
 import com.mycompany.webapp.service.WishListService;
@@ -64,9 +66,20 @@ public class InteriorController {
 	}
 	
 	@RequestMapping("/simulator")
-	public String simulator(@RequestParam(defaultValue ="0") int buildingNo, Model model, HttpSession session) {
+	public String simulator(@RequestParam(defaultValue ="0") int buildingNo, Model model, HttpSession session, Authentication authentication) {
 		log.info("실행");
-		String userId = (String)session.getAttribute("sessionUserId");
+		String userId;
+		//인증객체의 존재 여부 확인
+		if(authentication != null) {
+			UserCustom userCustom = (UserCustom)authentication.getPrincipal();
+			userId = userCustom.getUsername();
+			log.info("userID" + userId);
+			log.info("userRole" + userCustom.getAuthorities());
+		} else {
+			userId = null;
+		}
+		
+		log.info(userId);
 		WishListDto wishlist=new WishListDto();
 		wishlist.setUserId(userId);
 		wishlist.setBuildingNo(buildingNo);
