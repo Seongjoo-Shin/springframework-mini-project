@@ -86,7 +86,7 @@ public class TakeController {
 	   if(type.equals("nomal")) { //일반 사진만 가져와!
 		   int num = Integer.parseInt(img);
 		   if(files.get(num).getPanoramaCheck() == 1) {
-			   return;
+			   num++;
 		   }
 		   byte[] temp = files.get(num).getImageFileData();
 		   InputStream is = new ByteArrayInputStream(temp);

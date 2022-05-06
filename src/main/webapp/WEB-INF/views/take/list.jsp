@@ -453,6 +453,7 @@
             		var marker = markers[seq],
             			infoWindow = infoWindows[seq];
             		//정보창이 열려있을 경우
+            		markerSeq = seq;
             		if(infoWindow.getMap()){
             			infoWindow.close();
             		}else { //정보창이 닫혀있을 경우!
