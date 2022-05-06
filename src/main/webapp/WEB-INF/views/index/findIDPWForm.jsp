@@ -45,7 +45,7 @@
 		color : red
 	}
 </style>
-<<script>
+<script>
 	var findIdNum;
 	var findPasswordNum;
 	var resultFindID = 0;
@@ -97,9 +97,9 @@
  	
 </script>
 <section  style="flex-grow:1;">
-	<div class="d-flex justify-content-center align-items-center vh-100">
+	<div class="d-flex justify-content-center align-items-center" style="margin-top: -31px;">
     <div class="d-flex flex-column justify-content-center col-md-3">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 30%"">
             <li class="nav-item" role="presentation">
               <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">아이디</a>
             </li>
@@ -116,22 +116,22 @@
                      <div>
                          <h2 class="pb-3" style="text-align: center;">아이디찾기</h2>
                          <div class="form-group">
-                             <input id="findInputEmail" name="findInputEmail" placeholder="등록된 이메일" type="text"/>
-                             <button type="button" onClick="findEmail()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">인증번호 받기</button>
+                             <input id="findInputEmail" name="findInputEmail" placeholder="등록된 이메일" type="text" style="padding: 2px;"/>
+                             <button type="button" onClick="findEmail()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white; margin-bottom: 7px;">인증번호 받기</button>
                          </div>
                          
                          <span class="failFindEmail" style="margin-bottom: 15px ">등록된 이메일이 아닙니다.</span>
                          
-                         <div id="cDiv" class="form-group" style="display:none">
-                             <input id="checkFindIdNum" placeholder="인증번호" type="text"/>
-                             <button type="button" onClick="confirmFindIdNum()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">확인</button>
+                         <div id="cDiv" class="form-group" style="display:none;" >
+                             <input id="checkFindIdNum" placeholder="인증번호" type="text" style="padding: 2px;"/>
+                             <button type="button" onClick="confirmFindIdNum()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white; margin-bottom: 7px;">확인</button>
                              <span class="failFindID" style="margin-bottom: 15px ">인증번호가 일치하지 않습니다.</span>
                              <span class="successFindID" style="margin-bottom: 15px ">인증번호가 확인되었습니다.</span>
                          </div>
                      </div>
                      
                      <div>
-                         <button type="button" onClick="findIdByEmail()" class="btn btn-sm" style="width: 300px; background-color: rgb(242, 101, 45); color: white;">아이디찾기</button>
+                         <button type="button" onClick="findIdByEmail()" class="btn btn-sm" style="margin:30px auto; width: 300px; background-color: rgb(242, 101, 45); color: white;">아이디찾기</button>
                      </div>
                      <script>
                      	function findIdByEmail(){
@@ -190,8 +190,8 @@
 	                             <span class="noId" style="margin-bottom: 15px ">존재하지 않는 아이디입니다.</span>
 	                         </div>
 	                         <div class="form-group">
-	                             <input id="passwordEmail" placeholder="등록된 이메일" type="text"/>
-	                             <button type="button" onClick="checkInfo()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">인증번호 받기</button>
+	                             <input id="passwordEmail" placeholder="등록된 이메일" type="text" style="padding: 2px;"/>
+	                             <button type="button" onClick="checkInfo()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white; margin-bottom: 7px;">인증번호 받기</button>
 	                         	 <span class="noEmail" style="margin-bottom: 15px ">존재하지 않는 이메일입니다.</span>
 	                         </div>
 	                         <script>
@@ -235,8 +235,8 @@
 	                         </script>
 	                         
 	                         <div id="pDiv" class="form-group" style="display:none">
-                             	 <input id="checkFindPasswordNum" placeholder="인증번호" type="text"/>
-	                             <button type="button" onClick="confirmFindPasswordNum()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white;">확인</button>
+                             	 <input id="checkFindPasswordNum" placeholder="인증번호" type="text" style="padding: 2px;"/>
+	                             <button type="button" onClick="confirmFindPasswordNum()" class="btn btn-sm" style="background-color: rgb(242, 101, 45); color: white; margin-bottom: 7px;">확인</button>
                          		 <span class="failFindPassword" style="margin-bottom: 15px ">인증번호가 일치하지 않습니다.</span>
                              	 <span class="successFindPassword" style="margin-bottom: 15px ">인증번호가 확인되었습니다.</span>
                          	</div>
@@ -256,7 +256,7 @@
                          	</script>
 	                     </div>
 	                     <div>
-	                         <button type="button" onClick="sendNewPassword()" class="btn btn-sm" style="width: 300px; background-color: rgb(242, 101, 45); color: white;">새로운비밀번호</button>
+	                         <button type="button" onClick="sendNewPassword()" class="btn btn-sm" style="margin:30px auto; width: 300px; background-color: rgb(242, 101, 45); color: white;">새로운비밀번호</button>
 	                     </div>
 	                     <script>
 	                     	 function sendNewPassword(){

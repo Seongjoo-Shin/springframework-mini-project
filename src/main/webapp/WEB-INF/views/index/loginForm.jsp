@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <section style="flex-grow:1;">
 	 <form method="post" action="/index/login" onsubmit ="return loginCheck()">
-	    <div class = "d-flex flex-row justify-content-center" style="height: 60vh; margin-top: 200px;">
+	    <div class = "d-flex flex-row justify-content-center" style="height: 40vh; margin-top: 130px;">
 	        <div class="d-flex flex-column justify-content-center align-content-center col-md-3" style="height: 300px; border: 2px solid rgb(148,148,148); border-radius: 10px;">
 	            <div class="d-flex flex-row justify-content-center align-content-center" >
 	                <div class="d-flex flex-column justify-content-center align-content-center">
