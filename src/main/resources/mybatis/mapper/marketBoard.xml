@@ -123,11 +123,11 @@
 	
 	<!-- 게시글 파일 DB 저장 -->
 	<insert id="insertMarketFile" parameterType="marketfile">
-		<selectKey keyProperty="marketfileNo" resultType="Integer" order="BEFORE">
+		<selectKey keyProperty="marketFileNo" resultType="Integer" order="BEFORE">
 			select MARKETFILES_SEQ.nextval from dual
 		</selectKey>
 			INSERT INTO MARKETFILES (ATTACH_ORIGINAL_NAME, ATTACH_SAVE_NAME, ATTACH_TYPE, MARKET_NO, MARKET_FILE_NO, MARKET_IMAGE_FILE_DATA)
-			VALUES(#{attachOriginalName}, #{attachSaveName}, #{attachType}, #{marketNo}, #{marketfileNo}, #{imageFileData})
+			VALUES(#{attachOriginalName}, #{attachSaveName}, #{attachType}, #{marketNo}, #{marketFileNo}, #{imageFileData})
 	</insert>
 	
 	<!--  -->
