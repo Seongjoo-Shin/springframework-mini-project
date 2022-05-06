@@ -76,8 +76,8 @@
                                 <th>번호</th>
                                 <th>매물이름</th>
                                 <th>거래종류</th>
-                                <th>전용면적</th>
-                                <th>등록날짜</th>
+                                <th>게시날짜</th>
+                                <th>등록기간연장</th>
                                 <th>수정</th>
                                 <th><input type="checkbox" class="delete" onclick="selectAll(this)"></th>
                             </tr>
@@ -88,9 +88,9 @@
 	                                <td class="text-center bg-light"><span>${building.buildingNo}</span></td>
 	                                <td><a href="/take/view?buildingNo=${building.buildingNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${building.buildingName}</a></td>
 	                                <td class="text-center">${building.buildingTradeInfo }</td>
-	                                <td class="text-center">${building.buildingSupplyArea}</td>
-	                                <td class="text-center"><fmt:formatDate value="${building.buildingRegistDate}" pattern="yyyy-MM-dd"/></td>
-	                                <td><a class="btn btn-sm btn-outline-dark" href="/take/enroll?type=updateEnroll&buildingNo=${building.buildingNo}">수정</a></td>
+	                                <td class="text-center"><fmt:formatDate value="${building.buildingRegistDate}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${building.buildingEndDate}" pattern="yyyy-MM-dd"/></td>
+	                                <td class="text-center"><a class="btn btn-sm btn-outline-dark" onclick="updateDate('${building.buildingNo}')">기간 연장 ${building.buildingEndDate}</a></td>
+	                                <td class="text-center"><a class="btn btn-sm btn-outline-dark text" href="/take/enroll?type=updateEnroll&buildingNo=${building.buildingNo}">수정</a></td>
 	                                <td class="text-center"><input type="checkbox" class="delete" name="buildingNo" class="delete_box" id="${building.buildingNo}"></td>
 	                            </tr>
 							</c:forEach>

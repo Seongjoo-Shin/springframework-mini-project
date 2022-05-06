@@ -10,8 +10,8 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.KeyWordDto;
@@ -85,9 +85,9 @@ public class OpeningController {
 	
 	@RequestMapping(value="/oneKeyword", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String oneKeyword(@RequestParam("kNo") int keywordNo) {
-		
-		KeyWordDto keyword = openingService.getKeyword(keywordNo);
+	public String oneKeyword(@RequestBody String kNo) {
+		int no = Integer.parseInt(kNo);
+		KeyWordDto keyword = openingService.getKeyword(no);
 		JSONObject jsonObject = new JSONObject();
 		if(keyword.getKeyword1() != null) {
 			jsonObject.put("keyword1", keyword.getKeyword1());

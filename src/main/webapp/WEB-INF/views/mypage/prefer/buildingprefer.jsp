@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-8">
                     <h3 class="m-3">찜 목록</h3>
-                    <div class="row <c:if test='${total < 1}'>mb-5</c:if>" style="border-bottom: 1px solid black;">
+                    <div class="row <c:if test='${total < 1}'>mb-5</c:if>">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active h5 text-dark" href="/mypage/prefer/buildingprefer">인수</a>
@@ -42,8 +42,9 @@
                                 <a class="nav-link h5 text-dark"  href="/mypage/prefer/marketprefer">거래</a>
                             </li>
                         </ul>
+                        <span style="width: 88%; border-bottom: 1px solid #dee2e6;"></span>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row" style="margin-top: 2rem!important;">
                     <c:forEach var="building" items="${buildings}">
 	                    <div class="col-3 float-left mb-5">
 	                        <div class="card" style="height:386px;">

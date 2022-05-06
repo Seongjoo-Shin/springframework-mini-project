@@ -62,6 +62,7 @@
 	    <result property="buildingFloor" column="building_floor"/>
 	    <result property="buildingOption" column="building_option"/>
 	    <result property="buildingRegistDate" column="building_regist_date"/>
+	    <result property="buildingEndDate" column="building_end_date"/>
 	</resultMap>
 	
 	<resultMap id="messageMap" type="message">
@@ -224,11 +225,11 @@
 	
 	<select id="selectBuildingList" parameterType="pager" resultMap="buildingMap">
 		<![CDATA[
-		SELECT rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		SELECT rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date, building_end_date
 		FROM (
-		  SELECT ROWNUM as rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		  SELECT ROWNUM as rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date, building_end_date
 		  FROM (
-		    SELECT building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		    SELECT building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date, building_end_date
 		    FROM buildings
 		    WHERE building_writer = #{userId} and building_use_yn = 1
 		    ORDER BY building_no desc
@@ -364,11 +365,11 @@
 	
 	<select id="selectLikeListWithBuilding" parameterType="pager" resultMap="buildingMap">
 		<![CDATA[
-		SELECT rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		SELECT rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date, building_end_date
 		FROM (
-		  SELECT ROWNUM as rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		  SELECT ROWNUM as rnum, building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date, building_end_date
 		  FROM (
-		    SELECT building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date
+		    SELECT building_no, building_name, building_addr, building_addr_detail, building_latitude, building_longitude, building_trade_info, building_takeover_price, building_deposit_price, building_month_rent, building_price, building_available_date, building_detail_content, building_use_yn, building_writer, building_supply_area, building_dedicated_area, building_total_floor, building_floor, building_option, building_regist_date, building_end_date
 		    FROM buildings b, likelists l
 		    WHERE b.building_no = l.like_list_no and l.like_user_id = #{userId} and l.like_type = 'building'
 		    ORDER BY b.building_no desc

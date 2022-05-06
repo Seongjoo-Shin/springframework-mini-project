@@ -195,15 +195,48 @@
                                     	keyword["value"+i] = elements[i].id;
                                     	jsonObject = JSON.stringify(keyword);
                                     } 
-                                	callAjax(jsonObject);
+                                    callData(jsonObject);
                                 }
                                 
-								function callAjax(json){
+								function callData(keyword){
+									var sendData = JSON.parse(keyword);
+									var addr;
+									document.getElementById("msgBox").innerHTML = '';
+									
+									/* var xhr1 = new XMLHttpRequest(); 
+							        xhr1.open("GET", "/opening/keyword", true);
+							        xhr1.setRequestHeader("Content-Type", "application/json");
+							        xhr1.send(sendData);
+							        xhr1.onreadystatechange = function() {
+							        	if (xhr1.readyState === 4) {
+							            	if (xhr1.status === 200) {
+							            		const data = JSON.parse(xhr.responseText);
+							            		positions = [];
+		                                		for(var i=0; i<markers.length; i++){
+		                                			markers[i].setMap(null);
+		                                			infoWindows[i].setMap(null);
+		                                		}
+												setTimeout(() => {
+													for(var i=0; i<data.keywordsLength; i++){
+			                                			positions.push(
+			                                				{
+			                                					keywordNo: data.keywords[i].keyword_no,
+			                                					lat: data.keywords[i].latitude, 
+			                                					lng: data.keywords[i].longitude,
+			                                				},
+			                                			);
+			                                		}	
+												}, 1000);
+		                                		initMap();
+							            	}
+							          	}
+							        }; */
+									
 									$.ajax({
 										type: "GET",
                                 		url: "/opening/keyword",
                                 		traditional: true,
-                                		data: JSON.parse(json),
+                                		data: sendData,
                                 	}).done((data) => {
                                 		positions = [];
                                 		for(var i=0; i<markers.length; i++){
@@ -230,60 +263,66 @@
 								function innerInfo(kNo){
 									var addr;
 									document.getElementById("msgBox").innerHTML = '';
-									$.ajax({
-										url: '/opening/oneKeyword',
-										data: {kNo},
-									}).done((data) => {
-										naver.maps.Service.reverseGeocode({
-                                            location: new naver.maps.LatLng(data.latitude, data.longitude),
-                                        }, function(status, response) {
-                                            if (status !== naver.maps.Service.Status.OK) {
-                                                return alert('Something wrong!');
-                                            }
-                                            result = response.result; // 검색 결과의 컨테이너
-                                            items = result.items.address; // 검색 결과의 배열
-                                            addr = result.items[1].address;
-                                        });
-										setTimeout(() => {
-											var html = '';
-											html += '<div class="ml-4 mt-3" style="max-width: 400px;">';
-											html += '    <p>주소 : <b>' + addr + '</b></p>';
-											if(data.keyword1 != null){
-												html += '    <span>임플란트 - ' + data.keyword1 + '</span><br>';
-											}
-											if(data.keyword2 != null){
-												html += '    <span>역세권 - ' + data.keyword2 + '</span><br>';
-											}
-											if(data.keyword3 != null){
-												html += '    <span>소아치료전문 - ' + data.keyword3 + '</span><br>';
-											}
-											if(data.keyword4 != null){
-												html += '    <span>노인치료전문 - ' + data.keyword4 + '</span><br>';
-											}
-											if(data.keyword5 != null){
-												html += '    <span>교정전문 - ' + data.keyword5 + '</span><br>';
-											}
-											if(data.keyword6 != null){
-												html += '    <span>턱관절교정 - ' + data.keyword6 + '</span><br>';
-											}
-											if(data.keyword7 != null){
-												html += '    <span>사랑니발치 - ' + data.keyword7 + '</span><br>';
-											}
-											if(data.keyword8 != null){
-												html += '    <span>편의시설 - ' + data.keyword8 + '</span><br>';
-											}
-											html += '<div class="mt-2"><sapn>주변시설 - '+data.current_use+'</span></div>';
-											html += '<div class="mt-4"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none;" class="btn text-center" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
-											html += '</div>';
-											if(contentFlag == true){
-												document.getElementById("msgBox").innerHTML = html;	
-											} else {
-												document.getElementById("msgBox").innerHTML = '';
-											}
-										}, 100)
-									}).fail((data) => {
-										swal("서버페이지의 오류가 발생하였습니다.");
-									});
+									var xhr = new XMLHttpRequest(); 
+
+							        xhr.open("POST", "/opening/oneKeyword", true);
+							        xhr.setRequestHeader("Content-Type", "application/json");
+							        xhr.send(kNo);
+							        
+							        xhr.onreadystatechange = function() {
+							        	if (xhr.readyState === 4) {
+							            	if (xhr.status === 200) {
+							            		const data = JSON.parse(xhr.responseText);
+							            		naver.maps.Service.reverseGeocode({
+		                                            location: new naver.maps.LatLng(data.latitude, data.longitude),
+		                                        }, function(status, response) {
+		                                            if (status !== naver.maps.Service.Status.OK) {
+		                                                return alert('Something wrong!');
+		                                            }
+		                                            result = response.result; // 검색 결과의 컨테이너
+		                                            items = result.items.address; // 검색 결과의 배열
+		                                            addr = result.items[1].address;
+		                                        });
+												setTimeout(() => {
+													var html = '';
+													html += '<div class="ml-4 mt-3" style="max-width: 400px;">';
+													html += '    <p>주소 : <b>' + addr + '</b></p>';
+													if(data.keyword1 != null){
+														html += '    <span>임플란트 - ' + data.keyword1 + '</span><br>';
+													}
+													if(data.keyword2 != null){
+														html += '    <span>역세권 - ' + data.keyword2 + '</span><br>';
+													}
+													if(data.keyword3 != null){
+														html += '    <span>소아치료전문 - ' + data.keyword3 + '</span><br>';
+													}
+													if(data.keyword4 != null){
+														html += '    <span>노인치료전문 - ' + data.keyword4 + '</span><br>';
+													}
+													if(data.keyword5 != null){
+														html += '    <span>교정전문 - ' + data.keyword5 + '</span><br>';
+													}
+													if(data.keyword6 != null){
+														html += '    <span>턱관절교정 - ' + data.keyword6 + '</span><br>';
+													}
+													if(data.keyword7 != null){
+														html += '    <span>사랑니발치 - ' + data.keyword7 + '</span><br>';
+													}
+													if(data.keyword8 != null){
+														html += '    <span>편의시설 - ' + data.keyword8 + '</span><br>';
+													}
+													html += '<div class="mt-2"><sapn>주변시설 - '+data.current_use+'</span></div>';
+													html += '<div class="mt-4"><button onclick="openPano(\''+data.latitude+'\','+'\''+data.longitude+'\');" type="button" style="background-color: rgb(242, 101, 45); color: white; text-decoration:none;" class="btn text-center" data-toggle="modal" data-target=".bd-example-modal-lg">로드뷰 보기</button></div>';
+													html += '</div>';
+													if(contentFlag == true){
+														document.getElementById("msgBox").innerHTML = html;	
+													} else {
+														document.getElementById("msgBox").innerHTML = '';
+													}
+												}, 100)
+							            	}
+							          	}
+							        };
 								}
 								
 								function openPano(lat, lng){

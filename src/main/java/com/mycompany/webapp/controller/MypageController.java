@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -123,7 +124,7 @@ public class MypageController {
 		PagerDto pager = new PagerDto(10 , 10, totalCnt, pageNo);
 		pager.setUserId(userId);
 		model.addAttribute("pager", pager);
-		List<BuildingDto> buildings = mypageService.getMyBuildingList(pager); 
+		List<BuildingDto> buildings = mypageService.getMyBuildingList(pager);
 		model.addAttribute("total", totalCnt);
 		model.addAttribute("buildings", buildings);
 		return "/mypage/myboard/building";
@@ -359,10 +360,15 @@ public class MypageController {
 	@PostMapping(value="/userWithdrawal", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	@mypageLoginCheck
-	public String userWithdrawal(HttpSession session, UserDto user, HttpServletRequest request, Model model) {
+	public String userWithdrawal(@RequestBody String sendData, UserDto user, HttpSession session, HttpServletRequest request, Model model) {
+		JSONObject jsonObject = new JSONObject();
+		JSONObject jjson = new JSONObject(sendData);
+		String userId = (String) jjson.get("userId");
+		user.setUserId((String)jjson.get("userId"));
+		user.setUserPassword((String)jjson.get("userPassword"));
 		UserDto chkPwd = mypageService.getPassword(user.getUserId());
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		JSONObject jsonObject = new JSONObject();
+		
 		if(passwordEncoder.matches(user.getUserPassword(), chkPwd.getUserPassword())) {
 			mypageService.userWithdrawal(user);
 			session.removeAttribute("sessionUserId");

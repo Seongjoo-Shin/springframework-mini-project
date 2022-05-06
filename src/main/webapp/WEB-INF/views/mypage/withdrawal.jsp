@@ -4,6 +4,8 @@
 	function fn_withdrawal(){
 		var userId = '${sessionUserId}';
 		var userPassword = document.getElementById("password").value;
+		var data1 = {"userId": userId, "userPassword": userPassword};
+		var sendData = JSON.stringify(data1);
 		if(userPassword == null || userPassword == ""){
 			swal("비밀번호를 입력해주세요").then(() => {
 				document.getElementById("password").focus();	
@@ -14,24 +16,29 @@
 				buttons: true,
 			}).then((result) => {
 				if(result == true){
-					$.ajax({
-						url: '/mypage/userWithdrawal',
-						method: 'POST',
-						data: {userId, userPassword},
-					}).done((data)=>{
-						if(data.status == "success"){
-							swal(data.message).then(() => {
-								location.href = "/";
-							});
-						} else {
-							swal(data.message).then(() => {
-								document.getElementById("password").innerHTML = "";
-								document.getElementById("password").focus();
-							})
-						}
-					}).fail((data)=>{
-						
-					});
+					var xhr = new XMLHttpRequest(); 
+
+			        xhr.open("POST", "/mypage/userWithdrawal", true);
+			        xhr.setRequestHeader("Content-Type", "application/json");
+			        xhr.send(sendData);
+
+			        xhr.onreadystatechange = function() {
+			        	if (xhr.readyState === 4) {
+			            	if (xhr.status === 200) {
+			            		const res = JSON.parse(xhr.responseText);
+				            	if(res.status == "success"){
+									swal(res.message).then(() => {
+										location.href = "/";
+									});
+								} else {
+									swal(res.message).then(() => {
+										document.getElementById("password").innerHTML = "";
+										document.getElementById("password").focus();
+									});
+								}
+			            	}
+			          	}
+			        };
 				}
 			});
 		}
