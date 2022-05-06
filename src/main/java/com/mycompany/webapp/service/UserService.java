@@ -33,7 +33,12 @@ public class UserService {
 		} else {
 			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			if(passwordEncoder.matches(user.getUserPassword(), dbUser.getUserPassword())) {
-				return LoginResult.SUCCESS;
+				if(dbUser.getUserEnabled()==1) {
+					return LoginResult.SUCCESS;
+				} else {
+					return LoginResult.FAIL_USERID;
+				}
+				
 			}
 			return LoginResult.FAIL_USERPASSWORD;
 		}
