@@ -3,9 +3,9 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <section style="flex-grow:1;">
-          <div style="position: relative; width: 100%; height: 0; padding-top: 13.1096%; padding-bottom: 48px; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAE_uy-UhDY&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">  </iframe></div>신튜브 님의 <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAE_uy-UhDY&#x2F;view?utm_content=DAE_uy-UhDY&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">공지사항</a>
-      <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
-        <h1 class="">공지사항</h1>
+      <div class="d-flex align-items-center justify-content-center pt-3">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/notice.png" style="width:100%">
+        <!-- <h1 class="">공지사항</h1> -->
       </div>
       <div class="container-fluid ">
         <div class="row">
@@ -15,12 +15,10 @@
             <div class="row mt-5">
               <div class="col-lg-12">
                 <div class="table-responsive">
-                  <table
-                    class="table project-table table-centered table-nowrap table-hover" 
-                  >
+                  <table class="table project-table table-centered table-nowrap table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">공지</th>
+                        <th scope="col" >공지</th>
                         <th scope="col" style="text-align: center;">제목</th>
                         <th scope="col">작성자</th>
                         <th scope="col" style="text-align: center;">작성일</th>
@@ -28,13 +26,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="i" begin="1" end="10">
+                    <c:forEach var="noticeboard" items="${noticeboards}">
                      	<tr style="cursor: pointer">
 	                        <td><button class="noticeBtn">공지</button></td>
-	                        <td><a class="text-dark" href="noticeDetail">New admin Design</a></td>
-	                        <td>닉네임</td>
-	                        <td style="text-align: center;">2022.02.12</td>
-	                        <td>13</td>
+	                        <td><a class="text-dark" href="noticeDetail?noticeNo=${noticeboard.noticeNo}">${noticeboard.noticeTitle}</a></td>
+	                        <td>${noticeboard.userDto.userNickname}</td>
+	                        <td style="text-align: center;"><fmt:formatDate value="${noticeboard.noticeRegistDate}" pattern="yyyy-MM-dd"/></td>
+	                        <td>${noticeboard.noticeHitCount}</td>
                      	</tr>
                     </c:forEach>
                     </tbody>
@@ -46,27 +44,41 @@
                     <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
                 </div>
                 
-				<!-- 페이징처리 -->
+				<!-- 페이지 처리 -->
                 <div class="pt-3 my-3">
                   <ul class="pagination justify-content-center mb-0">
-                    <li class="page-item disabled">
-                      <a
-                        class="page-link"
-                        href="#"
-                        tabindex="-1"
-                        aria-disabled="true"
-                        >Previous</a>
-                    </li>
-                    <c:forEach var="i" begin="11" end="20">
-                    	<li class="page-item">
-                      		<a class="page-link" href="#"><p><c:out value="${i}"/></p></a>
-                    	</li>
-                    </c:forEach>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
-                    </li>
+	               	<li class="page-item">
+						<a class="page-link" href="list?pageNo=1">First</a>
+					</li>
+					<c:if test="${pager.groupNo>1}">
+						<li class="page-item">
+							<a class="page-link" href="list?pageNo=${pager.startPageNo-1}">Previous</a>
+						</li>
+					</c:if>
+                    
+                    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}"><!-- 시작 페이지부터 마지막 페이지까지 반복 -->
+						<c:if test="${pager.pageNo != i}">
+							<li class="page-item">
+								<a class="page-link" href="list?pageNo=${i}">${i}</a>
+							</li>
+						</c:if>
+						<c:if test="${pager.pageNo == i}">
+							<li class="page-item active">
+								<a class="page-link" href="list?pageNo=${i}">${i}</a>
+							</li>
+						</c:if>
+					</c:forEach>
+					<c:if test="${pager.groupNo<pager.totalGroupNo}">
+						<li class="page-item">
+	                      <a class="page-link" href="list?pageNo=${pager.endPageNo+1}">Next</a>
+	                    </li>
+					</c:if>
+					<li class="page-item">
+	                	<a class="page-link" href="list?pageNo=${pager.totalPageNo}">Last</a>
+	                </li>
                   </ul>
                 </div>
+                <!-- 페이지 처리 끝 -->
               </div>
             </div>
           </div>

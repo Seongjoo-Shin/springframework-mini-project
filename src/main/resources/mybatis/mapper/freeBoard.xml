@@ -20,13 +20,13 @@
  	</resultMap>
  	
 	<select id="selectByPage" parameterType="pager" resultMap="freeBoardWithUserResultMap">
-		SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_hit_count, user_nickname
+		SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_use_yn, free_hit_count, user_nickname
 		FROM (
-		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, free_hit_count, user_nickname
+		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, free_use_yn, free_hit_count, user_nickname
 		  FROM (
-		    SELECT f.free_no, f.free_title, f.free_writer, f.free_regist_date, f.free_hit_count, u.user_nickname
+		    SELECT f.free_no, f.free_title, f.free_writer, f.free_regist_date, f.free_hit_count, f.free_use_yn, u.user_nickname
 		    FROM freeboards f, users u
-		    where f.free_writer = u.user_id
+		    where f.free_writer = u.user_id and f.free_use_yn = 1
 		    ORDER BY free_no DESC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  

@@ -35,10 +35,12 @@ import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
+import com.mycompany.webapp.dto.NoticeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.service.CommentService;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.MarketBoardService;
+import com.mycompany.webapp.service.NoticeService;
 import com.mycompany.webapp.service.TakeService;
 import com.mycompany.webapp.service.UserService;
 
@@ -59,6 +61,9 @@ public class CommunityController {
 	private MarketBoardService marketBoardService;
 	@Resource
 	private TakeService takeService; //insertlikeLists 사용하기 위해 Resource
+	@Resource
+	private NoticeService noticeService;
+
 
 
 	// 자유게시판 - board -------------------------------------------------------------------------------------------------------------------
@@ -591,7 +596,6 @@ public class CommunityController {
 
 		   
 		   String[] deleteImgNoList = deleteDb.split(",");
-		   log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		   log.info("deleteDb"+deleteDb);
 		   log.info("deleteImgNoList: " + deleteImgNoList.length);
 		   
@@ -660,8 +664,20 @@ public class CommunityController {
 	}
  
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
-	@RequestMapping("/notice/list")
-	public String noticeList() {
+	@GetMapping("/notice/list")
+	public String noticeList(@RequestParam(defaultValue = "1") int pageNo,  Model model) { //페이지는 1페이지부터 넘어오기!
+		
+		//Notice 게시판 게시물 개수 가져오기
+		int totalBoardNum = noticeService.totalCount();
+		log.info(totalBoardNum);
+		PagerDto pager = new PagerDto(10, 10, totalBoardNum, pageNo);
+		model.addAttribute("pager", pager);
+		
+		
+		//페이지 정보
+		List<NoticeBoardDto> noticeboards = noticeService.getNoticeBoardByPage(pager);
+		model.addAttribute("noticeboards", noticeboards);
+		
 		return "/community/notice/list";
 	}
 

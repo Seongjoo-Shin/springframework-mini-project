@@ -30,9 +30,8 @@
 	<resultMap id="noticeboardMap" type="noticeboard">
 	    <result property="noticeNo" column="notice_no"/>
 	    <result property="noticeWriter" column="notice_writer"/>
-	    <result property="noticeTitile" column="notice_title"/>
+	    <result property="noticeTitle" column="notice_title"/>
 	    <result property="noticeContent" column="notice_content"/>
-	    <result property="noticeFileSeq" column="notice_file_seq"/>
 	    <result property="noticeRegistDate" column="notice_regist_date"/>
 	    <result property="noticeModifyDate" column="notice_modify_date"/>
 	    <result property="noticeUseYN" column="notice_use_yn"/>

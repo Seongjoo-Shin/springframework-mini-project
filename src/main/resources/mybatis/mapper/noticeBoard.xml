@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                 
+<mapper namespace="com.mycompany.webapp.dao.NoticeBoardDao">
+	
+	<resultMap id="noticeBoardWithUserResultMap" type="noticeboard">
+		<result column="NOTICE_NO" property="noticeNo"/>
+		<result column="NOTICE_WRITER" property="noticeWriter"/>
+		<result column="NOTICE_TITLE" property="noticeTitle"/>
+		<result column="NOTICE_CONTENT" property="noticeContent"/>
+		<result column="NOTICE_REGIST_DATE" property="noticeRegistDate"/>
+		<result column="NOTICE_MODIFY_DATE" property="noticeModifyDate"/>
+		<result column="NOTICE_USE_YN" property="noticeUseYN"/>
+		<result column="NOTICE_HIT_COUNT" property="noticeHitCount"/>
+		<association property="userDto" javaType="com.mycompany.webapp.dto.UserDto">
+			<result column="user_id" property="userId"/>
+			<result column="user_nickname" property="userNickname"/>
+		</association>
+ 	</resultMap>
+ 	
+ 	<select id="selectByPage" parameterType="pager" resultMap="noticeBoardWithUserResultMap">
+		SELECT rnum, NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_REGIST_DATE, NOTICE_MODIFY_DATE, NOTICE_USE_YN, NOTICE_HIT_COUNT, user_nickname
+		FROM (
+		  SELECT ROWNUM as rnum, NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_REGIST_DATE, NOTICE_MODIFY_DATE, NOTICE_USE_YN, NOTICE_HIT_COUNT, user_nickname
+		  FROM (
+		    SELECT n.NOTICE_NO, n.NOTICE_WRITER, n.NOTICE_TITLE, n.NOTICE_CONTENT, n.NOTICE_REGIST_DATE, n.NOTICE_MODIFY_DATE,
+		    	   n.NOTICE_USE_YN, n.NOTICE_HIT_COUNT, u.user_nickname
+		    FROM noticeboards n, users u
+		    where n.NOTICE_WRITER = u.user_id and n.NOTICE_USE_YN = 1
+		    ORDER BY NOTICE_NO DESC
+		  )
+		  WHERE rownum &lt;= #{endRowNo}  
+		)
+		WHERE rnum &gt;= #{startRowNo}
+	</select>
+	
+	<select id="count" resultType="Integer">
+		SELECT count(*) FROM noticeboards
+	</select>
+	
+
+</mapper>
