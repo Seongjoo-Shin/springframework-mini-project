@@ -116,6 +116,14 @@
 		::-webkit-scrollbar-track {
 		    background: #e9ecef;  /*스크롤바 뒷 배경 색상*/
 		}
+		
+		.nav-link.active[aria-selected="true"]{
+			border-color: gray; 
+			border-bottom-color: transparent;
+		}
+		.nav-link[aria-selected="false"]{
+			border-bottom-color: gray;
+		}
 		      	
     </style> 
 </head>
