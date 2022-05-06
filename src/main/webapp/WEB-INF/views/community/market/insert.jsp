@@ -12,20 +12,21 @@
             <div class="h3 border-bottom mb-3"><img src="${pageContext.request.contextPath}/resources/images/writing.png">글쓰기</div>
 	            <div class="mb-5"><!-- action="insertMarketContent"  -->
 	              <form method="post" id="marketInsertForm" action="" enctype="multipart/form-data">
-					<select id="category" name="category" class="form-select-lg" aria-label=".form-select-lg example">
+					<select id="category" name="category" class="mb-3 form-select-lg float-left" aria-label=".form-select-lg example">
 					  <option value="0" selected>카테고리 선택</option>
 					  <option value="1">장비</option>
 					  <option value="2">가구</option>
 					  <option value="3">소모품</option>
 					  <option value="4">기타</option>
 					</select>
-	                <input type="text" name="title" class="form-control my-3" placeholder="제목을 입력하세요"></input>
+					<small id="selectHelp" class="form-text text-danger mx-5" style="display:none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*카테고리를 선택해 주세요!</small>					
+	                <input type="text" name="title" class="form-control mt-3 mb-3" placeholder="제목을 입력하세요"></input>
 	                <div class="border rounded" style="background-color: rgb(231, 231, 236);">
 		                <div id="explainNomal" class="p-3 text-center">
 	                      <img src="${pageContext.request.contextPath}/resources/images/mascot.png" width="90px"/>
 	                      <h6>최소 1장 이상 등록해야 하며, 가로 사진을 권장합니다.</h6>
 	                      <label for="chooseFile1" class="btn btn-info m-1">사진 등록</label>
-	                      <input type="file" id="chooseFile1"  name="chooseFile1" accept="image/*" style="display: none;" onchange="getImageFiles(event)" multiple>
+	                      <input type="file" id="chooseFile1"  name="chooseFile1" accept="image/*" style="display:;" onchange="getImageFiles(event)" multiple>
 	                    </div>
 	                    <div id="nomalImgField">
                            <div id="nomalImgPreview" class="w-100" style="align-items: center; display: inline;">
@@ -34,7 +35,7 @@
                         </div>
 	                </div>
 	                <input id="price" name="price" type="text" class="form-control mt-3" placeholder="₩가격 (숫자만 입력해주세요)"></input>
-	                <small id="priceHelp" class="form-text text-danger" style="display:none;">&nbsp;&nbsp;&nbsp;*가격란엔 숫자만 입력해주세요!</small>
+	                <small id="priceHelp" class="form-text text-danger" style="display:none">&nbsp;&nbsp;&nbsp;*가격란엔 숫자만 입력해주세요!</small>
 	                <textarea name="content" class="form-control mt-3" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow-y:scroll; resize:none"></textarea>
 	              </form>
 	              	<div class="pagination justify-content-center mb-0">
@@ -172,7 +173,7 @@
     
 		var input = document.getElementById("price");
 		
-		//유효성 검사
+		//가격 유효성 검사
 		input.oninput = function(){
 			console.log("가격이 입력되었습니다.");
 			let resultCheckData = true;
@@ -200,6 +201,22 @@
 			}
 		};
 		
+
+		//select 1차 유효성 검사
+		const selectElement = document.querySelector('#category');
+		
+		selectElement.addEventListener('change', (event) => {
+			var selected = $("#category option:selected").val();
+			console.log(selected);
+			if(selected === '0'){
+				$("#selectHelp").css("display","");
+			}else{
+				$("#selectHelp").css("display","none");
+			}
+			
+		});
+
+		
 		//등록 버튼을 눌렀을 때
 		function submitBtnClick(){
 			
@@ -207,12 +224,19 @@
         	var form = document.querySelector("form");
             var formData = new FormData(form);
             
+            const selectElement = document.querySelector('#category');
+            var selected = $("#category option:selected").val();
+            
             //select 유효성 검사
-            if($("#category").val == 0){
+            if(selected === '0'){
             	swal({
-					text: "이미지를 최소 1장은 등록해야 합니다.",
+					title:"카테고리 미선택.",
+					text: "카테고리를 선택해주세요!",
 					icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
 				});
+				return;
+            }else{
+            	$("#selectHelp").css("display","none");
             }
             
             //이미지 첨부파일 formData에 담기

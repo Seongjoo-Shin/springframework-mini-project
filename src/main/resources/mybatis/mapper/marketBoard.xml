@@ -113,12 +113,12 @@
 	
 	<!-- 게시글 등록 -->
 	<insert id="insertMarket" parameterType="marketboard">
-		<selectKey keyProperty="marketNoKey" resultType="Integer" order="BEFORE">
+		<selectKey keyProperty="marketNo" resultType="Integer" order="BEFORE">
 			select MARKETBOARDS_SEQ.nextval from dual
 		</selectKey>
 			INSERT INTO marketboards (market_no, market_title, market_content, market_writer, market_category, market_regist_date,
 										 market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn)
-			VALUES(#{marketNoKey}, #{marketTitle}, #{marketContent}, #{marketWriter}, #{marketCategory}, SYSDATE, SYSDATE, 1, 0, #{marketPrice}, 0, 1)							 
+			VALUES(#{marketNo}, #{marketTitle}, #{marketContent}, #{marketWriter}, #{marketCategory}, SYSDATE, SYSDATE, 1, 0, #{marketPrice}, 0, 1)							 
 	</insert>
 	
 	<!-- 게시글 파일 DB 저장 -->

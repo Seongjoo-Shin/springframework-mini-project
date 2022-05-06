@@ -39,13 +39,17 @@
 	                    </a>
 	                  </div>
 	                  <div class="card-body" style="padding: 1rem;">
+	                  	<div class="float-right recommentCount">
+	                  		<c:if test= "${marketboard.marketSaleYN eq 0}">
+	                  			<p class="border border-secondary px-3 py-1 text-dark rounded">거래완료</p>
+	                  		</c:if> 
+	                    </div>
 	                    <p style="margin-bottom: 0px;">${marketboard.marketTitle}</p>
 	                    <p style="margin-bottom: 7px; font-weight: bold;"><span>${marketboard.marketPrice}</span>원</p>                 
  	                    <div class="float-right recommentCount">
 	                    	<span>관심 </span><span> ${marketboard.marketLikeCount}</span>
 	                    	<p>조회수 <span> ${marketboard.marketHitCount}</span></p>
 	                    </div>
-	                 
 	                    <input id="marketWriter${marketboard.marketNo}" type="hidden" name="freeNo" value="${marketboard.marketWriter}"/>
 	                    <p style="margin-bottom: 0px; font-size:15px;">${marketboard.userDto.userNickname} </p>
 	                    <p style="margin-bottom: 0px; font-size:15px;">

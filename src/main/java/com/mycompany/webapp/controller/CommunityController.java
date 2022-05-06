@@ -559,7 +559,7 @@ public class CommunityController {
 	             marketFileDto.setAttachSaveName(saveFilename);
 	             marketFileDto.setAttachType(m.getContentType());
 	             marketFileDto.setImageFileData(m.getBytes());
-	             marketFileDto.setMarketNo(cnt);
+	             marketFileDto.setMarketNo(marketBoardDto.getMarketNo());
 	             marketBoardService.insertMarketFile(marketFileDto);
 	             
 	          }
