@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -26,6 +27,7 @@ public class LoginCheck {
 		HttpServletRequest request = sra.getRequest();
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("sessionUserId");
+		
 		log.info(userId);
 		if(userId == null) {
 			return "redirect:/index/loginForm";

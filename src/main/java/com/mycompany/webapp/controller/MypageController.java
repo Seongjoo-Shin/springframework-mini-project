@@ -4,7 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -122,12 +123,19 @@ public class MypageController {
 	@RequestMapping("/myboard/building")
 	@mypageLoginCheck
 	public String myboardBuilding(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
+		LocalDateTime now = LocalDateTime.now();
+		
 		String userId = (String) session.getAttribute("sessionUserId");
 		int totalCnt = mypageService.getTotalBuildingCount(userId); 
 		PagerDto pager = new PagerDto(10 , 10, totalCnt, pageNo);
 		pager.setUserId(userId);
 		model.addAttribute("pager", pager);
 		List<BuildingDto> buildings = mypageService.getMyBuildingList(pager);
+		
+		for(BuildingDto b : buildings) {
+			b.setBuildingEndBtn(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
+		}
+		
 		model.addAttribute("total", totalCnt);
 		model.addAttribute("buildings", buildings);
 		return "/mypage/myboard/building";
@@ -144,6 +152,25 @@ public class MypageController {
 		} else {
 			jsonObject.put("message", "게시물 삭제에 실패하였습니다.");
 		}
+		String json = jsonObject.toString();
+		return json;
+	}
+	
+	@PostMapping(value="/mybuilding/prolongDate", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	@mypageLoginCheck
+	public String prolongDate(@RequestBody String buildingNo) {
+		int no = Integer.parseInt(buildingNo);
+		int cnt = mypageService.prolongEndDate(no);
+		JSONObject jsonObject = new JSONObject();
+		if(cnt > 0) {
+			jsonObject.put("message", "게시종료날짜가 연장되엇습니다.");
+			jsonObject.put("status", "success");
+		} else {
+			jsonObject.put("message", "게시종료날짜가 연장되지 않았습니다.");
+			jsonObject.put("status", "fail");
+		}
+		
 		String json = jsonObject.toString();
 		return json;
 	}
@@ -202,19 +229,12 @@ public class MypageController {
 	@RequestMapping("/prefer/buildingprefer")
 	@mypageLoginCheck
 	public String buildingprefer(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, Model model) {
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		
 		String userId = (String) session.getAttribute("sessionUserId");
 		int totalCnt = mypageService.getLikeBuildingCnt(userId);
 		PagerDto pager = new PagerDto(8, 10, totalCnt, pageNo);
 		pager.setUserId(userId);
 		model.addAttribute("pager", pager);
 		List<BuildingDto> buildings = mypageService.getLikeBuilding(pager);
-		for(BuildingDto b : buildings) {
-			LocalDateTime result1 = now.plusDays(3);
-			//b.setBuildingEndBtn();
-		}
 		model.addAttribute("total", totalCnt);
 		model.addAttribute("buildings", buildings);
 		return "/mypage/prefer/buildingprefer";			

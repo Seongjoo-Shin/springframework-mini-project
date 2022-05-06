@@ -12,7 +12,9 @@
 					data: {'marketNo': marketNo},
 					type: 'POST',
 				}).done((data) => {
-					location.reload();
+					swal("좋아요가 취소되었습니다.").then(() => {
+						location.reload();	
+					});
 				}).fail((data) =>{
 				});
 			}

@@ -87,7 +87,10 @@ public class MypageService {
 		}
 		return cnt;
 	}
-	
+
+	public int prolongEndDate(int buildingNo) {
+		return mypageDao.updateEndDate(buildingNo);
+	}
 
 	// --------------------- 쪽지함 기능 ------------------------------
 	public List<MessageDto> getMessageReceiveList(PagerDto pager){
@@ -186,4 +189,5 @@ public class MypageService {
 	public int changeSalesStatus(int marketNo) {
 		return mypageDao.updateSalesYN(marketNo);
 	}
+
 }

@@ -248,6 +248,15 @@
 			building_no = #{buildingNo}
 	</delete>
 	
+	<update id="updateEndDate" parameterType="Integer">
+		UPDATE
+			buildings
+		SET
+			building_end_date = building_end_date + 30
+		WHERE
+			building_no = #{buildingNo}
+	</update>
+	
 	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 쪽지함 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 	<select id="selectReceiveMessageList" parameterType="pager" resultMap="messageMap">
 		<![CDATA[

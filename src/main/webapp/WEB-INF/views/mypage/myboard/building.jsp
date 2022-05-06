@@ -41,6 +41,38 @@
     			}
     		});
         }
+        
+        function fn_addEndDate(buildingNo){
+        	swal("기간을 연장하시겠습니까?", {
+				dangerMode: true,
+				buttons: true,
+			}).then((result) => {
+				if(result == true){
+					var xhr = new XMLHttpRequest(); 
+
+			        xhr.open("POST", "/mypage/mybuilding/prolongDate", true);
+			        xhr.setRequestHeader("Content-Type", "application/json");
+			        xhr.send(buildingNo);
+
+			        xhr.onreadystatechange = function() {
+			        	if (xhr.readyState === 4) {
+			            	if (xhr.status === 200) {
+			            		const res = JSON.parse(xhr.responseText);
+				            	if(res.status == "success"){
+									swal(res.message).then(() => {
+										location.reload();
+									});
+								} else {
+									swal(res.message).then(() => {
+										location.reload();
+									});
+								}
+			            	}
+			          	}
+			        };
+				}
+			});
+        }
     </script>
     <section style="flex-grow:1;">
         <div class="container-fluid h-100 mt-5">
@@ -91,8 +123,19 @@
 	                                <td><a href="/take/view?buildingNo=${building.buildingNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${building.buildingName}</a></td>
 	                                <td class="text-center">${building.buildingTradeInfo }</td>
 	                                <td class="text-center"><fmt:formatDate value="${building.buildingRegistDate}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${building.buildingEndDate}" pattern="yyyy-MM-dd"/></td>
-	                                <td class="text-center"><a class="btn btn-sm btn-outline-dark" onclick="updateDate('${building.buildingNo}')">기간 연장 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/></a></td>
-	                                <td class="text-center"><a class="btn btn-sm btn-outline-dark text" href="/take/enroll?type=updateEnroll&buildingNo=${building.buildingNo}">수정</a></td>
+	                                
+	                                <td class="text-center">
+	                                <fmt:formatDate var="sDate" value="${building.buildingEndDate}" pattern="yyyyMMdd"/>
+	                                <fmt:formatDate var="eDate" value="${building.buildingEndBtn}" pattern="yyyyMMdd"/>
+	                                <c:if test="${(sDate - eDate) <= 3}">
+	                                	<a class="btn btn-sm btn-outline-dark" onclick="fn_addEndDate('${building.buildingNo}')">기간 연장</a>
+	                                </c:if>
+	                                </td>
+	                                <td class="text-center">
+	                                <c:if test="${(sDate - eDate) > 3 }">
+	                                <a class="btn btn-sm btn-outline-dark text" href="/take/enroll?type=updateEnroll&buildingNo=${building.buildingNo}">수정</a>
+	                                </c:if>
+	                                </td>
 	                                <td class="text-center"><input type="checkbox" class="delete" name="buildingNo" class="delete_box" id="${building.buildingNo}"></td>
 	                            </tr>
 							</c:forEach>

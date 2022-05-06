@@ -38,6 +38,7 @@ public interface MypageDao {
 	public List<BuildingDto> selectBuildingList(PagerDto pager); // 본인이 작성한 공지사항 게시물 검색
 	public int selectAllBuilding(String userId);
 	public int deleteYnMyBuilding(int buildingNo);
+	public int updateEndDate(int buildingNo);
 	
 	// 쪽지함
 	public List<MessageDto> selectReceiveMessageList(PagerDto pager); // 받은 메세지함 
@@ -73,6 +74,8 @@ public interface MypageDao {
 	
 	// 회원 탈퇴
 	public int userWithdrawal(UserDto user);
+
+	
 
 
 	
