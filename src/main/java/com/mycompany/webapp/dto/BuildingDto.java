@@ -30,5 +30,6 @@ public class BuildingDto {
 	private String buildingOption;
 	private Date buildingRegistDate;
 	private int buildingLikeCount;
+	private Date buildingEndDate;
 	
 }

@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -278,6 +279,22 @@ public class TakeController {
 	   bdt.setBuildingTotalFloor(Integer.parseInt(request.getParameter("buildingTotalFloor")));
 	   bdt.setBuildingFloor(Integer.parseInt(request.getParameter("buildingFloor")));
 	   bdt.setBuildingOption(option);
+	   
+	   Date now = new Date();
+	   
+	   Calendar cal = Calendar.getInstance();
+	   
+	   cal.setTime(now);
+	   
+	   cal.add(Calendar.DATE, 30);
+	   
+	   SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+	   //String strEndDate = sdf2.format(cal.getTime());
+	   
+	   Date endDate = cal.getTime();
+	   
+	   bdt.setBuildingEndDate(endDate);
+	   log.info("끝! : " + endDate);
 	   
 	   List<EquipmentDto> equipmentList = new ArrayList<EquipmentDto>();
 	   

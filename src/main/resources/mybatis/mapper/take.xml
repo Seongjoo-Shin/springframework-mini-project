@@ -24,6 +24,7 @@
 		<result column="building_option" property="buildingOption"/>
 		<result column="building_regist_date" property="buildingRegistDate"/>
 		<result column="building_like_count" property="buildingLikeCount"/>
+		<result column="building_end_date" property="buildingEndDate"/>
 	</resultMap>
 	
 	<resultMap type="buildingfile" id="buildingFileDtoResult">
@@ -111,7 +112,8 @@
 			#{buildingFloor},
 			#{buildingOption},
 			SYSDATE,
-			'0'
+			'0',
+			#{buildingEndDate}
 		)
 	</insert>
 	
