@@ -1,34 +1,35 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/nice-select.css"> -->
     <section style="flex-grow:1;">
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
         <h1 class="">거래 게시판</h1>
       </div>
-      <div class="container-fluid my-5">
+      <div class="container-fluid my-3">
         <div class="row">
           <div class="col-2"></div>
           <div class="col-8 row">
-            <div class="minimenu col-12 mb-4 pb-3" style="border-bottom: solid 2px rgb(138,138,138);">
+            <div class="minimenu col-12 my-3 pb-3" style="border-bottom: solid 2px rgb(138,138,138);">
               <div class="dropdown">
-                <button id="dropbtn" class="btn dropbtn" style="height:37.62px"><img src="${pageContext.request.contextPath}/resources/images/stick.png" style="height: 15px; width: 15px;" class="mr-2">카테고리</button><!--눌렀을때 효과-->
+                <button id="category" class="btn dropbtn" style="height:37.62px"><img src="${pageContext.request.contextPath}/resources/images/stick.png" style="height: 15px; width: 15px;" class="mr-2">카테고리</button><!--눌렀을때 효과-->
                 <div class="dropdown-content">
-                  <a class="dropdown-item" href="#">전체</a>
-                  <a class="dropdown-item" href="#">장비</a>
-                  <a class="dropdown-item" href="#">가구</a>
-                  <a class="dropdown-item" href="#">소모품</a>
-                  <a class="dropdown-item" href="#">기타</a>
+                  <a class="dropdown-item" href="javascript:showData(0)">전체</a>
+                  <a class="dropdown-item" href="javascript:showData(1)">장비</a>
+                  <a class="dropdown-item" href="javascript:showData(2)">가구</a>
+                  <a class="dropdown-item" href="javascript:showData(3)">소모품</a>
+                  <a class="dropdown-item" href="javascript:showData(4)">기타</a>
                 </div>
               </div>
               <div class="dropdown">
-                <button id="dropbtn" class="btn dropbtn" style="height: 37.62px;">최신순 ▼</button><!--눌렀을때 효과-->
+                <button id="alignment" class="btn dropbtn" style="height: 37.62px;">최신순 ▼</button><!--눌렀을때 효과-->
                 <div class="dropdown-content">
-                  <a class="dropdown-item" href="#">인기순</a>
+                  <a class="dropdown-item" href="javascript:alignData(0)">최신순</a>
+                  <a class="dropdown-item" href="javascript:alignData(1)">인기순</a>
                 </div>
               </div>
-            </div>
-            
+            </div>         
             <!-- 거래게시판 물품 목록 -->        
               <c:forEach var="marketboard" items="${marketBoards}">
 	              <div class="col-3 float-left mb-5">
@@ -125,5 +126,26 @@
         </div>
       </div>
     </section>
+    <script>
+    	var alignarray = {"category":0,"align":0}
+
+	    // $(document).ready(function(){
+	    //     // selectbox styling
+	    //     $('select').niceSelect();
+	    // });
+	    
+	   	function showData(num){
+        alignarray.category = num;
+        console.log(alignarray);
+        $.ajax({
+          url: "getMarketPage",
+          data: alignarray
+        }).done((data)=>{
+          location.reload(true);
+        });
+      }
+
+      function 
+    </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

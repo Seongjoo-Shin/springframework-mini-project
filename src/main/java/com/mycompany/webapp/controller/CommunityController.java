@@ -358,6 +358,8 @@ public class CommunityController {
 		return "/community/market/list";
 	}
 	
+	
+	
 	//리스트에서 대표사진 보여줌, 리스트의 index에 해당하는 사진 불러와줌
 	@RequestMapping("/market/getMarketImage")
 	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
