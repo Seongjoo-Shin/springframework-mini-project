@@ -421,20 +421,20 @@
 	                                </div>
 	                                <div class="pl-3 d-flex flex-column m-2">
 	                                    <div class="d-flex m-2">
-	                                        <input type="number" id="buildingTakeoverPrice" name="buildingTakeoverPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="인수 비용을 입력해주세요." value="${buildingInfo.buildingTakeoverPrice}"/>
+	                                        <input type="number" min="1" id="buildingTakeoverPrice" name="buildingTakeoverPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="인수 비용을 입력해주세요." value="${buildingInfo.buildingTakeoverPrice}"/>
 	                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 	                                    </div>
 	                                    <div id="leaseDiv" style="display: block;">
 		                                    <div class="d-flex m-2" >
-		                                        <input type="number" id="buildingDepositPrice" name="buildingDepositPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="보증금" value="${buildingInfo.buildingDepositPrice}"/>
+		                                        <input type="number" min="1" id="buildingDepositPrice" name="buildingDepositPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="보증금" value="${buildingInfo.buildingDepositPrice}"/>
 		                                        <div style="font-size: 30px;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
-		                                        <input type="number" id="buildingMonthRent" name="buildingMonthRent" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="월세" value="${buildingInfo.buildingMonthRent}"/>
+		                                        <input type="number" min="1" id="buildingMonthRent" name="buildingMonthRent" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="월세" value="${buildingInfo.buildingMonthRent}"/>
 		                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 		                                    </div>
 	                                    </div>
 	                                    <div id="tradeDiv" style="display:none;">
 	                                    	<div class="d-flex m-2" >
-		                                        <input type="number" id="buildingPrice" name="buildingPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="매매가" value="${buildingInfo.buildingPrice}"/>
+		                                        <input type="number" min="1" id="buildingPrice" name="buildingPrice" class="p-1 border rounded" style="font-size: 18px; color: rgb(88, 90, 95); border-color: transparent;" placeholder="매매가" value="${buildingInfo.buildingPrice}"/>
 		                                        <div class="mr-2 p-2" style="font-size: 20px; color: rgb(131, 133, 139);">만원(예. 1000만원)</div>
 		                                    </div>
 	                                    </div>
@@ -452,13 +452,13 @@
 	                        <div class="p-2 d-flex flex-column mr-6">
 	                            <div class="d-flex m-2">
 	                                <div class="m-2">공급 면적</div>
-	                                <span><input type="number" onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="공급면적" value="${buildingInfo.buildingSupplyArea}"/>&nbsp;&nbsp;&nbsp;평</span>
+	                                <span><input type="number" min="1" onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="공급면적" value="${buildingInfo.buildingSupplyArea}"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingSupplyAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
 	                            <div class="border-bottom"></div>
 	                            <div class="d-flex m-2 mt-3">
 	                                <div class="m-2">전용 면적</div>
-	                                <span><input type="number" onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="전용면적" value="${buildingInfo.buildingDedicatedArea}"/>&nbsp;&nbsp;&nbsp;평</span>
+	                                <span><input type="number" min="1" onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="전용면적" value="${buildingInfo.buildingDedicatedArea}"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingDedicatedAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
 	                        </div>
@@ -468,7 +468,7 @@
 	                        <div class="p-2 d-flex flex-column mr-6">
 	                            <div class="d-flex m-2 mb-1">
 	                                <div class="m-2 p-1 pr-2">건물 층수</div>
-	                                <input type="number" id="buildingTotalFloor" name="buildingTotalFloor" class="p-1 border" style="border-color: transparent;" placeholder="건물 층수 입력" value="${buildingInfo.buildingTotalFloor}"/>
+	                                <input type="number" min="1" id="buildingTotalFloor" name="buildingTotalFloor" class="p-1 border" style="border-color: transparent;" placeholder="건물 층수 입력" value="${buildingInfo.buildingTotalFloor}"/>
 	                            </div>
 	                            <div class="border-bottom"></div>
 	                            <div class="d-flex m-2 mt-3">
@@ -499,7 +499,7 @@
 	                            <div class="border rounded d-flex flex-column ml-2 flex-grow-1">
 	                                <div class="p-2">
 	                                    <input id="equipmentName" class="p-2 rounded border" type="text" placeholder="가지고 있는 장비를 추가해주세요!" style="width: 270px;"/>
-	                                    <input id="equipmentCnt" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
+	                                    <input id="equipmentCnt" class="p-2 rounded border" type="number" min="1" placeholder="장비 개수" style="width: 110px;"/>
 	                                    <button type="button" onclick="equipmentSave()" class="btn btn-info mb-1">+</button>
 	                                </div>
 	                                <div id="equipmentList" class="m-2">
@@ -918,13 +918,13 @@
                 </form>
                 <div class="d-flex justify-content-center mt-5 mb-4">
                 	<c:if test="${type eq 'newEnroll'}">
-                		<button onclick="submitBtnClick()" class="btn border rounded m-2 p-2 btn-info" style="font-size: 25px; width: 130px;">등록</button>
-	                	<button onclick="cancle()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
+                		<button onclick="submitBtnClick(this)" class="btn btn-outline-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">등록</button>
+	                	<button onclick="cancle()" class="btn btn-outline-dark border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
                 	</c:if>
                 	<c:if test="${type eq 'updateEnroll'}">
-                		<button onclick="submitBtnClick()" class="btn btn-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정 완료</button>
-                		<button onclick="history.back()" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
-                		<button class="btn border rounded m-2 p-2 btn-danger" style="font-size: 25px; width: 130px;">삭제</button>
+                		<button onclick="submitBtnClick(this)" class="btn btn-outline-info border rounded m-2 p-2" style="font-size: 25px; width: 130px;">수정 완료</button>
+                		<button onclick="history.back()" class="btn btn-outline-dark border rounded m-2 p-2" style="font-size: 25px; width: 130px;">취소</button>
+                		<button class="btn border rounded m-2 p-2 btn-outline-danger" style="font-size: 25px; width: 130px;">삭제</button>
                 	</c:if>
                 </div>
             </div>
@@ -958,7 +958,8 @@
 			});
         }
         
-        function submitBtnClick(){
+        function submitBtnClick(btn){
+        	btn.disabled = true;
         	var form = document.querySelector("form");
             var formData = new FormData(form);
             
@@ -1014,6 +1015,7 @@
             if(errorNum == 1){
             	alertShow();
             	errorNum = 0;
+            	btn.disabled = false;
             	return;
             }
             
@@ -1025,6 +1027,7 @@
 					icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
 					
 				});
+            	btn.disabled = false;
 				return;
             }else{
             	for (var i = 0; i < uploadFiles.length; i++) {
@@ -1075,6 +1078,7 @@
     					text: "가지고 계신 장비 정보를 입력해주세요.",
     					icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png"
     				});
+            		btn.disabled = false;
             		return;
             	}else{
             		for(equip of tempList){
@@ -1102,12 +1106,9 @@
             	}else{
             		message = "매물 등록이 완료 되었습니다.";
             	}
-            	console.log(message);
-            	console.log(data);
             	swal({
 					text: message
 				}).then(()=>{
-					/* $(location).attr("href", "enrollCancle"); */
 					location.href = document.referrer;
 				});
 			});
@@ -1117,6 +1118,11 @@
         	    event.preventDefault();
         	  };
        	});
+        
+        $("input[type='number']").keyup(function(event){
+            var inputVal = $(this).val();
+            $(this).val(inputVal.replace(/[^0-9]/gi,''));
+        });
     </script>
                				
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -344,11 +344,14 @@
     	</div>
 
         <script>
-	    	let markers = new Array();
-	    	let infoWindows = new Array();
+	    	var markers = new Array();
+	    	var infoWindows = new Array();
 	    	var map;
 	    	var marker;
 	    	var curMarker;
+	    	
+	    	//현재 클릭한 마커의 시퀀스
+	        var markerSeq;
 	    	
 	    	var areaArr = new Array();
 	    	
@@ -435,7 +438,6 @@
             		
             		markers.push(marker);
             		infoWindows.push(infoWindow);
-            		
             	}
             	for(var i=0, ii=markers.length; i<ii; i++) {
                     naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
@@ -449,9 +451,10 @@
             	return function(e){
             		var marker = markers[seq],
             			infoWindow = infoWindows[seq];
+            		//정보창이 열려있을 경우
             		if(infoWindow.getMap()){
             			infoWindow.close();
-            		}else {
+            		}else { //정보창이 닫혀있을 경우!
                         infoWindow.open(map, marker); // 표출
                     }
             	}
@@ -497,6 +500,12 @@
                     map.setCenter(location);
                     map.setZoom(16);
                     
+                    var infoWindow = infoWindows[markerSeq];
+                    
+                    if(infoWindow.getMap()){
+                    	infoWindow.close();
+            		}
+                    
                     bounds = map.getBounds(),
                     southWest = bounds.getSW(),
                     northEast = bounds.getNE(),
@@ -515,14 +524,19 @@
                 latSpan = northEast.lat() - southWest.lat();
             	
             	$("li").css("display", "none");
+            	$("#noSearch").remove();
             	
             	$("#leaseDropDownMenu").css("display", "none");
             	$("#tradeDropDownMenu").css("display", "none");
             	$("#priceDiv").css("border", "1px solid rgb(192, 191, 191)");
                 $("#priceBtn").css("color","black");
+                
+                var cnt = 0;
             	
             	<c:forEach var="building" items="${buildings}" varStatus="status">
 	            	var addrPoint = new naver.maps.Point(${building.buildingLongitude}, ${building.buildingLatitude});
+	            	
+	            	
 	            	
 	        		if(bounds.hasPoint(addrPoint)){
 	        			if(tradeInfo == '임대'){
@@ -540,12 +554,15 @@
 		        					console.log(v1);
 		        					if(buildingMonth <= v2){
 		        						$("li#"+${status.index}).show();
+		        						cnt++;
 		        					}
 		        				}else if(v1 == 0){
 		        					if(buildingMonth <= v2){
 		        						$("li#"+${status.index}).show();
+		        						cnt++;
 		        					}else if(v2 == 0){
 		        						$("li#"+${status.index}).show();
+		        						cnt++;
 		        					}
 		        				}
 	        				}
@@ -556,22 +573,38 @@
 		        				
 		        				if(buildingPrice <= v3){
 		        					$("li#"+${status.index}).show();
+		        					cnt++;
 		        				}else if(v3 == 0){
 		        					$("li#"+${status.index}).show();
+		        					cnt++;
 		        				}
 	        				}
 	        			}else{
 	        				$("li#"+${status.index}).show();
+	        				cnt++;
 	        			}
 	        		}
             	</c:forEach>
-            	
+            	if(cnt == 0){
+            		swal({
+            			text:"검색 결과가 없습니다."
+            		});
+            		
+            		$("#saleList").prepend('<div id="noSearch" class="m-4">검색 결과가 없습니다.</div>');
+            	}
 			}
             
             //리셋버튼을 클릭하면 실행되는 함수로, 현재 사용자가 위치하는 곳으로 돌아온다.------------------------------------------------------------
             function resetMap(){
             	navigator.geolocation.getCurrentPosition(resetPosition);
             	map.setZoom(16);
+            	
+            	var infoWindow = infoWindows[markerSeq];
+                if(infoWindow.getMap()){
+                	infoWindow.close();
+        		}
+            	console.log("mark : " + markerSeq);
+            	
             	$("#priceBtnText").text("");
             	tradeInfo = "";
             	
@@ -588,6 +621,7 @@
                 $("#leaseBtn").css("color","black");
                 
                 $("li").show();
+                $("#noSearch").remove();
             }
             
             function resetPosition(position) {
@@ -597,14 +631,9 @@
             	var resetPosition = new naver.maps.Point(resetLlon, resetLat);
             	
             	curMarker.setPosition(resetPosition);
-            	
-            	console.log("resetPosition : " + resetPosition);
 
             	var resetLocation = new naver.maps.LatLng(resetPosition);
                 map.setCenter(resetLocation);
-                
-            	console.log(curMarker);
-            	console.log(resetLocation);
             }
             //리셋 버튼 클릭하면 실행되는 함수 끝------------------------------------------------------------------------------------------
             
@@ -613,6 +642,7 @@
             	console.log(seq);
            		var marker = markers[seq],
            			infoWindow = infoWindows[seq];
+           		markerSeq = seq;
            		if(infoWindow.getMap()){
            			infoWindow.close();
            		}else {
