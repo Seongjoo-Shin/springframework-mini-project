@@ -3,7 +3,9 @@ package com.mycompany.webapp.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
@@ -34,6 +38,7 @@ import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
 import com.mycompany.webapp.dto.NoticeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
+import com.mycompany.webapp.security.UserCustom;
 import com.mycompany.webapp.service.CommentService;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.MarketBoardService;
@@ -662,7 +667,7 @@ public class CommunityController {
  
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@GetMapping("/notice/list")
-	public String noticeList(@RequestParam(defaultValue = "1") int pageNo,  Model model) { //페이지는 1페이지부터 넘어오기!
+	public String noticeList(@RequestParam(defaultValue = "1") int pageNo, Model model) { //페이지는 1페이지부터 넘어오기!
 		
 		//Notice 게시판 게시물 개수 가져오기
 		int totalBoardNum = noticeService.totalCount();
@@ -680,12 +685,39 @@ public class CommunityController {
 
 	// 공지 상세 페이지
 	@GetMapping("/notice/noticeDetail")
-	public String noticeDetail() {
+	public String noticeDetail(int noticeNo, Model model, HttpSession session, HttpServletRequest request, Authentication authentication) {
+		
+		//조회수 1 올리기
+		noticeService.updateHitCount(noticeNo);
+		
+		//noticeBoardDto 내용 DB에서 가져오기
+		NoticeBoardDto noticeBoardDto = noticeService.getNoticeBoardByNoticeNo(noticeNo);
+		
+		//게시물 내용 개행 처리
+		String tempContent = noticeBoardDto.getNoticeContent();
+		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
+		tempContent = tempContent.replaceAll("<br/>", "\n");
+		noticeBoardDto.setNoticeContent(tempContent);
+		
+		//noticeBoardDto 내용 model에 싣기
+		model.addAttribute("noticeboard", noticeBoardDto);
+		
 		return "/community/notice/view";
 	}
-
-	@RequestMapping("/notice/insert")
-	public String noticeInsert() {
+	
+	//목록에서 글쓰기 페이지로 이동
+	@GetMapping("/notice/insert")
+	public String noticeInsert(Authentication authentication) {
+		String userId;
+		
+		//인증 객체의 존재 여부 확인 >> 존재하지 않을 경우 로그인폼으로 이동
+		if(authentication != null) {
+			UserCustom userCustom = (UserCustom)authentication.getPrincipal();
+			userId = userCustom.getUsername();
+		}else {	
+			userId = null;
+			return "redirect:/index/loginForm";
+		}
 		return "/community/notice/insert";
 	}
 
@@ -696,7 +728,24 @@ public class CommunityController {
 
 	// 글쓰기 등록 버튼
 	@PostMapping("/notice/insertNoticeContent")
-	public String insertNoticeContent() {
+	public String insertNoticeContent(HttpServletRequest request,
+    		HttpSession session,
+    		@RequestPart(value="attach_file", required=false) List<MultipartFile> files,
+ 		    Model model, Authentication authentication) {
+		
+		//인증 객체 생성해 아이디 가져옴
+		String userId;
+		UserCustom userCustom = (UserCustom)authentication.getPrincipal();
+		userId = userCustom.getUsername();
+
+		NoticeBoardDto noticeBoardDto = new NoticeBoardDto();
+		noticeBoardDto.setNoticeTitle(request.getParameter("title"));
+		noticeBoardDto.setNoticeContent(request.getParameter("content"));
+		noticeBoardDto.setNoticeWriter(userId);
+		
+		log.info(userId);
+		noticeService.noticeBoardInsert(noticeBoardDto);
+
 		return "redirect:/community/notice/list";
 	}
 
@@ -705,5 +754,4 @@ public class CommunityController {
 	public String insertNoticeCancle() {
 		return "redirect:/community/notice/list";
 	}
-
 }

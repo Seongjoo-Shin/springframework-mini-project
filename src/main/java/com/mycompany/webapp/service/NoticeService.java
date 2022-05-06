@@ -27,4 +27,16 @@ public class NoticeService {
 	public List<NoticeBoardDto> getNoticeBoardByPage(PagerDto pager) {
 		return noticeBoardDao.selectByPage(pager);
 	}
+
+	public NoticeBoardDto getNoticeBoardByNoticeNo(int noticeNo) {	
+		return noticeBoardDao.selectByNoticeNo(noticeNo);
+	}
+
+	public void updateHitCount(int noticeNo) {
+		noticeBoardDao.updateHitCount(noticeNo);
+	}
+	
+	public void noticeBoardInsert(NoticeBoardDto noticeBoardDto) {
+		noticeBoardDao.noticeBoardInsert(noticeBoardDto);
+	}
 }

@@ -13,4 +13,10 @@ public interface NoticeBoardDao {
 	public int count();
 	
 	public List<NoticeBoardDto> selectByPage(PagerDto pager);
+
+	public NoticeBoardDto selectByNoticeNo(int noticeNo);
+
+	public void updateHitCount(int noticeNo);
+
+	public void noticeBoardInsert(NoticeBoardDto noticeBoardDto);
 }

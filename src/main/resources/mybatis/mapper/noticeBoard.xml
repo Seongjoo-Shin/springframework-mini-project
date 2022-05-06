@@ -28,7 +28,7 @@
 		    	   n.NOTICE_USE_YN, n.NOTICE_HIT_COUNT, u.user_nickname
 		    FROM noticeboards n, users u
 		    where n.NOTICE_WRITER = u.user_id and n.NOTICE_USE_YN = 1
-		    ORDER BY NOTICE_NO DESC
+		    ORDER BY n.NOTICE_NO ASC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
 		)
@@ -38,6 +38,51 @@
 	<select id="count" resultType="Integer">
 		SELECT count(*) FROM noticeboards
 	</select>
+	
+	<select id="selectByNoticeNo" parameterType="Integer" resultMap="noticeBoardWithUserResultMap">
+		select n.NOTICE_NO, n.NOTICE_WRITER, n.NOTICE_TITLE, n.NOTICE_CONTENT, n.NOTICE_REGIST_DATE, n.NOTICE_MODIFY_DATE, n.NOTICE_USE_YN, n.NOTICE_HIT_COUNT, u.user_nickname
+		from noticeboards n, users u
+		where n.NOTICE_WRITER = u.user_id and n.NOTICE_USE_YN = 1 and n.NOTICE_NO=#{noticeNo}
+	</select>
+	
+	<update id="updateHitCount">
+		update noticeboards
+		set NOTICE_HIT_COUNT = NOTICE_HIT_COUNT + 1
+		where NOTICE_NO = #{noticeNo}
+	</update>
+	
+<!-- 		<insert id="freeboardInsert" parameterType="Map">
+		<selectKey keyProperty="freeNo" resultType="Integer" order="BEFORE">
+			select FREEBOARDS_SEQ.nextval from dual
+		</selectKey>
+			INSERT INTO freeboards (free_no, free_title, free_content, free_writer, free_regist_date, free_modify_date, free_use_yn, free_hit_count)
+			VALUES(#{freeNo}, #{freeTitle}, #{freeContent}, #{freeWriter}, SYSDATE, SYSDATE, 1, 0)
+	</insert> -->
+	
+	<insert id="noticeBoardInsert" parameterType="noticeboard">
+		<selectKey keyProperty="noticeNo" resultType="Integer" order="BEFORE">
+			select NOTICEBOARDS_SEQ.nextval from dual
+		</selectKey>
+		    insert INTO 
+		    noticeboards 
+		    (NOTICE_NO, 
+		    NOTICE_WRITER, 
+		    NOTICE_TITLE, 
+		    NOTICE_CONTENT, 
+		    NOTICE_REGIST_DATE, 
+		    NOTICE_MODIFY_DATE, 
+		    NOTICE_USE_YN, 
+		    NOTICE_HIT_COUNT)
+	   		values
+	   		(#{noticeNo}, 
+	   		#{noticeWriter}, 
+	   		#{noticeTitle}, 
+	   		#{noticeContent}, 
+	   		SYSDATE, 
+	   		SYSDATE, 
+	   		1, 
+	   		0)
+	</insert>
 	
 
 </mapper>
