@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="row" style="padding: 15px;">
-          <a href="simulator" class="btn btn-sm mt-3" style="height: 50px; background-color: rgb(242, 101, 45); font-size: 25px; color: white;">내 인테리어 만들어보기 -></a>
+          <a href="simulator" class="btn btn-outline-dark rounded" style="height: 50px; font-size: 25px;">내 인테리어 만들어보기 -></a>
         </div>
       </div>
       
