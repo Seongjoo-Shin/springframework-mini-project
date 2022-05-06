@@ -172,10 +172,16 @@
 		where market_no = #{marketNo}
 	</update>
 	
-	<!-- 사진 삭제 -->
+	<!-- MarketFileNo를 사용하여 사진 삭제 -->
 	<delete id="deleteImageByFileNo" parameterType="Integer">
 		delete from marketfiles
 		where market_file_no = #{imgNo}
+	</delete>
+	
+	<!-- MarketNo를 사용하여 글과 사진 삭제 -->
+	<delete id="deleteMarketBoardByMarketNo" parameterType="Integer">
+		delete from marketboards
+		where market_no = #{marketNo}
 	</delete>
 </mapper>
 

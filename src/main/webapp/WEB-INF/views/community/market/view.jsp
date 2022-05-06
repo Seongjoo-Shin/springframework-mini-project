@@ -103,8 +103,8 @@
                     <div class="buttons mt-5 d-flex justify-content-center">
                     	<c:if test="${sessionUserId == marketBoardDto.marketWriter}">
 	                    	<a class="btn btn-outline-dark mr-3" style="width:100px;" href="update?marketNo=${marketBoardDto.marketNo}">수정</a>
-	                        <a class="btn btn-outline-dark mr-3" style="width:100px;" href="marketViewtoList">삭제</a>
-	                        <a class="btn btn-outline-dark mr" style="width:100px;" href="marketViewtoList">판매완료</a>
+	                        <button class="btn btn-outline-dark mr-3" style="width:100px;" onclick="deleteMarketBoard('${marketBoardDto.marketNo}');">삭제</button>
+	                        <button class="btn btn-outline-dark mr" style="width:100px;" onclick="updateSaleYn('${marketBoardDto.marketNo}');">판매완료</button>
                     	</c:if>
                     </div>
                 </div>
@@ -175,7 +175,35 @@
 	    			document.getElementById("interCnt").innerHTML = likeCnt;
 	    		});
 	        }
-	    }    
+	    }
+		
+		function deleteMarketBoard(marketNo){
+			$.ajax({
+				url: "deleteMarketBaord",
+				data: {marketNo:marketNo}
+			}).done((data)=>{
+            	swal({
+					text: "삭제되었습니다."
+				}).then(()=>{
+					$(location).attr("href", "marketInsertCancle");
+				});
+	    		return;
+			});
+		}
+		
+		function updateSaleYn(marketNo){
+			$.ajax({
+				url: "updateSaleYn",
+				data: {marketNo:marketNo}
+			}).done((data)=>{
+            	swal({
+					text: "판매완료 되었습니다."
+				}).then(()=>{
+					$(location).attr("href", "marketInsertCancle");
+				});
+	    		return;
+			});
+		}
     </script>
 
 	    	

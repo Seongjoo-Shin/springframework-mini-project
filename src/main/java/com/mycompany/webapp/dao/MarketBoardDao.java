@@ -47,4 +47,7 @@ public interface MarketBoardDao {
 	//수정시 사진 지움
 	public void deleteImageByFileNo(int marketFileNo);
 	
+	//MarketNo를 사용하여 글과 사진 삭제
+	public void deleteMarketBoardByMarketNo(int marketNo);
+	
 }

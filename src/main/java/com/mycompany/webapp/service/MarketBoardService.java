@@ -80,4 +80,13 @@ public class MarketBoardService {
 		
 	}
 
+	public void updateSaleYn(int marketNo) {
+		// TODO Auto-generated method stub
+		marketBoardDao.updateSaleYn(marketNo);
+	}
+	
+	public void deleteMarketBoardByMarketNo(int marketNo) {
+		marketBoardDao.deleteMarketBoardByMarketNo(marketNo);
+	}
+
 }

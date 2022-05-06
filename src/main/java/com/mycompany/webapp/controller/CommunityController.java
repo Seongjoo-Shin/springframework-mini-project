@@ -284,7 +284,6 @@ public class CommunityController {
 		
 		session.setAttribute("upperNo", upperNo);
 		
-		
 		String json = jsonObject.toString();
 		return json; 
 	}
@@ -438,7 +437,6 @@ public class CommunityController {
 		
 		//marketBoardDto 내용 가져오기
 		MarketBoardDto marketBoardDto = marketBoardService.getMarketBoard(marketNo); 
-		log.info(marketBoardDto.toString());
 		
 		//게시물 내용 개행 처리 
 		String tempContent = marketBoardDto.getMarketContent();
@@ -523,7 +521,9 @@ public class CommunityController {
 	}
 
 	@GetMapping("/market/marketViewtoList")
-	public String marketViewToList() {
+	public String marketViewToList(int marketNo) {
+		marketBoardService.updateSaleYn(marketNo);
+		
 		return "redirect:/community/market/list";
 	}
 
@@ -632,9 +632,33 @@ public class CommunityController {
        return "redirect:/community/market/list";
     }
     
-    //글 삭제 버튼
-    
-
+	//글 삭제 버튼 
+	@GetMapping(value="/market/deleteMarketBaord", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String deleteMarketBaord(int marketNo) {
+		//cascade 설정으로 market에서 글 지우면 첨부파일도 같이 없어짐!
+		marketBoardService.deleteMarketBoardByMarketNo(marketNo);
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("result", "success");
+		String json = jsonObject.toString(); //json 얻는 방법.
+		
+		return json;
+	}
+	
+	//판매완료
+	@GetMapping(value="/market/updateSaleYn", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String updateSaleYn(int marketNo) {
+		marketBoardService.updateSaleYn(marketNo);
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("result", "success");
+		String json = jsonObject.toString(); //json 얻는 방법.
+		
+		return json;
+	}
+ 
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@RequestMapping("/notice/list")
 	public String noticeList() {
