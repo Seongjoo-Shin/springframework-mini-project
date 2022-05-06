@@ -154,7 +154,6 @@
             	<sec:authorize access="isAuthenticated()">
             		<form id="logoutForm" method="post" action="${pageContext.request.contextPath}/logout">
 		            	<span class="logout pr-3 font-weight-bold">
-		            		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		            		<a onClick="logout1()" type = "submit" class ="text-dark" style="">로그아웃</a> 
 		                </span>
 		                <span class="mypage pr-3 font-weight-bold">
