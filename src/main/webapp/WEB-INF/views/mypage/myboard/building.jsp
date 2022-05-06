@@ -56,18 +56,19 @@
                 </div>
                 <div class="col-8">
                     <h3 class="m-3">작성글</h3>
-                    <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="row">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link h5 text-dark" href="/mypage/myboard/board">자유게시판</a>
+                                <a class="nav-link h5 text-dark"  role="tab" aria-selected="false" href="/mypage/myboard/board">자유게시판</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link h5 text-dark"  href="/mypage/myboard/market">거래게시판</a>
+                                <a class="nav-link h5 text-dark"  role="tab" aria-selected="false" href="/mypage/myboard/market">거래게시판</a>
                             </li>
                             <li class="nav-item">
-                                <a class="active nav-link h5 text-dark" href="/mypage/myboard/building">인수/매물</a>
+                                <a class="active nav-link h5 text-dark"  role="tab" aria-selected="true" href="/mypage/myboard/building">인수/매물</a>
                             </li>
                         </ul>
+                        <span style="width: 71%; border-bottom: 1px solid gray;"></span>
                     </div>
                     <div class="row">
                         <table class="table table-hover">
@@ -83,13 +84,14 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <c:set var="now" value="<%=new java.util.Date()%>" />
 							<c:forEach var="building" items="${buildings}">
 								<tr>
 	                                <td class="text-center bg-light"><span>${building.buildingNo}</span></td>
 	                                <td><a href="/take/view?buildingNo=${building.buildingNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${building.buildingName}</a></td>
 	                                <td class="text-center">${building.buildingTradeInfo }</td>
 	                                <td class="text-center"><fmt:formatDate value="${building.buildingRegistDate}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${building.buildingEndDate}" pattern="yyyy-MM-dd"/></td>
-	                                <td class="text-center"><a class="btn btn-sm btn-outline-dark" onclick="updateDate('${building.buildingNo}')">기간 연장 ${building.buildingEndDate}</a></td>
+	                                <td class="text-center"><a class="btn btn-sm btn-outline-dark" onclick="updateDate('${building.buildingNo}')">기간 연장 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/></a></td>
 	                                <td class="text-center"><a class="btn btn-sm btn-outline-dark text" href="/take/enroll?type=updateEnroll&buildingNo=${building.buildingNo}">수정</a></td>
 	                                <td class="text-center"><input type="checkbox" class="delete" name="buildingNo" class="delete_box" id="${building.buildingNo}"></td>
 	                            </tr>

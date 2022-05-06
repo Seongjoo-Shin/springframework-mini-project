@@ -29,5 +29,5 @@ public class BuildingDto {
 	private Date buildingRegistDate;
 	private int buildingLikeCount;
 	private Date buildingEndDate;
-	
+	private Date buildingEndBtn;
 }

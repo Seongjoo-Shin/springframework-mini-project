@@ -3,6 +3,8 @@ package com.mycompany.webapp.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -55,6 +57,7 @@ public class MypageController {
 		model.addAttribute("user", user); // 검색된 유저정보를 model에 담는다
 		return "/mypage/modify"; // mypage/modify로 리턴
 	}
+	
 	// 비밀번호 수정
 	@PostMapping(value="/updatepassword", produces="application/json; charset=UTF-8") // json형태로 리턴해주기 위해 produces를 설정
 	@ResponseBody // json형태로 리턴해주기 위해 ResponseBody어노테이션 작성
@@ -199,12 +202,19 @@ public class MypageController {
 	@RequestMapping("/prefer/buildingprefer")
 	@mypageLoginCheck
 	public String buildingprefer(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, Model model) {
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
 		String userId = (String) session.getAttribute("sessionUserId");
 		int totalCnt = mypageService.getLikeBuildingCnt(userId);
 		PagerDto pager = new PagerDto(8, 10, totalCnt, pageNo);
 		pager.setUserId(userId);
 		model.addAttribute("pager", pager);
 		List<BuildingDto> buildings = mypageService.getLikeBuilding(pager);
+		for(BuildingDto b : buildings) {
+			LocalDateTime result1 = now.plusDays(3);
+			//b.setBuildingEndBtn();
+		}
 		model.addAttribute("total", totalCnt);
 		model.addAttribute("buildings", buildings);
 		return "/mypage/prefer/buildingprefer";			

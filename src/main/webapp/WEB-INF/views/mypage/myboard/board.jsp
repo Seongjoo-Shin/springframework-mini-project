@@ -55,18 +55,19 @@
                 </div>
                 <div class="col-8">
                     <h3 class="m-3">작성글</h3>
-                    <div class="row" style="border-bottom: 1px solid black;">
+                    <div class="row">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active h5 text-dark" href="/mypage/myboard/board">자유게시판</a>
+                                <a class="nav-link active h5 text-dark" role="tab" aria-selected="true" href="/mypage/myboard/board">자유게시판</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link h5 text-dark"  href="/mypage/myboard/market">거래게시판</a>
+                                <a class="nav-link h5 text-dark" role="tab" aria-selected="false" href="/mypage/myboard/market">거래게시판</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link h5 text-dark" href="/mypage/myboard/building">인수/매물</a>
+                                <a class="nav-link h5 text-dark" role="tab" aria-selected="false" href="/mypage/myboard/building">인수/매물</a>
                             </li>
                         </ul>
+                        <span style="width: 71%; border-bottom: 1px solid gray;"></span>
                     </div>
                     <div class="row">
                         <table class="table table-hover">

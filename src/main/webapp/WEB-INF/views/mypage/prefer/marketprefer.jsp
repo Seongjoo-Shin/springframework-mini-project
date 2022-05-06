@@ -36,14 +36,14 @@
                     <h3 class="m-3">찜 목록</h3>
                     <div class="row <c:if test='${total < 1}'>mb-5</c:if>">
                         <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link h5 text-dark" href="/mypage/prefer/buildingprefer">인수</a>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link h5 text-dark" role="tab" aria-selected="false" href="/mypage/prefer/buildingprefer">인수</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active h5 text-dark"  href="/mypage/prefer/marketprefer">거래</a>
+                            <li class="nav-item" role="presentation">
+                                 <a class="nav-link h5 text-dark active" role="tab" aria-selected="true" href="/mypage/prefer/marketprefer">거래</a>
                             </li>
                         </ul>
-                        <span style="width: 88%; border-bottom: 1px solid #dee2e6;"></span>
+                        <span style="width: 88%; border-bottom: 1px solid gray;"></span>
                     </div>
                     <div class="row" style="margin-top: 2rem!important;">
                     <c:if test="${total > 0}">
