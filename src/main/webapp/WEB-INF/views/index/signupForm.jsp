@@ -131,14 +131,14 @@
 
 <section style="flex-grow:1;">
 	<form id="signupForm" method="post" action="/index/signUp" onsubmit ="return check()">
-		   <div class="d-flex flex-row justify-content-center align-items-center vh-100">
+		   <div class="d-flex flex-row justify-content-center align-items-center">
 		       <div class="d-flex flex-column col-md-4">
 		           <div class="d-flex justify-content-center">
-		               <img class="mb-5" src="${pageContext.request.contextPath}/resources/images/logo.png" width="250px"/>  
+		               <h2 class= "m-5">회원가입</h2>
 		           </div>
 		           <div class="form-group">
-		               <input id="userId" name="userId" class ="col-md-8" placeholder="아이디" type="text"/>
-		               <button type="button" onClick="checkId()" class="btn btn-sm col-3" style="background-color: rgb(242, 101, 45); color: white;">중복확인</button>
+		               <input id="userId" name="userId" class ="col-md-8 p-2" placeholder="아이디" type="text"/>
+		               <button type="button" onClick="checkId()" class="btn col-3 p-2" style="background-color: rgb(242, 101, 45); color: white; margin-bottom: 6px;">중복확인</button>
 		               <script>
 		                function checkId() {
 		             	   if($(userId).val() == ""){
@@ -170,15 +170,15 @@
 		   			   <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
 		        </div>
 		        <div class="form-group">
-		            <input id="userPassword" name="userPassword" class ="col-md-8" placeholder="비밀번호" type="password"/>
+		            <input id="userPassword" name="userPassword" class ="col-md-8 p-2" placeholder="비밀번호" type="password"/>
 		        </div>
 		        <div class="form-group">
-		            <input id="confirmPassword" class ="col-md-8" placeholder="비밀번호 확인" type="text"/>
+		            <input id="confirmPassword" class ="col-md-8 p-2" placeholder="비밀번호 확인" type="text"/>
 		            <span class="id_input_re_5">비밀번호가 일치하지 않습니다.</span>
 		        </div>
 		        <div class="form-group d-flex flex-row">
-		            <input class ="col-md-3 mr-1" id="userEmail1" name="userEmail1" placeholder="이메일" type="text" style="width: 80px;"/>@<input class="ml-1 mr-1" id="userEmail2" name="userEmail2" type="text"/>
-		            <select name = "select_email" onchange="selectEmail(this)">
+		            <input class ="col-md-3 mr-1 p-2" id="userEmail1" name="userEmail1" placeholder="이메일" type="text" style="width: 80px;"/><span class="mt-2" style="font-size="1rem";>@</span><input class="ml-1 mr-1" id="userEmail2" name="userEmail2" type="text"/>
+		            <select name = "select_email" class="p-2" onchange="selectEmail(this)">
 		                <option value="" selected>선택하세요</option> 
 		                <option value="naver.com">naver.com</option> 
 		                <option value="gmail.com">gmail.com</option> 
@@ -189,7 +189,7 @@
 		        </div>
 		        <span class="id_input_re_6">등록된 이메일입니다.</span>
 		       	<div class="form-group">
-		       		<button type="button" onClick="checkEmail()" class="btn btn-sm col-md-8" style="background-color: rgb(242, 101, 45); color: white;">이메일 인증</button>
+		       		<button type="button" onClick="checkEmail()" class="btn p-2 col-md-8" style="background-color: rgb(242, 101, 45); color: white;">이메일 인증</button>
 		       		<script>
 		       			function checkEmail() {
 		       			  sumemail();
@@ -244,14 +244,14 @@
 		       	</script>
 		       	
 		        <div class="form-group">
-		            <input id="userName" name="userName" class ="col-md-8" placeholder="이름" type="text"/>
+		            <input id="userName" name="userName" class ="col-md-8 p-2" placeholder="이름" type="text"/>
 		        </div>
 		        <div class="form-group">
-		            <input id="userPhone" name="userPhone" class ="col-md-8" placeholder="전화번호" type="text"/>
+		            <input id="userPhone" name="userPhone" class ="col-md-8 p-2" placeholder="전화번호" type="text"/>
 		        </div>
 		        <div class="form-group">
-		            <input id="userNickname" name="userNickname" class ="col-md-8" placeholder="닉네임" type="text"/>
-		            <button type="button" onClick="checkNickname()" class="btn btn-sm col-3"  style="background-color: rgb(242, 101, 45); color: white;">중복확인</button>
+		            <input id="userNickname" name="userNickname" class ="col-md-8 p-2" placeholder="닉네임" type="text"/>
+		            <button type="button" onClick="checkNickname()" class="btn p-2 col-3"  style="background-color: rgb(242, 101, 45); color: white; margin-bottom: 6px;">중복확인</button>
 		        	<script>
 		                function checkNickname() {
 		             	   var nickname = $(userNickname).val();
@@ -276,8 +276,8 @@
 		               <span class="id_input_re_3">사용 가능한 닉네임입니다.</span>
 		   			   <span class="id_input_re_4">닉네임이 이미 존재합니다.</span>
 		        </div>
-		        <div class = "form-group">
-		        	<input type="submit" onclick="" value="회원가입" class="btn btn-sm col-11" style="background-color: rgb(242, 101, 45); color: white; margin: 0px auto;"></input>
+		        <div class = "form-group" style="margin-bottom:100px;">
+		        	<input type="submit" onclick="" value="회원가입" class="btn p-2 col-11" style=" background-color: rgb(242, 101, 45); color: white; margin: 0px auto;"></input>
 		        </div>
 		    </div>
 		</div>

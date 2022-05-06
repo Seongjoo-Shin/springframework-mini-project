@@ -90,7 +90,7 @@ public class IndexController {
 		
 	}
 	
-	@PostMapping(value = "/checkId", produces = "application/json; charset=UTF-8")
+	@RequestMapping(value = "/checkId", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String checkId(String id) {
 		LoginResult result = userService.checkId(id);

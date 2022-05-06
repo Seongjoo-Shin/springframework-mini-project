@@ -24,7 +24,7 @@
 			success-handler-ref="logoutSuccessHandler"/>
 			
 		<!-- 사이트간 요청 위조 방지 비활성 -->
-		<!-- <security:csrf disabled ="true"/> -->
+		<security:csrf disabled ="true"/>
 		
 		<!-- 요청 URL 권한 설정 -->
 		<!-- <security:intercept-url pattern="/ch17/admin*" access="hasRole('ROLE_ADMIN')"/>
