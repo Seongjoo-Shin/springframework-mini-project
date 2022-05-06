@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <script>
         function selectAll(selectAll)  {
-        	document.querySelectorAll('input[type="checkbox"]');.forEach((checkbox) => {
+        	document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
                 checkbox.checked = selectAll.checked
             })
         }

@@ -194,7 +194,7 @@ public class MypageController {
 		} else {
 			int cnt = mypageService.deleteMyMarket(marketNo);
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("message", cnt + "개를 삭제하였습니다");
+			jsonObject.put("message", "게시물을 삭제하였습니다");
 			String json = jsonObject.toString();
 			log.info(json);
 			return json;
