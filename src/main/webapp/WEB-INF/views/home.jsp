@@ -125,7 +125,7 @@
 			          <c:if test="${noticeboards.size() > 0}">
 			          <c:forEach var="noticeboards" items="${noticeboards}">
 			          	<tr>
-			          		<td><a class="text-dark" href="/community/market/view?noticeNo=${noticeboards.noticeNo}" style="font-size:20px;">${noticeboards.noticeTitle }</a></td>
+			          		<td><a class="text-dark" href="/community/notice/view?noticeNo=${noticeboards.noticeNo}" style="font-size:20px;">${noticeboards.noticeTitle }</a></td>
 			          		<td><small class="ml-3"><fmt:formatDate value="${noticeboards.noticeRegistDate}" pattern="yyyy-MM-dd"/></small></td>
 			          	</tr>
 			          </c:forEach>
