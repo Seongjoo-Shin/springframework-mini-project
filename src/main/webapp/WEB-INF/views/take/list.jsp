@@ -9,6 +9,7 @@
 <script>
         $(function(){
             getLocation();
+            
         });
 
         //매매가
@@ -657,6 +658,11 @@
                 var currentLoc = new naver.maps.LatLng(curPosition.y, curPosition.x);
                 map.setCenter(currentLoc);
                 map.setZoom(16);
+                var infoWindow = infoWindows[markerSeq];
+                
+                if(infoWindow.getMap()){
+                	infoWindow.close();
+        		}
             }
             
         </script>

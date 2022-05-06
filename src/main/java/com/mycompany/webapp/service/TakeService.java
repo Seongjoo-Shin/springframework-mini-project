@@ -91,4 +91,8 @@ public class TakeService {
 	public void deleteBuildingByNo(int buildingNo) {
 		takeDao.deleteBuildingByNo(buildingNo);
 	}
+
+	public void updateBuildingUseYN(int buildingNo) {
+		takeDao.updateBuildingUseYN(buildingNo);
+	}
 }

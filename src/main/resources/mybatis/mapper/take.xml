@@ -46,6 +46,7 @@
 	
 	<select id="selectBuildingList" resultMap="buildingDtoResult">
 		select * from buildings
+		where building_use_yn = '1'
 	</select>
 	
 	<select id="selectImageFileByBuildingNo" parameterType="String" resultMap="buildingFileDtoResult">
@@ -188,6 +189,12 @@
 			building_floor = #{buildingFloor},
 			building_option = #{buildingOption},
 			building_like_count = #{buildingLikeCount}
+		where building_no = #{buildingNo}
+	</update>
+	
+	<update id="updateBuildingUseYN" parameterType="int">
+		update buildings
+		set building_use_yn = '0'
 		where building_no = #{buildingNo}
 	</update>
 	

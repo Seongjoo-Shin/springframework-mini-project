@@ -38,4 +38,5 @@ public interface TakeDao {
 	
 	void updateBuilding(BuildingDto bdt);
 	void deleteBuildingByNo(int buildingNo);
+	void updateBuildingUseYN(int buildingNo);
 }
