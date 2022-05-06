@@ -12,9 +12,9 @@
 					data: {'marketNo': marketNo},
 					type: 'POST',
 				}).done((data) => {
+					location.reload();
 				}).fail((data) =>{
 				});
-				location.reload();
 			}
 			
 		});

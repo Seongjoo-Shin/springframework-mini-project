@@ -19,12 +19,13 @@
 						method: 'POST',
 						data: {userId, userPassword},
 					}).done((data)=>{
-						if(data.status = "success"){
+						if(data.status == "success"){
 							swal(data.message).then(() => {
 								location.href = "/";
 							});
 						} else {
 							swal(data.message).then(() => {
+								document.getElementById("password").innerHTML = "";
 								document.getElementById("password").focus();
 							})
 						}

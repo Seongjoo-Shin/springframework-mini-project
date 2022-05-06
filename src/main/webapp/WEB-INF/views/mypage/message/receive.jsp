@@ -90,7 +90,7 @@
                                     <th>받은날</th>
                                     <th>보낸사람</th>
                                     <th>답장여부</th>
-                                    <td><input type="checkbox" onclick="selectAll(this)" id="allSelect" class="delete" /></td>
+                                    <th><input type="checkbox" onclick="selectAll(this)" id="allSelect" class="delete" /></th>
                                 </tr>
                             </thead>
                             <tbody>

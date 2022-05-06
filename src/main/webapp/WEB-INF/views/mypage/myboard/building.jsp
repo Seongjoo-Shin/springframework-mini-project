@@ -78,8 +78,8 @@
                                 <th>거래종류</th>
                                 <th>전용면적</th>
                                 <th>등록날짜</th>
-                                <th></th>
-                                <td><input type="checkbox" class="delete" onclick="selectAll(this)"></td>
+                                <th>수정</th>
+                                <th><input type="checkbox" class="delete" onclick="selectAll(this)"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -96,7 +96,7 @@
 							</c:forEach>
 							<c:if test="${total eq 0}">
 								<tr class="m-5">
-									<td colspan="5" class="text-center m-5"><h5>작성한 게시물이 없습니다.</h5></td>
+									<td colspan="7" class="text-center"><h5>작성한 게시물이 없습니다.</h5></td>
 								</tr>
 							</c:if>
                         </tbody>

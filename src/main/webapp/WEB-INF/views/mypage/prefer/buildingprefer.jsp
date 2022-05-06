@@ -12,9 +12,9 @@
 					data: {'buildingNo': buildingNo},
 					type: 'POST',
 				}).done((data) => {
+					location.reload();
 				}).fail((data) =>{
 				});
-				location.reload();
 			}
 		});
 	}

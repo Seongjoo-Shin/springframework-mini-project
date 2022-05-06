@@ -82,7 +82,7 @@
                                     <th>보낸날</th>
                                     <th>받은사람</th>
                                     <th>회신여부</th>
-                                    <td><input type="checkbox" onclick="selectAll(this)" class="delete"/></td>
+                                    <th><input type="checkbox" onclick="selectAll(this)" class="delete"/></th>
                                 </tr>
                             </thead>
                             <tbody>

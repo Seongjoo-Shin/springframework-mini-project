@@ -76,6 +76,7 @@
 						<li class="nav-item"><a class="nav-link h5 text-dark" href="/mypage/myboard/building">인수/매물</a></li>
 					</ul>
 				</div>
+				<c:if test="${total > 0}">
 				<div class="row mt-3">
 				<c:forEach var="market" items="${markets}">
 					<div class="card float-left mr-5 mb-5" style="margin-left: 4rem!important; height: 390px; width:300px;">
@@ -120,10 +121,13 @@
 						</div>
 					</div>
 				</c:forEach>
-				<c:if test="${total eq 0}">
-					<div class="text-center m-5"><h5>작성한 게시물이 없습니다.</h5></div>
-				</c:if>
 				</div>
+				</c:if>
+				<c:if test="${total eq 0}">
+					<div class="row mt-3 justify-content-center">
+						<div class="text-center m-5"><h5>작성한 게시물이 없습니다.</h5></div>
+					</div>
+				</c:if>
 			</div>
 			
 			<div class="col-2"></div>
