@@ -221,7 +221,7 @@
 		function submitBtnClick(){
 			
 			//폼 태그안의 input태그들은 name값으로 접근 가능하다.
-        	var form = document.querySelector("form");
+        	var form = document.getElementById("marketInsertForm");
             var formData = new FormData(form);
             
             const selectElement = document.querySelector('#category');

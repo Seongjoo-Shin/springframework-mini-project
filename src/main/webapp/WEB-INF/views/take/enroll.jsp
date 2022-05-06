@@ -511,7 +511,7 @@
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">입주 가능일</h4>
-	                    <input type="text" class="border rounded" id="buildingAvailableDate" name="buildingAvailableDate" value="${buildingInfo.buildingAvailableDate}" readonly>
+	                    <input type="text" class="border rounded" id="buildingAvailableDate" name="buildingAvailableDate" value="${buildingInfo.buildingAvailableDate}" readonly />
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">상세 설명</h4>
@@ -960,7 +960,9 @@
         
         function submitBtnClick(btn){
         	btn.disabled = true;
-        	var form = document.querySelector("form");
+        	var form = document.getElementById("frm");
+        	
+        	console.log(form);
             var formData = new FormData(form);
             
             var errorNum = 0;
