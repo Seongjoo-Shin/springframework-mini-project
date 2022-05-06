@@ -6,7 +6,7 @@
 	<div class="container-fluid h-100 mt-5 mb-5">
 	<div class="row">
       <div class="col-2">
-       <ul style="list-style-type: none; width: 80%;">
+       <ul style="list-style-type: none; width: 80%;" class="ml-4">
             예시모델
             <hr/>
             <li >
@@ -58,13 +58,14 @@
             pannellum.viewer("panorama", {
               type: "equirectangular",
               panorama: "${pageContext.request.contextPath}/resources/images/pano2.jpg",
-              autoLoad:true
+              autoLoad:true,
+              autoRotate: -2
             });
           </script>
           </div>
         </div>
         <div class="row" style="padding: 15px;">
-          <a href="simulator" class="btn btn-outline-dark border rounded" style="height: 50px; font-size: 25px;">내 인테리어 만들어보기 →</a>
+          <a href="simulator" class="btn btn-outline-dark border rounded p-2 mt-3" style="height: 50px; font-size: 25px;">내 인테리어 만들어보기 →</a>
         </div>
       </div>
       
