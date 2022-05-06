@@ -23,17 +23,8 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 			Authentication authentication) throws ServletException, IOException {
 		log.info("성공핸들러 실행");
 		HttpSession session = request.getSession();
-        if (session != null) {
-            String redirectUrl = (String) session.getAttribute("prevPage");
-            if (redirectUrl != null) {
-                session.removeAttribute("prevPage");
-                getRedirectStrategy().sendRedirect(request, response, redirectUrl);
-            } else {
-                super.onAuthenticationSuccess(request, response, authentication);
-            }
-        } else {
-            super.onAuthenticationSuccess(request, response, authentication);
-        }
+        session.setAttribute("sessionUserId", authentication.getName());
+        super.onAuthenticationSuccess(request, response, authentication);
 	}
 	
 	
