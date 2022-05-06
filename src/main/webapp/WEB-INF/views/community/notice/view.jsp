@@ -32,7 +32,7 @@
               </div>
             </div>
             <div class="buttons my-5 d-flex justify-content-center">
-                <a class="btn btn-outline-dark mr-3" style="width:100px; height:40px;" href="noticeViewtoList">목록</a>
+                <a class="btn btn-outline-dark mr-3" style="width:100px; height:40px;" href="list">목록</a>
             </div>       
           <div class="col-2"></div>
         </div>

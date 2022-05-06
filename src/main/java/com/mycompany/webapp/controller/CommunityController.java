@@ -3,9 +3,7 @@ package com.mycompany.webapp.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mycompany.webapp.dto.BuildingFileDto;
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
@@ -706,12 +703,6 @@ public class CommunityController {
 	// 글쓰기 취소 버튼
 	@RequestMapping("/notice/insertNoticeCancle")
 	public String insertNoticeCancle() {
-		return "redirect:/community/notice/list";
-	}
-
-	// 목록 버튼
-	@GetMapping("/notice/noticeViewtoList")
-	public String noticeViewToList() {
 		return "redirect:/community/notice/list";
 	}
 

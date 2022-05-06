@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
-                        <a class="btn btn-outline-dark mr-3" style="width:100px; height:50px;" href="marketViewtoList">목록</a>
+                        <a class="btn btn-outline-dark mr-3" style="width:100px; height:50px;" href="list">목록</a>
                         <button class="btn btn-outline-dark ml-3" style="width:100px;" onclick="likeBtnClick(this);">
                         	<img id="interImg" class="mr-2" src="" width="30px;"/>
                         	<span id="interCnt">${marketBoardDto.marketLikeCount}</span>
