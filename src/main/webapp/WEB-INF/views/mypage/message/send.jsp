@@ -28,16 +28,15 @@
                 	if(cnt == 0){
         				swal("선택된 게시물이 없습니다.");
                 	} else {
-                		console.log(arr);
                 		$.ajax({
                 			type: 'POST',
                 			url: '/mypage/message/sdeleteMsg',
                 			dataType: 'json',
                 			data: {delArr: arr},
                 		}).done((data) => {
-                			swal(data.messgae).then(() => {
-                				location.reload();
-                			})
+                			swal(data.message).then(() => {
+            					location.reload();	
+            				});
                 		}).fail((data) => {
                 		});
                 	}

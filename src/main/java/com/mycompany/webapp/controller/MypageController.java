@@ -356,7 +356,7 @@ public class MypageController {
 		} 
 	}
 	
-	@PostMapping("/message/rdeleteMsg")
+	@PostMapping(value="/message/rdeleteMsg", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String rDeleteMsg(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
 		if(session.getAttribute("sessionUserId") == null) {
@@ -364,14 +364,17 @@ public class MypageController {
 		} else {
 			int cnt = mypageService.deleteMyReceiveMessage(delArr);
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("message", cnt + "개를 삭제하였습니다");
+			if(cnt > 0 ) {
+				jsonObject.put("message", cnt + "개를 삭제하였습니다");	
+			} else {
+				jsonObject.put("message", "삭제에 실패하였습니다.");
+			}
 			String json = jsonObject.toString();
-			
 			return json;
 		}
 	}
 	
-	@PostMapping("/message/sdeleteMsg")
+	@PostMapping(value="/message/sdeleteMsg", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String sDeleteMsg(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
 		if(session.getAttribute("sessionUserId") == null) {
@@ -379,9 +382,12 @@ public class MypageController {
 		} else {
 			int cnt = mypageService.deleteMySendMessage(delArr);
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("message", cnt + "개를 삭제하였습니다");
+			if(cnt > 0 ) {
+				jsonObject.put("message", cnt + "개를 삭제하였습니다");	
+			} else {
+				jsonObject.put("message", "삭제에 실패하였습니다.");
+			}
 			String json = jsonObject.toString();
-			
 			return json;
 		}
 	}

@@ -109,7 +109,7 @@ public class MypageService {
 	public int deleteMySendMessage(List<String> delArr) {
 		int cnt = 0;
 		for(String s : delArr) {
-			cnt = mypageDao.deleteMySendMessage(Integer.parseInt(s));
+			cnt += mypageDao.deleteMySendMessage(Integer.parseInt(s));
 		}
 		return cnt;	
 	}
@@ -117,7 +117,7 @@ public class MypageService {
 	public int deleteMyReceiveMessage(List<String> delArr) {
 		int cnt = 0;
 		for(String s : delArr) {
-			cnt = mypageDao.deleteMyReceiveMessage(Integer.parseInt(s));
+			cnt += mypageDao.deleteMyReceiveMessage(Integer.parseInt(s));
 		}
 		return cnt;	
 	}
