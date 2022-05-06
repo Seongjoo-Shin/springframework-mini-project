@@ -28,7 +28,7 @@
 		<div class="row mb-5">
 			<div class="col-2"></div>
 			<div class="col-8">
-				<div class="row ml-2">
+				<div class="row ml-5">
 				<h4>개원 장소 키워드 추천</h4>
 				</div>
 				<div class="row">
@@ -72,7 +72,7 @@
 								</div>
 							</div>
 						<div class="row d-flex mt-5">
-							<img src="/resources/images/mascot.png" width="100px" height="100px" style="margin-top: auto;" />
+							<img src="/resources/images/mascot.png" width="120px" style="margin-top: 210px;" />
 							<div class="ml-4 mr-3" style="width: 450px; height: 300px; border-radius: 15px;">
 								<img src="/resources/images/messageBox.png" width="480px" height="300px" class="float-right ml-1" style="z-index: -100000" />
 								<ul class="mt-3" id="msgBox" style="position: absolute;">
@@ -81,7 +81,7 @@
 						</div>
 					</div>
 					<div class="col-6 d-flex flex-column">
-						<div id="map" style="width: 100%; height: 490px; border-radius: 15px;" class="mt-4">
+						<div id="map" style="width: 100%; height: 500px; border-radius: 8px;" class="mt-4 border">
 							<a title="현재위치" onclick="moveMapCurrentLoc(event)" class="border rounded p-1 m-1 shadow" style="z-index: 10; position: absolute; top: 0; left: 0; background-color: white; cursor: pointer;">
 								<img src="${pageContext.request.contextPath}/resources/images/location.png" width="40px" />
 							</a>
