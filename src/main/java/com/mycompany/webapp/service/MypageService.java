@@ -48,8 +48,9 @@ public class MypageService {
 		return mypageDao.selectAllFreeBoard(userId);
 	}
 
-	public int deleteMyPosting(List<String> delArr) {
+	public int deleteMyPosting(String arr) {
 		int cnt = 0;
+		String[] delArr = arr.split(",");
 		for(String s : delArr) {
 			cnt += mypageDao.deleteYnMyPosting(Integer.parseInt(s));
 		}
@@ -80,9 +81,11 @@ public class MypageService {
 		return mypageDao.selectAllBuilding(userId);
 	}
 
-	public int deleteMyBuilding(List<String> delArr) {
+	public int deleteMyBuilding(String arr) {
 		int cnt = 0;
+		String[] delArr = arr.split(",");
 		for(String s : delArr) {
+			log.info("!@#!@# : " + s);
 			cnt += mypageDao.deleteYnMyBuilding(Integer.parseInt(s));
 		}
 		return cnt;
@@ -109,16 +112,18 @@ public class MypageService {
 		return mypageDao.selectSendMessageAll(userId);
 	}
 	
-	public int deleteMySendMessage(List<String> delArr) {
+	public int deleteMySendMessage(String arr) {
 		int cnt = 0;
+		String[] delArr = arr.split(",");
 		for(String s : delArr) {
 			cnt += mypageDao.deleteMySendMessage(Integer.parseInt(s));
 		}
 		return cnt;	
 	}
 	
-	public int deleteMyReceiveMessage(List<String> delArr) {
+	public int deleteMyReceiveMessage(String arr) {
 		int cnt = 0;
+		String[] delArr = arr.split(",");
 		for(String s : delArr) {
 			cnt += mypageDao.deleteMyReceiveMessage(Integer.parseInt(s));
 		}

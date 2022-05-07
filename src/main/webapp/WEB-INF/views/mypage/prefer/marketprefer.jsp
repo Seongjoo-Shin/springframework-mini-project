@@ -7,16 +7,21 @@
 			buttons: true,
 		}).then((result) => {
 			if(result == true){
-				$.ajax({
-					url: '/mypage/deleteLikeMarket',
-					data: {'marketNo': marketNo},
-					type: 'POST',
-				}).done((data) => {
-					swal("좋아요가 취소되었습니다.").then(() => {
-						location.reload();	
-					});
-				}).fail((data) =>{
-				});
+				var xhr = new XMLHttpRequest(); 
+
+		        xhr.open("POST", "/mypage/deleteLikeMarket", true);
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		        xhr.send(marketNo);
+
+		        xhr.onreadystatechange = function() {
+		        	if (xhr.readyState === 4) {
+		            	if (xhr.status === 200) {
+		            		swal("좋아요가 취소되었습니다.").then(() => {
+								location.reload();	
+							});
+		            	}
+		          	}
+		        };
 			}
 			
 		});

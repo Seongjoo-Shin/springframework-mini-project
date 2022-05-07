@@ -203,14 +203,15 @@
 									var addr;
 									document.getElementById("msgBox").innerHTML = '';
 									
-									/* var xhr1 = new XMLHttpRequest(); 
-							        xhr1.open("GET", "/opening/keyword", true);
+									var xhr1 = new XMLHttpRequest(); 
+							        xhr1.open("POST", "/opening/keyword", true);
 							        xhr1.setRequestHeader("Content-Type", "application/json");
-							        xhr1.send(sendData);
+							        xhr1.send(keyword);
 							        xhr1.onreadystatechange = function() {
 							        	if (xhr1.readyState === 4) {
 							            	if (xhr1.status === 200) {
-							            		const data = JSON.parse(xhr.responseText);
+							            		const data = JSON.parse(xhr1.responseText);
+							            		console.log(data);
 							            		positions = [];
 		                                		for(var i=0; i<markers.length; i++){
 		                                			markers[i].setMap(null);
@@ -230,34 +231,7 @@
 		                                		initMap();
 							            	}
 							          	}
-							        }; */
-									
-									$.ajax({
-										type: "GET",
-                                		url: "/opening/keyword",
-                                		traditional: true,
-                                		data: sendData,
-                                	}).done((data) => {
-                                		positions = [];
-                                		for(var i=0; i<markers.length; i++){
-                                			markers[i].setMap(null);
-                                			infoWindows[i].setMap(null);
-                                		}
-										setTimeout(() => {
-											for(var i=0; i<data.keywordsLength; i++){
-	                                			positions.push(
-	                                				{
-	                                					keywordNo: data.keywords[i].keyword_no,
-	                                					lat: data.keywords[i].latitude, 
-	                                					lng: data.keywords[i].longitude,
-	                                				},
-	                                			);
-	                                		}	
-										}, 1000);
-                                		initMap();
-                                	}).fail((data) => {
-                                		console.log(data);
-                                	});
+							        };
 								}
 								
 								function innerInfo(kNo){

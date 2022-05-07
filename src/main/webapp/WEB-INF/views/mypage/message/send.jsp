@@ -28,17 +28,22 @@
                 	if(cnt == 0){
         				swal("선택된 게시물이 없습니다.");
                 	} else {
-                		$.ajax({
-                			type: 'POST',
-                			url: '/mypage/message/sdeleteMsg',
-                			dataType: 'json',
-                			data: {delArr: arr},
-                		}).done((data) => {
-                			swal(data.message).then(() => {
-            					location.reload();	
-            				});
-                		}).fail((data) => {
-                		});
+                		var xhr = new XMLHttpRequest(); 
+
+    			        xhr.open("POST", "/mypage/message/sdeleteMsg", true);
+    			        xhr.setRequestHeader("Content-Type", "application/json");
+    			        xhr.send(arr);
+
+    			        xhr.onreadystatechange = function() {
+    			        	if (xhr.readyState === 4) {
+    			            	if (xhr.status === 200) {
+    			            		const res = JSON.parse(xhr.responseText);
+    			            		swal(res.message).then(() => {
+    	            					location.reload();	
+    	            				});
+    			            	}
+    			          	}
+    			        };
                 	}
         		} else {
         			document.querySelectorAll(".delete:checked").forEach(function(v, i) {

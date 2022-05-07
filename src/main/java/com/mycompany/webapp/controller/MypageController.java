@@ -63,13 +63,14 @@ public class MypageController {
 	@PostMapping(value="/updatepassword", produces="application/json; charset=UTF-8") // json형태로 리턴해주기 위해 produces를 설정
 	@ResponseBody // json형태로 리턴해주기 위해 ResponseBody어노테이션 작성
 	@mypageLoginCheck
-	public String updatePassword(HttpSession session, UserDto user, Model model, HttpServletRequest request) {
+	public String updatePassword(@RequestBody String sendData, HttpSession session, UserDto user, Model model, HttpServletRequest request) {
 		String userId = (String) session.getAttribute("sessionUserId");
+		JSONObject jjson = new JSONObject(sendData);
 		UserDto dbUser = mypageService.getUser(userId);
 		
 		// ajax의 data로 넘어온 현재 패스워드와, 새롭게 바뀔 패스워드를 pwd, newpwd로 저장
-		String pwd = request.getParameter("pwd");
-		String newpwd = request.getParameter("newPwd");
+		String pwd = jjson.getString("pwd");
+		String newpwd = jjson.getString("newPwd");
 		
 		JSONObject jsonObject = new JSONObject();
 		
@@ -105,8 +106,8 @@ public class MypageController {
 	@PostMapping(value="/myboard/delete", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	@mypageLoginCheck
-	public String myboardDelete(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
-		int cnt = mypageService.deleteMyPosting(delArr); // List를 통째로 Service로 넘겨 처리한다
+	public String myboardDelete(@RequestBody String arr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		int cnt = mypageService.deleteMyPosting(arr); // List를 통째로 Service로 넘겨 처리한다
 		JSONObject jsonObject = new JSONObject();
 		if(cnt > 0) {
 			jsonObject.put("message", cnt + "개를 삭제하였습니다.");	
@@ -144,8 +145,8 @@ public class MypageController {
 	@PostMapping(value="/mybuilding/delete", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	@mypageLoginCheck
-	public String mybuildingDelete(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
-		int cnt = mypageService.deleteMyBuilding(delArr);
+	public String mybuildingDelete(@RequestBody String arr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		int cnt = mypageService.deleteMyBuilding(arr);
 		JSONObject jsonObject = new JSONObject();
 		if(cnt > 0) {
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");	
@@ -194,8 +195,9 @@ public class MypageController {
 	@PostMapping(value="/mymarket/delete", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	@mypageLoginCheck
-	public String mymarketDelete(int marketNo, HttpServletRequest request, HttpSession session, Model model) throws Exception {
-		int cnt = mypageService.deleteMyMarket(marketNo);
+	public String mymarketDelete(@RequestBody String marketNo, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		log.info("@@@ : " + marketNo);
+		int cnt = mypageService.deleteMyMarket(Integer.parseInt(marketNo));
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("message", "게시물을 삭제하였습니다");
 		String json = jsonObject.toString();
@@ -214,8 +216,8 @@ public class MypageController {
 	@PostMapping(value="/mymarket/saleComplete", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	@mypageLoginCheck
-	public String saleComplete(int marketNo) {
-		int cnt = mypageService.changeSalesStatus(marketNo);
+	public String saleComplete(@RequestBody String marketNo) {
+		int cnt = mypageService.changeSalesStatus(Integer.parseInt(marketNo));
 		JSONObject jsonObject = new JSONObject();
 		if(cnt > 0) {
 			jsonObject.put("message", "판매완료");
@@ -265,17 +267,16 @@ public class MypageController {
 	
 	@PostMapping("/deleteLikeBuilding")
 	@mypageLoginCheck
-	public String deleteLikeBuilding(HttpServletRequest request, HttpSession session) {
+	public String deleteLikeBuilding(@RequestBody String bNo, HttpServletRequest request, HttpSession session) {
 		
 		String userId = (String) session.getAttribute("sessionUserId");
-		int buildingNo = Integer.parseInt(request.getParameter("buildingNo"));
 		LikeListDto likeList = new LikeListDto();
-		likeList.setLikeListNo(buildingNo);
+		likeList.setLikeListNo(Integer.parseInt(bNo));
 		likeList.setLikeType("building");
 		likeList.setLikeUserId(userId);
 		
 		mypageService.deleteLikeBuilding(likeList);
-		mypageService.updateBuildingLikeCount(buildingNo);
+		mypageService.updateBuildingLikeCount(Integer.parseInt(bNo));
 		
 		return "mypage/prefer/buildingprefer";
 	}
@@ -297,16 +298,15 @@ public class MypageController {
 	// ------------------------------
 	@PostMapping("/deleteLikeMarket")
 	@mypageLoginCheck
-	public String deleteLikeMarket(HttpServletRequest request, HttpSession session) {
+	public String deleteLikeMarket(@RequestBody String mNo, HttpServletRequest request, HttpSession session) {
 		String userId = (String) session.getAttribute("sessionUserId");
-		int marketNo = Integer.parseInt(request.getParameter("marketNo"));
 		LikeListDto likeList = new LikeListDto();
-		likeList.setLikeListNo(marketNo);
+		likeList.setLikeListNo(Integer.parseInt(mNo));
 		likeList.setLikeType("market");
 		likeList.setLikeUserId(userId);
 		
 		mypageService.deleteLikeMarket(likeList);
-		mypageService.updateMarketLikeCount(marketNo);
+		mypageService.updateMarketLikeCount(Integer.parseInt(mNo));
 		
 		return "mypage/prefer/marketprefer";
 	}
@@ -343,8 +343,8 @@ public class MypageController {
 	@PostMapping(value="/message/rdeleteMsg", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	@mypageLoginCheck
-	public String rDeleteMsg(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
-		int cnt = mypageService.deleteMyReceiveMessage(delArr);
+	public String rDeleteMsg(@RequestBody String arr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		int cnt = mypageService.deleteMyReceiveMessage(arr);
 		JSONObject jsonObject = new JSONObject();
 		if(cnt > 0 ) {
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");	
@@ -358,8 +358,8 @@ public class MypageController {
 	@PostMapping(value="/message/sdeleteMsg", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	@mypageLoginCheck
-	public String sDeleteMsg(@RequestParam(value="delArr[]") List<String> delArr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
-		int cnt = mypageService.deleteMySendMessage(delArr);
+	public String sDeleteMsg(@RequestBody String arr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		int cnt = mypageService.deleteMySendMessage(arr);
 		JSONObject jsonObject = new JSONObject();
 		if(cnt > 0 ) {
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");	

@@ -5,16 +5,26 @@
 			var pwd = document.getElementById("password").value;
 			var newPwd = document.getElementById("newPwd").value;
 			var chkNewPwd = document.getElementById("chkNewPwd").value;
+			var data1 = {'pwd':pwd, 'newPwd':newPwd, 'chkNewPwd': chkNewPwd};
+			var sendData = JSON.stringify(data1);
 			if(newPwd == chkNewPwd){
-				$.ajax({
-					url: '/mypage/updatepassword',
-					data: {'pwd':pwd, 'newPwd':newPwd, 'chkNewPwd': chkNewPwd},
-					method: 'POST',
-				}).done((data, status) => {
-					swal(data.message).then(() => {
-						location.reload();
-					});	
-				});
+				
+				var xhr = new XMLHttpRequest(); 
+
+		        xhr.open("POST", "/mypage/updatepassword", true);
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		        xhr.send(sendData);
+
+		        xhr.onreadystatechange = function() {
+		        	if (xhr.readyState === 4) {
+		            	if (xhr.status === 200) {
+		            		const res = JSON.parse(xhr.responseText);
+							swal(res.message).then(() => {
+								location.reload();
+							});
+		            	}
+		          	}
+		        };
 			} else {
 				swal("새로운 비밀번호가 일치하지 않습니다.").then(() => {
 					location.reload();				

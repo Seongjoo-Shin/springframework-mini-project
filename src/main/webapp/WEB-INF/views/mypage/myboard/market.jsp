@@ -7,17 +7,22 @@
 			buttons: true,
 		}).then((result) => {
 			if(result == true){
-				$.ajax({
-					type: 'POST',
-					url: '/mypage/mymarket/delete',
-					dataType: 'json',
-					data: {marketNo},
-				}).done((data) => {
-					swal(data.message).then(() => {
-						location.reload();	
-					});
-				}).fail((data) => {
-				});				
+				var xhr = new XMLHttpRequest(); 
+
+		        xhr.open("POST", "/mypage/mymarket/delete", true);
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		        xhr.send(marketNo);
+
+		        xhr.onreadystatechange = function() {
+		        	if (xhr.readyState === 4) {
+		            	if (xhr.status === 200) {
+		            		const res = JSON.parse(xhr.responseText);
+		            		swal(res.message).then(() => {
+								location.reload();
+							});
+		            	}
+		          	}
+		        };
 			}
 		});
 	}
@@ -28,17 +33,22 @@
 			buttons: true,
 		}).then((result) => {
 			if(result == true){
-				$.ajax({
-					type: 'POST',
-					url: '/mypage/mymarket/saleComplete',
-					dataType: 'json',
-					data: {marketNo},
-				}).done((data) => {
-					swal(data.message).then(() => {
-						location.reload();	
-					});
-				}).fail((data) => {
-				});		
+				var xhr = new XMLHttpRequest(); 
+
+		        xhr.open("POST", "/mypage/mymarket/saleComplete", true);
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		        xhr.send(marketNo);
+
+		        xhr.onreadystatechange = function() {
+		        	if (xhr.readyState === 4) {
+		            	if (xhr.status === 200) {
+		            		const res = JSON.parse(xhr.responseText);
+		            		swal(res.message).then(() => {
+								location.reload();	
+							});
+		            	}
+		          	}
+		        };
 			}
 		});
 	}
