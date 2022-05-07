@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +37,7 @@ import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
+import com.mycompany.webapp.dto.MarketPagerDto;
 import com.mycompany.webapp.dto.NoticeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.security.UserCustom;
@@ -344,7 +346,7 @@ public class CommunityController {
 		log.info("실행");
 		//market 게시물 개수 가져오기
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
-		PagerDto pager = new PagerDto(16, 10, totalBoardNum, pageNo);
+		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
 		model.addAttribute("pager", pager);
 		
 		//페이지 정보
@@ -358,6 +360,37 @@ public class CommunityController {
 		return "/community/market/list";
 	}
 	
+	
+	@PostMapping(value = "/market/listJson")
+	@ResponseBody
+	public String marketListAlign(
+			@RequestParam(defaultValue = "1") int pageNo,
+			Model model, HttpSession session,
+			@RequestParam("category") String category) {
+		
+		log.info(category);
+		
+		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
+		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
+		pager.setCategory(category);
+		model.addAttribute("pager", pager);
+		
+		
+		//페이지 정보
+		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
+		model.addAttribute("marketBoards", marketboards);
+		log.info("marketList페이지");		
+		
+		//사용자 정보
+		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("marketboardsList", marketboards);
+		
+		String json = jsonObject.toString();
+		
+		return json;
+	}
 	
 	
 	//리스트에서 대표사진 보여줌, 리스트의 index에 해당하는 사진 불러와줌

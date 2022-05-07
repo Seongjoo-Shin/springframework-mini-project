@@ -24,7 +24,7 @@
  	</resultMap>
  	
  	<!-- list에서 page당 가져오는 정보 -->
- 	 <select id="selectByPage" parameterType="pager" resultMap="marketBoardWithUserResultMap">
+ 	 <select id="selectByPage" parameterType="marketpager" resultMap="marketBoardWithUserResultMap">
  		SELECT rnum, market_no, market_title, market_writer, market_category
  				, market_regist_date, market_modify_date, market_use_yn, market_hit_count, market_price, market_like_count, market_sale_yn, user_nickname
 		FROM (
@@ -44,7 +44,14 @@
 			        ,m.market_sale_yn
 			        ,u.user_nickname
 			FROM marketboards m, users u
-			where m.market_writer = u.user_id and market_use_yn = 1
+			<choose>
+				<when test='category != null and !category.equals("")'>
+					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1 and m.MARKET_CATEGORY = #{category}
+				</when>
+				<otherwise>
+					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1
+				</otherwise>			
+			</choose>
 			ORDER BY market_no DESC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
@@ -71,8 +78,12 @@
 		where m.market_writer = u.user_id and market_no =#{marketNo} and market_use_yn = 1	
  	</select>
  	
- 	<select id="totalCount" resultType="Integer">
-		SELECT count(*) FROM marketboards
+ 	<select id="totalCount" parameterType="marketpager" resultType="Integer">
+		SELECT count(*)
+		FROM marketboards
+		<if test='category != null and category.equals("")'>
+			where MARKET_CATEGORY = #{category}
+		</if>
 	</select>
 	
 	<resultMap id="marketboardMap" type="marketboard">
@@ -129,9 +140,6 @@
 			INSERT INTO MARKETFILES (ATTACH_ORIGINAL_NAME, ATTACH_SAVE_NAME, ATTACH_TYPE, MARKET_NO, MARKET_FILE_NO, MARKET_IMAGE_FILE_DATA)
 			VALUES(#{attachOriginalName}, #{attachSaveName}, #{attachType}, #{marketNo}, #{marketFileNo}, #{imageFileData})
 	</insert>
-	
-	<!--  -->
-	
 	
 	<!-- 조회수 증가 -->
 	<update id="updateHitCount" parameterType="Integer">

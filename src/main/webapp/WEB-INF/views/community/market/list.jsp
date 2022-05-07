@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/nice-select.css"> -->
+
     <section style="flex-grow:1;">
       <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
         <h1 class="">거래 게시판</h1>
@@ -15,7 +16,7 @@
               <div class="dropdown">
                 <button id="category" class="btn dropbtn" style="height:37.62px"><img src="${pageContext.request.contextPath}/resources/images/stick.png" style="height: 15px; width: 15px;" class="mr-2">카테고리</button><!--눌렀을때 효과-->
                 <div class="dropdown-content">
-                  <a class="dropdown-item" href="javascript:showData(0)">전체</a>
+                  <a class="dropdown-item" href="javascript:showData('')">전체</a>
                   <a class="dropdown-item" href="javascript:showData(1)">장비</a>
                   <a class="dropdown-item" href="javascript:showData(2)">가구</a>
                   <a class="dropdown-item" href="javascript:showData(3)">소모품</a>
@@ -30,7 +31,9 @@
                 </div>
               </div>
             </div>         
-            <!-- 거래게시판 물품 목록 -->        
+            <!-- 거래게시판 물품 목록 -->
+            <div id="div_tranlist" class="col-12">
+            
               <c:forEach var="marketboard" items="${marketBoards}">
 	              <div class="col-3 float-left mb-5">
 	                <div class="card">
@@ -60,6 +63,7 @@
 	                </div>
 	              </div>
               </c:forEach>  
+            </div>       
 
             <!-- 글쓰기 버튼 -->
             <div class="col-12 d-flex align-content-end justify-content-end">
@@ -126,8 +130,8 @@
         </div>
       </div>
     </section>
-    <script>
-    	var alignarray = {"category":0,"align":0}
+    <script type="text/javascript">
+    	var alignarray = {"category": ""}; //"align":0
 
 	    // $(document).ready(function(){
 	    //     // selectbox styling
@@ -135,17 +139,49 @@
 	    // });
 	    
 	   	function showData(num){
-        alignarray.category = num;
-        console.log(alignarray);
-        $.ajax({
-          url: "getMarketPage",
-          data: alignarray
-        }).done((data)=>{
-          location.reload(true);
-        });
-      }
+	   		alert(333333);
+	        alignarray.category = num;
+	        alignarray.pageNo = 1;
+	        console.log(alignarray);	
+			$.ajax({
+				url: "/community/market/listJson",
+				data: alignarray,
+				method:"post",
+				dataType:'json'
+			})
+			.done((data)=>{
+				console.log(data);
+				var html = '';
+				$.each(data.marketboardsList, function (index, item) {
+					html += '  <div class="col-3 float-left mb-5">';
+					html += '	<div class="card">';
+					html += '	  <div class="embed-responsive embed-responsive-4by3">';
+					html += '		<a href="marketDetail?marketNo='+item.marketNo+'">';
+					html += '			<img src="/community/market/getMarketImage?marketNo='+item.marketNo+'&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>';
+					html += '		</a>';
+					html += '	  </div>';
+					html += '	  <div class="card-body" style="padding: 1rem;">';
+					html += '		<div class="float-right recommentCount">';
+					html += '		</div>';
+					html += '		<p style="margin-bottom: 0px;">'+item.marketTitle+'</p>';
+					html += '		<p style="margin-bottom: 7px; font-weight: bold;"><span>'+item.marketPrice+'</span>원</p>';
+					html += '		<div class="float-right recommentCount">';
+					html += '			<span>관심 </span><span> '+item.marketLikeCount+'</span>';
+					html += '			<p>조회수 <span> '+item.marketHitCount+'</span></p>';
+					html += '		</div>';
+					html += '		<input id="marketWriter'+item.marketNo+'" type="hidden" name="freeNo" value="'+item.marketWriter+'"/>';
+					html += '		<p style="margin-bottom: 0px; font-size:15px;">'+item.userDto.userNickname+' </p>';
+					html += '		<p style="margin-bottom: 0px; font-size:15px;">';
+// 					html += '			'+item.marketRegistDate+';
+					html += '		</p>';
+					html += '	  </div>';
+					html += '	</div>';
+					html += '  </div>';
+				});
+				console.log(html);
+				$("#div_tranlist").html(html);
+			})
+      	}
 
-      function 
     </script>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
