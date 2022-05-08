@@ -45,14 +45,23 @@
 			        ,u.user_nickname
 			FROM marketboards m, users u
 			<choose>
-				<when test='category != null and !category.equals("")'>
+				<when test='!category.equals("") and !align.equals("")'>
 					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1 and m.MARKET_CATEGORY = #{category}
+					ORDER BY market_like_count DESC
 				</when>
-				<otherwise>
+				<when test='!category.equals("") and align.equals("")'>
+					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1 and m.MARKET_CATEGORY = #{category}
+					ORDER BY market_no DESC
+				</when>
+				<when test='category.equals("") and !align.equals("")'>
 					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1
+					ORDER BY market_like_count DESC
+				</when>
+  				<otherwise>
+					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1
+					ORDER BY market_no DESC
 				</otherwise>			
-			</choose>
-			ORDER BY market_no DESC
+			</choose>			
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
 		)

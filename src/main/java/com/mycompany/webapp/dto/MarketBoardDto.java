@@ -12,6 +12,7 @@ public class MarketBoardDto {
 	private String marketWriter;
 	private String marketCategory;
 	private Date marketRegistDate;
+	private String stringRegistDate;
 	private Date marketModifyDate;
 	private int marketUseYN;
 	private int marketHitCount;

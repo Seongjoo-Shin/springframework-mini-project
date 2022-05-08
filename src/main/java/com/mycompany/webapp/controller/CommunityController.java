@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -348,6 +349,8 @@ public class CommunityController {
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
 		model.addAttribute("pager", pager);
+		pager.setCategory("");
+		pager.setAlign("");
 		
 		//페이지 정보
 		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
@@ -360,27 +363,34 @@ public class CommunityController {
 		return "/community/market/list";
 	}
 	
-	
 	@PostMapping(value = "/market/listJson")
 	@ResponseBody
 	public String marketListAlign(
 			@RequestParam(defaultValue = "1") int pageNo,
 			Model model, HttpSession session,
-			@RequestParam("category") String category) {
+			@RequestParam("category") String category,
+			@RequestParam("align") String align) {
 		
 		log.info(category);
 		
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
 		pager.setCategory(category);
+		pager.setAlign(align);
 		model.addAttribute("pager", pager);
 		
 		
 		//페이지 정보
 		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
-		model.addAttribute("marketBoards", marketboards);
-		log.info("marketList페이지");		
 		
+		//Date to String 형변환
+		for(int i=0; i<marketboards.size(); i++) {
+			Date from = marketboards.get(i).getMarketRegistDate();
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String to = transFormat.format(from);
+			marketboards.get(i).setStringRegistDate(to);
+		}
+
 		//사용자 정보
 		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
 		
