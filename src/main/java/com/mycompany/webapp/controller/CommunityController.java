@@ -366,6 +366,7 @@ public class CommunityController {
 	@PostMapping(value = "/market/listJson")
 	@ResponseBody
 	public String marketListAlign(
+			HttpServletRequest request,		
 			@RequestParam(defaultValue = "1") int pageNo,
 			Model model, HttpSession session,
 			@RequestParam("category") String category,
@@ -377,6 +378,11 @@ public class CommunityController {
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
 		pager.setCategory(category);
 		pager.setAlign(align);
+		pager.setSearchContent(request.getParameter("searchContent"));
+		log.info(request.getParameter("searchContent"));
+		pager.setSearchType(request.getParameter("searchType"));
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22");
+		log.info(request.getParameter("searchType"));
 		model.addAttribute("pager", pager);
 		
 		

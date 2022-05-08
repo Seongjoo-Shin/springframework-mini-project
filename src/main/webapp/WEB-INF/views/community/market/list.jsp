@@ -104,21 +104,24 @@
 	                </li>
                   </ul>
                 </div>
-              <form class="form-inline my-2 my-lg-0 justify-content-center">
-                  <select name="searchType">
-                    <option value="제목+내용" selected="select">제목+내용</option>
+                <div>
+                
+                </div>
+              <form id="searchForm" action="" class="form-inline my-2 my-lg-0 justify-content-center" enctype="multipart/form-data">
+                  <select id="searchType" name="searchType">
+                    <!-- <option value="제목+내용" selected>제목+내용</option> -->
                     <option value="내용">내용</option>
-                    <option value="제목">제목</option>
-                    <option value="작성자">작성자</option>
+                    <option value="제목" selected>제목</option>
                   </select>
                   <input
                     class="form-control"
                     type="text"
+                    name="searchContent"
                     placeholder="검색어를 입력해 주세요."
                     aria-label="Search"
                     width="300"
                   />
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                  <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchBtn()">
                     검색
                   </button>
                 </form>
@@ -130,6 +133,64 @@
     </section>
     <script type="text/javascript">
     	var alignarray = {"category": "", "align":""};
+    	var searchCondition ={"searchType":"", "searchContent":""};
+    	
+    	//검색 버튼 눌렀을 때
+    	function searchBtn(){
+    		alert("클릭");
+    		//formData 가져오기
+        	var form = document.getElementById("searchForm");
+            var formData = new FormData(form);
+            
+            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            console.log(formData);
+            
+            searchCondition.searchType = num;
+            searchCondition.searchContent = 1;
+            
+            
+            var selected = $("#searchType option:selected").val();
+
+            
+            $.ajax({
+            	method:'POST',
+            	url: "/community/market/listJson",
+            	data: formData,
+            	contentType: false,
+            	processData:false            	
+            }).done((data)=>{
+            	
+				console.log(data);
+				var html = '';
+				$.each(data.marketboardsList, function (index, item) {
+					html += '  <div class="col-3 float-left mb-3">';
+					html += '	<div class="card">';
+					html += '	  <div class="embed-responsive embed-responsive-4by3">';
+					html += '		<a href="marketDetail?marketNo='+item.marketNo+'">';
+					html += '			<img src="/community/market/getMarketImage?marketNo='+item.marketNo+'&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>';
+					html += '		</a>';
+					html += '	  </div>';
+					html += '	  <div class="card-body" style="padding: 1rem;">';
+					html += '		<div class="float-right recommentCount">';
+					html += '		</div>';
+					html += '		<p style="margin-bottom: 0px;">'+item.marketTitle+'</p>';
+					html += '		<p style="margin-bottom: 7px; font-weight: bold;"><span>'+item.marketPrice+'</span>원</p>';
+					html += '		<div class="float-right recommentCount">';
+					html += '			<span>관심 </span><span> '+item.marketLikeCount+'</span>';
+					html += '			<p>조회수 <span> '+item.marketHitCount+'</span></p>';
+					html += '		</div>';
+					html += '		<input id="marketWriter'+item.marketNo+'" type="hidden" name="freeNo" value="'+item.marketWriter+'"/>';
+					html += '		<p style="margin-bottom: 0px; font-size:15px;">'+item.userDto.userNickname+' </p>';
+					html += '		<p style="margin-bottom: 0px; font-size:15px;">'+item.stringRegistDate+'</p>';
+					html += '	  </div>';
+					html += '	</div>';
+					html += '  </div>';
+				});
+				console.log(html);
+				$("#div_tranlist").html(html);				
+            })            
+            
+    	}
     	
     	function alignData(num){
     		alert(num);
