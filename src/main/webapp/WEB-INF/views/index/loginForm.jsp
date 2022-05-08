@@ -22,10 +22,10 @@
 	                </div>
 	            </div>
 	            <div class="d-flex flex-column">
-	            	<c:if test="${error != null}">
-		            	<p style="margin:auto; color:red; font-size:0.9rem;">아이디 또는 비밀번호를 잘못 입력했습니다.</p>
+	            	<c:if test="${SPRING_SECURITY_LAST_EXCEPTION.message == 'Bad credentials'}">
+						<p style="margin:auto; color:red; font-size:0.9rem;">아이디 또는 비밀번호를 잘못 입력했습니다.</p>
 		            	<p style="margin:0px auto 10px auto; color:red; font-size:0.9rem;">입력하신 내용을 다시 확인해주세요.</p>
-	            	</c:if>
+					</c:if>
 	            </div>
 	            <div class = "d-flex flex-row justify-content-center align-content-center">
 	                <a href="findAccount">아이디/비밀번호 찾기</a>

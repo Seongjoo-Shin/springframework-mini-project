@@ -76,7 +76,7 @@
     </bean>
     
     <bean id ="authenticationFailureHandler" class="com.mycompany.webapp.security.AuthenticationFailureHandler">
-    	<property name="defaultFailureUrl" value = "/index/signupForm"></property>
+    	<property name="defaultFailureUrl" value = "/index/loginForm"></property>
     </bean>
     
     <bean id ="logoutSuccessHandler" class="com.mycompany.webapp.security.LogoutSuccessHandler">
