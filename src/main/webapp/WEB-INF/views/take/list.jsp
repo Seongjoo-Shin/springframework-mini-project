@@ -296,32 +296,30 @@
 					                                    				<span >원</span>
 					                                    				<script>
 					                                    					var price = `${building.buildingPrice}`;
-					                                    					if(price > 10000){
-					                                    						pVal = price;
-					                                    						
-					                                    		                if(price >= 1000 && price < 10000){
-					                                    		                	$("#price${status.index}").text(price + "만");
-					                                    		                } else if(price >= 10000){
-					                                    		                    pVal = price;
-					                                    		                    pVal = pVal.replace("0", "");
-					                                    		                    pVal = pVal.replace("0", "");
-					                                    		                    pVal = pVal.replace("0", "");
+				                                    						var pVal = price;
+				                                    						
+				                                    		                if(price >= 1000 && price < 10000){
+				                                    		                	$("#price${status.index}").text(price + "만");
+				                                    		                } else if(price >= 10000){
+				                                    		                    pVal = price;
+				                                    		                    pVal = pVal.replace("0", "");
+				                                    		                    pVal = pVal.replace("0", "");
+				                                    		                    pVal = pVal.replace("0", "");
 
-					                                    		                    pVal2 = pVal.slice(-1);
-					                                    		                    
-					                                    		                    if(pVal >= 100 && pVal < 1000){
-					                                    		                    	pVal = pVal.slice(0, 2);
-					                                    		                    }else if(pVal < 100){
-					                                    		                    	pVal = pVal.slice(0, 1);
-					                                    		                    }else{
-					                                    		                    	pVal = pVal.slice(0, 3);
-					                                    		                    }
-					                                    		                    var t = pVal + "억" + pVal2 + "000 만";
-					                                    		                    $("#price${status.index}").text(t);
-					                                    		                }else{
-					                                    		                    $("#price${status.index}").text(price + "만");
-					                                    		                }
-					                                    					}
+				                                    		                    pVal2 = pVal.slice(-1);
+				                                    		                    
+				                                    		                    if(pVal >= 100 && pVal < 1000){
+				                                    		                    	pVal = pVal.slice(0, 2);
+				                                    		                    }else if(pVal < 100){
+				                                    		                    	pVal = pVal.slice(0, 1);
+				                                    		                    }else{
+				                                    		                    	pVal = pVal.slice(0, 3);
+				                                    		                    }
+				                                    		                    var t = pVal + "억" + pVal2 + "000 만";
+				                                    		                    $("#price${status.index}").text(t);
+				                                    		                }else{
+				                                    		                    $("#price${status.index}").text(price + "만");
+				                                    		                }
 					                                    				</script>
 					                                    			</c:if>
 					                                    		</div>
