@@ -79,6 +79,7 @@
  .inp { padding: 10px 10px; background-color: #f1f1f1; border-radius: 4px; border: 0px; } 
 
  .inp:focus { outline: none; background-color: #eee; } 
+ .ui-datepicker-trigger {	margin-bottom: 10px;	}
 </style>
 
 	<script>
@@ -140,8 +141,6 @@
             	
             	//옵션을 설정해준다.
             	setOptions();
-            	
-            	//getImageFile();
             	
             	//만약 사진에 뭐가 있다면! 일단 미리보기에 사진 띄우기
             	if($("#nomalImgPreview").children().length != 0){
@@ -224,21 +223,6 @@
 	        	</c:forEach>
         	}
         }
-        
-        //DB에서 가져온 이미지를 파일로 저장하기 위함!
-        function getImageFile(img){
-        	var buildingNo = `${buildingInfo.buildingNo}`;
-        	$.ajax({
-        		method: 'POST',
-            	url:'getImageByteArrayToFile',
-            	data:{
-            		buildingNo,
-            		img
-            	},
-        	}).done((res)=>{
-        		console.log(res);
-        	});
-        }
     </script>
     <style>
     	.error::placeholder{color:red;}
@@ -301,11 +285,11 @@
 	                        </div>
 	                        <div class="border-left d-flex justify-content-center flex-grow-1">
 	                            <div id="addrDes">
-	                                <div class="d-flex flex-column justify-content-center" style="height: 300px;">
+	                                <div class="d-flex flex-column justify-content-center" style="width:100%; height: 400px;margin:10px;">
 	                                    주소 검색을 하시면 해당 위치에 지도가 뜹니다! :D 
 	                                </div>
 	                            </div>
-	                            <div id="map" class="border rounded" style="width:100%;height:400px;margin-top:10px; display: none;">지도</div>
+	                            <div id="map" class="border rounded" style="width:100%;height:400px;margin:10px; display: none;">지도</div>
 	                            <script>
 	                            	//매물의 위치에 대한 위경도를 저장하기 위한 변수들
 	                            	var buildingLat;
@@ -446,16 +430,16 @@
 	                <div>
 	                    <h4 class="mt-5">상세 정보</h4>
 	                    <div class="border rounded d-flex">
-	                        <div class="text-center p-4 d-flex flex-column" style="background-color: rgb(231, 231, 236);">
+	                        <div class="text-center p-4 d-flex flex-column justify-content-center" style="background-color: rgb(231, 231, 236);">
 	                            <div>건물 크기<br/>(1P = 3.3058㎡)</div>
 	                        </div>
-	                        <div class="p-2 d-flex flex-column mr-6">
+	                        <div class="p-2 d-flex flex-column justify-content-center mr-6">
 	                            <div class="d-flex m-2">
 	                                <div class="m-2">공급 면적</div>
 	                                <span><input type="number" min="1" onchange="supplyChange(this)" id="buildingSupplyArea" name="buildingSupplyArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="공급면적" value="${buildingInfo.buildingSupplyArea}"/>&nbsp;&nbsp;&nbsp;평</span>
 	                                <span style="font-size:18px;"><input id="buildingSupplyAreaM" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" disabled/>&nbsp;&nbsp;&nbsp;㎡</span>
 	                            </div>
-	                            <div class="border-bottom"></div>
+	                            <div class="border-bottom m-1"></div>
 	                            <div class="d-flex m-2 mt-3">
 	                                <div class="m-2">전용 면적</div>
 	                                <span><input type="number" min="1" onchange="dedicatedChange(this)" id="buildingDedicatedArea" name="buildingDedicatedArea" class="ml-2 p-2 border" style="width: 100px; border-color: transparent;" placeholder="전용면적" value="${buildingInfo.buildingDedicatedArea}"/>&nbsp;&nbsp;&nbsp;평</span>
@@ -470,7 +454,7 @@
 	                                <div class="m-2 p-1 pr-2">건물 층수</div>
 	                                <input type="number" min="1" id="buildingTotalFloor" name="buildingTotalFloor" class="p-1 border" style="border-color: transparent;" placeholder="건물 층수 입력" value="${buildingInfo.buildingTotalFloor}"/>
 	                            </div>
-	                            <div class="border-bottom"></div>
+	                            <div class="border-bottom m-1"></div>
 	                            <div class="d-flex m-2 mt-3">
 	                                <div class="m-2 p-1 pr-2">해당 층수</div>
 	                                <input type="number" id="buildingFloor" name="buildingFloor" class="p-1 border" style="border-color: transparent;" placeholder="해당 층수 입력" value="${buildingInfo.buildingFloor}"/>
@@ -493,8 +477,8 @@
 	                    </div>
 	                    <div id="equipDiv" style="display: none;">
 	                        <div class="d-flex mt-2">
-	                            <div class="border rounded d-flex justify-content-center p-4" style="background-color: rgb(231, 231, 236); width: 130px;">
-	                                <div>장비</div>
+	                            <div class="border rounded p-4" style="background-color: rgb(231, 231, 236); width: 130px; height: 140px; position: relative;">
+	                                <div style="transform: translate(-50%,-50%); position: absolute;left: 50%;top: 50%;">장비</div>
 	                            </div>
 	                            <div class="border rounded d-flex flex-column ml-2 flex-grow-1">
 	                                <div class="p-2">
@@ -515,7 +499,7 @@
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">상세 설명</h4>
-	                    <textarea id="buildingDetailContent" name="buildingDetailContent" class="border rounded w-100" style="resize:none; height: 300px; font-size: 20px;" maxlength="500" placeholder=' [상세 설명 작성 주의 사항]&#13;&#10;&#13;&#10; - 매물 정보와 관련이 없는 홍보성 정보는 입력할 수 없습니다.&#13;&#10; - 비속어를 입력할 수 없습니다.&#13;&#10;&#13;&#10; ** 위 주의 사항을 위반할 경우, 해당 매물이 삭제될 수 있습니다.'>${buildingInfo.buildingDetailContent}</textarea>
+	                    <textarea id="buildingDetailContent" name="buildingDetailContent" class="border rounded w-100 p-2" style="resize:none; height: 300px; font-size: 20px;" maxlength="500" placeholder=' [상세 설명 작성 주의 사항]&#13;&#10;&#13;&#10; - 매물 정보와 관련이 없는 홍보성 정보는 입력할 수 없습니다.&#13;&#10; - 비속어를 입력할 수 없습니다.&#13;&#10;&#13;&#10; ** 위 주의 사항을 위반할 경우, 해당 매물이 삭제될 수 있습니다.'>${buildingInfo.buildingDetailContent}</textarea>
 	                </div>
 	                <div>
 	                    <h4 class="mt-5">사진 등록</h4>
@@ -544,7 +528,7 @@
 	                                    		<c:forEach var="image" items="${imageFile}" varStatus="status">
 	                                    			<c:if test="${image.panoramaCheck eq '0'}">
 	                                    				<span id="file${status.index}">
-		                                    				<img id="${status.index}" name="exist" src="getImageByteArrayToFile?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=${status.index}" data-file="${image.attachOriginalName}" seq="${image.buildingFileNo}" width="200px" height="150px" style="border: 1px solid gainsboro; padding: 10px; background-color :white;" />
+		                                    				<img id="${status.index}" name="exist" src="getImageByteArrayToFile?buildingNo=${buildingInfo.buildingNo}&type=nomal&img=${status.index}" data-file="${image.attachOriginalName}" seq="${image.buildingFileNo}" width="300px" height="220px" class="m-1 border rounded" style="border: 1px solid gainsboro; padding: 10px; background-color :white;" />
 		                                    				<a class="btn btn-danger" onclick="deleteImg(${status.index})" style="margin-right:8px; cursor:pointer;">X</a>
 		                                    			</span>
 	                                    			</c:if>
@@ -569,11 +553,11 @@
 	                                    <input type="file" id="chooseAroundImg"  name="chooseAroundImg" accept="image/*" style="display: none;" onchange="get360ImageFile(event)">
 	                                </div>
 	                                <div id="aroundImgField" class="d-flex">
-	                                    <div id="aroundImgPreview" class="w-100" style="align-items: center;">
+	                                    <div id="aroundImgPreview" class="d-flex" style="align-items: center;">
 	                                    	<c:if test="${not empty nomalCnt}">
 	                                    		<c:forEach var="image" items="${imageFile}" varStatus="status">
 	                                    			<c:if test="${image.panoramaCheck eq '1'}">
-	                                    				<div seq="${image.buildingFileNo}" name="exist" id="panorama" style="border-radius: 10px; object-fit: cover;"></div>
+	                                    				<div seq="${image.buildingFileNo}" class="m-1" name="exist" id="panorama" style="border-radius: 10px; object-fit: cover;"></div>
 	                                    				<script>
 		                                    				pannellum.viewer("panorama", {
 		                	                                    type: "equirectangular",
@@ -581,17 +565,16 @@
 		                	                                    autoLoad: true
 		                	                                });
 		                	                                $("#explainAround").css('display', 'none');
-		                	
-		                	                                const delete360Btn = document.createElement('span');
+		                	                                
+		                	                                const delete360Btn = document.createElement('a');
 		                	                                delete360Btn.setAttribute('onclick', 'delete360Img(this)');
+		                	                                delete360Btn.setAttribute("class", "btn btn-danger ml-2");
 		                	                                delete360Btn.innerHTML = "X";
 		                	                                delete360Btn.style.padding = "10px";
-		                	                                delete360Btn.style.border = "1px solid rgb(231, 231, 236)";
-		                	                                delete360Btn.style.backgroundColor = 'white';
-		                	                                delete360Btn.style.marginRight = "8px";
 		                	                                delete360Btn.style.cursor = "pointer";
+		                	                                delete360Btn.style.fontSize = "25px";
 		                	
-		                	                                aroundImgField.appendChild(delete360Btn);
+		                	                                aroundImgPreview.appendChild(delete360Btn);
 		                	
 		                	                                $("#chooseAroundImg").val("");
 	                                    				</script>
@@ -684,7 +667,7 @@
 	                                const panoName = "${pageContext.request.contextPath}/resources/images/"+name;
 
 	                                console.log(uploadAroundFile);
-	                                aroundImgPreview.innerHTML += '<div id="panorama" style="border-radius: 10px; object-fit: cover;"></div>';
+	                                aroundImgPreview.innerHTML += '<span id="panorama" class="m-2" style="border-radius: 10px; object-fit: cover;"></span>';
 	
 	                                pannellum.viewer("panorama", {
 	                                    type: "equirectangular",
@@ -693,16 +676,15 @@
 	                                });
 	                                $("#explainAround").css('display', 'none');
 	
-	                                const delete360Btn = document.createElement('span');
+	                                const delete360Btn = document.createElement('a');
 	                                delete360Btn.setAttribute('onclick', 'delete360Img(this)');
+	                                delete360Btn.setAttribute("class", "btn btn-danger ml-2");
 	                                delete360Btn.innerHTML = "X";
 	                                delete360Btn.style.padding = "10px";
-	                                delete360Btn.style.border = "1px solid rgb(231, 231, 236)";
-	                                delete360Btn.style.backgroundColor = 'white';
-	                                delete360Btn.style.marginRight = "8px";
 	                                delete360Btn.style.cursor = "pointer";
+	                                delete360Btn.style.fontSize = "25px";
 	
-	                                aroundImgField.appendChild(delete360Btn);
+	                                aroundImgPreview.appendChild(delete360Btn);
 	
 	                                $("#chooseAroundImg").val("");
 	                            }
@@ -733,8 +715,9 @@
 	
 	                                img.setAttribute('src', e.target.result);
 	                                img.setAttribute('data-file', file.name);
-	                                img.setAttribute('width', '200px');
-	                                img.setAttribute('height', '150px');
+	                                img.setAttribute('class', "m-1 border rounded");
+	                                img.setAttribute('width', '300px');
+	                                img.setAttribute('height', '220px');
 	                                img.style.border = '1px solid gainsboro';
 	                                img.style.padding = '10px';
 	                                img.style.backgroundColor = 'white';
@@ -744,10 +727,11 @@
 	                                deleteBtn.setAttribute('onclick', 'deleteImg(' + fileNo + ')');
 	                                deleteBtn.style.marin = "10px";
 	                                deleteBtn.innerHTML = "X";
-	                                deleteBtn.style.marginRight = "8px";
+	                                deleteBtn.style.marginRight = "5px";
 	                                deleteBtn.style.cursor = "pointer";
 	
 	                                span.setAttribute("id","file" + fileNo);
+	                                span.setAttribute("class","m-2");
 	                                span.appendChild(img);
 	                                span.appendChild(deleteBtn);
 	                                
@@ -877,26 +861,31 @@
 									//이름이 같은 장비가 없다면 새로 만들어서 equipList에 추가해준다.
 									var equipSpan = document.createElement("span");
 						            var equipName = document.createElement("span");
+						            
+						            var equipCntName = document.createElement("span");
 						            var equipCnt = document.createElement("span");
 						            var equipDel = document.createElement("button");
 	
-						            equipSpan.setAttribute("class", "border p-2 m-2");
+						            equipSpan.setAttribute("class", "border rounded");
+						            equipSpan.style.padding = "12px";
 						            equipSpan.setAttribute("id", "equip"+equipNo);
 	
 						            equipName.setAttribute("class", "ml-2 p-1");
 						            equipName.setAttribute("id", "equip"+equipNo+"Name");
 						            equipName.innerHTML = equipmentName;
 						            
+						            equipCntName.innerHTML = " / 개수 : ";
 	
 						            equipCnt.setAttribute("class","p-1");
 						            equipCnt.setAttribute("id","equip"+equipNo+"Cnt");
 						            equipCnt.innerHTML = equipmentCnt;
 	
 						            equipDel.setAttribute("onclick","equipmentDel(this)");
-						            equipDel.setAttribute("class","btn btn-danger mb-2");
+						            equipDel.setAttribute("class","btn btn-danger mb-1 ml-2");
 						            equipDel.innerHTML = "X";
 	
 						            equipSpan.appendChild(equipName);
+						            equipSpan.appendChild(equipCntName);
 						            equipSpan.appendChild(equipCnt);
 						            equipSpan.appendChild(equipDel);
 	
