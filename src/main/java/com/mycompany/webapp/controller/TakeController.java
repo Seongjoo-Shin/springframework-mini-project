@@ -276,7 +276,6 @@ public class TakeController {
 	   cal.add(Calendar.DATE, 30);
 	   
 	   SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-	   //String strEndDate = sdf2.format(cal.getTime());
 	   
 	   Date endDate = cal.getTime();
 	   

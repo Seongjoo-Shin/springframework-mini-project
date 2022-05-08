@@ -9,6 +9,11 @@
 <script>
         $(function(){
             getLocation();
+            var saleList = document.getElementById("saleList");
+            
+            if(saleList.childElementCount == 0){
+            	$("#saleList").prepend('<div id="noSearch" class="m-4">등록된 매물이 존재하지 않습니다.</div>');
+            }
             
         });
 
@@ -535,8 +540,6 @@
             	
             	<c:forEach var="building" items="${buildings}" varStatus="status">
 	            	var addrPoint = new naver.maps.Point(${building.buildingLongitude}, ${building.buildingLatitude});
-	            	
-	            	
 	            	
 	        		if(bounds.hasPoint(addrPoint)){
 	        			if(tradeInfo == '임대'){
