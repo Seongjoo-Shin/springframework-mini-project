@@ -49,19 +49,6 @@ public class TakeController {
    @RequestMapping("/list")
    public String list(@RequestParam(required = false) String latitude,@RequestParam(required = false) String longitude, Model model) throws ParseException {
 	   List<BuildingDto> buildings = takeService.selectBuildingList();
-	   for(BuildingDto bdt : buildings) {
-		   Date bdtDate = bdt.getBuildingRegistDate();
-		   Date today = new Date();
-		   
-		   long diffSec = (today.getTime() - bdtDate.getTime()) / 1000; //초 차이
-		   long diffDays = diffSec / (24*60*60); //일자수 차이
-		   
-		   log.info("day : " + diffDays);
-		   
-		   if(diffDays >= 30) {
-			   takeService.updateBuildingUseYN(bdt.getBuildingNo());
-		   }
-	   }
 	   
 	   model.addAttribute("buildings", buildings);
 	   

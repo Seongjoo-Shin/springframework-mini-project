@@ -554,7 +554,7 @@
 	                                </div>
 	                                <div id="aroundImgField" class="d-flex">
 	                                    <div id="aroundImgPreview" class="d-flex" style="align-items: center;">
-	                                    	<c:if test="${not empty nomalCnt}">
+	                                    	<c:if test="${not empty panoCnt}">
 	                                    		<c:forEach var="image" items="${imageFile}" varStatus="status">
 	                                    			<c:if test="${image.panoramaCheck eq '1'}">
 	                                    				<div seq="${image.buildingFileNo}" class="m-1" name="exist" id="panorama" style="border-radius: 10px; object-fit: cover;"></div>

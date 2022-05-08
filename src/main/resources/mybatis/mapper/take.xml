@@ -47,7 +47,8 @@
 	
 	<select id="selectBuildingList" resultMap="buildingDtoResult">
 		select * from buildings
-		where building_use_yn = '1'
+		where SYSDATE >= building_regist_date
+			and building_end_date >= SYSDATE
 	</select>
 	
 	<select id="selectImageFileByBuildingNo" parameterType="String" resultMap="buildingFileDtoResult">
