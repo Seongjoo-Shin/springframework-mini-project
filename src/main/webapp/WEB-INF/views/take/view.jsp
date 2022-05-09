@@ -27,6 +27,8 @@
            showOption();
            showLikeCount();
            hospitalLocation();
+           
+           setPrice();
         });
     </script>
     
@@ -103,17 +105,23 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">${buildingInfo.buildingTakeoverPrice} 만원</span>
+                                            <span id="takeoverPrice" class="ml-5"></span>
+                                            <span> 원</span>
                                         </div>
-                                        <div class="mb-5" style="font-size: 20px;">
-                                            <span class="ml-5">
-                                               <c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
-                                                  ${buildingInfo.buildingDepositPrice} / ${buildingInfo.buildingMonthRent} 만원
-                                               </c:if>
-                                               <c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
-                                                  ${buildingInfo.buildingPrice} 만원
-                                               </c:if>
-                                            </span>
+                                        <div class="mb-5 ml-5" style="font-size: 20px;">
+                                            <c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
+                                            	<span id="depositPrice">
+                                               		${buildingInfo.buildingDepositPrice}
+                                           		</span>
+                                           		<span style="font-size: 20px;"> 원</span>
+                                           		<span style="font-size: 20px;"> / </span>
+                                           		<span id="monthPrice" style="font-size: 20px;"></span>
+                                           		<span style="font-size: 20px;">원</span>
+                                            </c:if>
+                                            <c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
+                                            	<span id="buildingPrice" style="font-size: 20px;"></span>
+                                           		<span style="font-size: 20px;"> 원</span>
+                                            </c:if>
                                         </div>
                                         <div class="mb-5" style="font-size: 20px;">
                                             <span id="car" class="ml-5"></span>
@@ -180,21 +188,22 @@
                                                 </c:if>
                                              </div>
                                           <div class="col-7">
-                                             <div class="mb-2">
-                                                <div class="ml-5" style="font-size: 23px;">
-                                                      ${buildingInfo.buildingTakeoverPrice} 만원
-                                                   </div>
+                                             <div class="mb-3">
+                                                <div id="takeoverPriceQuick" class="ml-2" style="font-size: 20px;"></div>
                                              </div>
-                                             <c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
-                                                   <span class="ml-5" style="font-size: 23px;">
-                                                      ${buildingInfo.buildingDepositPrice} / ${buildingInfo.buildingMonthRent} 만원
-                                                   </span>
-                                                </c:if>
-                                                <c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
-                                                   <span class="ml-5 " style="font-size: 23px;"><span>
-                                                      ${buildingInfo.buildingPrice} 만원
-                                                   </span>
-                                                </c:if>
+                                             <div class="mt-2">
+                                             	<c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
+                                                   <span class="ml-2" style="font-size: 20px;" id="depositPriceQuick"></span>
+                                                   <span style="font-size: 20px;"> 원</span>
+                                                   <span style="font-size: 20px;"> / </span>
+                                                   <span style="font-size: 20px;" id="monthPriceQuick"></span>
+                                                   <span style="font-size: 20px;">원</span>
+                                             	</c:if>
+                                             	<c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
+                                                	<span id="buildingPriceQuick" class="ml-2" style="font-size: 20px;"><span>
+                                                	<span style="font-size: 20px;"> 원</span>
+                                             	</c:if>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
@@ -268,7 +277,7 @@
                   <a href="/mypage/myboard/building?pageNo=${pageNo}" class="btn border rounded m-2 p-2" style="font-size: 25px; width: 130px;">목록</a>
                </c:if>
                <c:if test="${sessionUserId eq buildingInfo.buildingWriter}">
-                  <a href="deleteBuilding?buildingNo=${buildingInfo.buildingNo}" class="btn btn-outline-danger border rounded m-2 p-2" style="font-size: 25px; width: 130px;">삭제</a>
+                  <a onclick="deleteBuilding()" class="btn btn-outline-danger border rounded m-2 p-2" style="font-size: 25px; width: 130px;">삭제</a>
                </c:if>
                <c:if test="${sessionUserId ne buildingInfo.buildingWriter}">
                   <a href="/interior/simulator?buildingNo=${buildingInfo.buildingNo}" class="btn btn-outline-dark border rounded m-2 p-2" style="font-size: 25px;">인테리어 만들기</a>
@@ -407,6 +416,7 @@
         	   span.innerHTML =  tempSpan;
         	   options.append(span);
            }
+           
            //엘리베이터가 있을 경우, 있다고 텍스트 추가
            if(optionValue.includes("1")){
               $("#ele").text("있음");
@@ -446,6 +456,146 @@
              }
           });
        }
+       
+       function deleteBuilding() {
+    	   swal("해당 매물을 삭제하시겠습니까?", {
+	   			dangerMode: true,
+	   			buttons: true,
+			}).then((result) => {
+	   			if(result == true){
+	   				
+	   				$.ajax({
+	   					method: 'POST',
+	   	            	url:'deleteBuilding',
+	   	            	data: {buildingNo : `${buildingInfo.buildingNo}`}
+	   				}).done((data) => {
+	   					if(data == "success"){
+	   						swal("삭제되었습니다.", {
+	   	   				      	icon: "success",
+	   	   				    }).then(()=>{
+	   	   				    	location.href = "list";
+	   	   				    });
+	   					}else{
+	   						swal("삭제되지 않았습니다.", {
+	   	   				      	icon: "error",
+	   	   				    });
+	   					}
+	   				});
+	   				
+	   			}else{
+	   				swal("삭제가 취소되었습니다.");
+	   			}
+	   		});
+       }
+       
+       function setPrice() {
+    	   //takeoverPrice 설정
+    	   var takeoverPrice = `${buildingInfo.buildingTakeoverPrice}`;
+    	   if(takeoverPrice >= 10000){
+    		   var takePrice = takeoverPrice;
+    		   takePrice = takePrice.replace("0", "");
+    		   takePrice = takePrice.replace("0", "");
+    		   takePrice = takePrice.replace("0", "");
+    		   
+    		   takePrice2 = takePrice.slice(-1);
+    		   
+    		   if(takePrice >= 100 && takePrice < 1000){
+    			   takePrice = takePrice.slice(0, 2);
+               }else if(takePrice < 100){
+            	   takePrice = takePrice.slice(0, 1);
+               }else{
+            	   takePrice = takePrice.slice(0, 3);
+               }
+    		   
+    		   $("#takeoverPrice").text(takePrice + " 억 " + takePrice2 + "000 만");
+    		   $("#takeoverPriceQuick").text(takePrice + " 억 " + takePrice2 + "000 만");
+    	   }else{
+    		   $("#takeoverPrice").text(takePrice + "만");
+    		   $("#takeoverPriceQuick").text(takePrice + "만");
+    	   }
+    	   
+    	   if(`${buildingInfo.buildingTradeInfo}` == '임대'){
+    		   var monthPrice = `${buildingInfo.buildingMonthRent}`;
+    		   console.log(monthPrice);
+    		   
+    		   if(monthPrice >= 10000){
+        		   var monthPriceVal = monthPrice;
+        		   monthPriceVal = monthPriceVal.replace("0", "");
+        		   monthPriceVal = monthPriceVal.replace("0", "");
+        		   monthPriceVal = monthPriceVal.replace("0", "");
+        		   
+        		   monthPriceVal2 = monthPriceVal.slice(-1);
+        		   
+        		   if(monthPriceVal >= 100 && monthPriceVal < 1000){
+        			   monthPriceVal = monthPriceVal.slice(0, 2);
+                   }else if(monthPriceVal < 100){
+                	   monthPriceVal = monthPriceVal.slice(0, 1);
+                   }else{
+                	   monthPriceVal = monthPriceVal.slice(0, 3);
+                   }
+        		   console.log(monthPrice);
+        		   
+        		   $("#monthPrice").text(monthPriceVal + " 억 " + monthPriceVal2 + "000 만");
+        		   $("#monthPriceQuick").text(monthPriceVal + " 억 " + monthPriceVal2 + "000 만");
+        	   }else{
+        		   $("#monthPrice").text(monthPrice + "만");
+        		   $("#monthPriceQuick").text(monthPrice + "만");
+        	   }
+    		   
+    		   var depositPrice = `${buildingInfo.buildingDepositPrice}`;
+    		   
+    		   if(depositPrice >= 10000){
+        		   var depositPriceVal = depositPrice;
+        		   depositPriceVal = depositPriceVal.replace("0", "");
+        		   depositPriceVal = depositPriceVal.replace("0", "");
+        		   depositPriceVal = depositPriceVal.replace("0", "");
+        		   
+        		   depositPriceVal2 = depositPriceVal.slice(-1);
+        		   
+        		   if(depositPriceVal >= 100 && depositPriceVal < 1000){
+        			   depositPriceVal = depositPriceVal.slice(0, 2);
+                   }else if(depositPriceVal < 100){
+                	   depositPriceVal = depositPriceVal.slice(0, 1);
+                   }else{
+                	   depositPriceVal = depositPriceVal.slice(0, 3);
+                   }
+        		   console.log(monthPrice);
+        		   
+        		   $("#depositPrice").text(depositPriceVal + " 억 " + depositPriceVal2 + "000 만");
+        		   $("#depositPriceQuick").text(depositPriceVal + " 억 " + depositPriceVal2 + "000 만");
+        	   }else{
+        		   $("#depositPrice").text(depositPrice + "만");
+        		   $("#depositPriceQuick").text(depositPrice + "만");
+        	   }
+    		   
+    	   }else{
+    		   var buildingPrice = `${buildingInfo.buildingPrice}`;
+    		   
+    		   if(buildingPrice >= 10000){
+        		   var buildingPriceVal = buildingPrice;
+        		   buildingPriceVal = buildingPriceVal.replace("0", "");
+        		   buildingPriceVal = buildingPriceVal.replace("0", "");
+        		   buildingPriceVal = buildingPriceVal.replace("0", "");
+        		   
+        		   buildingPriceVal2 = buildingPriceVal.slice(-1);
+        		   
+        		   if(buildingPriceVal >= 100 && buildingPriceVal < 1000){
+        			   buildingPriceVal = buildingPriceVal.slice(0, 2);
+                   }else if(buildingPriceVal < 100){
+                	   buildingPriceVal = buildingPriceVal.slice(0, 1);
+                   }else{
+                	   buildingPriceVal = buildingPriceVal.slice(0, 3);
+                   }
+        		   console.log(monthPrice);
+        		   
+        		   $("#buildingPrice").text(buildingPriceVal + " 억 " + buildingPriceVal2 + "000 만");
+        		   $("#buildingPriceQuick").text(buildingPriceVal + " 억 " + buildingPriceVal2 + "000 만");
+        	   }else{
+        		   $("#buildingPrice").text(buildingPrice + "만");
+        		   $("#buildingPriceQuick").text(buildingPrice + "만");
+        	   }
+    	   }
+	   }
        
        $(window).scroll(function() { 
           var currentPosition = parseInt($("#quickmenu").css("top")); 

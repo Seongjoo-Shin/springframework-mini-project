@@ -425,8 +425,10 @@ public class TakeController {
    }
    
    @RequestMapping("/deleteBuilding")
+   @ResponseBody
    public String deleteBuilding(int buildingNo) {
+	   log.info(buildingNo);
 	   takeService.deleteBuildingByNo(buildingNo);
-	   return "redirect:/take/list";
+	   return "success";
    }
 }
