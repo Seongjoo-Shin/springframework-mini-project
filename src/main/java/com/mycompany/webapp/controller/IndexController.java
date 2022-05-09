@@ -83,7 +83,7 @@ public class IndexController {
 		log.info(user);
 		SignUpResult result = userService.signUp(user);
 		if(result == SignUpResult.SUCCESS) {
-			return "redirect:/index/loginForm";
+			return "/index/signupForm";
 		} else {
 			return "/index/signupForm";
 		}
@@ -96,9 +96,9 @@ public class IndexController {
 		LoginResult result = userService.checkId(id);
 		JSONObject jsonObject = new JSONObject();
 		if(result == LoginResult.SUCCESS) {
-			jsonObject.put("result", "fail");
+			jsonObject.put("result", "가입가능");
 		} else {
-			jsonObject.put("result", "success");
+			jsonObject.put("result", "가입불가");
 		}
 		
 		String json = jsonObject.toString();

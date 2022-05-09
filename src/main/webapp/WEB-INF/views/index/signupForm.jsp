@@ -43,6 +43,20 @@
 		display : none;
 	}
 	
+	.id_input_checkId{
+		color : red;
+		display : none;
+	}
+	
+	.id_input_checkPassword{
+		color : red;
+		display : none;
+	}
+	
+	.id_input_checkPhone{
+		color : red;
+		display:none;
+	}
 	.error::-webkit-input-placeholder{
 		color : red
 	}
@@ -55,6 +69,7 @@
 	var passwordFlag = 0;
 	var emailFlag = 0;
 	var nameFlag = 0;
+	var phoneFlag= 0;
 	var nicknameFlag = 0;
 	
     function selectEmail(ele){ 
@@ -108,14 +123,36 @@
     		return false;
     	}
     	
+    	//핸드폰번호 유효성 검사
+    	var userPhonePattern = /^010-?([0-9]{3,4})-?([0-9]{4})$/;
+    	var phone = $('#userPhone').val();
+    	var userPhonePatternTest = userPhonePattern.test(phone);
+    	if(userPhonePatternTest==false){
+    		$('.id_input_checkPhone').css("display","inline-block");
+    	} else if(userPhonePatternTest==true) {
+    		$('.id_input_checkPhone').css("display","none");
+    	}
+    	
     	if ($('#userNickname').val()==""){
     		$('#userNickname').attr('placeholder', '닉네임을 입력하세요')
     		$('#userNickname').addClass('error');
     		return false;
-    	}
+    	} 
     	
+    	//비밀번호 정규표현식 유효성 검사
+    	var userPasswordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    	var password = $('#userPassword').val();
+    	var userPasswordPatternTest = userPasswordPattern.test(password);
+  	    if(userPasswordPatternTest == false){
+  		    $('.id_input_checkPassword').css("display","inline-block");
+  		    return false;
+  	    } else if(userPasswordPatternTest == true){
+  	    	$('.id_input_checkPassword').css("display","none");
+  	    }
+  	   
     	if($('#confirmPassword').val()!=$('#userPassword').val()){
     		$('.id_input_re_5').css("display","inline-block");
+    		$('.id_input_checkPassword').css("display","none");
     		return false;
     	} else {
     		passwordFlag = 1;
@@ -124,6 +161,8 @@
     	//폼의 모든 내용이 잘 작성 되었나 확인후 submit
     	if(idFlag==1 && passwordFlag==1 && emailFlag==1 && nameFlag==1 && nicknameFlag==1 ){
     		return true;
+    	} else {
+    		return false;
     	}
     	
     }
@@ -143,9 +182,22 @@
 		                function checkId() {
 		             	   if($(userId).val() == ""){
 		             			check();
-		             			return
-		             	   }
+		             			return;
+		             	   } 
+		             	   
+		             	   //아이디 정규표현식 유효성 검사
+		             	   var userIdPattern = /^[a-z]+[a-z0-9]{5,19}$/;
 		             	   var id = $(userId).val();
+		             	   var userIdPatternTest = userIdPattern.test(id);
+		             	   if(userIdPatternTest == false){
+		             		   $('.id_input_checkId').css("display","inline-block");
+		             		   $('.id_input_re_1').css("display", "none");
+		             		   $('.id_input_re_2').css("display", "none");
+	 						   $('.id_input_re_5').css("display","none");
+		             		   return;
+		             	   }
+		             	   
+		             	   
 		 					$.ajax({
 		 						url: "/index/checkId",
 		 						data: {id},
@@ -153,27 +205,31 @@
 		 					})
 		 					.done((data) => {
 		 						console.log(data.result);
-		 						if(data.result ==="success"){
+		 						if(data.result ==="가입불가"){
 		 							$('.id_input_re_2').css("display","inline-block");
 		 							$('.id_input_re_1').css("display", "none");
 		 							$('.id_input_re_5').css("display","none");
-		 						} else if(data.result ==="fail"){
+		 							$('.id_input_checkId').css("display","none");
+		 						} else if(data.result ==="가입가능"){
 		 							idFlag = 1;
 		 							$('.id_input_re_1').css("display","inline-block");
 		 							$('.id_input_re_2').css("display", "none");
 		 							$('.id_input_re_5').css("display","none");
+		 							$('.id_input_checkId').css("display","none");
 		 						}
 		 					});
 		 				}
 		               </script>
+		               <span class="id_input_checkId">6~20자의 영문 소문자와 숫자만 사용가능합니다.</span>
 		               <span class="id_input_re_1">사용 가능한 아이디입니다.</span>
 		   			   <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
 		        </div>
 		        <div class="form-group">
 		            <input id="userPassword" name="userPassword" class ="col-md-8 p-2" placeholder="비밀번호" type="password"/>
+		            <span class="id_input_checkPassword">8자 이상, 하나 이상의 문자, 숫자, 특수문자를 조합하시오.</span>
 		        </div>
 		        <div class="form-group">
-		            <input id="confirmPassword" class ="col-md-8 p-2" placeholder="비밀번호 확인" type="text"/>
+		            <input id="confirmPassword" class ="col-md-8 p-2" placeholder="비밀번호 확인" type="password"/>
 		            <span class="id_input_re_5">비밀번호가 일치하지 않습니다.</span>
 		        </div>
 		        <div class="form-group d-flex flex-row">
@@ -223,8 +279,8 @@
 		       	</div>
 		       	
 		       	<div id="aDiv" class="form-group" style="display:none">
-		       		<input id="certificationinput" name="certificationNum" class ="col-md-8" placeholder="인증번호" type="text"/>
-		       		<button type="button" onClick="checkNum()" class="btn btn-sm col-3" style="background-color: rgb(242, 101, 45); color: white;">확인</button>
+		       		<input id="certificationinput" name="certificationNum" class ="col-md-8 p-2" placeholder="인증번호" type="text"/>
+		       		<button type="button" onClick="checkNum()" class="btn btn-sm col-3 p-2" style="background-color: rgb(242, 101, 45); color: white;">확인</button>
 		       		<span class="id_input_re_7">인증번호가 일치하지 않습니다.</span>
 		       		<span class="id_input_re_8">인증이 성공했습니다.</span>
 		       	</div>
@@ -248,7 +304,11 @@
 		        </div>
 		        <div class="form-group">
 		            <input id="userPhone" name="userPhone" class ="col-md-8 p-2" placeholder="전화번호" type="text"/>
+		            <span>ex)010-1234-1234</span>
+		            <p class="id_input_checkPhone" style="margin:0;">예시와 같은 형식이 아닙니다.</p>
 		        </div>
+		        
+		        
 		        <div class="form-group">
 		            <input id="userNickname" name="userNickname" class ="col-md-8 p-2" placeholder="닉네임" type="text"/>
 		            <button type="button" onClick="checkNickname()" class="btn p-2 col-3"  style="background-color: rgb(242, 101, 45); color: white; margin-bottom: 6px;">중복확인</button>
