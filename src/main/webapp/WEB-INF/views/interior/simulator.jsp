@@ -29,6 +29,15 @@
 	var sofa3ImageName="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa3.png";
 	var sofa3CheckedImageName="${pageContext.request.contextPath}/resources/images/interior/sofa/checkedSofa3.png";
 	
+	var tchair1ImageName="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair1.png";
+	var tchair1CheckedImageName="${pageContext.request.contextPath}/resources/images/interior/tchair/checkedtChair1.png";
+	
+	var tchair2ImageName="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair2.png";
+	var tchair2CheckedImageName="${pageContext.request.contextPath}/resources/images/interior/tchair/checkedtChair2.png";
+	
+	var tchair3ImageName="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair3.png";
+	var tchair3CheckedImageName="${pageContext.request.contextPath}/resources/images/interior/tchair/checkedtChair3.png";
+	
 	function checkImg(imgName){
 		if(imgName == bed1ImageName){
 			$('#bed1').attr("src", bed1CheckedImageName);
@@ -226,7 +235,88 @@
 		} else if(imgName == sofa3CheckedImageName){
 			$('#sofa3').attr("src", sofa3ImageName);
 			$('#sofa1Div').css('display','none');
+			//--------------------------------------------------------------------------------------------------------------------
+		} else if(imgName == tchair1ImageName){
+			$('#tChair1').attr("src", tchair1CheckedImageName);
+			$('#tChair2').attr("src", tchair2ImageName);
+			$('#tChair3').attr("src", tchair3ImageName);
+			$('#sofa1').attr("src", sofa1ImageName);
+	 		$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr('src', sofa3ImageName);
+	 		$('#chair1').attr("src", chair1ImageName);
+	 		$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr('src', chair3ImageName);
+	 		$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
+	 		
+	 		$('#tChairDetailimage').attr('src', imgName);
+			$('#tChairinteriorName').text('진료실의자 A타입');
+			$('#tChairinteriorPrice').text('123000');
+			
+			$('#tChair1').css('display','inline-block');
+			$('#sofa1Div').css('display','none');
+			$('#bed1Div').css('display','none');
+			$('#chair1Div').css('display','none');
+			
+		} else if(imgName == tchair1CheckedImageName){
+			$('#tChair1').attr("src", tchair1ImageName);
+			$('#tChair1Div').css('display','none');
+		} else if(imgName == tchair2ImageName){
+			$('#tChair2').attr("src", tchair2CheckedImageName);
+			$('#tChair1').attr("src", tchair1ImageName);
+			$('#tChair3').attr("src", tchair3ImageName);
+			$('#sofa1').attr("src", sofa1ImageName);
+	 		$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr('src', sofa3ImageName);
+	 		$('#chair1').attr("src", chair1ImageName);
+	 		$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr('src', chair3ImageName);
+	 		$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
+			
+	 		$('#tChairDetailimage').attr('src', imgName);
+			$('#tChairinteriorName').text('진료실의자 B타입');
+			$('#tChairinteriorPrice').text('76000');
+			
+			$('#tChair1').css('display','inline-block');
+			$('#sofa1Div').css('display','none');
+			$('#bed1Div').css('display','none');
+			$('#chair1Div').css('display','none');
+	 		
+		} else if(imgName == tchair2CheckedImageName){
+			$('#tChair2').attr("src", tchair2ImageName);
+			$('#tChair1Div').css('display','none');
+		} else if(imgName == tchair3ImageName){
+			$('#tChair3').attr("src", tchair3CheckedImageName);
+			$('#tChair1').attr("src", tchair1ImageName);
+			$('#tChair2').attr("src", tchair2ImageName);
+			$('#sofa1').attr("src", sofa1ImageName);
+	 		$('#sofa2').attr("src", sofa2ImageName);
+	 		$('#sofa3').attr('src', sofa3ImageName);
+	 		$('#chair1').attr("src", chair1ImageName);
+	 		$('#chair2').attr("src", chair2ImageName);
+	 		$('#chair3').attr('src', chair3ImageName);
+	 		$('#bed1').attr("src", bed1ImageName);
+	 		$('#bed2').attr("src", bed2ImageName);
+	 		$('#bed3').attr("src", bed3ImageName);
+	 		
+	 		$('#tChairDetailimage').attr('src', imgName);
+			$('#tChairinteriorName').text('진료실의자 C타입');
+			$('#tChairinteriorPrice').text('39000');
+			
+			$('#tChair1Div').css('display','inline-block');
+			$('#sofa1Div').css('display','none');
+			$('#bed1Div').css('display','none');
+			$('#chair1Div').css('display','none');
+			
+		} else if(imgName == tchair3CheckedImageName){
+			$('#tChair3').attr("src", tchair3ImageName);
+			$('#tChair1Div').css('display','none');
 		}
+		
+		
 		
 	}
 	
@@ -348,6 +438,19 @@
                   	   <p>가격 : <span id="sofainteriorPrice"></span></p>
                   	   <input id="sofaItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
                   	   <button onClick="addWishList($('#sofainteriorName').text(), $('#sofainteriorPrice').text(), $('#sofaDetailimage').attr('src'),${buildingNo},$('#sofaItemCnt').val())" class="btn btn-sm col-3 float-right" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
+                    </div>
+                    <h5 class="mt-2">진료실 의자</h5>
+                    <li>
+                       <img id="tChair1" onClick="checkImg($('#tChair1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair1.png" width="80px" height="80px"/>
+                       <img id="tChair2" onClick="checkImg($('#tChair2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair2.png" width="80px" height="80px"/>
+                       <img id="tChair3" onClick="checkImg($('#tChair3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair3.png" width="80px" height="80px"/>
+                    </li>
+                    <div id="tChair1Div" class="mt-2" style="display:none;">
+                  	   <img id ="tChairDetailimage" src="" width="100%"/>
+                  	   <p>제품명 : <span id="tChairinteriorName"></span></p>
+                  	   <p>가격 : <span id="tChairinteriorPrice"></span></p>
+                  	   <input id="tChairItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
+                  	   <button onClick="addWishList($('#tChairinteriorName').text(), $('#tChairinteriorPrice').text(), $('#tChairDetailimage').attr('src'),${buildingNo},$('#tChairItemCnt').val())" class="btn btn-sm col-3 float-right" style="background-color:rgb(242, 101, 45); color: white;">추가</button>
                     </div>
                 </ul>
             </div>
