@@ -328,11 +328,6 @@ public class CommunityController {
 	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
 	public String marketList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,  Model model, HttpSession session) {
-		if(session.getAttribute("sessionUserId") == null) {
-			return "redirect:/index/loginForm";
-		}
-
-		log.info("실행");
 		//market 게시물 개수 가져오기
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
