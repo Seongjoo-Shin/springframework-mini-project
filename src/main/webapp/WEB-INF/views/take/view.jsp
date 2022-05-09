@@ -35,7 +35,7 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div>
-                    <h2 class="mt-5 mb-5 text-center">매물 정보</h2>
+                    <h2 class="mb-5 text-center" style="margin-top:60px;">매물 정보</h2>
                 </div>
                 <div>
                     <div class="col-12 row d-flex justify-content-center" style="padding-right: 0;">
@@ -149,9 +149,9 @@
                             </c:forTokens>
                             <div class="mb-3" class="mb-1">
                                <c:forEach var="equip" items="${equipments}">
-                                  <span class="p-1 m-2" style="font-size: 18px; border: 2px solid; color: rgb(42, 110, 211); border-radius: 7px; border-color: rgb(42, 110, 211);">
+                                  <div class="p-2 m-2" style="font-size: 18px; border: 2px solid; color: rgb(42, 110, 211); border-radius: 7px; border-color: rgb(42, 110, 211); display:inline-block;">
                                        ${equip.equipmentName} : ${equip.equipmentCount} 개
-                                   </span>
+                                   </div>
                                </c:forEach>
                             </div>
                         </div>

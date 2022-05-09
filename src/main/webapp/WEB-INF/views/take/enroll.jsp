@@ -430,7 +430,7 @@
 	                <div>
 	                    <h4 class="mt-5">상세 정보</h4>
 	                    <div class="border rounded d-flex">
-	                        <div class="text-center p-4 d-flex flex-column justify-content-center" style="background-color: rgb(231, 231, 236);">
+	                        <div class="text-center p-4 d-flex flex-column justify-content-center" style="background-color: rgb(231, 231, 236); width:160px;">
 	                            <div>건물 크기<br/>(1P = 3.3058㎡)</div>
 	                        </div>
 	                        <div class="p-2 d-flex flex-column justify-content-center mr-6">
@@ -463,7 +463,7 @@
 	                    </div>
 	    
 	                    <div class="d-flex mt-2">
-	                        <div class="border rounded d-flex justify-content-center p-4" style="background-color: rgb(231, 231, 236); width: 130px;">
+	                        <div class="border rounded d-flex justify-content-center p-4" style="background-color: rgb(231, 231, 236); width: 160px;">
 	                            <div>옵션 항목</div>
 	                        </div>
 	                        <div class="border rounded d-flex flex-grow-1 ml-2">
@@ -475,21 +475,19 @@
 	                            <button type="button" class="optionBtn" value="6" onclick="optionBtnClick(this)">주변 약국</button>
 	                        </div>
 	                    </div>
-	                    <div id="equipDiv" style="display: none;">
-	                        <div class="d-flex mt-2">
-	                            <div class="border rounded p-4" style="background-color: rgb(231, 231, 236); width: 130px; height: 140px; position: relative;">
-	                                <div style="transform: translate(-50%,-50%); position: absolute;left: 50%;top: 50%;">장비</div>
-	                            </div>
-	                            <div class="border rounded d-flex flex-column ml-2 flex-grow-1">
-	                                <div class="p-2">
-	                                    <input id="equipmentName" class="p-2 rounded border" type="text" placeholder="가지고 있는 장비를 추가해주세요!" style="width: 270px;"/>
-	                                    <input id="equipmentCnt" class="p-2 rounded border" type="number" min="1" placeholder="장비 개수" style="width: 110px;"/>
-	                                    <button type="button" onclick="equipmentSave()" class="btn btn-info mb-1">+</button>
-	                                </div>
-	                                <div id="equipmentList" class="m-2">
-	                                </div>
-	                            </div>
-	                        </div>
+	                    <div id="equipDiv" style="display: none;" class="d-flex h-100 mt-2">
+                            <div class="border rounded p-4" style="background-color: rgb(231, 231, 236); width: 194px; position: relative;">
+                                <div style="transform: translate(-50%,-50%); position: absolute;left: 50%;top: 50%;">장비</div>
+                            </div>
+                            <div class="border rounded d-flex flex-column ml-2 flex-grow-1">
+                                <div class="p-2">
+                                    <input id="equipmentName" class="p-2 rounded border" type="text" placeholder="가지고 있는 장비를 추가해주세요!" style="width: 270px;"/>
+                                    <input id="equipmentCnt" class="p-2 rounded border" type="number" min="1" placeholder="장비 개수" style="width: 110px;"/>
+                                    <button type="button" onclick="equipmentSave()" class="btn btn-info mb-1">+</button>
+                                </div>
+                                <div id="equipmentList" class="m-2" style="display: inline-block;">
+                                </div>
+                            </div>
 	                    </div>
 	                    
 	                </div>
@@ -859,16 +857,17 @@
 									}
 									
 									//이름이 같은 장비가 없다면 새로 만들어서 equipList에 추가해준다.
-									var equipSpan = document.createElement("span");
+									var equipDiv = document.createElement("div");
 						            var equipName = document.createElement("span");
 						            
 						            var equipCntName = document.createElement("span");
 						            var equipCnt = document.createElement("span");
 						            var equipDel = document.createElement("button");
 	
-						            equipSpan.setAttribute("class", "border rounded");
-						            equipSpan.style.padding = "12px";
-						            equipSpan.setAttribute("id", "equip"+equipNo);
+						            equipDiv.setAttribute("class", "border rounded m-1");
+						            equipDiv.style.padding = "6px";
+						            equipDiv.setAttribute("id", "equip"+equipNo);
+						            equipDiv.style.display = "inline-block";
 	
 						            equipName.setAttribute("class", "ml-2 p-1");
 						            equipName.setAttribute("id", "equip"+equipNo+"Name");
@@ -884,12 +883,12 @@
 						            equipDel.setAttribute("class","btn btn-danger mb-1 ml-2");
 						            equipDel.innerHTML = "X";
 	
-						            equipSpan.appendChild(equipName);
-						            equipSpan.appendChild(equipCntName);
-						            equipSpan.appendChild(equipCnt);
-						            equipSpan.appendChild(equipDel);
+						            equipDiv.appendChild(equipName);
+						            equipDiv.appendChild(equipCntName);
+						            equipDiv.appendChild(equipCnt);
+						            equipDiv.appendChild(equipDel);
 	
-						            $("#equipmentList").append(equipSpan);
+						            $("#equipmentList").append(equipDiv);
 						            $("#equipmentName").val("");
 									$("#equipmentCnt").val("");
 									equipNo++;
