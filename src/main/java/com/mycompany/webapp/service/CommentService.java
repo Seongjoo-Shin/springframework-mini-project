@@ -11,7 +11,7 @@ import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.PagerDto;
 
 @Service
-public class commentService {
+public class CommentService {
 	@Resource
 	private CommentDao commentDao;
 	

@@ -38,7 +38,7 @@ import com.mycompany.webapp.dto.MarketPagerDto;
 import com.mycompany.webapp.dto.NoticeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.security.UserCustom;
-import com.mycompany.webapp.service.commentService;
+import com.mycompany.webapp.service.CommentService;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.MarketBoardService;
 import com.mycompany.webapp.service.NoticeService;
@@ -57,7 +57,7 @@ public class CommunityController {
 	@Resource
 	private UserService userService;
 	@Resource
-	private commentService commentService;
+	private CommentService CommentService;
 	@Resource
 	private MarketBoardService marketBoardService;
 	@Resource
@@ -166,13 +166,13 @@ public class CommunityController {
 		
 		//등록된 댓글 보여주기----------------------------
 		//댓글 개수 가져오기
-		int totalCommentNum = commentService.totalCountwhenFreeNo(freeNo);
+		int totalCommentNum = CommentService.totalCountwhenFreeNo(freeNo);
 		PagerDto pager = new PagerDto(50,10,totalCommentNum,1);
 		pager.setFreeNo(freeNo);
 		model.addAttribute("pager",pager); //jsp에서 페이지 만들 때 사용하려고 model로 보내줌.
 		
 		//페이지 정보
-		List<CommentDto> comments = commentService.getselectByFreeNo(pager);
+		List<CommentDto> comments = CommentService.getselectByFreeNo(pager);
 		model.addAttribute("comments", comments);
 		
 		return "/community/board/view";
@@ -232,14 +232,14 @@ public class CommunityController {
 		commentDto.setFreeNo(freeNo);
 		commentDto.setCommentWriter(SessionUserid);
 		
-		commentService.insertComment(commentDto);
+		CommentService.insertComment(commentDto);
 		
 		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}
 
 	@PostMapping("/board/commentDelete")
 	public String commentDelete(CommentDto commentDto) {
-		commentService.deleteComment(commentDto);
+		CommentService.deleteComment(commentDto);
 		return "redirect:/community/board/boardDetail?freeNo="+commentDto.getFreeNo();
 	}
 	
@@ -262,7 +262,7 @@ public class CommunityController {
 		CommentDto commentDto = new CommentDto();
 		commentDto.setCommentContent(commentContent);
 		commentDto.setCommentNo(commentNo);
-		commentService.updateComment(commentDto);
+		CommentService.updateComment(commentDto);
 		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}
 	
@@ -312,7 +312,7 @@ public class CommunityController {
 		commentDto.setCommentModifyDate(sqlDate);
 		commentDto.setCommentRegistDate(sqlDate);
 
-		int commentNo = commentService.insertReplyComment(commentDto);
+		int commentNo = CommentService.insertReplyComment(commentDto);
 		commentDto.setCommentNo(commentNo);
 		
 		JSONObject jsonObject = new JSONObject();
@@ -618,10 +618,7 @@ public class CommunityController {
 		
 		   log.info("/market/updateMarketContent 실행");
 		   String category = request.getParameter("category");
-		   log.info(category);
-		   log.info(request.getParameter("marketNo"));
 		   int marketNo = Integer.parseInt(request.getParameter("marketNo"));
-		   log.info(request.getParameter("title"));
 		   MarketBoardDto marketBoardDto = new MarketBoardDto();
 		   marketBoardDto.setMarketCategory(category);
 		   marketBoardDto.setMarketNo(marketNo);
@@ -632,8 +629,7 @@ public class CommunityController {
 		   String[] deleteImgNoList = deleteDb.split(",");
 		   log.info("deleteDb"+deleteDb);
 		   log.info("deleteImgNoList: " + deleteImgNoList.length);
-		   
-		   
+		   	   
 		   if((!deleteDb.equals(""))) {
 			   for(String deleteImgNo : deleteImgNoList) {
 				   log.info("deleteImgNoList요소: "+deleteImgNo);
@@ -699,14 +695,16 @@ public class CommunityController {
  
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@GetMapping("/notice/list")
-	public String noticeList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model) { //페이지는 1페이지부터 넘어오기!
+	public String noticeList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model, HttpSession session) { //페이지는 1페이지부터 넘어오기!
 		
 		//Notice 게시판 게시물 개수 가져오기
 		int totalBoardNum = noticeService.totalCount();
 		log.info(totalBoardNum);
 		PagerDto pager = new PagerDto(10, 10, totalBoardNum, pageNo);
 		model.addAttribute("pager", pager);
-		
+		if(session.getAttribute("sessionUserId") != null) {
+			model.addAttribute("sessionMid", session.getAttribute("sessionUserId").toString());
+		}		
 		
 		//페이지 정보
 		List<NoticeBoardDto> noticeboards = noticeService.getNoticeBoardByPage(pager);
@@ -733,6 +731,9 @@ public class CommunityController {
 		
 		//noticeBoardDto 내용 model에 싣기
 		model.addAttribute("noticeboard", noticeBoardDto);
+		if(session.getAttribute("sessionUserId") != null) {
+			model.addAttribute("sessionMid", session.getAttribute("sessionUserId").toString());
+		}		
 		
 		return "/community/notice/view";
 	}
@@ -754,8 +755,20 @@ public class CommunityController {
 	}
 
 	@RequestMapping("/notice/update")
-	public String noticeUpdate() {
-		return "/community/board/update";
+	public String noticeUpdate(int noticeNo, HttpSession session, HttpServletRequest request, Model model) {
+		NoticeBoardDto noticeBoardDto = noticeService.getNoticeBoardByNoticeNo(noticeNo);
+		
+		//noticeBoardDto 내용 model에 싣기
+		model.addAttribute("noticeboard", noticeBoardDto);
+		model.addAttribute("sessionMid", session.getAttribute("sessionUserId").toString());
+		model.addAttribute("referer", request.getHeader("Referer"));
+		return "/community/notice/update";
+	}
+	
+	@RequestMapping("/notice/updateSave")
+	public String updateSave(NoticeBoardDto notice, String referer) {
+		noticeService.updateNoticeBoard(notice);
+		return "redirect:"+referer;
 	}
 
 	// 글쓰기 등록 버튼
@@ -786,4 +799,13 @@ public class CommunityController {
 	public String insertNoticeCancle() {
 		return "redirect:/community/notice/list";
 	}
+	
+	@RequestMapping("/notice/deleteNoticeBoard")
+	@ResponseBody
+	public String deleteNoticeBoard(int noticeNo) {
+		log.info(noticeNo);
+		noticeService.deleteNoticeBoard(noticeNo);
+		
+		return "success";
+	}	
 }

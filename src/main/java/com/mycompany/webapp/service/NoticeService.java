@@ -39,4 +39,12 @@ public class NoticeService {
 	public void noticeBoardInsert(NoticeBoardDto noticeBoardDto) {
 		noticeBoardDao.noticeBoardInsert(noticeBoardDto);
 	}
+	
+	
+	public void updateNoticeBoard(NoticeBoardDto notice) {
+		noticeBoardDao.updateNoticeBoard(notice);
+	}
+	public void deleteNoticeBoard(int noticeNo) {
+		noticeBoardDao.deleteNoticeBoard(noticeNo);
+	}	
 }

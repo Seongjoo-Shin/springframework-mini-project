@@ -1,9 +1,25 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
+	<script>
+		$( document ).ready(function() {
+			console.log($("#noticeList").children().length);
+		    if($("#noticeList").children().length == 0){
+		    	console.log("냥");
+		    	var div = document.createElement('div');
+		    	div.setAttribute("class", "text-center p-2 m-2");
+		    	div.setAttribute("id", "noList");
+		    	div.style.fontSize = "22px";
+		    	div.style.height = "200px";
+		    	div.style.width = "100%";
+		    	div.innerHTML = "등록된 공지가 없습니다.";
+		    	
+		    	$("#noticeList").append(div);
+		    }
+		});
+	</script>
     <section style="flex-grow:1;">
-      <div class="d-flex align-items-center justify-content-center pt-3">
+      <div class="d-flex align-items-center justify-content-center pt-3 mt-2">
       	<img alt="" src="${pageContext.request.contextPath}/resources/images/notice.png" style="width:100%">
         <!-- <h1 class="">공지사항</h1> -->
       </div>
@@ -19,13 +35,13 @@
                     <thead>
                       <tr>
                         <th scope="col" >공지</th>
-                        <th scope="col" style="text-align: center;">제목</th>
+                        <th scope="col" style="">제목</th>
                         <th scope="col">작성자</th>
                         <th scope="col" style="text-align: center;">작성일</th>
                         <th scope="col">조회</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="noticeList">
                     <c:forEach var="noticeboard" items="${noticeboards}">
                      	<tr style="cursor: pointer">
 	                        <td><button class="noticeBtn">공지</button></td>
@@ -41,7 +57,9 @@
                 <!-- end project-list -->
                 
                 <div class="float-right">
-                    <a href="insert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
+	                <c:if test="${sessionMid eq 'admin'}">
+                		<a href="insert" type="button" class="btn btn-outline-dark border p-2 m-1" style="font-size: 18px;">글쓰기</a>
+                	</c:if>
                 </div>
                 
 				<!-- 페이지 처리 -->

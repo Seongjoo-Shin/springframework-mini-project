@@ -19,4 +19,8 @@ public interface NoticeBoardDao {
 	public void updateHitCount(int noticeNo);
 
 	public void noticeBoardInsert(NoticeBoardDto noticeBoardDto);
+	
+	public void updateNoticeBoard(NoticeBoardDto notice);
+
+	public void deleteNoticeBoard(int noticeNo);	
 }
