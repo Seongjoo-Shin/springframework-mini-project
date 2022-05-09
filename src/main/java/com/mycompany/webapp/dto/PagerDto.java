@@ -19,6 +19,9 @@ public class PagerDto {
 	private int endRowIndex;	//페이지의 마지막 행 인덱스
 	private String userId;
 	private int freeNo;
+	private String searchType;
+	private String searchContent;	
+	
 
 	public PagerDto(int rowsPerPage, int pagesPerGroup, int totalRows, int pageNo) {
 		this.rowsPerPage = rowsPerPage;

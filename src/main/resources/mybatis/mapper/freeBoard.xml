@@ -27,6 +27,15 @@
 		    SELECT f.free_no, f.free_title, f.free_writer, f.free_regist_date, f.free_hit_count, f.free_use_yn, u.user_nickname
 		    FROM freeboards f, users u
 		    where f.free_writer = u.user_id and f.free_use_yn = 1
+			<if test="searchType ==  'content' and searchContent != null">
+		    	and f.free_content like '%'||#{searchContent}||'%'
+		    </if>
+		    <if test="searchType == 'title' and searchContent != null">
+		    	and f.free_title like '%'||#{searchContent}||'%'
+		    </if>
+		    <if test="searchType ==  'all' and searchContent != null">
+	    		and (f.free_content like '%'||#{searchContent}||'%' or f.free_title like '%'||#{searchContent}||'%')
+		    </if>		    
 		    ORDER BY free_no DESC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
@@ -78,5 +87,3 @@
 		where free_no = #{freeNo}
 	</update>
 </mapper>
-
-

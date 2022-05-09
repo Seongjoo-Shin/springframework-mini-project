@@ -80,6 +80,9 @@
 		update comments 
 		set comment_use_yn = 0
 		where comment_no = #{commentNo}
+		<if test="upperNo == 0">
+			or upper_no = #{commentNo}
+		</if>
 	</update>
 	
 	<!-- 댓글 수정 -->

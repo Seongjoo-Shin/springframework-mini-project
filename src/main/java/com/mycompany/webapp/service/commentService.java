@@ -11,7 +11,7 @@ import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.PagerDto;
 
 @Service
-public class CommentService {
+public class commentService {
 	@Resource
 	private CommentDao commentDao;
 	
@@ -34,7 +34,7 @@ public class CommentService {
 	}
 	
 	//댓글 삭제
-	public void deleteComment(int commentNo) {
+	public void deleteComment(CommentDto commentNo) {
 		commentDao.deleteComment(commentNo);
 	}
 	

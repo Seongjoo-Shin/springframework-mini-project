@@ -36,18 +36,21 @@
                 <div class="col-2">
                 </div>
                 <div class="col-8 mt-5">
-                	<div class="h5 ml-3 mr-3 mt-3">
-	                    <span>글쓴이 : </span><span>${marketBoardDto.userDto.userNickname}</span>
+                	<div class="ml-3 mr-3">
+	                    <span class="h5 pt-3" style="margin-bottom: 0px">글쓴이 : </span><span class="h5 pt-3" style="margin-bottom: 0px">${marketBoardDto.userDto.userNickname}</span>
 	                    <a class="btn btn-outline-dark ml-2" onclick="openMsgForm('${marketBoardDto.marketWriter}')">쪽지보내기</a>
-	                    <span class="date float-right mr-3"><fmt:formatDate value="${marketBoardDto.marketRegistDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+	                    <span class="date float-right mr-3 h6 pt-3" style="margin-bottom: 0px">
+	                    	<fmt:formatDate value="${marketBoardDto.marketRegistDate}" pattern="yyyy-MM-dd  HH:mm"/>
+	                    	<span class="ml-3">조회: ${marketBoardDto.marketHitCount}</span>
+	                    	</span>
 					</div>
-                    <div class="card">
+                    <div class="card mt-3">
                         <div class="card-body p-3">
                             <div class="title mb-3">
-                                <span class="h4">${marketBoardDto.marketTitle}</span>
+                                <span class="h3 p-4">${marketBoardDto.marketTitle}</span>
                             </div>							
 							<!-- Top content -->
-					        <div class="top-content px-5">
+					        <div class="top-content my-5 px-5">
 					        	<div class="container px-5">
 					        		<div class="row px-5">
 					        			<div class="col">
@@ -94,8 +97,8 @@
                         </div>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
-                        <a class="btn btn-outline-dark mr-3" style="width:100px; height:50px;" href="list">목록</a>
-                        <button class="btn btn-outline-dark ml-3" style="width:100px;" onclick="likeBtnClick(this);">
+                        <a class="btn btn-outline-dark mr-3 p-2" style="width:100px; height:40px;" href="list">목록</a>
+                        <button class="btn btn-outline-dark ml-3" style="width:100px; " onclick="likeBtnClick(this);">
                         	<img id="interImg" class="mr-2" src="" width="30px;"/>
                         	<span id="interCnt">${marketBoardDto.marketLikeCount}</span>
                         </button>

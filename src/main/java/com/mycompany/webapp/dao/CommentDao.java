@@ -16,7 +16,7 @@ public interface CommentDao {
 	//대댓글 등록
 	public int insertReplyComment(CommentDto commentDto);
 	//댓글 삭제
-	public void deleteComment(int commentNo);
+	public void deleteComment(CommentDto commentNo);
 	//해당 페이지 댓글 총 개수
 	public Integer count(int freeNo);
 	//댓글 수정

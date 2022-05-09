@@ -27,7 +27,7 @@
 					<a href="/community/board/update?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">수정</a>
 				</c:if>  	
 				<c:if test="${from ne 'mypage'}">
-					<a href="/community/board/list" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+					<a href="/community/board/list?pageNo=${pageNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
 				</c:if>
 				<c:if test="${from eq 'mypage'}">
 					<a href="/mypage/myboard/board?pageNo=${pageNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
@@ -63,6 +63,7 @@
 		             				       <form method="post" action="commentDelete">
 		             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
 		             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+		             				       		<input type="hidden" name="upperNo" value=" ${commentDto.upperNo}"/>
 		             				       		<button type="submit" class="commentBtn" style="width:161px;">삭제</button>
 		             				       	</form>                                 
 			                       		</c:if>
@@ -92,10 +93,11 @@
 								<div class="col-2">
 			                  		<div class="d-flex flex-column comment2" style="margin-right: 13px;">
 			                       		<c:if test="${sessionUserId == commentDto.commentWriter}">
-		             				       <button class="commentBtn" onclick="updateContent(${commentDto.commentNo})">수정</button>
+			                       		   <button class="commentBtn" onclick="updateContent(${commentDto.commentNo})">수정 ${commentDto.upperNo}</button>
 		             				       <form method="post" action="commentDelete">
 		             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
 		             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
+		             				       		<input type="hidden" name="upperNo" value=" ${commentDto.upperNo}"/>
 		             				       		<button type="submit" class="commentBtn" style="width:144px;">삭제</button>
 		             				       	</form>                                 
 			                       		</c:if>

@@ -26,7 +26,7 @@
           <div class="col-8">
             <div class="h3 border-bottom mb-3"><img class="mr-2" src="${pageContext.request.contextPath}/resources/images/writing.png">글쓰기</div>
 	            <div class="mb-5"><!-- action="insertMarketContent"  -->
-	              <form method="POST" id="marketInsertForm" enctype="multipart/form-data">
+	              <form action="" id="marketInsertForm" enctype="multipart/form-data">
 					<select id="category" name="category" class="form-select-lg" aria-label=".form-select-lg example">
 					  <option value="0">카테고리 선택</option>
 					  <option value="1" <c:if test="${marketBoardDto.marketCategory eq '1'}">selected</c:if>>장비</option>
@@ -34,7 +34,7 @@
 					  <option value="3" <c:if test="${marketBoardDto.marketCategory eq '3'}">selected</c:if>>소모품</option>
 					  <option value="4" <c:if test="${marketBoardDto.marketCategory eq '4'}">selected</c:if>>기타</option>
 					</select>
-					<input type="hidden" name="marketNo" value="${marketBoardDto.marketNo}"/>
+					<input id="marketNo" name="marketNo" value="${marketBoardDto.marketNo}"/>
 					
 	                <input type="text" name="title" class="form-control my-3" value="${marketBoardDto.marketTitle}"/>
 	                <div class="border rounded" style="background-color: rgb(231, 231, 236);">
@@ -260,8 +260,10 @@
 		function updateBtnClick(){
 			
 			//폼 태그안의 input태그들은 name값으로 접근 가능하다.
-        	var form = document.querySelector("form");
+        	var form = document.querySelector("#marketInsertForm");
             var formData = new FormData(form);
+            console.log(formData);
+            
             
             //select 유효성 검사
             if($("#category").val == 0){

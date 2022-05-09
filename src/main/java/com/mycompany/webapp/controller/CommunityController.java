@@ -38,7 +38,7 @@ import com.mycompany.webapp.dto.MarketPagerDto;
 import com.mycompany.webapp.dto.NoticeBoardDto;
 import com.mycompany.webapp.dto.PagerDto;
 import com.mycompany.webapp.security.UserCustom;
-import com.mycompany.webapp.service.CommentService;
+import com.mycompany.webapp.service.commentService;
 import com.mycompany.webapp.service.FreeBoardService;
 import com.mycompany.webapp.service.MarketBoardService;
 import com.mycompany.webapp.service.NoticeService;
@@ -57,7 +57,7 @@ public class CommunityController {
 	@Resource
 	private UserService userService;
 	@Resource
-	private CommentService commentService;
+	private commentService commentService;
 	@Resource
 	private MarketBoardService marketBoardService;
 	@Resource
@@ -69,34 +69,29 @@ public class CommunityController {
 
 	// 자유게시판 - board -------------------------------------------------------------------------------------------------------------------
 	@GetMapping("/board/list")
-	public String boardList(@RequestParam(defaultValue = "1") int pageNo,  Model model) { //페이지는 1페이지부터 넘어오기!
-		//게시판에 데이터 넣어놓기
-		/*		for(int i=101; i<=10000; i++) {
-					FreeBoardDto freeBoardDto = new FreeBoardDto();
-					freeBoardDto.setFreeNo(i) ;
-					freeBoardDto.setFreeTitle("제목"+i);
-					freeBoardDto.setFreeContent("내용"+i);
-					freeBoardDto.setFreeWriter("test");
-					Date sampledate = new Date();
-					long sampledateinsert = sampledate.getTime();
-					java.sql.Date date1 = new java.sql.Date(sampledateinsert);
-					freeBoardDto.setFreeRegistDate(date1);
-					freeBoardDto.setFreeModifyDate(date1);
-					freeBoardDto.setFreeUseYN(1);
-					freeBoardDto.setFreeHitCount(0);
-					freeBoardDao.insert(freeBoardDto);
-				}*/
-
+	public String boardList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,  Model model, HttpServletRequest request) { //페이지는 1페이지부터 넘어오기!
+		
+		String searchType = (String) request.getParameter("searchType");
+		String searchContent = (String) request.getParameter("searchContent");
+		
 		//Board 게시물 개수 가져오기
 		int totalBoardNum = freeBoardService.getTotalFreeBoardNum(); // 전체 개수 가져오기
 		PagerDto pager = new PagerDto(10, 10, totalBoardNum, pageNo);
+		
+		if(searchType != null) {
+			pager.setSearchType(searchType);
+		}
+		if(searchContent != null) {
+			pager.setSearchContent(searchContent);
+		}
+		
 		model.addAttribute("pager", pager);
 		
 		//페이지 정보
 		List<FreeBoardDto> freeboards = freeBoardService.getFreeBoards(pager);
 		model.addAttribute("freeboards", freeboards);
-		log.info(freeboards.toString());
-		log.info("boardList페이지");
+		model.addAttribute("searchType", pager.getSearchType());
+		model.addAttribute("searchContent", pager.getSearchContent());
 		
 		return "/community/board/list";
 	}
@@ -243,12 +238,9 @@ public class CommunityController {
 	}
 
 	@PostMapping("/board/commentDelete")
-	public String commentDelete(
-			@RequestParam("freeNo") int freeNo,
-			@RequestParam("commentNo") int commentNo) {
-		commentService.deleteComment(commentNo);
-		log.info("commentDelete 실행, commentNo: "+commentNo);
-		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
+	public String commentDelete(CommentDto commentDto) {
+		commentService.deleteComment(commentDto);
+		return "redirect:/community/board/boardDetail?freeNo="+commentDto.getFreeNo();
 	}
 	
 	//댓글 수정 html 조각 가져오기
@@ -335,7 +327,7 @@ public class CommunityController {
 
 	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
-	public String marketList(@RequestParam(defaultValue = "1") int pageNo,  Model model, HttpSession session) {
+	public String marketList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,  Model model, HttpSession session) {
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		}
@@ -363,31 +355,23 @@ public class CommunityController {
 	@ResponseBody
 	public String marketListAlign(
 			HttpServletRequest request,		
-			@RequestParam(defaultValue = "1") int pageNo,
+			@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
 			Model model, HttpSession session,
 			@RequestParam("category") String category,
 			@RequestParam("align") String align) {
 		
-		log.info("c:"+category);
-		log.info("a:"+align);
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
 
 		pager.setCategory(category);
 		pager.setAlign(align);
 		pager.setSearchContent(request.getParameter("searchContent"));
-		log.info(request.getParameter("searchContent"));
 		pager.setSearchType(request.getParameter("searchType"));
-		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22");
-		log.info(request.getParameter("searchType"));
 		model.addAttribute("pager", pager);
-		
-		
+			
 		//페이지 정보
 		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
-		
-		
-		
+
 		//Date to String 형변환
 		for(int i=0; i<marketboards.size(); i++) {
 			Date from = marketboards.get(i).getMarketRegistDate();
@@ -634,15 +618,16 @@ public class CommunityController {
 		
 		   log.info("/market/updateMarketContent 실행");
 		   String category = request.getParameter("category");
+		   log.info(category);
+		   log.info(request.getParameter("marketNo"));
 		   int marketNo = Integer.parseInt(request.getParameter("marketNo"));
-		   
+		   log.info(request.getParameter("title"));
 		   MarketBoardDto marketBoardDto = new MarketBoardDto();
 		   marketBoardDto.setMarketCategory(category);
 		   marketBoardDto.setMarketNo(marketNo);
 		   marketBoardDto.setMarketTitle(request.getParameter("title"));
 		   marketBoardDto.setMarketPrice(request.getParameter("price"));
 		   marketBoardDto.setMarketContent(request.getParameter("content"));
-
 		   
 		   String[] deleteImgNoList = deleteDb.split(",");
 		   log.info("deleteDb"+deleteDb);
@@ -714,7 +699,7 @@ public class CommunityController {
  
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@GetMapping("/notice/list")
-	public String noticeList(@RequestParam(defaultValue = "1") int pageNo, Model model) { //페이지는 1페이지부터 넘어오기!
+	public String noticeList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model) { //페이지는 1페이지부터 넘어오기!
 		
 		//Notice 게시판 게시물 개수 가져오기
 		int totalBoardNum = noticeService.totalCount();

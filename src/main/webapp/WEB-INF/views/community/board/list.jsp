@@ -81,6 +81,17 @@
                   </ul>
                 </div>
                 <!-- 페이지 처리 끝 -->
+	            <div id="search" class="mb-5 mt-3">
+	              <form id="searchForm" action="list" class="form-inline my-2 my-lg-0 justify-content-center" enctype="multipart/form-data">
+	                <select id="searchType" name="searchType" class="mr-1">
+	                  <option value="all" <c:if test="${searchType ne '내용' || searchType ne '제목'}">selected</c:if>>전체</option>
+	                  <option value="content" <c:if test="${searchType eq '내용'}">selected</c:if>>내용</option>
+	                  <option value="title" <c:if test="${searchType eq '제목'}">selected</c:if>>제목</option>
+	                </select>
+	                <input class="form-control" type="text" name="searchContent" placeholder="검색어를 입력해 주세요." aria-label="Search" width="300" value="${searchContent}"/>
+	                <input type="submit" value="검색" class="btn btn-outline-success my-2 my-sm-0 ml-1"/>
+	              </form>
+                </div>                
               </div>
             </div>
           </div>
