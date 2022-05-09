@@ -266,7 +266,7 @@
     <div class="col-2"></div>
     <div class="col-8" style="margin:0 auto">
     	<h4 class="p-3 mt-3">나만의 인테리어 만들기</h4>
-        <div class="row">
+        <div class="row mb-5">
         	<div class="col-8">
 	        	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 	              <div id = "div" class="carousel-inner">
@@ -404,11 +404,11 @@
 			   				</c:forEach>
 			    		</tbody>
 			    	</table>
-			    	<div style="position:absolute;bottom:0px; width:95%;">
-			    	<div class="float-right">
-			    		<span class="float-left">합계 : </span>
-			    		<span class="float-right" id="totalResult"></span>
-			    	</div>
+			    	<div style="position:absolute;bottom:0px; width:95%; border-bottom: 1px solid gray;">
+				    	<div class="float-right">
+				    		<span class="float-left" style="font-size: 25px;">합계 : </span>
+				    		<span class="float-right" id="totalResult" style="font-size: 25px;"></span>
+				    	</div>
 			    	</div>
 			    	<script>
 			    		var total = 0;
