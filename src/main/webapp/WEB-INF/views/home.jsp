@@ -34,7 +34,7 @@
 	    				</div>
 	            	</div>
 	    		</div>
-	    		<div style="border-right: 2px solid #dee2e6; height:650px; z-index: 100" class="mt-5 ml-5"></div>
+	    		<div style="border-right: 2px solid #dee2e6; height:650px; z-index: 100; margin-left: 5rem !important;" class="mt-5"></div>
     		</div>
     		
     		<div class="col-7" data-aos="fade-left" data-aos-duration="2000">
