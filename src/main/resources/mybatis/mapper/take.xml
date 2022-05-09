@@ -184,7 +184,7 @@
 			building_price = #{buildingPrice},
 			building_available_date = #{buildingAvailableDate},
 			building_detail_content = #{buildingDetailContent},
-			building_use_yn = #{buildingUseYN},
+			building_use_yn = '1',
 			building_writer = #{buildingWriter},
 			building_supply_area = #{buildingSupplyArea},
 			building_dedicated_area = #{buildingDedicatedArea},
