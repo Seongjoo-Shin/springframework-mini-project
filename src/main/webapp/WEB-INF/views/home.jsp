@@ -9,49 +9,60 @@
 	<script> 
         AOS.init(); 
     </script>
-	<div class="d-flex flex-column">
-            <div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-row justify-content-center align-items-center mb-5" style="margin-top:100px;">
-                <div class="d-flex flex-column mr-5">
-                    <div>
-                        <span style="font-size: 30px; font-weight: bold;">START</span>
-                        <span style="font-size: 30px; font-weight: bold; color: rgb(242, 101, 45);">:D</span>
-                        <span style="font-size: 30px; font-weight: bold">EN</span>
-                        <span style="font-size: 30px;">은</span>
-                    </div>
-                    <span class="hometext">START DENTIST들과 함께 합니다.</span>
-                    <div>
-                    	<span class="hometext">자신만의 병원을 찾아보세요.</span>
-                    	<span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
-                    </div>
-                </div>
-                <a href="${pageContext.request.contextPath}/opening/opening">
-                	<img class="border rounded" src="resources/images/mainMap.png" class="img-responsive centor-block m-3" style="height: 550px;"/>
-                </a>
-            </div>
-            <div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-row justify-content-center align-items-center mt-5 mb-4">
-            	<a href="${pageContext.request.contextPath}/take/list">
-            		<img src = "resources/images/main2_img.png" style="width:700px; height: 400px;"/>
-            	</a>
-                <div class="d-flex flex-column ml-5">
-                    <span class="hometext">병원을 인수하고</span>
-                    <span class="hometext">싶으시다고요?</span>
-                    <span class="hometext">이곳에서 인수에 대한</span>
-                    <span class="hometext">정보를 얻으세요!&nbsp;<span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span></span>
-                </div>
-            </div>
-            <div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-column justify-content-center align-items-center mt-5" style="height: 400px;">
-                <div>
-	                <a href = "/interior/example" style="text-decoration: none;">
-	                	<img class="m-2 border rounded" src = "resources/images/mainHos1.jpg" width="550px" height="400px"/>
-	                    <img class="m-2 border rounded" src = "resources/images/mainHos2.jpg" width="550px" height="400px"/>
+    <section class="container-fluid">
+    	<div class="row">
+    		<div class="col-5 d-flex flex-column justify-content-center align-items-center" style="background-color:rgb(239,242,249);">
+    			<div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-row justify-content-center align-items-center">
+	                <div class="d-flex flex-column">
+	                    <div>
+	                        <span style="font-size: 30px; font-weight: bold;">START</span>
+	                        <span style="font-size: 30px; font-weight: bold; color: rgb(242, 101, 45);">:D</span>
+	                        <span style="font-size: 30px; font-weight: bold">EN</span>
+	                        <span style="font-size: 30px;">은</span>
+	                    </div>
+	                    <span class="hometext">START DENTIST들과 함께 합니다.</span>
+	                    <div>
+	                    	<span class="hometext">자신만의 병원을 찾아보세요.</span>
+	                    	<span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
+	                    </div>
+	                </div>
+	                <a href="${pageContext.request.contextPath}/opening/opening">
+	                	<img class="border rounded" src="resources/images/mainMap.png" class="img-responsive centor-block w-100" style="height: 400px;"/>
 	                </a>
-                </div>
-                <div style="font-size: 30px;" class="mt-2 mb-1">
-                    <span>자신만의 병원을 인테리어 해보세요.</span>
-                    <span style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
-                </div>
-            </div>
-            <div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-column justify-content-center align-items-center" style="height: 400px; margin-top:150px;">
+            	</div>
+    		</div>
+    		<div class="col-7">
+    			<div class="row" style="background-color: rgb(231, 231, 236);">
+    				<div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-row justify-content-center align-items-center">
+		            	<a href="${pageContext.request.contextPath}/take/list">
+		            		<img src = "resources/images/main2_img.png" style="width:700px; height: 400px;"/>
+		            	</a>
+		                <div class="d-flex flex-column ml-5">
+		                    <span class="hometext">병원을 인수하고</span>
+		                    <span class="hometext">싶으시다고요?</span>
+		                    <span class="hometext">이곳에서 인수에 대한</span>
+		                    <span class="hometext">정보를 얻으세요!&nbsp;<span class="hometext" style="font-weight: bold; color: rgb(242, 101, 45);">:D</span></span>
+		                </div>
+		            </div>
+    			</div>
+    			<div class="row" >
+    				<div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-column justify-content-center align-items-center">
+		                <div>
+			                <a href = "/interior/example" class="d-flex w-100" style="text-decoration: none;">
+			                	<img class="col-6 border rounded" src = "resources/images/mainHos1.jpg" height="400px"/>
+			                    <img class="col-6 border rounded" src = "resources/images/mainHos2.jpg" height="400px"/>
+			                </a>
+		                </div>
+		                <div style="font-size: 30px;" class="mt-2 mb-1">
+		                    <span>자신만의 병원을 인테리어 해보세요.</span>
+		                    <span style="font-weight: bold; color: rgb(242, 101, 45);">:D</span>
+		                </div>
+		            </div>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="row" style="background-color: gray;">
+    		<div data-aos="fade-up" data-aos-duration="2000" class="d-flex flex-column w-100 justify-content-center align-items-center mt-5">
 			  <div class="container-fluid row" style="height: 250px;">
 			    <div class="col-1"></div>
 			    <div class="col-10 row mb-3">
@@ -142,11 +153,11 @@
 			    </div>
 			  	<div class="col-1"></div>
 			  </div>
-			  <div style="font-size: 25px; margin-bottom:150px;" class="mt-5">
+			  <div style="font-size: 25px;" class="mt-5">
 			    <span class="p-2">여러사람들과 소통하고, 정보를 얻을 수 있어요.</span>
 			    <span style="font-weight: bold; color: rgb(242, 101, 45)">:D</span>
 			  </div>
 			</div>
-
-    </div>        				
+    	</div>
+    </section>      				
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
