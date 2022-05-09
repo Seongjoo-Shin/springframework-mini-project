@@ -36,7 +36,7 @@
 	                </div>
 	                <input id="price" name="price" type="text" class="form-control mt-3" placeholder="₩가격 (숫자만 입력해주세요)"></input>
 	                <small id="priceHelp" class="form-text text-danger" style="display:none">&nbsp;&nbsp;&nbsp;*가격란엔 숫자만 입력해주세요!</small>
-	                <textarea name="content" class="form-control mt-3" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow-y:scroll; resize:none"></textarea>
+	                <textarea name="content" class="form-control mt-3" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow:auto; resize:none" maxlength="500"></textarea>
 	              </form>
 	              	<div class="pagination justify-content-center mb-0">
 	                   	<button onclick="submitBtnClick()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">등&nbsp;&nbsp;&nbsp;록</button>

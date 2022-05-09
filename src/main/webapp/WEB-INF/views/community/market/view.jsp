@@ -12,6 +12,14 @@
         }
 
         function openMsgForm(marketWriter){
+	        
+	        if(`${sessionUserId}` == ""){
+	    		swal({
+	    			text:"로그인해야 이용할 수 있는 기능입니다. 로그인을 해주세요."
+	    		});
+	    		return;
+	    	}
+
             var url = "<%=request.getContextPath() %>/message?receiver="+marketWriter;
             var option = "width = 300, height = 350, top = 100, left = 200, location = no";
             window.open(url, "message", option);

@@ -61,7 +61,7 @@
 	               
 	                <input id="price" name="price" type="text" class="form-control mt-3" value="${marketBoardDto.marketPrice}"/>
 	                <small id="priceHelp" class="form-text text-danger" style="display:none;">&nbsp;&nbsp;&nbsp;*가격란엔 숫자만 입력해주세요!</small>
-	                <textarea name="content" class="form-control mt-3" style="height: 300px; overflow-y:scroll; resize:none">${marketBoardDto.marketContent}</textarea>
+	                <textarea name="content" class="form-control mt-3" style="height: 300px; overflow-y:scroll; resize:none" maxlength="500">${marketBoardDto.marketContent}</textarea>
 	              </form>
 	              	<div class="pagination justify-content-center mb-0">
 	                   	<button onclick="updateBtnClick()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">수&nbsp;&nbsp;&nbsp;정</button>

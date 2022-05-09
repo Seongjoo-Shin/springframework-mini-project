@@ -65,7 +65,7 @@
 
             <!-- 글쓰기 버튼 -->
             <div class="col-12 d-flex align-content-end justify-content-end">
-              <a href="gotoInsert" type="button" class="btn px-2 btn-secondary">글쓰기</a>
+              <a href="gotoInsert" type="button" class="btn btn-outline-dark border p-2 m-1" style="font-size: 20px; width:90px;">글쓰기</a>
             </div>
             
             <!-- 페이지 & 검색 -->
@@ -108,13 +108,14 @@
                 
                 </div>
               <form id="searchForm" action="" class="form-inline my-2 my-lg-0 justify-content-center" enctype="multipart/form-data">
-                  <select id="searchType" name="searchType">
+                  <select class="p-2 border rounded m-1" id="searchType" name="searchType">
                     <!-- <option value="제목+내용" selected>제목+내용</option> -->
                     <option value="내용">내용</option>
                     <option value="제목" selected>제목</option>
                   </select>
                   <input
                     class="form-control"
+                    style="padding:9px;"
                     type="text"
                     id="searchContent"
                     name="searchContent"
@@ -122,7 +123,7 @@
                     aria-label="Search"
                     width="300"
                   />
-                  <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="searchBtn()">
+                  <button type="button" class="btn btn-outline-info p-2 m-1" style="width:80px;" onclick="searchBtn()">
                     검색
                   </button>
                 </form>
@@ -145,14 +146,7 @@
 
             formData.append("category", alignarray.category);
             formData.append("align", alignarray.align);
-            
-            
-            console.log("category"+alignarray.category);
-            console.log("align"+alignarray.align);
-            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            console.log(formData);
-	
-     
+
             $.ajax({
             	method:'POST',
             	url: "/community/market/listJson",
@@ -194,7 +188,6 @@
     	}
     	
     	function alignData(num){
-    		alert(num);
 	        alignarray.align = num;
 	        alignarray.pageNo = 1;
 	        console.log(alignarray);
@@ -245,7 +238,7 @@
     	}
 	    
 	   	function showData(num){
-	   		alert(num);
+
 	        alignarray.category = num;
 	        alignarray.pageNo = 1;
 	        console.log(alignarray);

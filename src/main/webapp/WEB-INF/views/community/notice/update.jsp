@@ -17,7 +17,7 @@
 	              	<input name="noticeNo" style="display:none;" value="${noticeboard.noticeNo}"/>
 	              	<input name="referer" style="display:none;" value="${referer}"/>
 	                <input type="text" name="noticeTitle" class="form-control my-3" placeholder="제목을 입력하세요" style="font-size: 25px;" value="${noticeboard.noticeTitle}"></input>
-	                <textarea name="noticeContent" class="form-control" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow-y:auto; font-size: 22px; resize: none;" maxlength="500">${noticeboard.noticeContent}</textarea>
+	                <textarea name="noticeContent" class="form-control" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow:auto; font-size: 22px; resize: none;" maxlength="500">${noticeboard.noticeContent}</textarea>
 	                <div class="m-2" style="text-align: center;">
 	                	<button type="submit" class="btn btn-outline-info border rounded p-2 m-2" style="font-size: 22px; width: 100px;">저  장</button> 
 	                	<button type="button" onclick="updateCancle()" class="btn btn-outline-dark border rounded p-2 m-2" style="font-size: 22px; width: 100px;">취  소</button>

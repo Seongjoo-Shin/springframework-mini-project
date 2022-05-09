@@ -42,7 +42,12 @@
 		    </if>		    
 		    ORDER BY f.free_regist_date DESC, f.free_no desc
 		  )
-		  WHERE rownum &lt;= #{endRowNo}  
+		  <if test="endRowNo lt totalRows">
+		  	WHERE rownum &lt;= #{endRowNo}  
+		  </if>
+		  <if test="endRowNo gte totalRows">
+		  	WHERE rownum &lt;= #{totalRows}  
+		  </if>
 		)
 		WHERE rnum &gt;= #{startRowNo}
 	</select>

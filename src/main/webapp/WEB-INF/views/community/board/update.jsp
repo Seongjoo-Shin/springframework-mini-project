@@ -15,7 +15,7 @@
               <form id="updateForm" method="post" action="updateForm" enctype="multipart/form-data">
               	<input type="hidden" name="freeNo" value="${freeBoardDto.freeNo}"/>
                 <input type="text" class="form-control my-3" name="title" value="${freeBoardDto.freeTitle}"></input>
-                <textarea class="form-control" style="height: 300px; overflow-y:scroll; white-space:pre;" name="content">${freeBoardDto.freeContent}</textarea>
+                <textarea class="form-control" style="height: 300px; resize:none;" name="content" maxlength="500" >${freeBoardDto.freeContent}</textarea>
                 <div class="pagination justify-content-center mb-0">
                     <button type="button" onclick="goSubmit()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">수정 완료</button>
                     <button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>
@@ -29,8 +29,9 @@
     </section>
     <script>
 	    function cancle(){
-		      $(location).attr("href", "insertCancle")
-		    }
+		      /* $(location).attr("href", "insertCancle") */
+	    	location.href = document.referrer;
+	    }
 		function goSubmit(){
 		      $("#updateForm").submit(); //form태그의 action="insertContent"탐
 		    }    

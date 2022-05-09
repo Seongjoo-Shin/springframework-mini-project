@@ -99,7 +99,7 @@
 				</otherwise>			
 			</choose>			
 		  )
-		  WHERE rownum &lt;= #{endRowNo}  
+		  	WHERE rownum &lt;= #{endRowNo}  
 		)
 		WHERE rnum &gt;= #{startRowNo}
  	</select>

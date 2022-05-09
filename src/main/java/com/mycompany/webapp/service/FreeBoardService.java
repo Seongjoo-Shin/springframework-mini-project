@@ -32,6 +32,8 @@ public class FreeBoardService {
 	}
 	
 	public List<FreeBoardDto> getFreeBoards(PagerDto pagerDto) {
+		log.info(pagerDto.getTotalRows());
+		
 		return freeBoardDao.selectByPage(pagerDto);
 	}
 	

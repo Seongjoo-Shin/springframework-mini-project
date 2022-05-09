@@ -57,7 +57,7 @@
                 
                 <div class="float-right">
 	                <c:if test="${sessionMid eq 'admin'}">
-                		<a href="insert" type="button" class="btn btn-outline-dark border p-2 m-1" style="font-size: 18px;">글쓰기</a>
+                		<a href="insert" type="button" class="btn btn-outline-dark border p-2 m-1" style="font-size: 20px; width:90px;">글쓰기</a>
                 	</c:if>
                 </div>
                 

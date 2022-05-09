@@ -12,13 +12,13 @@
           <div class="col-2"></div>
           <div class="col-8">
             <div class="h3 border-bottom mb-3"><img src="${pageContext.request.contextPath}/resources/images/writing.png">글쓰기</div>
-	            <div class="mb-5">
+	            <div class="mb-4">
 	              <form method="post" action="insertNoticeContent" id="insertForm">
-	                <input name="title" type="text" class="form-control my-3" placeholder="제목을 입력하세요"></input>
-	                <textarea name="content" class="form-control" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow-y:scroll; resize:none"></textarea>
-	                <div class="pagination justify-content-center mb-0">
-	                    <button type="button" onclick="goSubmit()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">등&nbsp;&nbsp;&nbsp;록</button>
-	                    <button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>
+	                <input id="title" name="title" type="text" class="form-control my-3" style="font-size: 25px;" placeholder="제목을 입력하세요" required="required"/>
+	                <textarea name="content" class="form-control" placeholder="게시물 내용을 작성해 주세요." style="height: 300px; overflow:auto; resize:none; font-size: 22px;" maxlength="500" required="required"></textarea>
+	                <div class="pagination justify-content-center mb-0 mt-5">
+	                    <button type="button" onclick="goSubmit()" class="btn btn-outline-info border rounded p-2 m-2" style="font-size: 22px; width: 100px;">등  록</button>
+	                    <button type="button" onclick="cancle()" class="btn btn-outline-danger border rounded p-2 m-2" style="font-size: 22px; width: 100px;">취  소</button>
 	                </div>             
 	              </form>              
 	            </div>
@@ -29,11 +29,12 @@
     </section>
     <script>
 	    function cancle(){
-	      $(location).attr("href", "insertNoticeCancle")
+	      	$(location).attr("href", "insertNoticeCancle")
 	    }
 	    function goSubmit(){
-		      $("#insertForm").submit(); //form태그의 action="insertContent"탐
-		   }
+	    	$("#title").
+	      	$("#insertForm").submit(); //form태그의 action="insertContent"탐
+	   }
   	</script>
     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

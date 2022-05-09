@@ -14,7 +14,7 @@
             <div class="mb-5">
               <form method="post" action="insertContent" id="insertForm">
                 <input type="text" class="form-control my-3" maxlength="100" placeholder="제목을 입력하세요" name="title"></input>
-                <textarea class="form-control" placeholder="게시물 내용을 작성해 주세요." maxlength="1000" style="height: 300px; overflow-y:scroll; resize:none;" name="content"></textarea>
+                <textarea class="form-control" placeholder="게시물 내용을 작성해 주세요." maxlength="1000" style="height: 300px; overflow:auto; resize:none;" name="content"></textarea>
                 <div class="pagination justify-content-center mb-0">
                     <button type="button" onclick="goSubmit()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">등&nbsp;&nbsp;&nbsp;록</button>
                     <button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>

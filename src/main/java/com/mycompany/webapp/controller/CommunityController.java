@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mycompany.webapp.aspect.mypageLoginCheck;
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
@@ -138,9 +137,11 @@ public class CommunityController {
 	@GetMapping("/board/boardDetail")
 	public String boardDetail(int freeNo, Model model, HttpSession session, HttpServletRequest request) {
 
+		//조회수 먼저 올리기!
+		freeBoardService.setupdateHitCount(freeNo);
+		
  		//freeBoardDto 내용 model에 싣기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
-		freeBoardService.setupdateHitCount(freeNo);
 		model.addAttribute("freeBoardDto", freeBoardDto);
 		
 		//게시물 내용 개행 처리
@@ -679,7 +680,7 @@ public class CommunityController {
  
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@GetMapping("/notice/list")
-	@mypageLoginCheck
+	//@mypageLoginCheck
 	public String noticeList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model, HttpSession session) { //페이지는 1페이지부터 넘어오기!
 		
 		//Notice 게시판 게시물 개수 가져오기
