@@ -90,6 +90,9 @@ public class CommunityController {
 		
 		//페이지 정보
 		List<FreeBoardDto> freeboards = freeBoardService.getFreeBoards(pager);
+		for(FreeBoardDto f : freeboards) {
+			log.info(f.getRnum());
+		}
 		model.addAttribute("freeboards", freeboards);
 		model.addAttribute("searchType", pager.getSearchType());
 		model.addAttribute("searchContent", pager.getSearchContent());
@@ -150,11 +153,14 @@ public class CommunityController {
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
 		model.addAttribute("seesionUserid", SessionUserid);		
 		
-		//현재 로그인한 사용자 닉네임 댓글에 보여주기
-		String nickname = userService.getNickname(SessionUserid);
-		model.addAttribute("sessionUserNickname", nickname);
-		model.addAttribute("from", request.getParameter("from"));
-		model.addAttribute("pageNo", request.getParameter("pageNo"));
+		if(SessionUserid!=null) {
+			//현재 로그인한 사용자 닉네임 댓글에 보여주기
+			String nickname = userService.getNickname(SessionUserid);
+			model.addAttribute("sessionUserNickname", nickname);
+			model.addAttribute("from", request.getParameter("from"));
+			model.addAttribute("pageNo", request.getParameter("pageNo"));			
+		}
+
 		
 		//등록된 댓글 보여주기----------------------------
 		//댓글 개수 가져오기

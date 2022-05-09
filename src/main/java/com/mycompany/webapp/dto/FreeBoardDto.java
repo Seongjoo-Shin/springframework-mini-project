@@ -16,4 +16,5 @@ public class FreeBoardDto {
 	private int freeHitCount;		//조회수
 	private UserDto userDto;
 	private int rnum;
+	private int rnum2;
 }

@@ -5,7 +5,6 @@
 		$( document ).ready(function() {
 			console.log($("#noticeList").children().length);
 		    if($("#noticeList").children().length == 0){
-		    	console.log("냥");
 		    	var div = document.createElement('div');
 		    	div.setAttribute("class", "text-center p-2 m-2");
 		    	div.setAttribute("id", "noList");
@@ -35,7 +34,7 @@
                     <thead>
                       <tr>
                         <th scope="col" >공지</th>
-                        <th scope="col" style="">제목</th>
+                        <th scope="col" style="text-align: center;">제목</th>
                         <th scope="col">작성자</th>
                         <th scope="col" style="text-align: center;">작성일</th>
                         <th scope="col">조회</th>
