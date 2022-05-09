@@ -336,6 +336,10 @@ public class CommunityController {
 	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
 	public String marketList(@RequestParam(defaultValue = "1") int pageNo,  Model model, HttpSession session) {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		}
+
 		log.info("실행");
 		//market 게시물 개수 가져오기
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
@@ -355,7 +359,7 @@ public class CommunityController {
 		return "/community/market/list";
 	}
 	
-	@PostMapping(value = "/market/listJson")
+	@PostMapping(value = "/market/listJson", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String marketListAlign(
 			HttpServletRequest request,		
@@ -364,10 +368,11 @@ public class CommunityController {
 			@RequestParam("category") String category,
 			@RequestParam("align") String align) {
 		
-		log.info(category);
-		
+		log.info("c:"+category);
+		log.info("a:"+align);
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
+
 		pager.setCategory(category);
 		pager.setAlign(align);
 		pager.setSearchContent(request.getParameter("searchContent"));
@@ -380,6 +385,8 @@ public class CommunityController {
 		
 		//페이지 정보
 		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
+		
+		
 		
 		//Date to String 형변환
 		for(int i=0; i<marketboards.size(); i++) {
@@ -478,9 +485,6 @@ public class CommunityController {
 	@GetMapping("/market/marketDetail")
 	public String marketDetail(HttpSession session, int marketNo, Model model) {	
 		log.info(session.getAttribute("sessionUserId"));
-		if(session.getAttribute("sessionUserId") == null) {
-			return "redirect:/index/loginForm";
-		}
 
 		//조회수 증가
 		marketBoardService.setUpdateHitCount(marketNo);

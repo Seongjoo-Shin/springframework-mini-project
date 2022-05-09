@@ -53,49 +53,49 @@
 						and m.MARKET_CATEGORY = #{category}
 						<choose>
 							<when test="searchType!=null and searchType.equals('내용')">
-								and m.market_content like '%#{searchContent}%'
+								and m.market_content like '%'||#{searchContent}||'%' 
 							</when>
 							<when test="searchType!=null and searchType.equals('제목')">
-								and m.market_title like '%#{searchContent}%'
+								and m.market_title like '%'||#{searchContent}||'%' 
 							</when>
 						</choose>
 					ORDER BY market_like_count DESC
 				</when>
 				<when test='!category.equals("") and align.equals("")'>
-					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1 and m.MARKET_CATEGORY = #{category}
-					ORDER BY market_no DESC
+					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1 and m.MARKET_CATEGORY = #{category}	
 						<choose>
 							<when test="searchType!=null and searchType.equals('내용')">
-								and m.market_content like '%#{searchContent}%'
+								and m.market_content like '%'||#{searchContent}||'%' 
 							</when>
 							<when test="searchType!=null and searchType.equals('제목')">
-								and m.market_title like '%#{searchContent}%'
+								and m.market_title like '%'||#{searchContent}||'%' 
 							</when>
-						</choose>					
+						</choose>		
+					ORDER BY market_no DESC					
 				</when>
 				<when test='category.equals("") and !align.equals("")'>
 					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1
+					<choose>
+						<when test="searchType!=null and searchType.equals('내용')">
+							and m.market_content like '%'||#{searchContent}||'%' 
+						</when>
+						<when test="searchType!=null and searchType.equals('제목')">
+							and m.market_title like '%'||#{searchContent}||'%' 
+						</when>
+					</choose>	
 					ORDER BY market_like_count DESC
-						<choose>
-							<when test="searchType!=null and searchType.equals('내용')">
-								and m.market_content like '%#{searchContent}%'
-							</when>
-							<when test="searchType!=null and searchType.equals('제목')">
-								and m.market_title like '%#{searchContent}%'
-							</when>
-						</choose>					
 				</when>
   				<otherwise>
 					where m.market_writer = u.user_id and m.market_use_yn = 1 and m.market_sale_yn = 1
-					ORDER BY market_no DESC
 						<choose>
 							<when test="searchType!=null and searchType.equals('내용')">
-								and m.market_content like '%#{searchContent}%'
+								and m.market_content like '%'||#{searchContent}||'%' 
 							</when>
 							<when test="searchType!=null and searchType.equals('제목')">
-								and m.market_title like '%#{searchContent}%'
+								and m.market_title like '%'||#{searchContent}||'%' 
 							</when>
-						</choose>				
+						</choose>	
+					ORDER BY market_no DESC			
 				</otherwise>			
 			</choose>			
 		  )

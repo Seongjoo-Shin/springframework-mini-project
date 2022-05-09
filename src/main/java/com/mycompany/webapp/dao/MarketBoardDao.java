@@ -4,16 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
-import com.mycompany.webapp.dto.PagerDto;
+import com.mycompany.webapp.dto.MarketPagerDto;
 
 @Mapper
 public interface MarketBoardDao {
 	
 	//페이지당 가져오는 marketboardDto
-	public List<MarketBoardDto> selectByPage(PagerDto pagerDto);
+	public List<MarketBoardDto> selectByPage(MarketPagerDto pagerDto);
 	
 	//거래게시판 전체 게시물 개수
 	public int totalCount();

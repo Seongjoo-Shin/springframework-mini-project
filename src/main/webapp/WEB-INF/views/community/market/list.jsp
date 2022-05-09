@@ -116,12 +116,13 @@
                   <input
                     class="form-control"
                     type="text"
+                    id="searchContent"
                     name="searchContent"
                     placeholder="검색어를 입력해 주세요."
                     aria-label="Search"
                     width="300"
                   />
-                  <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchBtn()">
+                  <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="searchBtn()">
                     검색
                   </button>
                 </form>
@@ -132,26 +133,26 @@
       </div>
     </section>
     <script type="text/javascript">
+    	var num = 0;
     	var alignarray = {"category": "", "align":""};
     	var searchCondition ={"searchType":"", "searchContent":""};
     	
     	//검색 버튼 눌렀을 때
     	function searchBtn(){
-    		alert("클릭");
     		//formData 가져오기
         	var form = document.getElementById("searchForm");
             var formData = new FormData(form);
+
+            formData.append("category", alignarray.category);
+            formData.append("align", alignarray.align);
             
+            
+            console.log("category"+alignarray.category);
+            console.log("align"+alignarray.align);
             console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             console.log(formData);
-            
-            searchCondition.searchType = num;
-            searchCondition.searchContent = 1;
-            
-            
-            var selected = $("#searchType option:selected").val();
-
-            
+	
+     
             $.ajax({
             	method:'POST',
             	url: "/community/market/listJson",

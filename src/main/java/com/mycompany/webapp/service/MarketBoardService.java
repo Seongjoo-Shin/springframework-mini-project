@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 import com.mycompany.webapp.dao.MarketBoardDao;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
-import com.mycompany.webapp.dto.PagerDto;
+import com.mycompany.webapp.dto.MarketPagerDto;
 
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 
 @Service
@@ -28,7 +27,7 @@ public class MarketBoardService {
 	}
 	
 	//페이지당 가져오는 marketboardDto 정보 
-	public List<MarketBoardDto> getMarketBoards(PagerDto pagerDto) {
+	public List<MarketBoardDto> getMarketBoards(MarketPagerDto pagerDto) {
 		return marketBoardDao.selectByPage(pagerDto);
 	}
 	
