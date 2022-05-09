@@ -181,8 +181,9 @@
 		               <script>
 		                function checkId() {
 		             	   if($(userId).val() == ""){
-		             			check();
-		             			return;
+		             		    $('#userId').attr('placeholder', '아이디를 입력하세요')
+		              		    $('#userId').addClass('error');
+		              		    return;
 		             	   } 
 		             	   
 		             	   //아이디 정규표현식 유효성 검사
@@ -315,6 +316,12 @@
 		        	<script>
 		                function checkNickname() {
 		             	   var nickname = $(userNickname).val();
+		             	   if ($('#userNickname').val()==""){
+		             		  $('#userNickname').attr('placeholder', '닉네임을 입력하세요')
+		              		  $('#userNickname').addClass('error');
+		             		  return;
+		              	   }  
+		             	   
 		 					$.ajax({
 		 						url: "/index/checkNickname",
 		 						data: {nickname},
