@@ -505,11 +505,14 @@
                     map.setCenter(location);
                     map.setZoom(16);
                     
-                    var infoWindow = infoWindows[markerSeq];
+                    if(markerSeq != null){
+                    	var infoWindow = infoWindows[markerSeq];
+                        
+                        if(infoWindow.getMap()){
+                        	infoWindow.close();
+                		}
+                    }
                     
-                    if(infoWindow.getMap()){
-                    	infoWindow.close();
-            		}
                     
                     bounds = map.getBounds(),
                     southWest = bounds.getSW(),
@@ -602,10 +605,13 @@
             	navigator.geolocation.getCurrentPosition(resetPosition);
             	map.setZoom(16);
             	
-            	var infoWindow = infoWindows[markerSeq];
-                if(infoWindow.getMap()){
-                	infoWindow.close();
-        		}
+            	if(markerSeq != null){
+                	var infoWindow = infoWindows[markerSeq];
+                    
+                    if(infoWindow.getMap()){
+                    	infoWindow.close();
+            		}
+                }
             	console.log("mark : " + markerSeq);
             	
             	$("#priceBtnText").text("");
