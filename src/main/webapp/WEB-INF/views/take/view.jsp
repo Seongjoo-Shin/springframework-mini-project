@@ -202,23 +202,23 @@
                                     <div class="container-fluid mt-2">
                                         <div class="row">
                                             <div class="col-4 p-1 m-2 d-flex">
-                                                <span><img src="${pageContext.request.contextPath}/resources/images/elevatorImg.png" width="37px" /></span>
-                                                <span style="font-size: 23px; margin-top: 8px; margin-left: 15px;">${buildingInfo.buildingFloor} 층</span>
+                                                <span><img src="${pageContext.request.contextPath}/resources/images/miniElevator.png" /></span>
+                                                <span style="font-size: 23px; margin-left: 15px;">${buildingInfo.buildingFloor} 층</span>
                                             </div>
                                             <div class="col-5 p-1 m-2 d-flex">
-                                                <span><img src="${pageContext.request.contextPath}/resources/images/areaImg.png" width="37px" /></span>
-                                                <span style="font-size: 23px; margin-top: 8px; margin-left: 15px;">${buildingInfo.buildingDedicatedArea} / ${buildingInfo.buildingSupplyArea}</span>
+                                                <span><img src="${pageContext.request.contextPath}/resources/images/miniRul.png"/></span>
+                                                <span style="font-size: 23px; margin-left: 15px;">${buildingInfo.buildingDedicatedArea} / ${buildingInfo.buildingSupplyArea}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="container-fluid mt-2 mb-2">
                                         <div class="row">
                                             <div class="col-4 p-1 m-2 d-flex">
-                                                <span><img src="${pageContext.request.contextPath}/resources/images/carImg1.png" width="37px" /></span>
+                                                <span><img src="${pageContext.request.contextPath}/resources/images/miniCar.png" /></span>
                                                 <span id="car" style="font-size: 23px; margin-left: 15px;"></span>
                                             </div>
                                             <div class="col-5 p-1 m-2 d-flex">
-                                                <span><img src="${pageContext.request.contextPath}/resources/images/equipImg.png" width="35px" /></span>
+                                                <span><img src="${pageContext.request.contextPath}/resources/images/miniEquip.png" /></span>
                                                 <span id="equipCheck" style="font-size: 23px; margin-left: 15px;"></span>
                                             </div>
                                         </div>
@@ -380,34 +380,32 @@
            
            var options = $("#optionList");
            for(o of optionValue){
-              
-              var span = document.createElement('span');
-              span.setAttribute('class', 'd-flex justify-content-center');
-              var tempSpan = '<div class="border rounded p-3 mr-3 text-center" style="width: 100px; height:100px; background-color: rgb(231, 231, 236);">';
-              tempSpan    += '      <img width="40px" src="${pageContext.request.contextPath}/resources/images/';
-            if(o == '1'){
-               tempSpan += 'elevatorImg.png" />';
-               tempSpan += '      <div class="mt-2" style="font-size:13px;">엘리베이터</div>';
-              }else if (o == '2'){
-                 tempSpan += 'carImg.png" />';
-                 tempSpan += '      <div class="mt-2" style="font-size:13px;">주차 가능</div>';
-              }else if(o == '3'){
-                 tempSpan += 'equipImg.png" />';
-                 tempSpan += '      <div class="mt-2" style="font-size:13px;">장비</div>';
-              }else if(o == '4'){
-                 tempSpan += 'restroomImg.png" />';
-                 tempSpan += '      <div class="mt-2" style="font-size:13px;">화장실</div>';
-              }else if(o == '5'){
-                 tempSpan += 'cctvImg.png" />';
-                 tempSpan += '      <div class="mt-2" style="font-size:13px;">CCTV</div>';
-              }else if(o == '6'){
-                 tempSpan += 'medicine.png" />';
-                 tempSpan += '      <div class="mt-2" style="font-size:13px;">주변 약국</div>';
-              }
-            tempSpan    += '</div>';
-              
-            span.innerHTML =  tempSpan;
-             options.append(span);
+        	   var span = document.createElement('span');
+        	   span.setAttribute('class', 'd-flex justify-content-center');
+        	   var tempSpan = '<div class="border rounded p-3 mr-3 text-center" style="width: 100px; height:100px; background-color: rgb(231, 231, 236);">';
+        	   tempSpan    += '      <img src="${pageContext.request.contextPath}/resources/images/';
+        	   if(o == '1'){
+	               tempSpan += 'elevatorImg.png" />';
+	               tempSpan += '      <div class="mt-2" style="font-size:13px;">엘리베이터</div>';
+	           }else if (o == '2'){
+	               tempSpan += 'carImg.png" />';
+	               tempSpan += '      <div class="mt-2" style="font-size:13px;">주차 가능</div>';
+               }else if(o == '3'){
+	               tempSpan += 'equipImg.png" />';
+	               tempSpan += '      <div class="mt-2" style="font-size:13px;">장비</div>';
+               }else if(o == '4'){
+	               tempSpan += 'restroomImg.png" />';
+	               tempSpan += '      <div class="mt-2" style="font-size:13px;">화장실</div>';
+               }else if(o == '5'){
+	               tempSpan += 'cctvImg.png" />';
+	               tempSpan += '      <div class="mt-2" style="font-size:13px;">CCTV</div>';
+               }else if(o == '6'){
+	               tempSpan += 'medi.png" />';
+	               tempSpan += '      <div class="mt-2" style="font-size:13px;">주변 약국</div>';
+               }
+        	   tempSpan    += '</div>';
+        	   span.innerHTML =  tempSpan;
+        	   options.append(span);
            }
            //엘리베이터가 있을 경우, 있다고 텍스트 추가
            if(optionValue.includes("1")){
