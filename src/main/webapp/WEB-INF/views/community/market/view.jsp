@@ -61,12 +61,12 @@
 												  	<c:forEach var="file" items="${marketFileList}" varStatus="status">
 												  		<c:if test="${status.index == 0}">
 														    <div class="carousel-item active">
-														      <img class="d-block w-100" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="First slide" style="height: 450px">
+														      <img class="d-block w-100" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="First slide" style="height: 500px; width:100%; border-radius: 10px;">
 														    </div>							  			
 												  		</c:if>
 												  		<c:if test="${status.index != 0}">
 												  			<div class="carousel-item">
-														      <img class="d-block w-100" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="other slide" style="height: 450px">
+														      <img class="d-block w-100" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="other slide" style="height: 500px; width:100%; border-radius: 10px;">
 														    </div>	
 												  		</c:if>
 												  	</c:forEach>
