@@ -3,16 +3,16 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <section style="flex-grow:1;">
-      <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
-        <h1 class="">거래 게시판</h1>
+      <div class="d-flex align-items-center justify-content-center pt-3 my-5">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/market.png" style="width:100%">
       </div>
-      <div class="container-fluid my-3">
+      <div class="container-fluid my-5">
         <div class="row">
           <div class="col-2"></div>
           <div class="col-8 row">
-            <div class="minimenu col-12 my-3 pb-3" style="border-bottom: solid 2px rgb(138,138,138);">
+            <div class="minimenu col-12 my-3 pb-4" style="border-bottom: solid 2px rgb(138,138,138); font-size:24px;">
               <div class="dropdown">
-                <button id="category" class="btn dropbtn" style="height:37.62px"><img src="${pageContext.request.contextPath}/resources/images/stick.png" style="height: 15px; width: 15px;" class="mr-2">카테고리 > <span id="categorySpan"> 전체</span></button><!--눌렀을때 효과-->
+                <button id="category" class="btn dropbtn" style="height:40px"><img src="${pageContext.request.contextPath}/resources/images/stick.png" style="height: 15px; width: 15px;" class="mr-2">카테고리 > <span id="categorySpan"> 전체</span></button><!--눌렀을때 효과-->
                 <div class="dropdown-content">
                   <a class="dropdown-item" href="javascript:showData('')">전체</a>
                   <a class="dropdown-item" href="javascript:showData(1)">장비</a>
@@ -22,7 +22,7 @@
                 </div>
               </div>
               <div class="dropdown">
-                <button id="alignment" class="btn dropbtn" style="height: 37.62px;">최신순 ▼</button><!--눌렀을때 효과-->
+                <button id="alignment" class="btn dropbtn" style="height: 40px;">최신순 ▼</button><!--눌렀을때 효과-->
                 <div class="dropdown-content">
                   <a class="dropdown-item" href="javascript:alignData('')">최신순</a>
                   <a class="dropdown-item" href="javascript:alignData(1)">인기순</a>
@@ -30,14 +30,14 @@
               </div>
             </div>         
             <!-- 거래게시판 물품 목록 -->
-            <div id="div_tranlist" class="col-12" style="padding:0px 0px 0px 0px;">
+            <div id="div_tranlist" class="col-12 my-3" style="padding:0px 0px 0px 0px;">
             
               <c:forEach var="marketboard" items="${marketBoards}">
 	              <div class="col-3 float-left mb-5">
 	                <div class="card">
 	                  <div class="embed-responsive embed-responsive-4by3">
 	                    <a href="marketDetail?marketNo=${marketboard.marketNo}">
-	                    	<img src="/community/market/getMarketImage?marketNo=${marketboard.marketNo}&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>
+	                    	<img id="marketListImg" src="/community/market/getMarketImage?marketNo=${marketboard.marketNo}&img=0" class="card-img-top row-cols-1 embed-responsive-item" style=""/>
 	                    </a>
 	                  </div>
 	                  <div class="card-body" style="padding: 1rem;">

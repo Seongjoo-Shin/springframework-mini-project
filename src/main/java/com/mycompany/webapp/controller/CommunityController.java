@@ -147,7 +147,7 @@ public class CommunityController {
 		//게시물 내용 개행 처리
 		String tempContent = freeBoardDto.getFreeContent();
 		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
-		tempContent = tempContent.replaceAll("<br/>", "\n");
+		tempContent = tempContent.replaceAll("\n", "<br/>");
 		freeBoardDto.setFreeContent(tempContent);
 		
 		//현재 로그인한 사용자 id model에 싣기
@@ -462,7 +462,7 @@ public class CommunityController {
 		//게시물 내용 개행 처리 
 		String tempContent = marketBoardDto.getMarketContent();
 		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
-		tempContent = tempContent.replaceAll("<br/>", "\n");
+		tempContent = tempContent.replaceAll("\n", "<br/>");
 		marketBoardDto.setMarketContent(tempContent);
 		
 		//가격에 , 처리
@@ -711,7 +711,7 @@ public class CommunityController {
 		//게시물 내용 개행 처리
 		String tempContent = noticeBoardDto.getNoticeContent();
 		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
-		tempContent = tempContent.replaceAll("<br/>", "\n");
+		tempContent = tempContent.replaceAll("\n", "<br/>");
 		noticeBoardDto.setNoticeContent(tempContent);
 		
 		//noticeBoardDto 내용 model에 싣기

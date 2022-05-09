@@ -2,8 +2,8 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <section style="flex-grow:1;">
-      <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
-        <h1 class="">거래 게시판</h1>
+      <div class="d-flex align-items-center justify-content-center pt-3 mt-2">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/market.png" style="width:100%">
       </div>
       <div class="container-fluid my-5">
         <div class="row">

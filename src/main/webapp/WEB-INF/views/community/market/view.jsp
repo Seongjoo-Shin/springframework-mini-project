@@ -37,9 +37,9 @@
     </style>
     <section>
         <div class="container-fluid mb-5">
-            <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
-                <h1 class="">거래 게시판</h1>
-            </div>
+      <div class="d-flex align-items-center justify-content-center pt-3 mt-2">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/market.png" style="width:100%">
+      </div>
             <div class="row">
                 <div class="col-2">
                 </div>
@@ -69,7 +69,7 @@
 												  	<c:forEach var="file" items="${marketFileList}" varStatus="status">
 												  		<c:if test="${status.index == 0}">
 														    <div class="carousel-item active">
-														      <img class="d-block w-100" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="First slide" style="height: 500px; width:100%; border-radius: 10px;">
+														      <img id="myModal" class="d-block w-100" src="getMarketImage?marketNo=${marketBoardDto.marketNo}&img=${status.index}" alt="First slide" style="height: 500px; width:100%; border-radius: 10px;">
 														    </div>							  			
 												  		</c:if>
 												  		<c:if test="${status.index != 0}">
@@ -79,6 +79,14 @@
 												  		</c:if>
 												  	</c:forEach>
 								                </div>
+								                
+								                <!-- The Modal -->
+												<div id="myModal" class="modal">
+												  <span class="close">×</span>
+												  <img class="modal-content" id="img01">
+												</div>
+												
+												 
 								
 								                <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
 								                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -214,6 +222,27 @@
 				});
 	    		return;
 			});
+		}
+
+		// Get the modal
+		var modal = document.getElementById('myModal');
+
+		// Get the image and insert it inside the modal - use its "alt" text as a caption
+		var img = document.getElementById('myImg');
+		var modalImg = document.getElementById("img01");
+
+		img.onclick = function(){
+		    modal.style.display = "block";
+		    modalImg.src = this.src;
+		    modalImg.alt = this.alt;
+		}
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() { 
+		    modal.style.display = "none";
 		}
     </script>
 
