@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mycompany.webapp.aspect.mypageLoginCheck;
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
@@ -99,7 +100,6 @@ public class CommunityController {
 	// board/list에서 글쓰기 버튼 눌렀을 때
 	@GetMapping("/board/insert")
 	public String boardInsertBtn(HttpSession session) {
-		log.info(session.getAttribute("sessionUserId"));
 		if(session.getAttribute("sessionUserId") == null) {
 			return "redirect:/index/loginForm";
 		}else {
@@ -113,8 +113,6 @@ public class CommunityController {
 			@RequestParam("title") String title,
 			@RequestParam("content") String content,
 			HttpSession session) {
-		log.info("insertContentBtn 클릭");
-		log.info("아이디 정보"+session.getAttribute("sessionUserId"));
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
 		
 		//freeDto정보와 user정보를 같이 전달
@@ -136,11 +134,6 @@ public class CommunityController {
 	// 게시판 상세 페이지
 	@GetMapping("/board/boardDetail")
 	public String boardDetail(int freeNo, Model model, HttpSession session, HttpServletRequest request) {
-		
-		log.info(session.getAttribute("sessionUserId"));
-		if(session.getAttribute("sessionUserId") == null) {
-			return "redirect:/index/loginForm";
-		}
 
  		//freeBoardDto 내용 model에 싣기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
@@ -156,7 +149,6 @@ public class CommunityController {
 		//현재 로그인한 사용자 id model에 싣기
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
 		model.addAttribute("seesionUserid", SessionUserid);		
-		log.info("boardDetail 실행");
 		
 		//현재 로그인한 사용자 닉네임 댓글에 보여주기
 		String nickname = userService.getNickname(SessionUserid);
@@ -208,8 +200,6 @@ public class CommunityController {
 			HttpSession session,
 			@RequestParam("freeNo") int freeNo) {
 
-		log.info("수정페이지에서 boardUpdateForm 클릭");
-
 		//먼저 저장되 있던 정보 불러오기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
 		freeBoardDto.setFreeTitle(title);
@@ -226,7 +216,7 @@ public class CommunityController {
 			@RequestParam("commentContent") String commentContent,
 			HttpSession session) {
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
-		log.info(SessionUserid);
+
 		CommentDto commentDto = new CommentDto();
 		commentDto.setCommentContent(commentContent);
 		commentDto.setFreeNo(freeNo);
@@ -296,8 +286,6 @@ public class CommunityController {
 			@RequestParam("userId") String sessionUserId,
 			@RequestParam("commentDepth") int commentDepth, HttpSession session){
 		
-		log.info("/board/registReply");
-		
 		//댓글 등록 시간
 		Date utilDate = new Date();
 		long timeInMilliSeconds = utilDate.getTime();
@@ -328,6 +316,8 @@ public class CommunityController {
 	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
 	public String marketList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,  Model model, HttpSession session) {
+
+		log.info("실행");
 		//market 게시물 개수 가져오기
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
@@ -338,7 +328,6 @@ public class CommunityController {
 		//페이지 정보
 		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
 		model.addAttribute("marketBoards", marketboards);
-		log.info("marketList페이지");
 		
 		//사용자 정보
 		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
@@ -390,7 +379,6 @@ public class CommunityController {
 	//리스트에서 대표사진 보여줌, 리스트의 index에 해당하는 사진 불러와줌
 	@RequestMapping("/market/getMarketImage")
 	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
-		log.info("marketNo" + marketNo +"img" + img);
 		List<MarketFileDto> files = marketBoardService.selectImageFileByMarketNo(marketNo);
 		int num = Integer.parseInt(img);
 		byte[] temp = files.get(num).getImageFileData();
@@ -403,9 +391,6 @@ public class CommunityController {
    @RequestMapping(value="/market/checkLike", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String checkLike(String id, String type, String marketNo) {
-	   log.info("type : " + type);
-	   log.info("id : " + id);
-	   log.info("bn : " + marketNo);
 	   LikeListDto lld = new LikeListDto();
 	   
 	   lld.setLikeListNo(Integer.parseInt(marketNo));
@@ -430,9 +415,6 @@ public class CommunityController {
    @RequestMapping(value="/market/setLikeLists", produces = "application/json; charset=UTF-8")
    @ResponseBody
    public String setLikeLists(String check, String id, String type, int marketNo, String likeCnt) {
-	   log.info("type : " + type);
-	   log.info("id : " + id);
-	   log.info("marketNo : " + marketNo);
 	   LikeListDto lld = new LikeListDto();
 	   
 	   lld.setLikeListNo(marketNo);
@@ -463,7 +445,6 @@ public class CommunityController {
 	// 게시판 상세 페이지
 	@GetMapping("/market/marketDetail")
 	public String marketDetail(HttpSession session, int marketNo, Model model) {	
-		log.info(session.getAttribute("sessionUserId"));
 
 		//조회수 증가
 		marketBoardService.setUpdateHitCount(marketNo);
@@ -499,8 +480,12 @@ public class CommunityController {
 
 	//게시판 목록에서 글쓰기 버튼 눌렀을 때
 	@RequestMapping("/market/gotoInsert")
-	public String marketInsert() {
-		return "/community/market/insert";
+	public String marketInsert(HttpSession session) {
+		if(session.getAttribute("sessionUserId") == null) {
+			return "redirect:/index/loginForm";
+		} else {
+			return "/community/market/insert";			
+		}
 	}
 	
 	@GetMapping("/market/update")
@@ -567,8 +552,6 @@ public class CommunityController {
     		@RequestPart("attach_file") List<MultipartFile> files,
  		    Model model) throws IOException {
 		
-	   log.info("/market/insertMarketContent 실행");
-	   log.info("id : " + session.getAttribute("sessionUserId"));
 	   String userId = (String)session.getAttribute("sessionUserId");
 	   String category = request.getParameter("category");
 	   
@@ -690,11 +673,11 @@ public class CommunityController {
  
 	// 공지게시판 - list ---------------------------------------------------------------------------------------------------------
 	@GetMapping("/notice/list")
+	@mypageLoginCheck
 	public String noticeList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model, HttpSession session) { //페이지는 1페이지부터 넘어오기!
 		
 		//Notice 게시판 게시물 개수 가져오기
 		int totalBoardNum = noticeService.totalCount();
-		log.info(totalBoardNum);
 		PagerDto pager = new PagerDto(10, 10, totalBoardNum, pageNo);
 		model.addAttribute("pager", pager);
 		if(session.getAttribute("sessionUserId") != null) {
@@ -783,7 +766,6 @@ public class CommunityController {
 		noticeBoardDto.setNoticeContent(request.getParameter("content"));
 		noticeBoardDto.setNoticeWriter(userId);
 		
-		log.info(userId);
 		noticeService.noticeBoardInsert(noticeBoardDto);
 
 		return "redirect:/community/notice/list";

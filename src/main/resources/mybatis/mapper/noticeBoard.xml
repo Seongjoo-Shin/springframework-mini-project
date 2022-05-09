@@ -28,7 +28,7 @@
 		    	   n.NOTICE_USE_YN, n.NOTICE_HIT_COUNT, u.user_nickname
 		    FROM noticeboards n, users u
 		    where n.NOTICE_WRITER = u.user_id and n.NOTICE_USE_YN = 1
-		    ORDER BY n.NOTICE_NO DESC
+		    ORDER BY n.NOTICE_NO DESC, n.NOTICE_NO DESC
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
 		)

@@ -36,7 +36,7 @@
 		    <if test="searchType ==  'all' and searchContent != null">
 	    		and (f.free_content like '%'||#{searchContent}||'%' or f.free_title like '%'||#{searchContent}||'%')
 		    </if>		    
-		    ORDER BY free_no DESC
+		    ORDER BY f.free_regist_date DESC, f.free_no desc
 		  )
 		  WHERE rownum &lt;= #{endRowNo}  
 		)

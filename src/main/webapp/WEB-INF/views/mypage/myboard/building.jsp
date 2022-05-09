@@ -138,7 +138,7 @@
 	                                </c:if>
 	                                </td>
 	                                <td class="text-center">
-	                                <c:if test="${(sDate - eDate) > 3 }">
+	                                <c:if test="${building.buildingEndDate > sDate }">
 	                                <a class="btn btn-sm btn-outline-dark text" href="/take/enroll?type=updateEnroll&buildingNo=${building.buildingNo}">수정</a>
 	                                </c:if>
 	                                </td>
