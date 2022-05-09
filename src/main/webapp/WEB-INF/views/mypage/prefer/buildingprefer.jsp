@@ -78,7 +78,7 @@
 	                        </div>
 	                    </div>
 	                </c:forEach>
-	                <c:if test="${total < 1}">
+	                <c:if test="${total eq 0}">
                      	<div class="row text-center mt-5" style="margin:0 auto;">
                      	<h5>찜한 인수 매물이 존재하지 않습니다.</h5>
                      	</div>

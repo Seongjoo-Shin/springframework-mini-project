@@ -101,11 +101,13 @@
                             </c:if>
                         </table>
                     </div>
+                    <c:if test="${total > 0}">
                     <div class="row float-right">
                         <div class="mr-4">
                             <input type="button" value="삭제" class="float-right btn btn-sm btn-outline-danger" onclick="fn_checkedDel();"/>
                         </div>
                     </div>
+                    </c:if>
                     <div class="row d-flex justify-content-center mb-5">
                     <c:if test="${total > 0}">
 						<ul class="pagination justify-content-center mb-0">
