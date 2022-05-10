@@ -462,7 +462,7 @@ public class CommunityController {
 		//게시물 내용 개행 처리 
 		String tempContent = marketBoardDto.getMarketContent();
 		tempContent = org.springframework.web.util.HtmlUtils.htmlEscape(tempContent);
-		tempContent = tempContent.replaceAll("\n", "<br/>");
+		tempContent = tempContent.replaceAll("<br/>", "\n");
 		marketBoardDto.setMarketContent(tempContent);
 		
 		//가격에 , 처리
