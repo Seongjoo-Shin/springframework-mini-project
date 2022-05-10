@@ -79,10 +79,10 @@
             </div>
             
             <!-- 페이지 & 검색 -->
-            <div class="col-12 d-flex flex-column align-content-center justify-content-center">
+            <div class="col-12 d-flex flex-column align-content-center justify-content-center" >
 				<!-- 페이지 처리 -->
                 <div class="pt-3 my-3">
-                  <ul class="pagination justify-content-center mb-0">
+                  <ul class="pagination justify-content-center mb-0" style="display: flex">
 	               	<li class="page-item">
 						<a class="page-link" href="list?pageNo=1">First</a>
 					</li>
@@ -200,6 +200,9 @@
 				html += '</div>';
 				if(div_tranlist.childElementCount == 0){
 					$("#div_tranlist").html(html);
+					$(".pagination").css("display","none");
+				}else{
+					$(".pagination").css("display","flex");
 				}
             })            
             
@@ -266,6 +269,9 @@
 				html += '</div>';
 				if(div_tranlist.childElementCount == 0){
 					$("#div_tranlist").html(html);
+					$(".pagination").css("display","none");
+				}else{
+					$(".pagination").css("display","flex");
 				}
 			})
     	}
@@ -337,8 +343,6 @@
 				});
 				$("#div_tranlist").html(html);
 				
-				/* $("#searchForm").css("display","none"); */
-				
 				//card가 들어가는 엘리먼트 아이디로 가져오기
 				const div_tranlist = document.getElementById("div_tranlist");
 				var html = '';
@@ -347,6 +351,9 @@
 				html += '</div>';
 				if(div_tranlist.childElementCount == 0){
 					$("#div_tranlist").html(html);
+					$(".pagination").css("display","none");
+				}else{
+					$(".pagination").css("display","flex");
 				}
 			})
 
