@@ -17,8 +17,8 @@
 	});
     </script>
     <section style="flex-grow:1;">
-      <div class="d-flex align-items-center justify-content-center pt-3 mt-2">
-      	<img alt="" src="${pageContext.request.contextPath}/resources/images/market.png" style="width:100%">
+      <div class="d-flex align-items-center justify-content-center mb-5">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/marketBoard.png" style="width:100%">
       </div>
       <div class="container-fluid my-5">
         <div class="row">

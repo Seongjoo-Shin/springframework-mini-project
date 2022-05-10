@@ -37,13 +37,13 @@
     </style>
     <section>
         <div class="container-fluid mb-5">
-      <div class="d-flex align-items-center justify-content-center pt-3 mt-2">
-      	<img alt="" src="${pageContext.request.contextPath}/resources/images/market.png" style="width:100%">
-      </div>
+	      <div class="d-flex align-items-center justify-content-center mb-5">
+	      	<img alt="" src="${pageContext.request.contextPath}/resources/images/marketBoard.png" style="width:100%">
+	      </div>
             <div class="row">
                 <div class="col-2">
                 </div>
-                <div class="col-8 mt-5">
+                <div class="col-8">
                 	<div class="ml-3 mr-3">
 	                    <span class="h5 pt-3" style="margin-bottom: 0px">글쓴이 : </span><span class="h5 pt-3" style="margin-bottom: 0px">${marketBoardDto.userDto.userNickname}</span>
 	                    <a class="btn btn-outline-dark ml-2" onclick="openMsgForm('${marketBoardDto.marketWriter}')">쪽지보내기</a>
@@ -86,8 +86,6 @@
 												  <img class="modal-content" id="img01">
 												</div> -->
 												
-												 
-								
 								                <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
 								                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
 								                    <span class="sr-only">Previous</span>
@@ -113,7 +111,7 @@
                         </div>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
-                        <a class="btn btn-outline-secondary p-3" style="width:100px; height:56px;" href="list?pageNo=${pagerNo}">목록</a>
+                        <a class="btn btn-outline-secondary p-3" style="width:100px; height:56px;" href="list?category=${category}&align=${align}&searchContent=${searchContent}&searchType=${searchType}">목록</a>
                         <button class="btn btn-outline-secondary ml-3" style="width:100px; " onclick="likeBtnClick(this);">
                         	<img id="interImg" class="mr-2" src="" width="30px;"/>
                         	<span id="interCnt" class="p-1">${marketBoardDto.marketLikeCount}</span>
@@ -229,17 +227,8 @@
 		var img = document.getElementById('myImg');
 		var modalImg = document.getElementById("img01");
 
-		img.onclick = function(){
-		    modal.style.display = "block";
-		    modalImg.src = this.src;
-		    modalImg.alt = this.alt;
-		}
-
 		var span = document.getElementsByClassName("close")[0];
 
-		span.onclick = function() { 
-		    modal.style.display = "none";
-		}
     </script>
 
 	    	

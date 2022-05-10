@@ -65,8 +65,6 @@ public class CommunityController {
 	@Resource
 	private NoticeService noticeService;
 
-
-
 	// 자유게시판 - board -------------------------------------------------------------------------------------------------------------------
 	@GetMapping("/board/list")
 	public String boardList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,  Model model, HttpServletRequest request) { //페이지는 1페이지부터 넘어오기!
@@ -322,7 +320,13 @@ public class CommunityController {
 
 	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
-	public String marketList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,  Model model, HttpSession session) {
+	public String marketList(
+			@RequestParam(value="pageNo", defaultValue = "1") int pageNo,  
+			Model model, HttpSession session,
+			@RequestParam(value="category",defaultValue = "", required=false) String category,
+			@RequestParam(value="align",defaultValue = "", required=false) String align,
+			@RequestParam(value="searchContent",defaultValue = "", required=false) String searchContent,
+			@RequestParam(value="searchType",defaultValue = "", required=false) String searchType) {
 
 		log.info("실행");
 		//market 게시물 개수 가져오기
@@ -341,6 +345,12 @@ public class CommunityController {
 		
 		//페이지 정보 가져가기
 		model.addAttribute("pageNo", pageNo);
+		
+		//카테고리, 인기순, 검색내용 model에 싣기
+		model.addAttribute("category", category);
+		model.addAttribute("align", align);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchContent", searchContent);
 		
 		return "/community/market/list";
 	}
@@ -377,7 +387,8 @@ public class CommunityController {
 		jsonObject.put("marketboardsList", marketboards);
 		jsonObject.put("category", category);
 		jsonObject.put("align", align);
-		
+		jsonObject.put("searchContent", request.getParameter("searchContent"));
+		jsonObject.put("searchType", request.getParameter("searchType"));
 		
 		String json = jsonObject.toString();
 		
@@ -457,7 +468,11 @@ public class CommunityController {
 			HttpSession session, 
 			int marketNo, 
 			Model model,
-			@RequestParam(value="pageNo", defaultValue = "1") int pageNo) {	
+			@RequestParam(value="pageNo", required=false) String pageNo,
+			@RequestParam(value="category", required=false) String category,
+			@RequestParam(value="align", required=false) String align,
+			@RequestParam(value="searchContent", required=false) String searchContent,
+			@RequestParam(value="searchType", required=false) String searchType) {	
 
 		//조회수 증가
 		marketBoardService.setUpdateHitCount(marketNo);
@@ -487,7 +502,13 @@ public class CommunityController {
 		
 		//현재 로그인한 사용자 id model에 싣기
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
-		model.addAttribute("sessionUserId", SessionUserid);		
+		model.addAttribute("sessionUserId", SessionUserid);
+		
+		//카테고리, 인기순, 검색내용 model에 싣기
+		model.addAttribute("category", category);
+		model.addAttribute("align", align);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchContent", searchContent);
 
 		return "/community/market/view";
 	}

@@ -3,9 +3,8 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <section style="flex-grow:1;">
-      <div class="d-flex align-items-center justify-content-center pt-3">
-      	<img alt="" src="${pageContext.request.contextPath}/resources/images/notice.png" style="width:100%">
-        <!-- <h1 class="">공지사항</h1> -->
+      <div class="d-flex align-items-center justify-content-center">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/noticeBoard3.png" style="width:100%">
       </div>
       <div class="container-fluid my-5">
         <div class="row">

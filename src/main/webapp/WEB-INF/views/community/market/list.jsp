@@ -2,6 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+<script>
+	var alignarray = {"category": "", "align":"", "searchType":"", "searchContent":""};
+	$(document).ready(function(){
+		console.log("실행 되니??");
+        alignarray.align = `${align}`;
+        alignarray.searchType = `${searchType}`;
+        alignarray.searchContent = `${searchContent}`;
+        showData(`${category}`);
+	});
+</script>
     <section style="flex-grow:1;">
       <div class="d-flex align-items-center justify-content-center mb-5">
       	<img alt="" src="${pageContext.request.contextPath}/resources/images/marketBoard.png" style="width:100%">
@@ -135,8 +145,7 @@
     </section>
     <script type="text/javascript">
     	var num = 0;
-    	var alignarray = {"category": "", "align":"", "searchType":"", "searchContent":""};
-    	
+
     	//검색 버튼 눌렀을 때
     	function searchBtn(){
     		//formData 가져오기
@@ -161,7 +170,7 @@
 					html += '  <div class="col-3 float-left mb-3">';
 					html += '	<div class="card">';
 					html += '	  <div class="embed-responsive embed-responsive-4by3">';
-					html += '		<a href="marketDetail?marketNo='+item.marketNo+'">';
+					html += '		<a href="marketDetail?marketNo='+item.marketNo+'&category='+data.category+'&align='+data.align+'&searchContent='+data.searchContent+'&searchType='+data.searchType+'">';
 					html += '			<img src="/community/market/getMarketImage?marketNo='+item.marketNo+'&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>';
 					html += '		</a>';
 					html += '	  </div>';
@@ -181,13 +190,10 @@
 					html += '	</div>';
 					html += '  </div>';
 				});
-				console.log(html);
 				$("#div_tranlist").html(html);	
 				
 				//card가 들어가는 엘리먼트 아이디로 가져오기
 				const div_tranlist = document.getElementById("div_tranlist");
-				console.log("=======================================");
-				console.log(div_tranlist.childElementCount);
 				var html = '';
 				html += '<div class="p-4 text-center">';
 				html += 	'<div style="display:inline-block;"><h5> 해당 검색어의 게시물은 존재하지 않습니다. </h5></div>';		
@@ -204,12 +210,14 @@
 	        alignarray.pageNo = 1;
 	        console.log(alignarray);
 	        
-	        const searchContent = document.getElementById('searchContent').value;
+	        //searchType이랑 searchContent 내용 json에 포함하기.
 	        
+	        const searchContent = document.getElementById('searchContent').value;
+	        console.log("searchContent: "+searchContent);
 	        alignarray.searchType = $("#selectBox option:selected").val();
 	        alignarray.searchContent = searchContent;
 	        
-	        if(num=1){
+	        if(alignarray.align=1){
 	        	$('#alignment').html('인기순 ▼');
 	        }else{
 	        	$('#alignment').html('최신순 ▼');
@@ -228,7 +236,7 @@
 					html += '  <div class="col-3 float-left mb-3">';
 					html += '	<div class="card">';
 					html += '	  <div class="embed-responsive embed-responsive-4by3">';
-					html += '		<a href="marketDetail?marketNo='+item.marketNo+'">';
+					html += '		<a href="marketDetail?marketNo='+item.marketNo+'&category='+data.category+'&align='+data.align+'&searchContent='+data.searchContent+'&searchType='+data.searchType+'">';
 					html += '			<img src="/community/market/getMarketImage?marketNo='+item.marketNo+'&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>';
 					html += '		</a>';
 					html += '	  </div>';
@@ -248,13 +256,10 @@
 					html += '	</div>';
 					html += '  </div>';
 				});
-				console.log(html);
 				$("#div_tranlist").html(html);
 				
 				//card가 들어가는 엘리먼트 아이디로 가져오기
 				const div_tranlist = document.getElementById("div_tranlist");
-				console.log("=======================================");
-				console.log(div_tranlist.childElementCount);
 				var html = '';
 				html += '<div class="p-4 text-center">';
 				html += 	'<div class="" style="display:inline-block;"><h5> 해당 카테고리의 게시물은 존재하지 않습니다. </h5></div>';
@@ -271,6 +276,14 @@
 	        alignarray.pageNo = 1;
 	        console.log(alignarray);
 	        
+	        if(!alignarray.searchContent){	//비어있다면
+		        //searchType이랑 searchContent 내용 json에 포함하기.
+		        const searchContent = document.getElementById('searchContent').value;
+		        alignarray.searchType = $("#selectBox option:selected").val();
+		        alignarray.searchContent = searchContent;	        	
+	        }
+
+	        
 	        if(num==1){
 	        	$('#categorySpan').html('장비');
 	        }else if(num==2){
@@ -283,7 +296,12 @@
 	        	$('#categorySpan').html('전체');
 	        }
 	        
-	        
+	        if(num=1){
+	        	$('#alignment').html('인기순 ▼');
+	        }else{
+	        	$('#alignment').html('최신순 ▼');
+	        }
+
 			$.ajax({
 				url: "/community/market/listJson",
 				data: alignarray,
@@ -297,7 +315,7 @@
 					html += '  <div class="col-3 float-left mb-3">';
 					html += '	<div class="card">';
 					html += '	  <div class="embed-responsive embed-responsive-4by3">';
-					html += '		<a href="marketDetail?marketNo='+item.marketNo+'">';
+					html += '		<a href="marketDetail?marketNo='+item.marketNo+'&category='+data.category+'&align='+data.align+'&searchContent='+data.searchContent+'&searchType='+data.searchType+'">';
 					html += '			<img src="/community/market/getMarketImage?marketNo='+item.marketNo+'&img=0" class="card-img-top row-cols-1 embed-responsive-item"/>';
 					html += '		</a>';
 					html += '	  </div>';
@@ -317,15 +335,12 @@
 					html += '	</div>';
 					html += '  </div>';
 				});
-				console.log(html);
 				$("#div_tranlist").html(html);
 				
 				/* $("#searchForm").css("display","none"); */
 				
 				//card가 들어가는 엘리먼트 아이디로 가져오기
 				const div_tranlist = document.getElementById("div_tranlist");
-				console.log("=======================================");
-				console.log(div_tranlist.childElementCount);
 				var html = '';
 				html += '<div class="p-4 text-center">';
 				html += 	'<div class="" style="display:inline-block;"><h5> 해당 카테고리의 게시물은 존재하지 않습니다. </h5></div>';
