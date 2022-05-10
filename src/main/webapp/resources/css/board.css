@@ -267,7 +267,7 @@ Modal Content (image)
 }
 
 /* The Close Button */
-.close {
+/* .close {
     position: absolute;
     top: 15px;
     right: 35px;
@@ -282,11 +282,11 @@ Modal Content (image)
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
-}
+} */
 
 /* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
+/* @media only screen and (max-width: 700px){
     .modal-content {
         width: 100%;
     }
-}
+} */
