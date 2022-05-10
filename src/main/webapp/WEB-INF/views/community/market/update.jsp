@@ -27,16 +27,16 @@
             <div class="h3 border-bottom mb-3"><img class="mr-2" src="${pageContext.request.contextPath}/resources/images/writing.png">글쓰기</div>
 	            <div class="mb-5"><!-- action="insertMarketContent"  -->
 	              <form action="" id="marketInsertForm" enctype="multipart/form-data">
-					<select id="category" name="category" class="form-select-lg" aria-label=".form-select-lg example">
+					<select class="p-2 border rounded" id="category" name="category" class="form-select-lg" aria-label=".form-select-lg example">
 					  <option value="0">카테고리 선택</option>
 					  <option value="1" <c:if test="${marketBoardDto.marketCategory eq '1'}">selected</c:if>>장비</option>
 					  <option value="2" <c:if test="${marketBoardDto.marketCategory eq '2'}">selected</c:if>>가구</option>
 					  <option value="3" <c:if test="${marketBoardDto.marketCategory eq '3'}">selected</c:if>>소모품</option>
 					  <option value="4" <c:if test="${marketBoardDto.marketCategory eq '4'}">selected</c:if>>기타</option>
 					</select>
-					<input id="marketNo" name="marketNo" value="${marketBoardDto.marketNo}"/>
+					<input type="hidden" id="marketNo" name="marketNo" value="${marketBoardDto.marketNo}"/>
 					
-	                <input type="text" name="title" class="form-control my-3" value="${marketBoardDto.marketTitle}"/>
+	                <input type="text" name="title" class="form-control my-3 p-2" value="${marketBoardDto.marketTitle}" style="font-size:24px"/>
 	                <div class="border rounded" style="background-color: rgb(231, 231, 236);">
 		                <div id="explainNomal" class="p-3 text-center">
 	                      <img src="${pageContext.request.contextPath}/resources/images/mascot.png" width="90px"/>
@@ -59,9 +59,9 @@
                         </div>
 	                </div>
 	               
-	                <input id="price" name="price" type="text" class="form-control mt-3" value="${marketBoardDto.marketPrice}"/>
+	                <input id="price" name="price" type="text" class="form-control mt-3" value="${marketBoardDto.marketPrice}" style="font-size:24px"/>
 	                <small id="priceHelp" class="form-text text-danger" style="display:none;">&nbsp;&nbsp;&nbsp;*가격란엔 숫자만 입력해주세요!</small>
-	                <textarea name="content" class="form-control mt-3" style="height: 300px; overflow-y:scroll; resize:none" maxlength="500">${marketBoardDto.marketContent}</textarea>
+	                <textarea name="content" class="form-control mt-3" style="height: 300px; overflow-y:scroll; resize:none; font-size:20px" maxlength="500">${marketBoardDto.marketContent}</textarea>
 	              </form>
 	              	<div class="pagination justify-content-center mb-0">
 	                   	<button onclick="updateBtnClick()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">수&nbsp;&nbsp;&nbsp;정</button>

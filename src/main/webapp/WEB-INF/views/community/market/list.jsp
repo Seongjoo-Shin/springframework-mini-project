@@ -3,8 +3,8 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <section style="flex-grow:1;">
-      <div class="d-flex align-items-center justify-content-center pt-3 my-5">
-      	<img alt="" src="${pageContext.request.contextPath}/resources/images/market.png" style="width:100%">
+      <div class="d-flex align-items-center justify-content-center mb-5">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/marketBoard.png" style="width:100%">
       </div>
       <div class="container-fluid my-5">
         <div class="row">
@@ -108,7 +108,7 @@
                 
                 </div>
               <form id="searchForm" action="" class="form-inline my-2 my-lg-0 justify-content-center" enctype="multipart/form-data">
-                  <select class="p-2 border rounded m-1" id="searchType" name="searchType">
+                  <select id="selectBox" class="p-2 border rounded m-1" id="searchType" name="searchType">
                     <!-- <option value="제목+내용" selected>제목+내용</option> -->
                     <option value="내용">내용</option>
                     <option value="제목" selected>제목</option>
@@ -135,8 +135,7 @@
     </section>
     <script type="text/javascript">
     	var num = 0;
-    	var alignarray = {"category": "", "align":""};
-    	var searchCondition ={"searchType":"", "searchContent":""};
+    	var alignarray = {"category": "", "align":"", "searchType":"", "searchContent":""};
     	
     	//검색 버튼 눌렀을 때
     	function searchBtn(){
@@ -145,6 +144,7 @@
             var formData = new FormData(form);
 
             formData.append("category", alignarray.category);
+            console.log(alignarray.category);
             formData.append("align", alignarray.align);
 
             $.ajax({
@@ -182,7 +182,19 @@
 					html += '  </div>';
 				});
 				console.log(html);
-				$("#div_tranlist").html(html);				
+				$("#div_tranlist").html(html);	
+				
+				//card가 들어가는 엘리먼트 아이디로 가져오기
+				const div_tranlist = document.getElementById("div_tranlist");
+				console.log("=======================================");
+				console.log(div_tranlist.childElementCount);
+				var html = '';
+				html += '<div class="p-4 text-center">';
+				html += 	'<div style="display:inline-block;"><h5> 해당 검색어의 게시물은 존재하지 않습니다. </h5></div>';		
+				html += '</div>';
+				if(div_tranlist.childElementCount == 0){
+					$("#div_tranlist").html(html);
+				}
             })            
             
     	}
@@ -191,6 +203,11 @@
 	        alignarray.align = num;
 	        alignarray.pageNo = 1;
 	        console.log(alignarray);
+	        
+	        const searchContent = document.getElementById('searchContent').value;
+	        
+	        alignarray.searchType = $("#selectBox option:selected").val();
+	        alignarray.searchContent = searchContent;
 	        
 	        if(num=1){
 	        	$('#alignment').html('인기순 ▼');
@@ -233,8 +250,19 @@
 				});
 				console.log(html);
 				$("#div_tranlist").html(html);
+				
+				//card가 들어가는 엘리먼트 아이디로 가져오기
+				const div_tranlist = document.getElementById("div_tranlist");
+				console.log("=======================================");
+				console.log(div_tranlist.childElementCount);
+				var html = '';
+				html += '<div class="p-4 text-center">';
+				html += 	'<div class="" style="display:inline-block;"><h5> 해당 카테고리의 게시물은 존재하지 않습니다. </h5></div>';
+				html += '</div>';
+				if(div_tranlist.childElementCount == 0){
+					$("#div_tranlist").html(html);
+				}
 			})
-	        
     	}
 	    
 	   	function showData(num){
@@ -291,7 +319,22 @@
 				});
 				console.log(html);
 				$("#div_tranlist").html(html);
+				
+				/* $("#searchForm").css("display","none"); */
+				
+				//card가 들어가는 엘리먼트 아이디로 가져오기
+				const div_tranlist = document.getElementById("div_tranlist");
+				console.log("=======================================");
+				console.log(div_tranlist.childElementCount);
+				var html = '';
+				html += '<div class="p-4 text-center">';
+				html += 	'<div class="" style="display:inline-block;"><h5> 해당 카테고리의 게시물은 존재하지 않습니다. </h5></div>';
+				html += '</div>';
+				if(div_tranlist.childElementCount == 0){
+					$("#div_tranlist").html(html);
+				}
 			})
+
       	}
 	   	
 	   	

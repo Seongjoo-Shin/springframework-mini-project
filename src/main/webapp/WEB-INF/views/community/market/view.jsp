@@ -104,26 +104,26 @@
 					            </div>
 					        </div>
 
-                            <div class="price h5 mt-4 p-3 ml-2">
+                            <div class="price h4 mt-4 p-3 ml-2">
                                 <span>가격: </span> ${marketBoardDto.marketPrice} <span> 원</span>
                             </div>
                             <div class="p-3">
-                            	<textarea name="content" class="form-control mt-3 bg-white" style="height: 300px; resize:none" disabled>${marketBoardDto.marketContent}</textarea>	
+                            	<textarea name="content" class="form-control mt-3 bg-white" style="height: 300px; resize:none; font-size:20px;" disabled>${marketBoardDto.marketContent}</textarea>	
                             </div>
                         </div>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
-                        <a class="btn btn-outline-dark mr-3 p-2" style="width:100px; height:40px;" href="list">목록</a>
-                        <button class="btn btn-outline-dark ml-3" style="width:100px; " onclick="likeBtnClick(this);">
+                        <a class="btn btn-outline-secondary p-3" style="width:100px; height:56px;" href="list?pageNo=${pagerNo}">목록</a>
+                        <button class="btn btn-outline-secondary ml-3" style="width:100px; " onclick="likeBtnClick(this);">
                         	<img id="interImg" class="mr-2" src="" width="30px;"/>
-                        	<span id="interCnt">${marketBoardDto.marketLikeCount}</span>
+                        	<span id="interCnt" class="p-1">${marketBoardDto.marketLikeCount}</span>
                         </button>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
                     	<c:if test="${sessionUserId == marketBoardDto.marketWriter}">
-	                    	<a class="btn btn-outline-dark mr-3" style="width:100px;" href="update?marketNo=${marketBoardDto.marketNo}">수정</a>
-	                        <button class="btn btn-outline-dark mr-3" style="width:100px;" onclick="deleteMarketBoard('${marketBoardDto.marketNo}');">삭제</button>
-	                        <button class="btn btn-outline-dark mr" style="width:100px;" onclick="updateSaleYn('${marketBoardDto.marketNo}');">판매완료</button>
+	                    	<a class="btn btn-outline-info p-2 m-2" style="width:100px;" href="update?marketNo=${marketBoardDto.marketNo}">수정</a>
+	                        <button class="btn btn-outline-danger p-2 m-2" style="width:100px;" onclick="deleteMarketBoard('${marketBoardDto.marketNo}');">삭제</button>
+	                        <button class="btn btn-outline-primary p-2 m-2" style="width:100px;" onclick="updateSaleYn('${marketBoardDto.marketNo}');">판매완료</button>
                     	</c:if>
                     </div>
                 </div>

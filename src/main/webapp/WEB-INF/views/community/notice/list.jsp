@@ -18,9 +18,8 @@
 		});
 	</script>
     <section style="flex-grow:1;">
-      <div class="d-flex align-items-center justify-content-center pt-3 mt-2">
-      	<img alt="" src="${pageContext.request.contextPath}/resources/images/notice.png" style="width:100%">
-        <!-- <h1 class="">공지사항</h1> -->
+      <div class="d-flex align-items-center justify-content-center">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/noticeBoard3.png" style="width:100%">
       </div>
       <div class="container-fluid ">
         <div class="row">
@@ -31,23 +30,23 @@
               <div class="col-lg-12">
                 <div class="table-responsive">
                   <table class="table project-table table-centered table-nowrap table-hover">
-                    <thead>
+                    <thead style="font-size:20px;">
                       <tr>
                         <th scope="col" >공지</th>
                         <th scope="col" style="text-align: center;">제목</th>
-                        <th scope="col">작성자</th>
+                        <th scope="col" style="text-align: center;">작성자</th>
                         <th scope="col" style="text-align: center;">작성일</th>
-                        <th scope="col">조회</th>
+                        <th scope="col" style="text-align: center;">조회</th>
                       </tr>
                     </thead>
-                    <tbody id="noticeList">
+                    <tbody id="noticeList" style="font-size:18px;">
                     <c:forEach var="noticeboard" items="${noticeboards}">
                      	<tr style="cursor: pointer">
 	                        <td><button class="noticeBtn">공지</button></td>
-	                        <td><a class="text-dark" href="noticeDetail?noticeNo=${noticeboard.noticeNo}">${noticeboard.noticeTitle}</a></td>
-	                        <td>${noticeboard.userDto.userNickname}</td>
+	                        <td><a class="text-dark" href="noticeDetail?noticeNo=${noticeboard.noticeNo}&pageNo=${pager.pageNo}">${noticeboard.noticeTitle}</a></td>
+	                        <td style="text-align: center;">${noticeboard.userDto.userNickname}</td>
 	                        <td style="text-align: center;"><fmt:formatDate value="${noticeboard.noticeRegistDate}" pattern="yyyy-MM-dd"/></td>
-	                        <td>${noticeboard.noticeHitCount}</td>
+	                        <td style="text-align: center;">${noticeboard.noticeHitCount}</td>
                      	</tr>
                     </c:forEach>
                     </tbody>

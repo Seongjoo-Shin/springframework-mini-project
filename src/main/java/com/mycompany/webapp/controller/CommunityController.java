@@ -95,7 +95,7 @@ public class CommunityController {
 		model.addAttribute("freeboards", freeboards);
 		model.addAttribute("searchType", pager.getSearchType());
 		model.addAttribute("searchContent", pager.getSearchContent());
-		
+		model.addAttribute("totalBoardNum", totalBoardNum);
 		return "/community/board/list";
 	}
 
@@ -339,6 +339,9 @@ public class CommunityController {
 		//사용자 정보
 		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
 		
+		//페이지 정보 가져가기
+		model.addAttribute("pageNo", pageNo);
+		
 		return "/community/market/list";
 	}
 	
@@ -347,7 +350,7 @@ public class CommunityController {
 	public String marketListAlign(
 			HttpServletRequest request,		
 			@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
-			Model model, HttpSession session,
+			HttpSession session,
 			@RequestParam("category") String category,
 			@RequestParam("align") String align) {
 		
@@ -358,8 +361,7 @@ public class CommunityController {
 		pager.setAlign(align);
 		pager.setSearchContent(request.getParameter("searchContent"));
 		pager.setSearchType(request.getParameter("searchType"));
-		model.addAttribute("pager", pager);
-			
+		
 		//페이지 정보
 		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
 
@@ -370,12 +372,12 @@ public class CommunityController {
 			String to = transFormat.format(from);
 			marketboards.get(i).setStringRegistDate(to);
 		}
-
-		//사용자 정보
-		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
 		
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("marketboardsList", marketboards);
+		jsonObject.put("category", category);
+		jsonObject.put("align", align);
+		
 		
 		String json = jsonObject.toString();
 		
@@ -451,7 +453,11 @@ public class CommunityController {
 
 	// 게시판 상세 페이지
 	@GetMapping("/market/marketDetail")
-	public String marketDetail(HttpSession session, int marketNo, Model model) {	
+	public String marketDetail(
+			HttpSession session, 
+			int marketNo, 
+			Model model,
+			@RequestParam(value="pageNo", defaultValue = "1") int pageNo) {	
 
 		//조회수 증가
 		marketBoardService.setUpdateHitCount(marketNo);
@@ -473,6 +479,7 @@ public class CommunityController {
 		
 		//marketBoardDto 내용 model에 싣기
 		model.addAttribute("marketBoardDto", marketBoardDto);
+		model.addAttribute("pageNo",pageNo);
 		
 		//marketFileDto 내용 model에 싣기
 		List<MarketFileDto> marketFileList = marketBoardService.selectImageFileByMarketNo(marketNo);
@@ -547,7 +554,7 @@ public class CommunityController {
 
 	@GetMapping("/market/marketViewtoList")
 	public String marketViewToList(int marketNo) {
-		marketBoardService.updateSaleYn(marketNo);
+		
 		
 		return "redirect:/community/market/list";
 	}

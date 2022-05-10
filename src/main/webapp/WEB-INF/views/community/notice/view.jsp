@@ -25,7 +25,7 @@
               </div>
             </div>
             <div class="buttons my-5 d-flex justify-content-center">
-                <a class="btn btn-outline-dark p-2 m-2" style="font-size:22px; width: 100px;" href="list">목록</a>
+                <a class="btn btn-outline-dark p-2 m-2" style="font-size:22px; width: 100px;" href="list?pageNo=${pageNo}">목록</a>
                 <c:if test="${sessionMid eq 'admin'}">
                		<a class="btn btn-outline-info p-2 m-2" style="font-size:22px; width: 100px;" href="update?noticeNo=${noticeboard.noticeNo}" >수정</a>
                		<a id="deleteBtn" class="btn btn-outline-danger p-2 m-2" style="font-size:22px; width: 100px;" onclick="deleteNoticeBoard()">삭제</a>

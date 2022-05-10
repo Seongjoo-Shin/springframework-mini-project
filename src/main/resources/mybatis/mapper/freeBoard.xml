@@ -22,13 +22,12 @@
  	</resultMap>
  	
 	<select id="selectByPage" parameterType="pager" resultMap="freeBoardWithUserResultMap">
-		SELECT RNUM2, rnum, free_no, free_title, free_writer, free_regist_date, free_use_yn, free_hit_count, user_nickname
+		SELECT rnum, free_no, free_title, free_writer, free_regist_date, free_use_yn, free_hit_count, user_nickname
 		FROM (
-		  SELECT RNUM2, rnum, free_no, free_title, free_writer, free_regist_date, free_use_yn, free_hit_count, user_nickname
+		  SELECT ROWNUM as rnum, free_no, free_title, free_writer, free_regist_date, free_use_yn, free_hit_count, user_nickname
 		  FROM (
 		    SELECT
-		    	ROW_NUMBER() OVER(ORDER BY f.free_no) AS RNUM2,
-		    	ROWNUM as rnum, f.free_no, f.free_title, f.free_writer, f.free_regist_date, f.free_hit_count, f.free_use_yn, u.user_nickname
+		    	f.free_no, f.free_title, f.free_writer, f.free_regist_date, f.free_hit_count, f.free_use_yn, u.user_nickname
 		    FROM freeboards f, users u
 		    where f.free_writer = u.user_id and f.free_use_yn = 1
 			<if test="searchType ==  'content' and searchContent != null">
@@ -42,12 +41,7 @@
 		    </if>		    
 		    ORDER BY f.free_regist_date DESC, f.free_no desc
 		  )
-		  <if test="endRowNo lt totalRows">
-		  	WHERE rownum &lt;= #{endRowNo}  
-		  </if>
-		  <if test="endRowNo gte totalRows">
-		  	WHERE rownum &lt;= #{totalRows}  
-		  </if>
+		  WHERE ROWNUM &lt;= #{endRowNo}  
 		)
 		WHERE rnum &gt;= #{startRowNo}
 	</select>

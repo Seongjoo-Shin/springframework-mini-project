@@ -12,28 +12,28 @@
           <div class="col-2"></div>
           <div class="col-8">
             <div class="mb-5">
-              <div>
+              <div class="my-2">
                 <p class="d-inline-block h6 mx-2">글쓴이 <span class="ml-1">${freeBoardDto.userDto.userNickname}</span></p>
                 <p class="d-inline-block h6 float-right mx-2">조회수: <span>${freeBoardDto.freeHitCount}</span></p>
                 <p class="d-inline-block h6  float-right mx-2"><fmt:formatDate value="${freeBoardDto.freeRegistDate}" pattern="HH:mm"/></p>
                 <p class="d-inline-block h6 float-right mx-2"><fmt:formatDate value="${freeBoardDto.freeRegistDate}" pattern="yyyy-MM-dd"/></p>            
               </div>
               <div id="free-board-title" class="h4 p-3" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">${freeBoardDto.freeTitle}</div>
-              <div id="free-board-content" class="px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">
+              <div id="free-board-content" class="h5 px-3 py-5" style="border: 1px solid rgb(224, 224, 224); border-radius: 10px;">
               	${freeBoardDto.freeContent}
               </div>
               <div class="text-center my-3">
 				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">
-					<a href="/community/board/update?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">수정</a>
+					<a href="/community/board/update?freeNo=${freeBoardDto.freeNo}" class="btn btn-outline-info p-2 my-4" style="width:100px;">수정</a>
 				</c:if>  	
 				<c:if test="${from ne 'mypage'}">
-					<a href="/community/board/list?pageNo=${pageNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+					<a href="/community/board/list?pageNo=${pageNo}" class="btn btn-outline-secondary my-4 p-2" style="width:100px;">목록</a>
 				</c:if>
 				<c:if test="${from eq 'mypage'}">
-					<a href="/mypage/myboard/board?pageNo=${pageNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">목록</a>
+					<a href="/mypage/myboard/board?pageNo=${pageNo}" class="btn btn-outline-secondary my-4 p-2" style="width:100px;">목록</a>
 				</c:if>
 				<c:if test="${sessionUserId == freeBoardDto.freeWriter}">
-					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-sm btn-outline-dark" style="width:100px;">삭제</a>
+					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-outline-danger p-2 my-4" style="width:100px;">삭제</a>
 				</c:if> 
               </div>
               <div class="h6 ml-2" style="font-weight: bold;">댓글</div>
@@ -51,7 +51,7 @@
 				              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
 				                     <div style="flex: 8; padding: 4px 13px;">
 			                         <p id="commentWriter${commentDto.commentNo}" style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
-			                         <div id="commentContent${commentDto.commentNo}" class="comment-text">${commentDto.commentContent}</div>
+			                         <div style="white-space:pre;" id="commentContent${commentDto.commentNo}" class="comment-text">${commentDto.commentContent}</div>
 			                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>
 			                       </div>		                     		                    			
 			        			</div>
@@ -84,7 +84,7 @@
 				              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
 				                     <div style="flex: 8; padding: 4px 13px;">
 			                         <p id="commentWriter${commentDto.commentNo}" style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
-			                         <div id="commentContent${commentDto.commentNo}" class="comment-text">
+			                         <div style="white-space:pre;" id="commentContent${commentDto.commentNo}" class="comment-text">
 			                           ${commentDto.commentContent}
 			                         </div>
 			                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>

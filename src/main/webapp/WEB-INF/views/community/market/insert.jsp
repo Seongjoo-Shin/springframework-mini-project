@@ -24,9 +24,9 @@
 	                <div class="border rounded" style="background-color: rgb(231, 231, 236);">
 		                <div id="explainNomal" class="p-3 text-center">
 	                      <img src="${pageContext.request.contextPath}/resources/images/mascot.png" width="90px"/>
-	                      <h6>최소 1장 이상 등록해야 하며, 가로 사진을 권장합니다.</h6>
+	                      <h6>최소 1장 이상 등록해야 하며, 6장까지 등록 가능합니다.</h6>
 	                      <label for="chooseFile1" class="btn btn-info m-1">사진 등록</label>
-	                      <input type="file" id="chooseFile1"  name="chooseFile1" accept="image/*" style="display:;" onchange="getImageFiles(event)" multiple>
+	                      <input type="file" id="chooseFile1"  name="chooseFile1" accept="image/*" style="display:none;" onchange="getImageFiles(event)" multiple>
 	                    </div>
 	                    <div id="nomalImgField">
                            <div id="nomalImgPreview" class="w-100" style="align-items: center; display: inline;">
@@ -131,7 +131,8 @@
 	        deleteBtn.style.backgroundColor = 'white';
 	        deleteBtn.style.marginRight = "8px";
 	        deleteBtn.style.cursor = "pointer";
-	
+			
+	        
 	        span.appendChild(img);
 	        span.appendChild(deleteBtn);
 	        return span;
