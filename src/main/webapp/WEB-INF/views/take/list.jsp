@@ -281,19 +281,83 @@
 	                                <div style="width:100%;height:562px; border: 1px solid rgb(192, 191, 191); padding: 15px; overflow:auto;">
 	                                    <ul id="saleList" class="overflow-auto" style="list-style:none;">
 	                                    	<c:forEach var="building" items="${buildings}" varStatus="status">
-	                                    		<li id="" name="building${building.buildingNo}" class="border rounded p-2 mb-1" style="cursor:pointer;" onclick="moveMap(this.id)">
+	                                    		<li id="" name="building${building.buildingNo}" class="border rounded p-2 mb-2" style="cursor:pointer;" onclick="moveMap(this.id)">
 		                                    		<div class="container-fluid">
 		                                    			<div class="row">
-		                                    				<div class="col-7 d-flex flex-column justify-content-center">
+		                                    				<div class="col-7 d-flex flex-column justify-content-center p-0">
 			                                    				<div class="mb-2"><b>${building.buildingName}</b></div>
 					                                    		<div>${building.buildingAddr}&nbsp;&nbsp;${building.buildingAddrDetail}</div>
-					                                    		<div class="p-1 m-1">
-					                                    			<span class="border rounded p-1 text-center" style="background-color: rgb(164, 180, 235); color: white; width:60px;">${building.buildingTradeInfo}</span>
+					                                    		<div class="p-1 mt-1">
+					                                    			<span class="border rounded p-1 text-center mr-1" style="background-color: rgb(164, 180, 235); color: white; width:60px;">${building.buildingTradeInfo}</span>
 					                                    			<c:if test="${building.buildingTradeInfo eq '임대'}">
 					                                    				<span class="m-1">보증금 / 월세 : </span>
-					                                    				<span>${building.buildingDepositPrice}&nbsp;</span>
-					                                    				<span>/&nbsp;</span>
-					                                    				<span>${building.buildingMonthRent}&nbsp;만원</span>
+					                                    				<span id="depositPrice${status.index}"></span>
+					                                    				<span>원 </span>
+					                                    				<span>/</span>
+					                                    				<span id="monthPrice${status.index}"></span>
+					                                    				<span>원</span>
+					                                    				<script>
+					                                    					var depositPrice = `${building.buildingDepositPrice}`;
+					                                    					var dVal = depositPrice;
+					                                    					
+					                                    					if(depositPrice >= 1000 && depositPrice < 10000){
+				                                    		                	$("#depositPrice${status.index}").text(depositPrice + "만");
+				                                    		                } else if(depositPrice >= 10000){
+				                                    		                	dVal = dVal.replace("0", "");
+				                                    		                	dVal = dVal.replace("0", "");
+				                                    		                	dVal = dVal.replace("0", "");
+
+				                                    		                	dVal2 = dVal.slice(-1);
+				                                    		                    
+				                                    		                    if(dVal >= 100 && dVal < 1000){
+				                                    		                    	dVal = dVal.slice(0, 2);
+				                                    		                    }else if(dVal < 100){
+				                                    		                    	dVal = dVal.slice(0, 1);
+				                                    		                    }else{
+				                                    		                    	dVal = dVal.slice(0, 3);
+				                                    		                    }
+				                                    		                    
+				                                    		                    if(dVal2 == 0){
+				                                    		                    	$("#depositPrice${status.index}").text(dVal + "억");
+				                                    		                    }else{
+				                                    		                    	$("#depositPrice${status.index}").text(dVal + "억" + dVal2 + "000 만");
+				                                    		                    }
+				                                    		                    
+				                                    		                }else{
+				                                    		                    $("#depositPrice${status.index}").text(depositPrice + "만");
+				                                    		                }
+					                                    					
+					                                    					var monthPrice = `${building.buildingMonthRent}`;
+					                                    					var mVal = monthPrice;
+					                                    					
+					                                    					if(monthPrice >= 1000 && monthPrice < 10000){
+				                                    		                	$("#monthPrice${status.index}").text(monthPrice + "만");
+				                                    		                } else if(monthPrice >= 10000){
+				                                    		                	mVal = mVal.replace("0", "");
+				                                    		                	mVal = mVal.replace("0", "");
+				                                    		                	mVal = mVal.replace("0", "");
+
+				                                    		                	mVal2 = mVal.slice(-1);
+				                                    		                    
+				                                    		                    if(mVal >= 100 && mVal < 1000){
+				                                    		                    	mVal = mVal.slice(0, 2);
+				                                    		                    }else if(dVal < 100){
+				                                    		                    	mVal = mVal.slice(0, 1);
+				                                    		                    }else{
+				                                    		                    	mVal = mVal.slice(0, 3);
+				                                    		                    }
+				                                    		                    
+				                                    		                    if(mVal2 == 0){
+				                                    		                    	$("#monthPrice${status.index}").text(mVal + "억");
+				                                    		                    }else{
+				                                    		                    	$("#monthPrice${status.index}").text(mVal + "억" + mVal2 + "000 만");
+				                                    		                    }
+				                                    		                }else{
+				                                    		                    $("#monthPrice${status.index}").text(mVal + "만");
+				                                    		                }
+					                                    					
+					                                    					
+					                                    				</script>
 					                                    			</c:if>
 					                                    			<c:if test="${building.buildingTradeInfo eq '매매'}">
 					                                    				<span class="m-1">매매가</span>
@@ -320,8 +384,13 @@
 				                                    		                    }else{
 				                                    		                    	pVal = pVal.slice(0, 3);
 				                                    		                    }
-				                                    		                    var t = pVal + "억" + pVal2 + "000 만";
-				                                    		                    $("#price${status.index}").text(t);
+				                                    		                    
+				                                    		                    if(pVal2 == 0){
+				                                    		                    	$("#price${status.index}").text(pVal + "억");
+				                                    		                    }else{
+				                                    		                    	$("#price${status.index}").text(pVal + "억" + pVal2 + "000 만");
+				                                    		                    }
+				                                    		                    
 				                                    		                }else{
 				                                    		                    $("#price${status.index}").text(price + "만");
 				                                    		                }
@@ -329,7 +398,7 @@
 					                                    			</c:if>
 					                                    		</div>
 			                                    			</div>
-			                                    			<div class="col-5 p-0 m-0">
+			                                    			<div class="col-5 m-0">
 			                                    				<img class="border rounded" src="getBuildingImage?buildingNo=${building.buildingNo}&type=nomal&img=0" width="250px" height="150px"/>
 			                                    			</div>
 		                                    			</div>

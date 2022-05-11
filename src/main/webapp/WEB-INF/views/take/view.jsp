@@ -181,15 +181,16 @@
                                           <div class="col-4">
                                              <div class="mb-2" style="font-size: 23px;">인수</div>
                                              <c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
-                                                   <div style="font-size: 23px;">보증금 / 월세</div>
-                                                </c:if>
-                                                <c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
-                                                   <div style="font-size: 23px;">매매가</div>
-                                                </c:if>
-                                             </div>
+                                                <div style="font-size: 23px;">보증금 / 월세</div>
+                                             </c:if>
+                                             <c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
+                                                <div style="font-size: 23px;">매매가</div>
+                                   			 </c:if>
+                                          </div>
                                           <div class="col-7">
                                              <div class="mb-3">
-                                                <div id="takeoverPriceQuick" class="ml-2" style="font-size: 20px;"></div>
+                                                <span id="takeoverPriceQuick" class="ml-2" style="font-size: 20px;"></span>
+                                                <span style="font-size: 20px;">원</span>
                                              </div>
                                              <div class="mt-2">
                                              	<c:if test="${buildingInfo.buildingTradeInfo eq '임대'}">
@@ -200,8 +201,8 @@
                                                    <span style="font-size: 20px;">원</span>
                                              	</c:if>
                                              	<c:if test="${buildingInfo.buildingTradeInfo eq '매매'}">
-                                                	<span id="buildingPriceQuick" class="ml-2" style="font-size: 20px;"><span>
-                                                	<span style="font-size: 20px;"> 원</span>
+                                           			<span id="buildingPriceQuick" class="ml-2" style="font-size: 20px;"><span>
+                                               		<span style="font-size: 20px;"> 원</span>
                                              	</c:if>
                                              </div>
                                           </div>
@@ -379,7 +380,7 @@
         }
        
        function viewCancle() {
-          $(location).attr("href", "list");
+    	   location.href = document.referrer;
       }
        
        function showOption() {
@@ -507,8 +508,13 @@
             	   takePrice = takePrice.slice(0, 3);
                }
     		   
-    		   $("#takeoverPrice").text(takePrice + " 억 " + takePrice2 + "000 만");
-    		   $("#takeoverPriceQuick").text(takePrice + " 억 " + takePrice2 + "000 만");
+    		   if(takePrice2 == 0){
+    			   $("#takeoverPrice").text(takePrice + " 억 ");
+        		   $("#takeoverPriceQuick").text(takePrice + " 억");
+    		   }else{
+    			   $("#takeoverPrice").text(takePrice + " 억 " + takePrice2 + "000 만");
+        		   $("#takeoverPriceQuick").text(takePrice + " 억 " + takePrice2 + "000 만");
+    		   }
     	   }else{
     		   $("#takeoverPrice").text(takePrice + "만");
     		   $("#takeoverPriceQuick").text(takePrice + "만");
@@ -533,10 +539,14 @@
                    }else{
                 	   monthPriceVal = monthPriceVal.slice(0, 3);
                    }
-        		   console.log(monthPrice);
         		   
-        		   $("#monthPrice").text(monthPriceVal + " 억 " + monthPriceVal2 + "000 만");
-        		   $("#monthPriceQuick").text(monthPriceVal + " 억 " + monthPriceVal2 + "000 만");
+        		   if(monthPriceVal2 == 0){
+        			   $("#monthPrice").text(monthPriceVal + " 억");
+            		   $("#monthPriceQuick").text(monthPriceVal + " 억");
+        		   }else{
+        			   $("#monthPrice").text(monthPriceVal + " 억 " + monthPriceVal2 + "000 만");
+            		   $("#monthPriceQuick").text(monthPriceVal + " 억 " + monthPriceVal2 + "000 만");
+        		   }
         	   }else{
         		   $("#monthPrice").text(monthPrice + "만");
         		   $("#monthPriceQuick").text(monthPrice + "만");
@@ -559,10 +569,14 @@
                    }else{
                 	   depositPriceVal = depositPriceVal.slice(0, 3);
                    }
-        		   console.log(monthPrice);
         		   
-        		   $("#depositPrice").text(depositPriceVal + " 억 " + depositPriceVal2 + "000 만");
-        		   $("#depositPriceQuick").text(depositPriceVal + " 억 " + depositPriceVal2 + "000 만");
+        		   if(depositPriceVal2 == 0){
+        			   $("#depositPrice").text(depositPriceVal + " 억");
+            		   $("#depositPriceQuick").text(depositPriceVal + " 억");
+        		   }else{
+        			   $("#depositPrice").text(depositPriceVal + " 억 " + depositPriceVal2 + "000 만");
+            		   $("#depositPriceQuick").text(depositPriceVal + " 억 " + depositPriceVal2 + "000 만");
+        		   }
         	   }else{
         		   $("#depositPrice").text(depositPrice + "만");
         		   $("#depositPriceQuick").text(depositPrice + "만");
@@ -586,10 +600,14 @@
                    }else{
                 	   buildingPriceVal = buildingPriceVal.slice(0, 3);
                    }
-        		   console.log(monthPrice);
         		   
-        		   $("#buildingPrice").text(buildingPriceVal + " 억 " + buildingPriceVal2 + "000 만");
-        		   $("#buildingPriceQuick").text(buildingPriceVal + " 억 " + buildingPriceVal2 + "000 만");
+        		   if(buildingPriceVal2 == 0){
+        			   $("#buildingPrice").text(buildingPriceVal + " 억");
+            		   $("#buildingPriceQuick").text(buildingPriceVal + " 억");
+        		   }else{
+        			   $("#buildingPrice").text(buildingPriceVal + " 억 " + buildingPriceVal2 + "000 만");
+            		   $("#buildingPriceQuick").text(buildingPriceVal + " 억 " + buildingPriceVal2 + "000 만");
+        		   }
         	   }else{
         		   $("#buildingPrice").text(buildingPrice + "만");
         		   $("#buildingPriceQuick").text(buildingPrice + "만");

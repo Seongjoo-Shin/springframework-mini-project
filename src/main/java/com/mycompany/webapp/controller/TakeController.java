@@ -116,9 +116,11 @@ public class TakeController {
    }
    
    @GetMapping("/view")
-   public String view(String buildingNo, Model model, HttpServletRequest request, HttpSession session) {
+   public String view(String buildingNo, @RequestParam(required = false)String addr, @RequestParam(required = false) String depositPrice, @RequestParam(required = false)String monthPrice, @RequestParam(required = false) String tradePrice,  Model model, HttpServletRequest request, HttpSession session) {
 	  log.info("실행");
 	  log.info(buildingNo);
+	  
+	  log.info(addr);
 	  
 	  //매물 정보
 	  BuildingDto buildingDetailBuildingDto = takeService.selectBuildingByBuildingNo(buildingNo);
