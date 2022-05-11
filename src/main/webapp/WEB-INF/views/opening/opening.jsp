@@ -175,11 +175,9 @@
                                 			infoWindow = infoWindows[seq];
                                 		if(infoWindow.getMap()){
                                 			contentFlag = false;
-                                			console.log(contentFlag);
                                 			infoWindow.close();
                                 		}else {
                                 			contentFlag = true;
-                                			console.log(contentFlag);
                                             infoWindow.open(map, marker); // 표출
                                         }
                                 	}
@@ -211,7 +209,6 @@
 							        	if (xhr1.readyState === 4) {
 							            	if (xhr1.status === 200) {
 							            		const data = JSON.parse(xhr1.responseText);
-							            		console.log(data);
 							            		positions = [];
 		                                		for(var i=0; i<markers.length; i++){
 		                                			markers[i].setMap(null);
