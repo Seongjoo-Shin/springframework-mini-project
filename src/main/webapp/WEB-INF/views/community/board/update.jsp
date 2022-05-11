@@ -3,8 +3,8 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <section style="flex-grow:1;">
-      <div style="height: 250px;" class="bg-light d-flex align-items-center justify-content-center">
-        <h1 class="">자유 게시판</h1>
+      <div class="d-flex align-items-center justify-content-center mb-5">
+      	<img alt="" src="${pageContext.request.contextPath}/resources/images/freeBoard.png" style="width:100%">
       </div>
       <div class="container-fluid my-5">
         <div class="row">

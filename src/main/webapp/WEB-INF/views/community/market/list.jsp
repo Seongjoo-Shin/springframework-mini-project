@@ -210,8 +210,7 @@
     	
     	function alignData(num){
 	        alignarray.align = num;
-	        alignarray.pageNo = 1;
-	        console.log(alignarray);
+	        console.log(alignarray.align);
 	        
 	        //searchType이랑 searchContent 내용 json에 포함하기.
 	        
@@ -220,7 +219,7 @@
 	        alignarray.searchType = $("#selectBox option:selected").val();
 	        alignarray.searchContent = searchContent;
 	        
-	        if(alignarray.align=1){
+	        if(alignarray.align==1){
 	        	$('#alignment').html('인기순 ▼');
 	        }else{
 	        	$('#alignment').html('최신순 ▼');
@@ -279,7 +278,6 @@
 	   	function showData(num){
 
 	        alignarray.category = num;
-	        alignarray.pageNo = 1;
 	        console.log(alignarray);
 	        
 	        if(!alignarray.searchContent){	//비어있다면
@@ -302,7 +300,7 @@
 	        	$('#categorySpan').html('전체');
 	        }
 	        
-	        if(num=1){
+	        if(alignarray.align==1){
 	        	$('#alignment').html('인기순 ▼');
 	        }else{
 	        	$('#alignment').html('최신순 ▼');
@@ -358,8 +356,5 @@
 			})
 
       	}
-	   	
-	   	
-
     </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
