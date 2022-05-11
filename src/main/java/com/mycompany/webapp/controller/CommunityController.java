@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mycompany.webapp.dto.CommentDto;
 import com.mycompany.webapp.dto.FreeBoardDto;
 import com.mycompany.webapp.dto.LikeListDto;
+import com.mycompany.webapp.dto.MarketAlignDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
 import com.mycompany.webapp.dto.MarketPagerDto;
@@ -298,69 +299,65 @@ public class CommunityController {
 
 	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
-	public String marketList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model, HttpSession session, @RequestParam(value="category", defaultValue = "", required=false) String category, @RequestParam(value="align",defaultValue = "", required=false) String align, @RequestParam(value="searchContent",defaultValue = "", required=false) String searchContent, @RequestParam(value="searchType",defaultValue = "", required=false) String searchType) {
-
-		//market 게시물 개수 가져오기
-		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
-		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
-		model.addAttribute("pager", pager);
-		pager.setCategory("");
-		pager.setAlign("");
+	public String marketList(Model model, HttpServletRequest request) {
 		
+		//가져온 marketAlign 정보 담아주기
+		MarketAlignDto marketAlign = new MarketAlignDto();
+		marketAlign.setAlign(request.getParameter("align")==null?"":request.getParameter("align"));
+		marketAlign.setCategory(request.getParameter("category")==null?"":request.getParameter("category"));
+		marketAlign.setSearchContent(request.getParameter("searchContent")==null?"":request.getParameter("searchContent"));
+		marketAlign.setSearchType(request.getParameter("searchType")==null?"":request.getParameter("searchType"));
+		
+		log.info("ccc: " +marketAlign.getCategory());
+		
+		if(marketAlign.getCategory().equals("0")) {
+			marketAlign.setCategory("");
+		}
+		
+		if(marketAlign.getAlign().equals("a0")) {
+			marketAlign.setAlign("");
+		}
+		
+		//가져온 정보 토대로 전체 개수
+		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(marketAlign); // 전체 개수 가져오기
+		log.info("tt : " + totalBoardNum);
+		
+		int pageNo = 1;
+		
+		log.info("r : " + request.getParameter("pageNo"));
+		
+		
+		if(request.getParameter("pageNo") != null) {
+			if(!request.getParameter("pageNo").equals("")) {
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+			}
+		}
+		
+		//pager 만들어주기
+		MarketPagerDto pager = new MarketPagerDto(8, 10, totalBoardNum, pageNo);
+		if(marketAlign != null) {
+			pager.setAlign(marketAlign.getAlign());
+			pager.setCategory(marketAlign.getCategory());
+			pager.setSearchContent(marketAlign.getSearchContent());
+			pager.setSearchType(marketAlign.getSearchType());
+		}
+		
+		//market 게시물 개수 가져오기
+		model.addAttribute("pager", pager);
+		
+		log.info("pn : " + pageNo);
+
 		//페이지 정보
 		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
+		log.info("-------------------");
+		log.info(marketboards);
 		model.addAttribute("marketBoards", marketboards);
-		
-		//사용자 정보
-		model.addAttribute("sessionUserId", session.getAttribute("sessionUserId"));
 		
 		//페이지 정보 가져가기
 		model.addAttribute("pageNo", pageNo);
 		
-		//카테고리, 인기순, 검색내용 model에 싣기
-		model.addAttribute("category", category);
-		model.addAttribute("align", align);
-		model.addAttribute("searchType", searchType);
-		model.addAttribute("searchContent", searchContent);
-		
 		return "/community/market/list";
 	}
-	
-	@PostMapping(value = "/market/listJson", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public String marketListAlign(HttpServletRequest request,	@RequestParam(value="pageNo", defaultValue = "1") int pageNo, HttpSession session, @RequestParam("category") String category, @RequestParam("align") String align) {
-		
-		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
-		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
-
-		pager.setCategory(category);
-		pager.setAlign(align);
-		pager.setSearchContent(request.getParameter("searchContent"));
-		pager.setSearchType(request.getParameter("searchType"));
-		
-		//페이지 정보
-		List<MarketBoardDto> marketboards = marketBoardService.getMarketBoards(pager);
-
-		//Date to String 형변환
-		for(int i=0; i<marketboards.size(); i++) {
-			Date from = marketboards.get(i).getMarketRegistDate();
-			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-			String to = transFormat.format(from);
-			marketboards.get(i).setStringRegistDate(to);
-		}
-		
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("marketboardsList", marketboards);
-		jsonObject.put("category", category);
-		jsonObject.put("align", align);
-		jsonObject.put("searchContent", request.getParameter("searchContent"));
-		jsonObject.put("searchType", request.getParameter("searchType"));
-		
-		String json = jsonObject.toString();
-		
-		return json;
-	}
-	
 	
 	//리스트에서 대표사진 보여줌, 리스트의 index에 해당하는 사진 불러와줌
 	@RequestMapping("/market/getMarketImage")
@@ -423,7 +420,7 @@ public class CommunityController {
    }
 
 	// 게시판 상세 페이지
-	@GetMapping("/market/marketDetail")
+	@RequestMapping("/market/marketDetail")
 	public String marketDetail(
 			HttpSession session, 
 			int marketNo, 
@@ -456,6 +453,9 @@ public class CommunityController {
 		model.addAttribute("marketBoardDto", marketBoardDto);
 		model.addAttribute("pageNo",pageNo);
 		
+		log.info("dpn : " + pageNo);
+		log.info("mn : " + marketNo);
+		
 		//marketFileDto 내용 model에 싣기
 		List<MarketFileDto> marketFileList = marketBoardService.selectImageFileByMarketNo(marketNo);
 		model.addAttribute("marketFileList", marketFileList);
@@ -472,6 +472,8 @@ public class CommunityController {
 
 		return "/community/market/view";
 	}
+	
+	
 
 	//게시판 목록에서 글쓰기 버튼 눌렀을 때
 	@RequestMapping("/market/gotoInsert")

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.mycompany.webapp.dto.MarketAlignDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
 import com.mycompany.webapp.dto.MarketPagerDto;
@@ -15,7 +16,7 @@ public interface MarketBoardDao {
 	public List<MarketBoardDto> selectByPage(MarketPagerDto pagerDto);
 	
 	//거래게시판 전체 게시물 개수
-	public int totalCount();
+	public int totalCount(MarketAlignDto marketAlignDto);
 	
 	//리스트에서 대표사진 보여줌.
 	public List<MarketFileDto> selectImageFileByMarketNo(int marketNo);

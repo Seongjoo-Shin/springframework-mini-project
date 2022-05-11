@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.MarketBoardDao;
+import com.mycompany.webapp.dto.MarketAlignDto;
 import com.mycompany.webapp.dto.MarketBoardDto;
 import com.mycompany.webapp.dto.MarketFileDto;
 import com.mycompany.webapp.dto.MarketPagerDto;
@@ -20,9 +21,8 @@ public class MarketBoardService {
 	private MarketBoardDao marketBoardDao;
 	
 	//전체 게시물 갯수 가져오기
-	public int getTotalMarketBoardCount() {
-		log.info("실행");
-		int total =  marketBoardDao.totalCount();
+	public int getTotalMarketBoardCount(MarketAlignDto marketAlign) {
+		int total =  marketBoardDao.totalCount(marketAlign);
 		return total;
 	}
 	

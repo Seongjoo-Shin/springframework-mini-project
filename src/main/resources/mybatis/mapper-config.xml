@@ -23,5 +23,6 @@
 		<typeAlias type="com.mycompany.webapp.dto.UserDto" alias="user" />
 		<typeAlias type="com.mycompany.webapp.dto.WishListDto" alias="wishlist" />
 		<typeAlias type="com.mycompany.webapp.dto.MarketPagerDto" alias="marketpager" />
+		<typeAlias type="com.mycompany.webapp.dto.MarketAlignDto" alias="marketalign" />
    </typeAliases>
 </configuration>

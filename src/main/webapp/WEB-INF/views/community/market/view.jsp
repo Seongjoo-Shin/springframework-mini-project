@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <div class="buttons mt-5 d-flex justify-content-center">
-                        <a class="btn btn-outline-secondary p-3" style="width:100px; height:56px;" href="list?category=${category}&align=${align}&searchContent=${searchContent}&searchType=${searchType}">목록</a>
+                        <a class="btn btn-outline-secondary p-3" style="width:100px; height:56px;" href="list?pageNo=${pageNo}&category=${category}&align=${align}&searchType=${searchType}&searchContent=${searchContent}">목록</a>
                         <button class="btn btn-outline-secondary ml-3" style="width:100px; " onclick="likeBtnClick(this);">
                         	<img id="interImg" class="mr-2" src="" width="30px;"/>
                         	<span id="interCnt" class="p-1">${marketBoardDto.marketLikeCount}</span>
