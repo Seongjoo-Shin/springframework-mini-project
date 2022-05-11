@@ -469,19 +469,21 @@
 	                            <button type="button" class="optionBtn" value="6" onclick="optionBtnClick(this)">주변 약국</button>
 	                        </div>
 	                    </div>
-	                    <div id="equipDiv" style="display: none;" class="d-flex h-100 mt-2">
-                            <div class="border rounded p-4" style="background-color: rgb(231, 231, 236); width: 194px; position: relative;">
-                                <div style="transform: translate(-50%,-50%); position: absolute;left: 50%;top: 50%;">장비</div>
-                            </div>
-                            <div class="border rounded d-flex flex-column ml-2 flex-grow-1">
-                                <div class="p-2">
-                                    <input id="equipmentName" class="p-2 rounded border" type="text" placeholder="가지고 있는 장비를 추가해주세요!" style="width: 270px;"/>
-                                    <input id="equipmentCnt" class="p-2 rounded border" type="number" min="1" placeholder="장비 개수" style="width: 110px;"/>
-                                    <button type="button" onclick="equipmentSave()" class="btn btn-info mb-1">+</button>
-                                </div>
-                                <div id="equipmentList" class="m-2" style="display: inline-block;">
-                                </div>
-                            </div>
+	                    <div id="equipDiv" style="display: none;" class="h-100 mt-2">
+	                    	<div class="d-flex">
+	                    		<div class="border rounded p-4" style="background-color: rgb(231, 231, 236); width: 194px; position: relative;">
+	                                <div style="transform: translate(-50%,-50%); position: absolute;left: 50%;top: 50%;">장비</div>
+	                            </div>
+	                            <div class="border rounded d-flex flex-column ml-2 flex-grow-1">
+	                                <div class="p-2">
+	                                    <input id="equipmentName" class="p-2 rounded border" type="text" placeholder="가지고 있는 장비를 추가해주세요!" style="width: 270px;"/>
+	                                    <input id="equipmentCnt" class="p-2 rounded border" type="number" min="1" placeholder="장비 개수" style="width: 110px;"/>
+	                                    <button type="button" onclick="equipmentSave()" class="btn btn-info mb-1">+</button>
+	                                </div>
+	                                <div id="equipmentList" class="m-2" style="display: inline-block;">
+	                                </div>
+	                            </div>
+	                    	</div>
 	                    </div>
 	                    
 	                </div>
