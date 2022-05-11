@@ -60,7 +60,7 @@ public class IndexController {
 		user.setUserRole("USER_ROLE");
 		SignUpResult result = userService.signUp(user);
 		if(result == SignUpResult.SUCCESS) {
-			return "/index/signupForm";
+			return "/index/loginForm";
 		} else {
 			return "/index/signupForm";
 		}
