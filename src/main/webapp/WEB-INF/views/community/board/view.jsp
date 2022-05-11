@@ -82,21 +82,19 @@
 				              		<input id="commentDepth${commentDto.commentNo}" type="hidden" name="commentDepth" value="${commentDto.commentDepth}"/>
 				                     <div style="flex: 8; padding: 4px 13px;">
 			                         <p id="commentWriter${commentDto.commentNo}" style="font-weight: bold;">${commentDto.userDto.userNickname}</p>
-			                         <div style="white-space:pre;" id="commentContent${commentDto.commentNo}" class="comment-text">
-			                           ${commentDto.commentContent}
-			                         </div>
+			                         <div style="white-space:pre;" id="commentContent${commentDto.commentNo}" class="comment-text">${commentDto.commentContent}</div>
 			                         <p><small><fmt:formatDate value="${commentDto.commentRegistDate}" pattern="yyyy-MM-dd HH:mm"/></small></p>
 			                       </div>		                     		                    			
 			        			</div>
 								<div class="col-2">
 			                  		<div class="d-flex flex-column comment2" style="margin-right: 13px;">
 			                       		<c:if test="${sessionUserId == commentDto.commentWriter}">
-			                       		   <button class="commentBtn" onclick="updateContent(${commentDto.commentNo})">수정 ${commentDto.upperNo}</button>
+			                       		   <button class="commentBtn" onclick="updateContent(${commentDto.commentNo})">수정</button>
 		             				       <form method="post" action="commentDelete">
 		             				       		<input type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
 		             				       		<input id="${status.index}" type="hidden" name="commentNo" value="${commentDto.commentNo}"/>
 		             				       		<input type="hidden" name="upperNo" value=" ${commentDto.upperNo}"/>
-		             				       		<button type="submit" class="commentBtn" style="width:144px;">삭제</button>
+		             				       		<button type="submit" class="commentBtn" style="width:100%">삭제</button>
 		             				       	</form>                                 
 			                       		</c:if>
 			                      	</div>							

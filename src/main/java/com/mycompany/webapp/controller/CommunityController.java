@@ -250,9 +250,12 @@ public class CommunityController {
 	@PostMapping("/board/updateComment")
 	public String updateContent(@RequestParam("freeNo") int freeNo, @RequestParam("commentContent") String commentContent, @RequestParam("commentNo") int commentNo) {
 		CommentDto commentDto = new CommentDto();
+		commentContent = org.springframework.web.util.HtmlUtils.htmlEscape(commentContent);
+		commentContent = commentContent.replaceAll("<br/>", "\n");
 		commentDto.setCommentContent(commentContent);
 		commentDto.setCommentNo(commentNo);
 		CommentService.updateComment(commentDto);
+		
 		return "redirect:/community/board/boardDetail?freeNo="+freeNo;
 	}
 	

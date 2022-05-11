@@ -86,9 +86,7 @@
 					</div>
 					<!-- 거래게시판 물품 목록 -->
 					<div id="boardList">
-						<div id="div_tranlist" class="my-3"
-							style="padding: 0px 0px 0px 0px;">
-
+						<div id="div_tranlist" class="my-3" style="padding: 0px 0px 0px 0px;">
 							<c:forEach var="marketboard" items="${marketBoards}">
 								<div class="col-3 float-left mb-5">
 									<div class="card">
@@ -103,17 +101,13 @@
 											</button>
 										</div>
 										<div class="card-body" style="padding: 1rem;">
-											<div class="float-right recommentCount">
+<%-- 											<div class="float-right recommentCount">
 												<c:if test="${marketboard.marketSaleYN eq 0}">
 													<p class="border border-secondary px-3 py-1 text-dark rounded">거래완료</p>
 												</c:if>
-											</div>
-											<p style="margin-bottom: 0px;">${marketboard.marketTitle}</p>
-											<p style="margin-bottom: 7px; font-weight: bold;">
-												<span>${marketboard.marketPrice}</span>원
-											</p>
-											<div class="float-right recommentCount">
-												<p id="categoryType${marketboard.marketNo}"></p>
+											</div> --%>
+											<div class="float-right recommentCount mt-3">
+												<p id="categoryType${marketboard.marketNo}" class="text-dark" style="margin:0px;"></p>												
 												<script>
 													if(`${marketboard.marketCategory}` == 1){
 														$("#categoryType"+${marketboard.marketNo}).text("장비");
@@ -130,13 +124,14 @@
 													조회수 <span> ${marketboard.marketHitCount}</span>
 												</p>
 											</div>
-											<input id="marketWriter${marketboard.marketNo}" type="hidden"
-												name="freeNo" value="${marketboard.marketWriter}" />
-											<p style="margin-bottom: 0px; font-size: 15px;">${marketboard.userDto.userNickname}
+											<p style="margin-bottom: 0px; font-weight: bold;">${marketboard.marketTitle}</p>
+											<p style="margin-bottom: 7px; font-weight: bold;">
+												<span>${marketboard.marketPrice}</span>원
 											</p>
+											<input id="marketWriter${marketboard.marketNo}" type="hidden" name="freeNo" value="${marketboard.marketWriter}" />
+											<p style="margin-bottom: 0px; font-size: 15px;">${marketboard.userDto.userNickname}</p>
 											<p style="margin-bottom: 0px; font-size: 15px;">
-												<fmt:formatDate value="${marketboard.marketRegistDate}"
-													pattern="yyyy-MM-dd" />
+												<fmt:formatDate value="${marketboard.marketRegistDate}" pattern="yyyy-MM-dd" />
 											</p>
 										</div>
 									</div>
@@ -147,55 +142,48 @@
 
 						<!-- 글쓰기 버튼 -->
 						<div class="col-12 d-flex align-content-end justify-content-end">
-							<a href="gotoInsert" type="button"
-								class="btn btn-outline-dark border p-2 m-1"
-								style="font-size: 20px; width: 90px;">글쓰기</a>
+							<a href="gotoInsert" type="button" class="btn btn-outline-dark border pt-1 mt-1" style="font-size: 20px; width: 90px;">글쓰기</a>
 						</div>
 
 						<!-- 페이지 & 검색 -->
-						<div
-							class="col-12 d-flex flex-column align-content-center justify-content-center">
+						<div class="col-12 d-flex flex-column align-content-center justify-content-center">
 							<!-- 페이지 처리 -->
-							<div class="pt-3 my-3">
-								<ul class="pagination justify-content-center mb-0"
-									style="display: flex">
-									<li class="page-item"><button type="button" class="page-link" id="1" onclick="pageMove(this.id)">First</button></li>
-									<c:if test="${pager.groupNo>1}">
-										<li class="page-item"><button type="button" class="page-link" id = "${pager.startPageNo-1}" onclick="pageMove(this.id)">Previous</button></li>
-									</c:if>
+							<ul class="pagination justify-content-center mb-0" style="display: flex">
+								<li class="page-item"><button type="button" class="page-link" id="1" onclick="pageMove(this.id)">First</button></li>
+								<c:if test="${pager.groupNo>1}">
+									<li class="page-item"><button type="button" class="page-link" id = "${pager.startPageNo-1}" onclick="pageMove(this.id)">Previous</button></li>
+								</c:if>
 
-									<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-										<!-- 시작 페이지부터 마지막 페이지까지 반복 -->
-										<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><button type="button" class="page-link" id="${i}" onclick="pageMove(this.id)">${i}</button></li>
-										</c:if>
-										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><button type="button" class="page-link" id="${i}" onclick="pageMove(this.id)">${i}</button></li>
-										</c:if>
-									</c:forEach>
-									<c:if test="${pager.groupNo<pager.totalGroupNo}">
-										<li class="page-item"><button type="button" class="page-link" id="${pager.endPageNo+1}" onclick="pageMove(this.id)">Next</button></li>
+								<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+									<!-- 시작 페이지부터 마지막 페이지까지 반복 -->
+									<c:if test="${pager.pageNo != i}">
+										<li class="page-item"><button type="button" class="page-link" id="${i}" onclick="pageMove(this.id)">${i}</button></li>
 									</c:if>
-									<li class="page-item"><button type="button" class="page-link" id="${pager.totalPageNo}" onclick="pageMove(this.id)">Last</button></li>
-								</ul>
-								<input name="pageNo" id="pageNo" type="hidden" value="${pageNo}"/>
-							</div>
-							<div class="form-inline my-2 my-lg-0 justify-content-center">
-								<select id="selectBox" class="p-2 border rounded m-1" id="searchType" name="searchType">
-									<!-- <option value="제목+내용" selected>제목+내용</option> -->
-									<option value="내용">내용</option>
-									<option value="제목" selected>제목</option>
-								</select> 
-								<input class="form-control" style="padding: 9px;" type="text" id="searchContent" name="searchContent"
-									placeholder="검색어를 입력해 주세요." aria-label="Search" width="300" value="${pager.searchContent}"/>
-								<button type="button" class="btn btn-outline-info p-2 m-1" style="width: 80px;" onclick="clickSearchBtn()">검색</button>							
-							</div>
+									<c:if test="${pager.pageNo == i}">
+										<li class="page-item active"><button type="button" class="page-link" id="${i}" onclick="pageMove(this.id)">${i}</button></li>
+									</c:if>
+								</c:forEach>
+								<c:if test="${pager.groupNo<pager.totalGroupNo}">
+									<li class="page-item"><button type="button" class="page-link" id="${pager.endPageNo+1}" onclick="pageMove(this.id)">Next</button></li>
+								</c:if>
+								<li class="page-item"><button type="button" class="page-link" id="${pager.totalPageNo}" onclick="pageMove(this.id)">Last</button></li>
+							</ul>
+							<input name="pageNo" id="pageNo" type="hidden" value="${pageNo}"/>
+						</div>
+						<div class="form-inline my-2 my-lg-0 justify-content-center">
+							<select id="selectBox" class="p-2 border rounded m-1" id="searchType" name="searchType">
+								<!-- <option value="제목+내용" selected>제목+내용</option> -->
+								<option value="내용">내용</option>
+								<option value="제목" selected>제목</option>
+							</select> 
+							<input class="form-control" style="padding: 9px;" type="text" id="searchContent" name="searchContent"
+								placeholder="검색어를 입력해 주세요." aria-label="Search" width="300" value="${pager.searchContent}"/>
+							<button type="button" class="btn btn-outline-info p-2 m-1" style="width: 80px;" onclick="clickSearchBtn()">검색</button>	
 						</div>
 					</div>
 					<!-- #boardList 끝 -->
 					</form>
 				</div>
-
 				<div class="col-2"></div>
 			</div>
 		</div>
