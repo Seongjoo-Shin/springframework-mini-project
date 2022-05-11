@@ -12,7 +12,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,27 +35,8 @@ public class IndexController {
 	
 	@GetMapping("/loginForm")
 	public String loginForm() {
-		log.info("실행");
 		return "/index/loginForm";
 	}
-	
-	/*@PostMapping("/login")
-	public String login(UserDto user, HttpSession session, Model model) {
-		log.info(user);
-		LoginResult result = userService.login(user);
-		log.info(result);
-		
-		if(result == LoginResult.SUCCESS) {
-			session.setAttribute("sessionUserId", user.getUserId());
-			return "redirect:/";
-		} else if (result == LoginResult.FAIL_USERID) {
-			model.addAttribute("error", "아이디가 존재하지 않습니다.");
-			return "/index/loginForm";
-		}else {
-			model.addAttribute("error", "패스워드가 틀립니다.");
-			return "/index/loginForm";
-		}
-	}*/
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -66,13 +46,11 @@ public class IndexController {
 	
 	@RequestMapping("/findAccount")
 	public String findAccount() {
-		log.info("실행");
 		return "/index/findIDPWForm";
 	}
 	
 	@RequestMapping("/signUpForm")
 	public String signUpForm() {
-		log.info("실행");
 		return "/index/signupForm";
 	}
 	
@@ -80,7 +58,6 @@ public class IndexController {
 	public String signUp(UserDto user) {
 		user.setUserEnabled(1);
 		user.setUserRole("USER_ROLE");
-		log.info(user);
 		SignUpResult result = userService.signUp(user);
 		if(result == SignUpResult.SUCCESS) {
 			return "/index/signupForm";
@@ -170,7 +147,6 @@ public class IndexController {
 	@PostMapping(value = "/findEmail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String findEmail(String emailValue) {
-		log.info(emailValue);
 		int num;
 		LoginResult result = userService.checkEmail(emailValue);
 		JSONObject jsonObject = new JSONObject();
@@ -220,7 +196,6 @@ public class IndexController {
 	@PostMapping(value = "/findIdByEmail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String findIdByEmail(String emailValue) {
-		log.info(emailValue);
 		String result = userService.findIdByEmail(emailValue);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("result", result);
@@ -234,8 +209,6 @@ public class IndexController {
 	@PostMapping(value = "/findPasswordByEmail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String findPasswordByEmail(String idValue, String passwordEmail) {
-		log.info(idValue);
-		log.info(passwordEmail);
 		LoginResult resultId = userService.checkId(idValue);
 		JSONObject jsonObject = new JSONObject();
 		if(resultId == LoginResult.FAIL_USERID) {

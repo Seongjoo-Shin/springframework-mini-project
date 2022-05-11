@@ -181,12 +181,12 @@ public class MypageController {
 	@mypageLoginCheck
 	public String myboardMarket(@RequestParam(defaultValue = "1") int pageNo, HttpSession session, HttpServletRequest request, Model model) {
 		String userId = (String) session.getAttribute("sessionUserId");
-		int totalCnt = mypageService.getTotalMarketboardCount(userId); //
+		int totalCnt = mypageService.getTotalMarketboardCount(userId);
 		log.info(totalCnt);
 		PagerDto pager = new PagerDto(6, 10, totalCnt, pageNo);
 		pager.setUserId(userId);
 		model.addAttribute("pager", pager);
-		List<MarketBoardDto> markets = mypageService.getMyMarketBoardList(pager); // 
+		List<MarketBoardDto> markets = mypageService.getMyMarketBoardList(pager); 
 		model.addAttribute("total", totalCnt);
 		model.addAttribute("markets", markets);
 		return "/mypage/myboard/market";
@@ -196,7 +196,6 @@ public class MypageController {
 	@ResponseBody
 	@mypageLoginCheck
 	public String mymarketDelete(@RequestBody String marketNo, HttpServletRequest request, HttpSession session, Model model) throws Exception {
-		log.info("@@@ : " + marketNo);
 		int cnt = mypageService.deleteMyMarket(Integer.parseInt(marketNo));
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("message", "게시물을 삭제하였습니다");
@@ -245,7 +244,7 @@ public class MypageController {
 	@RequestMapping("/getBuildingImage")
 	public void getBuildingImage(HttpServletRequest req, HttpServletResponse res, String buildingNo, String type, String img) throws IOException {
 		List<BuildingFileDto> files = mypageService.selectImageFileByBuildingNo(buildingNo);
-   	    if(type.equals("nomal")) { //일반 사진만 가져와!
+   	    if(type.equals("nomal")) {
    	    	int num = Integer.parseInt(img);
 			if(files.get(num).getPanoramaCheck() == 1) {
 				num++;

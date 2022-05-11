@@ -57,7 +57,6 @@
        
        function getFiles(e){
           const files = e.currentTarget.files;
-           console.log(files);
            
            [...files].forEach(file => {
                //첨부파일의 형식이 이미지라면, 
@@ -74,7 +73,6 @@
                        imageFileNum++;
                        const preview = createPreviewImage(e, file);
                        imageFileList.appendChild(preview);
-                       console.log("image : " + imageFileNum);
                     };
                     reader.readAsDataURL(file);
                 }else{
@@ -90,16 +88,10 @@
                        nomalFileNum++;
                        const preview = createPreviewFile(e, file);
                        nomalFileList.appendChild(preview);
-                       console.log("nomal : " + nomalFileNum);
                     };
                     reader.readAsDataURL(file);
                 }
             });
-           
-           console.log(uploadImageFiles);
-           console.log(uploadNomalFiles);
-           console.log("image : " + imageFileNum);
-           console.log("nomal : " + nomalFileNum);
            
            e.target.value = ""; // 같은 파일 upload를 위한 처리
            

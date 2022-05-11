@@ -29,7 +29,6 @@
     </section>
     <script>
 	    function cancle(){
-		      /* $(location).attr("href", "insertCancle") */
 	    	location.href = document.referrer;
 	    }
 		function goSubmit(){

@@ -15,9 +15,7 @@
             <div class="row mt-5">
               <div class="col-lg-12">
                 <div class="table-responsive">
-                  <table
-                    class="table project-table table-centered table-nowrap table-hover" 
-                  >
+                  <table class="table project-table table-centered table-nowrap table-hover">
                     <thead>
                       <tr>
                         <th scope="col" style="font-size:20px;">#</th>

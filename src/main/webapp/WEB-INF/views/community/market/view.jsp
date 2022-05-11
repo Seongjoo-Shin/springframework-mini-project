@@ -3,14 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <script src="https://kit.fontawesome.com/748830bbae.js" crossorigin="anonymous"></script>
 	<script>
-        function selectAll(selectAll)  {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            
-            checkboxes.forEach((checkbox) => {
-                checkbox.checked = selectAll.checked
-            })
-        }
-
         function openMsgForm(marketWriter){
 	        
 	        if(`${sessionUserId}` == ""){
@@ -80,12 +72,6 @@
 												  	</c:forEach>
 								                </div>
 								                
-								                <!-- The Modal -->
-												<!-- <div id="myModal" class="modal">
-												  <span class="close">×</span>
-												  <img class="modal-content" id="img01">
-												</div> -->
-												
 								                <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
 								                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
 								                    <span class="sr-only">Previous</span>
@@ -95,8 +81,6 @@
 								                    <span class="sr-only">Next</span>
 								                </a>
 								            </div>
-								            <!-- End carousel -->
-					            
 					            		</div>
 					            	</div>
 					            </div>
@@ -221,13 +205,6 @@
 	    		return;
 			});
 		}
-
-		var modal = document.getElementById('myModal');
-
-		var img = document.getElementById('myImg');
-		var modalImg = document.getElementById("img01");
-
-		var span = document.getElementsByClassName("close")[0];
 
     </script>
 

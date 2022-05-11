@@ -386,7 +386,6 @@
        function showOption() {
           var optionList = `${buildingInfo.buildingOption}`;
            var optionValue = optionList.split(",");
-           console.log(optionValue);
            
            var options = $("#optionList");
            for(o of optionValue){
@@ -522,7 +521,6 @@
     	   
     	   if(`${buildingInfo.buildingTradeInfo}` == '임대'){
     		   var monthPrice = `${buildingInfo.buildingMonthRent}`;
-    		   console.log(monthPrice);
     		   
     		   if(monthPrice >= 10000){
         		   var monthPriceVal = monthPrice;

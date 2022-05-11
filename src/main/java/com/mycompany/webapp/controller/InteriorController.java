@@ -43,43 +43,35 @@ public class InteriorController {
 	
 	@RequestMapping("/example")
 	public String example() {
-		log.info("실행");
 		return "/interior/example";
 	}
 	
 	@RequestMapping("/example50")
 	public String example50() {
-		log.info("실행");
 		return "/interior/example50";
 	}
 	
 	@RequestMapping("/example65")
 	public String example65() {
-		log.info("실행");
 		return "/interior/example65";
 	}
 	
 	@RequestMapping("/example100")
 	public String example100() {
-		log.info("실행");
 		return "/interior/example100";
 	}
 	
 	@RequestMapping("/simulator")
 	public String simulator(@RequestParam(defaultValue ="0") int buildingNo, Model model, HttpSession session, Authentication authentication) {
-		log.info("실행");
 		String userId;
 		//인증객체의 존재 여부 확인
 		if(authentication != null) {
 			UserCustom userCustom = (UserCustom)authentication.getPrincipal();
 			userId = userCustom.getUsername();
-			log.info("userID" + userId);
-			log.info("userRole" + userCustom.getAuthorities());
 		} else {
 			userId = null;
 		}
 		
-		log.info(userId);
 		WishListDto wishlist=new WishListDto();
 		wishlist.setUserId(userId);
 		wishlist.setBuildingNo(buildingNo);
@@ -91,7 +83,6 @@ public class InteriorController {
 		if(userId!=null) {
 			List<WishListDto> wishLists = wishListService.getWishList(wishlist);
 			model.addAttribute("wishLists",wishLists);
-			log.info(wishLists);
 		}
 		
 		return "/interior/simulator";
@@ -101,8 +92,6 @@ public class InteriorController {
 	   public void getBuildingImage(HttpServletRequest req, HttpServletResponse res, String buildingNo, String type, String img) throws IOException {
 		   System.out.println(buildingNo);
 		   List<BuildingFileDto> files = takeService.selectImageFileByBuildingNo(buildingNo);
-		   
-		   log.info("type : " + type);
 		   
 		   if(type.equals("nomal")) { //일반 사진만 가져와!
 			   int num = Integer.parseInt(img);
@@ -127,7 +116,6 @@ public class InteriorController {
 	@PostMapping(value = "/addWishList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String addWishList(WishListDto wishList, HttpSession session) {
-		log.info(wishList);
 		String userId = (String)session.getAttribute("sessionUserId");
 		JSONObject jsonObject = new JSONObject();
 		
@@ -138,17 +126,14 @@ public class InteriorController {
 			WishListDto item = wishListService.findPictureById(wishList); 
 			//위시리스트에 없는 제품일때
 			if(item == null) {
-				log.info("추가성공");
 				wishListService.addItemToWishList(wishList);
 				jsonObject.put("result", "success");
 			} else { //위시리스트에 있는 제품일 경우 수량바꾸기
-				log.info("이미 위시리스트에 존재");
 				item.setCount(wishList.getCount());
 				wishListService.updateItemCount(item);
 				jsonObject.put("result", "hasItem");
 			}
 		}
-		
 		
 		String json = jsonObject.toString();
 		return json;
@@ -161,26 +146,8 @@ public class InteriorController {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("result", result);
 		
-		
 		String json = jsonObject.toString();
 		return json;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

@@ -3,7 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<script>
 		$( document ).ready(function() {
-			console.log($("#noticeList").children().length);
 		    if($("#noticeList").children().length == 0){
 		    	var div = document.createElement('div');
 		    	div.setAttribute("class", "text-center p-2 m-2");

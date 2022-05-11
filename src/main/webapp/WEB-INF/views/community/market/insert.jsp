@@ -67,7 +67,6 @@
 	  		
 	    	//첨부된 이미지 파일들을 가져온다.
 	        const files = e.currentTarget.files;
-	        console.log(files);
 	        
 	        //이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 6개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 6개를 넘어가게 되면 업로드할 수 없다!(최대 6장이기 때문에)
 	        console.log(nomalImgPreview.childElementCount + files.length);
@@ -81,9 +80,6 @@
 	        
 	        //모든 첨부 파일들에 대해 파일 각각을 처리하기 위해 forEach를 사용했다.
 	        [...files].forEach(file => {
-	        	console.log("모든 첨부 파일");
-	        	console.log(file);
-	        	console.log("-----------")
 	        	//첨부파일의 형식이 이미지가 아니라면,
 	            if(!file.type.match("image/.*")){
                 	swal({
@@ -176,14 +172,12 @@
 		
 		//가격 유효성 검사
 		input.oninput = function(){
-			console.log("가격이 입력되었습니다.");
 			let resultCheckData = true;
 			
 			//가격에는 숫자만 들어가게
 			var pricePattern = /^[0-9]+$/;
 			var price = $("#price").val();
 			var pricePatternTest = pricePattern.test(price); //유효성 검사 만족하는지 결과 true,false
-			console.log(pricePatternTest);
 			
 			if(pricePatternTest){
 				$("#priceHelp").css("display","none");
@@ -191,15 +185,6 @@
 				$("#priceHelp").css("display","block");
 				resultCheckData = false;
 			}	
-			
-			console.log(resultCheckData)
-			//유효성 검사를 통과했다면
-			if(resultCheckData){
-				console.log("유효성 검사 통과 ")
-				//document.querySelector("#marketInsertForm").submit();
-			}else{
-				
-			}
 		};
 		
 
@@ -278,33 +263,7 @@
 	function cancle(){
 		$(location).attr("href", "marketInsertCancle")
 	}
-		
-		
-		//form태그에 onsubmit="handleCheckData" 해준 경우
-/* 		function handleCheckData(){
-			console.log("타니?");
-			event.priventDefault(); //이벤트 실행 잠깐 막음
-			let resultCheckData = true;
-			
-			//가격에는 숫자만 들어가게
-			var pricePattern = '/^[0-9]+$/';
-			var price = $("#price").val();
-			var pricePatternTest = pricePattern.test(price); //유효성 검사 만족하는지 결과 true,false
-			console.log(pricePatternTest);
-			
-			if(pricePatternTest){
-				$("#price").removeClass("bg-danger");
-			}else{
-				$("#price").addClass("bg-danger");
-				resultCheckData = false;
-			}	
-			
-			console.log(resultCheckData)
-			//유효성 검사를 통과했다면
-			if(resultCheckData){
-				console.log("유효성 검사 통과 ")
-				//document.querySelector("#marketInsertForm").submit();
-			}} */
+	
     </script>
     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

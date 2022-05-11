@@ -186,9 +186,6 @@
 
         		monthPriceVal2 = monthPriceVal.slice(-1);
         		
-        		console.log("m : " + monthPriceVal);
-        		console.log("m2 : " + monthPriceVal2);
-        		
         		monthPriceVal = monthPriceVal.slice(0, 1);
         		
         		$("#monthPriceText").text(monthPriceVal + "억" + monthPriceVal2 + "000 만");
@@ -520,7 +517,6 @@
             
             //초기에 생성한 마커들을 클릭하면 실행하는 함수로, 마커를 클릭하면 해당 마커의 정보창을 보여준다.
             function getClickHandler(seq){
-            	console.log(seq);
             	return function(e){
             		var marker = markers[seq],
             			infoWindow = infoWindows[seq];
@@ -565,7 +561,6 @@
                     	return;
                     }
                     var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
-                    console.log(myaddr);
                     
                     curMarker.setPosition(myaddr);
                     
@@ -581,7 +576,6 @@
                         	infoWindow.close();
                 		}
                     }
-                    
                     
                     bounds = map.getBounds(),
                     southWest = bounds.getSW(),
@@ -681,7 +675,6 @@
                     	infoWindow.close();
             		}
                 }
-            	console.log("mark : " + markerSeq);
             	
             	$("#priceBtnText").text("");
             	tradeInfo = "";

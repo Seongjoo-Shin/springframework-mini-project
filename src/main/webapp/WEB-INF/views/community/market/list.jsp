@@ -5,7 +5,6 @@
 <script>
 	var alignarray = {"category": "", "align":"", "searchType":"", "searchContent":""};
 	$(document).ready(function(){
-		console.log("실행 되니??");
         alignarray.align = `${align}`;
         alignarray.searchType = `${searchType}`;
         alignarray.searchContent = `${searchContent}`;
@@ -153,7 +152,6 @@
             var formData = new FormData(form);
 
             formData.append("category", alignarray.category);
-            console.log(alignarray.category);
             formData.append("align", alignarray.align);
 
             $.ajax({
@@ -164,7 +162,6 @@
             	processData:false            	
             }).done((data)=>{
             	
-				console.log(data);
 				var html = '';
 				$.each(data.marketboardsList, function (index, item) {
 					html += '  <div class="col-3 float-left mb-3">';
@@ -210,12 +207,8 @@
     	
     	function alignData(num){
 	        alignarray.align = num;
-	        console.log(alignarray.align);
-	        
-	        //searchType이랑 searchContent 내용 json에 포함하기.
 	        
 	        const searchContent = document.getElementById('searchContent').value;
-	        console.log("searchContent: "+searchContent);
 	        alignarray.searchType = $("#selectBox option:selected").val();
 	        alignarray.searchContent = searchContent;
 	        
@@ -232,7 +225,6 @@
 				dataType:'json'
 			})
 			.done((data)=>{
-				console.log(data);
 				var html = '';
 				$.each(data.marketboardsList, function (index, item) {
 					html += '  <div class="col-3 float-left mb-3">';
@@ -278,7 +270,6 @@
 	   	function showData(num){
 
 	        alignarray.category = num;
-	        console.log(alignarray);
 	        
 	        if(!alignarray.searchContent){	//비어있다면
 		        //searchType이랑 searchContent 내용 json에 포함하기.
@@ -313,7 +304,6 @@
 				dataType:'json'
 			})
 			.done((data)=>{
-				console.log(data);
 				var html = '';
 				$.each(data.marketboardsList, function (index, item) {
 					html += '  <div class="col-3 float-left mb-3">';

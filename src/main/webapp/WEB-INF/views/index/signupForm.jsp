@@ -205,7 +205,6 @@
 		 						method:"post"
 		 					})
 		 					.done((data) => {
-		 						console.log(data.result);
 		 						if(data.result ==="가입불가"){
 		 							$('.id_input_re_2').css("display","inline-block");
 		 							$('.id_input_re_1').css("display", "none");
@@ -262,7 +261,6 @@
 		 						method:"post"
 		 					})
 		 					.done((data) => {
-		 						console.log(data.result);
 		 						if(data.result ==="success"){
 		 							emailAuthenticate();
 		 							num=data.num;
@@ -273,7 +271,6 @@
 		 					});
 		 				}
 		       			function emailAuthenticate(){
-		       				console.log("이메일인증 실행");
 		       				$('#aDiv').css("display", "inline-block");
 		       			}
 		       		</script>
@@ -288,12 +285,10 @@
 		       	<script>
 		       		function checkNum(){
 		       			if(num == $('#certificationinput').val()){
-		       				console.log("인증이 성공하였습니다.");
 		       				emailFlag = 1;
 		       				$('.id_input_re_8').css("display","inline-block");
 							$('.id_input_re_7').css("display", "none");
 		       			} else {
-		       				console.log("인증이 실패하였습니다.");
 		       				$('.id_input_re_7').css("display","inline-block");
 							$('.id_input_re_8').css("display", "none");
 		       			}
@@ -328,7 +323,6 @@
 		 						method:"post"
 		 					})
 		 					.done((data) => {
-		 						console.log(data.result);
 		 						if(data.result ==="success"){
 		 							$('.id_input_re_4').css("display","inline-block");
 		 							$('.id_input_re_3').css("display", "none")

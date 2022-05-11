@@ -406,22 +406,16 @@
 	
 	function addWishList(addName, addPrice, addPictureName, nowBuildingNo, itemCount){
 		var interiorName = addName;
-		console.log(interiorName);
 		var interiorPrice = addPrice;
-		console.log(interiorPrice);
 		var pictureName = addPictureName;
-		console.log(pictureName);
 		var buildingNo = nowBuildingNo;
-		console.log(buildingNo);
 		var count = itemCount;
-		console.log(count);
 		$.ajax({
 				url: "/interior/addWishList",
 				data: {interiorName,interiorPrice,pictureName, buildingNo, count},
 				method:"post"
 			})
 			.done((data)=>{
-				console.log(data.result);
 				if(data.result == 'noId'){
 					$(location).attr("href", "/index/loginForm");
 				} else if(data.result =='success'){
@@ -607,8 +601,6 @@
 			    				var price = parseInt(table.rows[i].cells[1].innerHTML);
 			    				var count = parseInt(table.rows[i].cells[2].innerHTML);
 			    				var sum = price * count;
-			    				console.log(price);
-			    				console.log(count);
 			    				total += sum;
 			    			}
 			    			$('#totalResult').text(total);

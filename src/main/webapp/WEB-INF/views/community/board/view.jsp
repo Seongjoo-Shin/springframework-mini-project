@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
     <section style="flex-grow:1;">
       <div class="d-flex align-items-center justify-content-center mb-5">
@@ -36,7 +35,6 @@
 					<a href="/community/board/freeBoardPostingDelete?freeNo=${freeBoardDto.freeNo}" class="btn btn-outline-danger p-2 my-4" style="width:100px;">삭제</a>
 				</c:if> 
               </div>
-              <div class="h6 ml-2" style="font-weight: bold;">댓글</div>
               <div id="free-board-coment">
 	              <ul>
  	              	<c:forEach var="commentDto" items="${comments}" varStatus="status">
@@ -136,8 +134,6 @@
 <script>
 	function updateContent(commentNo){
 		
-		console.log(commentNo);
-		
 		var freeNo = $("#freeNo"+commentNo).val();
 		var commentContent = $("#commentContent"+commentNo).text();
 		var userNickname = $("#commentWriter"+commentNo).text();    
@@ -145,8 +141,6 @@
 		var userId = "${sessionUserId}";
 		$("#container"+commentNo).attr('style','display:none');
 		
-		console.log(userNickname);
-
 		$.ajax({
 			url: "/community/board/updateContent",
 			data: {"commentContent":commentContent, "commentNo":commentNo, "userId":userId,
@@ -158,22 +152,17 @@
 	}
 
 	function bringReplyJson(commentNo){
-		console.log(commentNo);
-
 		var	upperNo = commentNo;
 		var	freeNo = $("#freeNo"+commentNo).val();
 		var	userId = "${sessionUserId}";
 		var	commentDepth = $("#commentDepth"+commentNo).val();
 
-		console.log("upperNo: " + upperNo);
-		
 		$.ajax({
 			url: "/community/board/bringReplyJson",
 			data: {"upperNo":upperNo, "freeNo":freeNo, "userId":userId, "commentDepth":commentDepth},
 			method: "post"
 		
 		}).done((data)=>{
-			console.log(upperNo);
 			var html = '';
 			html +='	<div class="row pl-5" style="display: flex;">';
 			html +='		<div style="flex: 8; padding: 4px 13px;">'; 
@@ -198,9 +187,6 @@
 		var	commentContext= $("#textarea"+commentNo).val();
 		var	userId = "${sessionUserId}";
 		
-		console.log("registReply commentNo: "+commentNo);
-		console.log('${sessionUserId}');
-		console.log("commentContext: " + commentContext);
 		$.ajax({
 			url: "/community/board/registReply",
 			data: { userId,  upperNo, freeNo, commentDepth, commentContext},

@@ -66,7 +66,6 @@
     				swal("삭제가 취소되었습니다.");
     			}
     		});
-    		//delete?noticeNo=${noticeboard.noticeNo}
     	}
     </script>
     

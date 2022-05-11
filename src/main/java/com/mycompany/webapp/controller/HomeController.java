@@ -32,7 +32,6 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String home(Model model) {
-		log.info("실행");
 		List<FreeBoardDto> freeboards = homeService.getFreeBoards();
 		List<MarketBoardDto> marketboards = homeService.getMarketBoards();
 		List<NoticeBoardDto> noticeboards = homeService.getNoticeBoards();
@@ -69,7 +68,6 @@ public class HomeController {
 	@GetMapping("/messageView")
 	public String messageView(HttpSession session, HttpServletRequest request, Model model) {
 		List<MessageDto> message = mypageService.getMessageByNo(Integer.parseInt(request.getParameter("messageNo")));
-		log.info(message);
 		model.addAttribute("message", message.get(0));
 		return "common/messageView";
 	}

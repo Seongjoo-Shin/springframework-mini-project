@@ -12,7 +12,6 @@
             nomalImgField.appendChild(btn);
     		useYn = 1;
     		fileNo = $("#nomalImgPreview").children().length;
-    		console.log("fn : " + fileNo);
     	}
 	});
     </script>
@@ -95,13 +94,10 @@
 	  	//일반 사진을 등록할 때 실행되는 함수이다.
 	    function getImageFiles(e) {
 	  		
-	  		console.log("123");
 	    	//첨부된 이미지 파일들을 가져온다.
 	        const files = e.currentTarget.files;
-	        console.log(files);
 	        
 	        //이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 6개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 6개를 넘어가게 되면 업로드할 수 없다!(최대 6장이기 때문에)
-	        console.log(nomalImgPreview.childElementCount + files.length);
 	        if(nomalImgPreview.childElementCount > 6 || (nomalImgPreview.childElementCount + files.length) > 6){
             	swal({
             		icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png",
@@ -112,9 +108,6 @@
 	        
 	        //모든 첨부 파일들에 대해 파일 각각을 처리하기 위해 forEach를 사용했다.
 	        [...files].forEach(file => {
-	        	console.log("모든 첨부 파일");
-	        	console.log(file);
-	        	console.log("-----------")
 	        	//첨부파일의 형식이 이미지가 아니라면,
 	            if(!file.type.match("image/.*")){
                 	swal({
@@ -200,12 +193,8 @@
 	    //이미지 미리보기에서 x버튼 눌러서 그림 삭제할 때
         function deleteImg(fnum){
         	if($('#img'+fnum).attr("name") == 'exist'){
-        		console.log("db에 저장된 것 삭제할 경우");
         		deleteDBImgBySeq.push($('#img'+fnum).attr("seq"));
-        		console.log("--"+$('#img'+fnum).attr("seq"));
         		document.querySelector("#file" + fnum).remove();
-        		
-        		
         	}else{
         		document.querySelector("#file" + fnum).remove();
         		var DBImgCnt = 0;
@@ -213,12 +202,9 @@
         			var DBImgCnt = `${nomalCnt}`;
                 	DBImgCnt++;
         		}
-            	console.log(fnum-DBImgCnt);
             	uploadFiles[fnum-DBImgCnt] = "";
-            	console.log(uploadFiles);
             	
         	}
-        	console.log($("#nomalImgPreview").children().length);
         	if($("#nomalImgPreview").children().length == 0){
             	$("#addBtn").remove();
                 $("#explainNomal").css('display', 'block');
@@ -230,14 +216,12 @@
 		
 		//유효성 검사
 		input.oninput = function(){
-			console.log("가격이 입력되었습니다.");
 			let resultCheckData = true;
 			
 			//가격에는 숫자만 들어가게
 			var pricePattern = /^[0-9]+$/;
 			var price = $("#price").val();
 			var pricePatternTest = pricePattern.test(price); //유효성 검사 만족하는지 결과 true,false
-			console.log(pricePatternTest);
 			
 			if(pricePatternTest){
 				$("#priceHelp").css("display","none");
@@ -245,15 +229,6 @@
 				$("#priceHelp").css("display","block");
 				resultCheckData = false;
 			}	
-			
-			console.log(resultCheckData)
-			//유효성 검사를 통과했다면
-			if(resultCheckData){
-				console.log("유효성 검사 통과 ")
-				//document.querySelector("#marketInsertForm").submit();
-			}else{
-				
-			}
 		};
 		
 		//수정 버튼을 눌렀을 때
@@ -262,8 +237,6 @@
 			//폼 태그안의 input태그들은 name값으로 접근 가능하다.
         	var form = document.querySelector("#marketInsertForm");
             var formData = new FormData(form);
-            console.log(formData);
-            
             
             //select 유효성 검사
             if($("#category").val == 0){
@@ -293,10 +266,6 @@
 
             //DB상에 존재하는 이미지 파일을 삭제하기 위해 시퀀스들을 저장한 배열을 append한다!
             formData.append("deleteDBImgBySeq",deleteDBImgBySeq);
-           	for(var i=0; i<deleteDBImgBySeq.length; i++){
-           		console.log(i+"번째 요소->>"+deleteDBImgBySeq[i]);
-           	}
-            
             
             $.ajax({
             	method:'POST',
@@ -318,7 +287,6 @@
 	function cancle(){
 		$(location).attr("href", "marketInsertCancle")
 	}
-	
     </script>
       
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

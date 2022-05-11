@@ -53,14 +53,12 @@
 
 	function findEmail(){
 		var emailValue = $('#findInputEmail').val();
-		console.log(emailValue);
 		$.ajax({
 			url: "/index/findEmail",
 			data: {emailValue},
 			method:"post"
 		})
 		.done((data) => {
-			console.log(data.result);
 			if(data.result ==="success"){
 				$('#cDiv').css("display", "inline-block");
 				$('.failFindEmail').css("display", "none");
@@ -75,12 +73,10 @@
 	
 	function confirmFindIdNum(){
 		if(findIdNum == $(checkFindIdNum).val()){
-			console.log("인증성공");
 			$('.successFindID').css("display", "inline-block");
 			$('.failFindID').css("display", "none");
 			resultFindID = 1;
 		} else{
-			console.log("인증실패");
 			$('.successFindID').css("display", "none");
 			$('.failFindID').css("display", "inline-block");
 		}
@@ -99,7 +95,7 @@
 <section  style="flex-grow:1;">
 	<div class="d-flex justify-content-center align-items-center" style="margin-top: -31px;">
     <div class="d-flex flex-column justify-content-center col-md-3">
-        <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 30%"">
+        <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 30%">
             <li class="nav-item" role="presentation">
               <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">아이디</a>
             </li>
@@ -140,7 +136,6 @@
                      		}
                      		
                      		var emailValue = $('#findInputEmail').val();
-                    		console.log(emailValue);
                     		$.ajax({
                     			url: "/index/findIdByEmail",
                     			data: {emailValue},
@@ -160,12 +155,10 @@
                      	
                      	function confirmFindPasswordNum(){
                     		if(findIdNum == $(checkFindIdNum).val()){
-                    			console.log("인증성공");
                     			$('.successFindID').css("display", "inline-block");
                     			$('.failFindID').css("display", "none");
                     			resultFindID = 1;
                     		} else{
-                    			console.log("인증실패");
                     			$('.successFindID').css("display", "none");
                     			$('.failFindID').css("display", "inline-block");
                     		}
@@ -199,14 +192,12 @@
 		                      		if($("#requireId").val() == ""){
 		                      			$("#requireId").attr("placeholder", "아이디를 입력하세요");
 		                      			$("#requireId").addClass('error');
-		                      			console.log("아이디없음");
 		                      			return;
 		                      		}
 		                      		
 		                      		if($("#passwordEmail").val() == ""){
 		                      			$("#passwordEmail").attr("placeholder", "이메일을 입력하세요");
 		                      			$("#passwordEmail").addClass('error');
-		                      			console.log("아이디없음");
 		                      			return;
 		                      		}
 		                      		
@@ -243,12 +234,10 @@
                          	<script>
                          		function confirmFindPasswordNum(){
                          			if(findPasswordNum == $(checkFindPasswordNum).val()){
-                         				console.log("인증성공");
                          				$('.successFindPassword').css("display", "inline-block");
                          				$('.failFindPassword').css("display", "none");
                          				resultFindPassword = 1;
                          			} else{
-                         				console.log("인증실패");
                          				$('.successFindPassword').css("display", "none");
                          				$('.failFindPassword').css("display", "inline-block");
                          			}
@@ -273,7 +262,6 @@
 	                    			method:"post"
 	                    		})
 	                    		.done((data) => {
-	                    			console.log(data.result);
 	                    			if(data.result=="update"){
 	                    				//alter창
 		                    			swal({

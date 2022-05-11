@@ -87,9 +87,6 @@ public class CommunityController {
 		
 		//페이지 정보
 		List<FreeBoardDto> freeboards = freeBoardService.getFreeBoards(pager);
-		for(FreeBoardDto f : freeboards) {
-			log.info(f.getRnum());
-		}
 		model.addAttribute("freeboards", freeboards);
 		model.addAttribute("searchType", pager.getSearchType());
 		model.addAttribute("searchContent", pager.getSearchContent());
@@ -109,10 +106,7 @@ public class CommunityController {
 
 	// 글쓰기 등록 버튼
 	@PostMapping("/board/insertContent")
-	public String insertContent(
-			@RequestParam("title") String title,
-			@RequestParam("content") String content,
-			HttpSession session) {
+	public String insertContent(@RequestParam("title") String title, @RequestParam("content") String content, HttpSession session) {
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
 		
 		//freeDto정보와 user정보를 같이 전달
@@ -192,18 +186,14 @@ public class CommunityController {
 	}
 
 	@GetMapping("/board/update")
-	public String boardUpdate(int freeNo, Model model, HttpSession session) {
+	public String boardUpdate(int freeNo, Model model) {
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
 		model.addAttribute("freeBoardDto", freeBoardDto);
 		return "/community/board/update";
 	}
 	
 	@PostMapping("/board/updateForm")
-	public String boardUpdateFrom(
-			@RequestParam("title") String title,
-			@RequestParam("content") String content,
-			HttpSession session,
-			@RequestParam("freeNo") int freeNo) {
+	public String boardUpdateFrom(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("freeNo") int freeNo) {
 
 		//먼저 저장되 있던 정보 불러오기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
@@ -216,10 +206,7 @@ public class CommunityController {
 	
 	// 댓글 ---------------------------------------------------------------------------------------------------------------------------------------------
 	@PostMapping("/board/insertComment")
-	public String insertComment(
-			int freeNo,
-			@RequestParam("commentContent") String commentContent,
-			HttpSession session) {
+	public String insertComment(int freeNo, @RequestParam("commentContent") String commentContent, HttpSession session) {
 		String SessionUserid = (String) session.getAttribute("sessionUserId");
 
 		CommentDto commentDto = new CommentDto();
@@ -250,10 +237,7 @@ public class CommunityController {
 	
 	//수정 하고 수정버튼 눌렀을 때
 	@PostMapping("/board/updateComment")
-	public String updateContent(
-			@RequestParam("freeNo") int freeNo,
-			@RequestParam("commentContent") String commentContent,
-			@RequestParam("commentNo") int commentNo) {
+	public String updateContent(@RequestParam("freeNo") int freeNo, @RequestParam("commentContent") String commentContent, @RequestParam("commentNo") int commentNo) {
 		CommentDto commentDto = new CommentDto();
 		commentDto.setCommentContent(commentContent);
 		commentDto.setCommentNo(commentNo);
@@ -263,7 +247,7 @@ public class CommunityController {
 	
 	@PostMapping(value = "/board/bringReplyJson", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String bringReplyJson(int upperNo, String userId, int commentDepth, int freeNo, Model model, HttpServletRequest request, HttpSession session) {
+	public String bringReplyJson(int upperNo, String userId, int commentDepth, int freeNo, HttpSession session) {
 		
 		//1. 닉네임 얻기
 		String userNickname = userService.getNickname(userId);
@@ -284,12 +268,7 @@ public class CommunityController {
 	
 	@PostMapping(value="/board/registReply", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String replyComment(
-			@RequestParam("upperNo") int upperNo,
-			@RequestParam("freeNo") int freeNo,
-			@RequestParam("commentContext") String commentContent,
-			@RequestParam("userId") String sessionUserId,
-			@RequestParam("commentDepth") int commentDepth, HttpSession session){
+	public String replyComment(@RequestParam("upperNo") int upperNo, @RequestParam("freeNo") int freeNo, @RequestParam("commentContext") String commentContent, @RequestParam("userId") String sessionUserId, @RequestParam("commentDepth") int commentDepth){
 		
 		//댓글 등록 시간
 		Date utilDate = new Date();
@@ -312,23 +291,15 @@ public class CommunityController {
 		jsonObject.put("commentDto", commentDto);
 		
 		String json = jsonObject.toString();
-		log.info(json.toString());
 		
-		return "json";
+		return json;
 	}
 
 
 	// 거래게시판 - market ---------------------------------------------------------------------------------------------------------------------------------
 	@RequestMapping("/market/list")
-	public String marketList(
-			@RequestParam(value="pageNo", defaultValue = "1") int pageNo,  
-			Model model, HttpSession session,
-			@RequestParam(value="category",defaultValue = "", required=false) String category,
-			@RequestParam(value="align",defaultValue = "", required=false) String align,
-			@RequestParam(value="searchContent",defaultValue = "", required=false) String searchContent,
-			@RequestParam(value="searchType",defaultValue = "", required=false) String searchType) {
+	public String marketList(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model, HttpSession session, @RequestParam(value="category", defaultValue = "", required=false) String category, @RequestParam(value="align",defaultValue = "", required=false) String align, @RequestParam(value="searchContent",defaultValue = "", required=false) String searchContent, @RequestParam(value="searchType",defaultValue = "", required=false) String searchType) {
 
-		log.info("실행");
 		//market 게시물 개수 가져오기
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
@@ -357,12 +328,7 @@ public class CommunityController {
 	
 	@PostMapping(value = "/market/listJson", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String marketListAlign(
-			HttpServletRequest request,		
-			@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
-			HttpSession session,
-			@RequestParam("category") String category,
-			@RequestParam("align") String align) {
+	public String marketListAlign(HttpServletRequest request,	@RequestParam(value="pageNo", defaultValue = "1") int pageNo, HttpSession session, @RequestParam("category") String category, @RequestParam("align") String align) {
 		
 		int totalBoardNum = marketBoardService.getTotalMarketBoardCount(); // 전체 개수 가져오기
 		MarketPagerDto pager = new MarketPagerDto(16, 10, totalBoardNum, pageNo);
@@ -398,7 +364,7 @@ public class CommunityController {
 	
 	//리스트에서 대표사진 보여줌, 리스트의 index에 해당하는 사진 불러와줌
 	@RequestMapping("/market/getMarketImage")
-	public void getMarketImage(HttpServletRequest req, HttpServletResponse res, int marketNo, String img) throws IOException {
+	public void getMarketImage(HttpServletResponse res, int marketNo, String img) throws IOException {
 		List<MarketFileDto> files = marketBoardService.selectImageFileByMarketNo(marketNo);
 		int num = Integer.parseInt(img);
 		byte[] temp = files.get(num).getImageFileData();
@@ -434,7 +400,7 @@ public class CommunityController {
    //하트 누르거나 취소했을 때 수정됨. 
    @RequestMapping(value="/market/setLikeLists", produces = "application/json; charset=UTF-8")
    @ResponseBody
-   public String setLikeLists(String check, String id, String type, int marketNo, String likeCnt) {
+   public void setLikeLists(String check, String id, String type, int marketNo, String likeCnt) {
 	   LikeListDto lld = new LikeListDto();
 	   
 	   lld.setLikeListNo(marketNo);
@@ -454,12 +420,6 @@ public class CommunityController {
 		   takeService.deleteLikeLists(lld);
 		   marketBoardService.updateLikeCountDown(marketNo); //좋아요 수 업데이트
 	   }
-			
-	   String json;
-	   JSONObject jsonObject = new JSONObject();
-	   
-	   json = jsonObject.toString();
-	   return json;
    }
 
 	// 게시판 상세 페이지
@@ -524,7 +484,7 @@ public class CommunityController {
 	}
 	
 	@GetMapping("/market/update")
-	public String marketUpdate(int marketNo, Model model, HttpSession session, HttpServletRequest req, HttpServletRequest res) {
+	public String marketUpdate(int marketNo, Model model) {
 		//수정 할 마켓 정보 가져오기
 		MarketBoardDto marketBoardDto = marketBoardService.getMarketBoard(marketNo);
 		List<MarketFileDto> marketFiles = marketBoardService.selectImageFileByMarketNo(marketNo);
@@ -534,17 +494,12 @@ public class CommunityController {
 		model.addAttribute("marketFiles", marketFiles);
 		model.addAttribute("marketFilesSize", marketFiles.size());
 		
-		for(int i=0; i<marketFiles.size(); i++) {
-			byte[] temp = marketFiles.get(i).getImageFileData();
-			InputStream is = new ByteArrayInputStream(temp);
-		}
-		
 		return "/community/market/update";
 	}
 
 	//바이트배열을 파일로 만들어서 출력해줌!
 	@RequestMapping("/market/getImageByteArrayToFile")
-	public void getImageByteArrayToFile(HttpServletRequest req, HttpServletResponse res, int marketNo, int img, 
+	public void getImageByteArrayToFile(HttpServletResponse res, int marketNo, int img, 
 			@RequestHeader("User-Agent") String userAgent) throws IOException {
 		List<MarketFileDto> marketFiles = marketBoardService.selectImageFileByMarketNo(marketNo);
 		
@@ -575,8 +530,6 @@ public class CommunityController {
 
 	@GetMapping("/market/marketViewtoList")
 	public String marketViewToList(int marketNo) {
-		
-		
 		return "redirect:/community/market/list";
 	}
 
@@ -620,16 +573,14 @@ public class CommunityController {
 	}
 	
 	// 글쓰기 수정 버튼
-   @RequestMapping("/market/updateMarketContent")
-   @ResponseBody
+    @RequestMapping("/market/updateMarketContent")
+    @ResponseBody
 	public String updateMarketContent(HttpServletRequest request,
 			@RequestPart(value="attach_file", required=false) List<MultipartFile> files,
- 		    Model model,
  		    @RequestParam(value="deleteDBImgBySeq") String deleteDb) throws IOException {
 	   
 	   		String result ="판매 상품이 수정되었습니다.";
 		
-		   log.info("/market/updateMarketContent 실행");
 		   String category = request.getParameter("category");
 		   int marketNo = Integer.parseInt(request.getParameter("marketNo"));
 		   MarketBoardDto marketBoardDto = new MarketBoardDto();
@@ -728,7 +679,7 @@ public class CommunityController {
 
 	// 공지 상세 페이지
 	@GetMapping("/notice/noticeDetail")
-	public String noticeDetail(int noticeNo, Model model, HttpSession session, HttpServletRequest request, Authentication authentication) {
+	public String noticeDetail(int noticeNo, Model model, HttpSession session) {
 		
 		//조회수 1 올리기
 		noticeService.updateHitCount(noticeNo);
@@ -787,9 +738,8 @@ public class CommunityController {
 	// 글쓰기 등록 버튼
 	@PostMapping("/notice/insertNoticeContent")
 	public String insertNoticeContent(HttpServletRequest request,
-    		HttpSession session,
     		@RequestPart(value="attach_file", required=false) List<MultipartFile> files,
- 		    Model model, Authentication authentication) {
+ 		    Authentication authentication) {
 		
 		//인증 객체 생성해 아이디 가져옴
 		String userId;
@@ -815,9 +765,7 @@ public class CommunityController {
 	@RequestMapping("/notice/deleteNoticeBoard")
 	@ResponseBody
 	public String deleteNoticeBoard(int noticeNo) {
-		log.info(noticeNo);
 		noticeService.deleteNoticeBoard(noticeNo);
-		
 		return "success";
 	}	
 }

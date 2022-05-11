@@ -52,8 +52,6 @@
               autoLoad: true,
               error:d
           });
-          console.log(d);
-          
           
       </script>
   </section>

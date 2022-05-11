@@ -105,12 +105,8 @@
             //만약, 수정하는 것이라면 데이트피커 날짜를 설정해준다.
             if(`${buildingInfo.buildingAvailableDate}` != ""){
             	var date = `<fmt:formatDate value="${buildingInfo.buildingAvailableDate}" pattern="yyyy-MM-dd" />`;
-                console.log(date);
-                console.log(new Date(date));
-                
                 var tempDate = new Date(date);
                 
-                console.log(tempDate.getFullYear());
                 
                 var availableDate = new Date(tempDate.getFullYear(), tempDate.getMonth() , tempDate.getDate(), 0, 0, 0 ,0);
                 var today = new Date();
@@ -133,7 +129,6 @@
 
             //update하는 경우!
             if(`${type}` == 'updateEnroll'){
-            	console.log(`${type}`);
             	setAddr(`${buildingInfo.buildingAddr}`);
             	if(`${buildingInfo.buildingTradeInfo}` == '매매'){
             		tradeBtnClick();
@@ -210,7 +205,6 @@
         //수정할 경우, DB에 저장된 옵션들을 가져와 설정해준다.
         function setOptions(){
         	var optionsList = `${buildingInfo.buildingOption}`.split(",");
-        	console.log(optionsList);
         	
         	for(option of optionsList){
         		$(".optionBtn[value=" + option + "]").trigger('click');
@@ -615,7 +609,6 @@
 	                            function getImageFiles(e) {
 	                            	//첨부된 이미지 파일들을 가져온다.
 	                                const files = e.currentTarget.files;
-	                            	console.log(files);
 	                            	
 	                            	//이미지 미리보기 엘리먼트에 추가된 자식노드의 수가 15개가 넘어가거나, 미리보기 엘리먼트의 자식노드와 첨부된 파일의 갯수가 15개를 넘어가게 되면 업로드할 수 없다!(최대 15장이기 때문에)
 	                                if(nomalImgPreview.childElementCount > 15 || (nomalImgPreview.childElementCount + files.length) > 15){
@@ -689,13 +682,11 @@
 	
 	                            function delete360Img(_this){
 	                            	if($("#panorama").attr("name") == 'exist'){
-	                            		console.log("db에 저장된 것 삭제할 경우");
 	                            		deleteDBImgBySeq.push($("#panorama").attr("seq"));
 	                            		
 	                            		$(_this).remove();
 		                                $("#panorama").remove();
 		                                $("#explainAround").css('display', 'block');
-		                                console.log(deleteDBImgBySeq);
 		                                
 	                            	}else{
 	                            		
@@ -764,7 +755,6 @@
 	                            
 	                            function deleteImg(fnum){
 	                            	if($("img#"+fnum).attr("name") == 'exist'){
-	                            		console.log("db에 저장된 것 삭제할 경우");
 	                            		deleteDBImgBySeq.push($("img#"+fnum).attr("seq"));
 	                            		document.querySelector("#file" + fnum).remove();
 	                            		
@@ -776,9 +766,7 @@
 	                            			var DBImgCnt = `${nomalCnt}`;
 			                            	DBImgCnt++;
 	                            		}
-		                            	console.log(fnum-DBImgCnt);
 		                            	uploadFiles[fnum-DBImgCnt] = "";
-		                            	console.log(uploadFiles);
 		                            	
 	                            	}
 	                            	console.log($("#nomalImgPreview").children().length);
@@ -950,7 +938,6 @@
         	btn.disabled = true;
         	var form = document.getElementById("frm");
         	
-        	console.log(form);
             var formData = new FormData(form);
             
             var errorNum = 0;
