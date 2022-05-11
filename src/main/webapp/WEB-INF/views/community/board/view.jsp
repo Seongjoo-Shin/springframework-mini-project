@@ -73,7 +73,7 @@
  	              		</c:if>
  	              		<c:if test="${commentDto.upperNo != 0}">
  	              			<li class="list-group-item">
-			        			<div id ="innerContainer${commentDto.commentNo}"></div>
+			        			<div id ="innerContainer${commentDto.commentNo}" class="pl-5"></div>
 			        			<div id="container${commentDto.commentNo}" class="row pl-5">
 			        			<div class="col-10">
 				              		<input id="freeNo${commentDto.commentNo}" type="hidden" name="freeNo" value="${commentDto.freeNo}"/>
@@ -134,7 +134,8 @@
 		
 		var freeNo = $("#freeNo"+commentNo).val();
 		var commentContent = $("#commentContent"+commentNo).text();
-		var userNickname = $("#commentWriter"+commentNo).text();    
+		var userNickname = $("#commentWriter"+commentNo).text();
+		var upperNo = $("#upperNo"+commentNo).val();
 
 		var userId = "${sessionUserId}";
 		$("#container"+commentNo).attr('style','display:none');
@@ -142,7 +143,7 @@
 		$.ajax({
 			url: "/community/board/updateContent",
 			data: {"commentContent":commentContent, "commentNo":commentNo, "userId":userId,
-					"userNickname":userNickname, "freeNo":freeNo},
+					"userNickname":userNickname, "freeNo":freeNo, "upperNo":upperNo},
 			method: "post"
 		}).done((data)=>{
 			$("#innerContainer"+commentNo).html(data);

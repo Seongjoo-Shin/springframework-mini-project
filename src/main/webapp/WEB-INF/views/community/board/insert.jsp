@@ -12,12 +12,12 @@
           <div class="col-8">
             <div class="h3 border-bottom mb-3"><img src="${pageContext.request.contextPath}/resources/images/writing.png">글쓰기</div>
             <div class="mb-5">
-              <form method="post" action="insertContent" id="insertForm">
-                <input type="text" class="form-control my-3" maxlength="100" placeholder="제목을 입력하세요" name="title"></input>
-                <textarea class="form-control" placeholder="게시물 내용을 작성해 주세요." maxlength="1000" style="height: 300px; overflow:auto; resize:none;" name="content"></textarea>
-                <div class="pagination justify-content-center mb-0">
-                    <button type="button" onclick="goSubmit()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">등&nbsp;&nbsp;&nbsp;록</button>
-                    <button type="button" onclick="cancle()" class="btn bg-light mt-3 mx-3 btn-lg" style="border: solid 1px rgb(224, 216, 216);">취&nbsp;&nbsp;&nbsp;소</button>
+              <form method="post" action="" id="insertForm">
+                <input id="title" type="text" class="form-control my-3" maxlength="100" placeholder="제목을 입력하세요" name="title" style="font-size: 25px;"></input>
+                <textarea id="content" class="form-control" placeholder="게시물 내용을 작성해 주세요." maxlength="4000" style="height: 300px; overflow:auto; resize:none; font-size: 22px;" name="content"></textarea>
+                <div class="pagination justify-content-center mt-2">
+	                <button type="button" onclick="goSubmit()" class="btn btn-outline-info border rounded p-2 m-2" style="font-size: 22px; width: 100px;">등  록</button>
+	                <button type="button" onclick="cancle()" class="btn btn-outline-danger border rounded p-2 m-2" style="font-size: 22px; width: 100px;">취  소</button>
                 </div>
               </form>              
             </div>            
@@ -30,9 +30,38 @@
 	    function cancle(){
 	      $(location).attr("href", "insertCancle")
 	    }
-	    function goSubmit(){
-	      $("#insertForm").submit(); //form태그의 action="insertContent"탐
-	    }
+	    
+	   	function goSubmit() {
+	   		var title = document.getElementById('title');
+	   		var titleValue = title.value;
+	   		
+	   		var content = document.getElementById('content');
+	   		var contentValue = content.value;
+		
+			let form = document.getElementById('insertForm');
+	   		
+	   		form.action = 'insertContent';
+	   		form.method = 'POST';
+	
+	    	if(!titleValue){
+	        	swal({
+	        		icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png",
+	        		text:"제목을 작성해주세요!"
+	        	});
+	        	return;
+	    	}else if(!contentValue){
+	        	swal({
+	        		icon:"${pageContext.request.contextPath}/resources/images/errorMascot.png",
+	        		text:"내용을 작성해주세요!"
+	        	});
+	    		return;
+	    	}else{
+	        	swal({text:"작성되었습니다!"}).then(()=>{
+	        		form.submit();
+				});
+	        	
+	    	}
+		}    
   	</script>
     
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
