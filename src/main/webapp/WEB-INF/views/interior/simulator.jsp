@@ -486,14 +486,14 @@
                 <ul class="ml-3">
                     <h5 class="mt-2">치과베드</h5>
                     <li>
-                       <img id="bed5" onClick="checkImg($('#bed5').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed5.png" width="80px" height="80px"/>
-                       <img id="bed4" onClick="checkImg($('#bed4').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed4.png" width="80px" height="80px"/>
-                       <img id="bed1" onClick="checkImg($('#bed1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed1.png" width="80px" height="80px"/>
-                       <img id="bed2" onClick="checkImg($('#bed2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed2.png" width="80px" height="80px"/>
-                       <img id="bed3" onClick="checkImg($('#bed3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed3.png" width="80px" height="80px"/>
+                       <img id="bed5" onClick="checkImg($('#bed5').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed5.png" class="border" width="80px" height="80px"/>
+                       <img id="bed4" onClick="checkImg($('#bed4').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed4.png" class="border" width="80px" height="80px"/>
+                       <img id="bed1" onClick="checkImg($('#bed1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed1.png" class="border" width="80px" height="80px"/>
+                       <img id="bed2" onClick="checkImg($('#bed2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed2.png" class="border" width="80px" height="80px"/>
+                       <img id="bed3" onClick="checkImg($('#bed3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/bed/treatmentBed3.png" class="border" width="80px" height="80px"/>
                     </li>
                     <div id="bed1Div" class="mt-2" style="display:none;">
-                  	   <img id ="bedDetailimage" src="" width="100%"/>
+                  	   <img id ="bedDetailimage" class="border" src="" width="100%"/>
                   	   <p>제품명 : <span id="bedinteriorName"></span></p>
                   	   <p>가격 : <span id="bedinteriorPrice"></span></p>
                   	   <input id="bedItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
@@ -501,12 +501,12 @@
                     </div>
                     <h5 class="mt-2">의자</h5>
                     <li>
-                       <img id="chair1" onClick="checkImg($('#chair1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair1.jpg" width="80px" height="80px"/>
-                       <img id="chair2" onClick="checkImg($('#chair2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair2.jpg" width="80px" height="80px"/>
-                       <img id="chair3" onClick="checkImg($('#chair3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair3.jpg" width="80px" height="80px"/>
+                       <img id="chair1" onClick="checkImg($('#chair1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair1.jpg" class="border" width="80px" height="80px"/>
+                       <img id="chair2" onClick="checkImg($('#chair2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair2.jpg" class="border" width="80px" height="80px"/>
+                       <img id="chair3" onClick="checkImg($('#chair3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/chair/chair3.jpg" class="border" width="80px" height="80px"/>
                     </li>
                     <div id="chair1Div" class="mt-2" style="display:none;">
-	                   <img id ="chairDetailimage" src="" width="100%"/>
+	                   <img id ="chairDetailimage" class="border" src="" width="100%"/>
 	                   <p>제품명 : <span id="chairinteriorName"></span></p>
 	                   <p>가격 : <span id="chairinteriorPrice"></span></p>
 	                   <input id="chairItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
@@ -514,12 +514,12 @@
 	                </div>
                     <h5 class="mt-2">쇼파</h5>
                     <li>
-                       <img id="sofa1" onClick="checkImg($('#sofa1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa1.jpg" width="80px" height="80px"/>
-                       <img id="sofa2" onClick="checkImg($('#sofa2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa2.jpg" width="80px" height="80px"/>
-                       <img id="sofa3" onClick="checkImg($('#sofa3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa3.png" width="80px" height="80px"/>
+                       <img id="sofa1" onClick="checkImg($('#sofa1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa1.jpg" class="border" width="80px" height="80px"/>
+                       <img id="sofa2" onClick="checkImg($('#sofa2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa2.jpg" class="border" width="80px" height="80px"/>
+                       <img id="sofa3" onClick="checkImg($('#sofa3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/sofa/sofa3.png" class="border" width="80px" height="80px"/>
                     </li>
                     <div id="sofa1Div" class="mt-2" style="display:none;">
-                  	   <img id ="sofaDetailimage" src="" width="100%"/>
+                  	   <img id ="sofaDetailimage" class="border" src="" width="100%"/>
                   	   <p>제품명 : <span id="sofainteriorName"></span></p>
                   	   <p>가격 : <span id="sofainteriorPrice"></span></p>
                   	   <input id="sofaItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
@@ -527,12 +527,12 @@
                     </div>
                     <h5 class="mt-2">진료실 의자</h5>
                     <li>
-                       <img id="tChair1" onClick="checkImg($('#tChair1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair1.png" width="80px" height="80px"/>
-                       <img id="tChair2" onClick="checkImg($('#tChair2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair2.png" width="80px" height="80px"/>
-                       <img id="tChair3" onClick="checkImg($('#tChair3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair3.png" width="80px" height="80px"/>
+                       <img id="tChair1" onClick="checkImg($('#tChair1').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair1.png" class="border" width="80px" height="80px"/>
+                       <img id="tChair2" onClick="checkImg($('#tChair2').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair2.png" class="border" width="80px" height="80px"/>
+                       <img id="tChair3" onClick="checkImg($('#tChair3').attr('src'))" src="${pageContext.request.contextPath}/resources/images/interior/tchair/tChair3.png" class="border" width="80px" height="80px"/>
                     </li>
                     <div id="tChair1Div" class="mt-2" style="display:none;">
-                  	   <img id ="tChairDetailimage" src="" width="100%"/>
+                  	   <img id ="tChairDetailimage" class="border" src="" width="100%"/>
                   	   <p>제품명 : <span id="tChairinteriorName"></span></p>
                   	   <p>가격 : <span id="tChairinteriorPrice"></span></p>
                   	   <input id="tChairItemCnt" min="1" class="p-2 rounded border" type="number"  placeholder="장비 개수" style="width: 110px;"/>
