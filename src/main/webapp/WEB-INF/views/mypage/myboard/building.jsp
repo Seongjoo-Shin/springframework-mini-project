@@ -123,9 +123,10 @@
                             </thead>
                             <tbody>
                             <c:set var="now" value="<%=new java.util.Date()%>" />
+                            <c:set var="num" value="${total - ((pager.pageNo-1) * 10) }"/> 
 							<c:forEach var="building" items="${buildings}">
 								<tr>
-	                                <td class="text-center bg-light"><span>${building.buildingNo}</span></td>
+	                                <td class="text-center bg-light"><span>${num}</span></td>
 	                                <td><a href="/take/view?buildingNo=${building.buildingNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${building.buildingName}</a></td>
 	                                <td class="text-center">${building.buildingTradeInfo }</td>
 	                                <td class="text-center"><fmt:formatDate value="${building.buildingRegistDate}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${building.buildingEndDate}" pattern="yyyy-MM-dd"/></td>
@@ -144,6 +145,7 @@
 	                                </td>
 	                                <td class="text-center"><input type="checkbox" class="delete" name="buildingNo" class="delete_box" id="${building.buildingNo}"></td>
 	                            </tr>
+	                            <c:set var="num" value="${num-1}"></c:set>
 							</c:forEach>
 							<c:if test="${total eq 0}">
 								<tr class="m-5">

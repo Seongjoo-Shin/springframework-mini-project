@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -187,22 +186,33 @@ public class CommunityController {
 	}
 
 	@GetMapping("/board/update")
-	public String boardUpdate(int freeNo, Model model) {
+	public String boardUpdate(int freeNo, Model model, HttpServletRequest request) {
+		String mypage = (String) request.getParameter("from");
+		log.info(mypage);
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
+		if(mypage != null) {
+			model.addAttribute("from", mypage);
+		} 
 		model.addAttribute("freeBoardDto", freeBoardDto);
 		return "/community/board/update";
 	}
 	
 	@PostMapping("/board/updateForm")
-	public String boardUpdateFrom(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("freeNo") int freeNo) {
+	public String boardUpdateFrom(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("freeNo") int freeNo, @RequestParam("from") String mypage) {
 
 		//먼저 저장되 있던 정보 불러오기
 		FreeBoardDto freeBoardDto = freeBoardService.getFreeBoard(freeNo);
 		freeBoardDto.setFreeTitle(title);
 		freeBoardDto.setFreeContent(content);
-
+		
+		log.info(mypage);
+		
 		freeBoardService.updateFreeBoard(freeBoardDto);
-		return "redirect:/community/board/boardDetail?freeNo="+freeBoardDto.getFreeNo();
+		if(mypage != null) {
+			return "redirect:/community/board/boardDetail?freeNo="+freeBoardDto.getFreeNo()+"&from=mypage";
+		} else {
+			return "redirect:/community/board/boardDetail?freeNo="+freeBoardDto.getFreeNo();	
+		}
 	}
 	
 	// 댓글 ---------------------------------------------------------------------------------------------------------------------------------------------

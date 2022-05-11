@@ -28,8 +28,6 @@ public class OpeningController {
 	
 	@RequestMapping("/opening")
 	public String opening(Model model) {
-		List<KeyWordDto> listKeyword = openingService.getKeywordAllPlace();
-		model.addAttribute("keywords", listKeyword);
 		return "opening/opening";
 	}
 	

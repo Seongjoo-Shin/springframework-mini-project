@@ -68,7 +68,7 @@
 								<div class="mr-5">
 									<span class="text-dark pr-2 float-left ml-5">* 중복 선택이가능합니다.</span>
 									<a href="#" class="float-right"><img src="${pageContext.request.contextPath}/resources/images/reset.png" width="40px" onclick="location.reload();" /> </a>
-									<a href="javascript:keywordAjax();"class=" pr-4 float-right"><img src="${pageContext.request.contextPath}/resources/images/search.png" width="40px"/></a>
+									<a href="javascript:keywordSearch();"class=" pr-4 float-right"><img src="${pageContext.request.contextPath}/resources/images/search.png" width="40px"/></a>
 								</div>
 							</div>
 						<div class="row d-flex mt-5">
@@ -183,7 +183,7 @@
                                 	}
                                 }
                                 
-                                function keywordAjax(){
+                                function keywordSearch(){
                                 	var elements = document.querySelectorAll("td > .active");
                                 	var keywordlst = new Array();
                                     var keyword = new Object();
@@ -201,14 +201,14 @@
 									var addr;
 									document.getElementById("msgBox").innerHTML = '';
 									
-									var xhr1 = new XMLHttpRequest(); 
-							        xhr1.open("POST", "/opening/keyword", true);
-							        xhr1.setRequestHeader("Content-Type", "application/json");
-							        xhr1.send(keyword);
-							        xhr1.onreadystatechange = function() {
-							        	if (xhr1.readyState === 4) {
-							            	if (xhr1.status === 200) {
-							            		const data = JSON.parse(xhr1.responseText);
+									var xhr = new XMLHttpRequest(); 
+							        xhr.open("POST", "/opening/keyword", true);
+							        xhr.setRequestHeader("Content-Type", "application/json");
+							        xhr.send(keyword);
+							        xhr.onreadystatechange = function() {
+							        	if (xhr.readyState === 4) {
+							            	if (xhr.status === 200) {
+							            		const data = JSON.parse(xhr.responseText);
 							            		positions = [];
 		                                		for(var i=0; i<markers.length; i++){
 		                                			markers[i].setMap(null);

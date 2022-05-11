@@ -84,14 +84,16 @@
                                 <th>수정</th>
                                 <td><input type="checkbox" class="delete" onclick="selectAll(this)"></td>
                             </tr>
+                            <c:set var="num" value="${total - ((pager.pageNo-1) * 10) }"/> 
                             <c:forEach items="${boards}" var="board" varStatus="status">
                             	<tr>
-                            		<td class="text-center bg-light"><span>${board.freeNo}</span></td>
+                            		<td class="text-center bg-light"><span>${num}</span></td>
 	                                <td><a href="/community/board/boardDetail?freeNo=${board.freeNo}&from=mypage&pageNo=${pager.pageNo}" class="text-dark">${board.freeTitle}</a></td>
 	                                <td class="text-center"><fmt:formatDate value="${board.freeModifyDate}" pattern="yyyy-MM-dd"/></td>
 	                                <td class="text-center"><a href="/community/board/update?freeNo=${board.freeNo}&from=mypage" class="btn btn-sm btn-outline-dark">수정</a></td>
 	                                <td class="text-center"><input type="checkbox" class="delete" name="freeNo" class="delete_box" id="${board.freeNo}"></td>
                             	</tr>
+                            	<c:set var="num" value="${num-1}"></c:set>
                             </c:forEach>
                             <c:if test="${total eq 0 }">
                             	<tr>

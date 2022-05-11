@@ -14,6 +14,9 @@
             <div class="mb-5">
               <form id="updateForm" method="post" action="updateForm" enctype="multipart/form-data">
               	<input type="hidden" name="freeNo" value="${freeBoardDto.freeNo}"/>
+              	<c:if test="${from eq 'mypage'}">
+              		<input type="hidden" name="from" value="mypage"/>
+              	</c:if>
                 <input type="text" class="form-control my-3" name="title" value="${freeBoardDto.freeTitle}"></input>
                 <textarea class="form-control" style="height: 300px; resize:none;" name="content" maxlength="500" >${freeBoardDto.freeContent}</textarea>
                 <div class="pagination justify-content-center mb-0">
