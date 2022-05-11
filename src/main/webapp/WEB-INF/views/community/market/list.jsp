@@ -94,7 +94,8 @@
 									<div class="card">
 										<div class="embed-responsive embed-responsive-4by3">
 											<button type="button"
-												onclick="marketDetail(this.id)" id="${marketboard.marketNo}">
+												onclick="marketDetail(this.id)" id="${marketboard.marketNo}"
+												style="border: 0; outline:0;">
 												<img id="marketListImg"
 												src="/community/market/getMarketImage?marketNo=${marketboard.marketNo}&img=0"
 												class="card-img-top row-cols-1 embed-responsive-item"
