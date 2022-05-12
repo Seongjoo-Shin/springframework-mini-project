@@ -277,8 +277,8 @@
             	var result = data;
             	swal({
 					text: "수정 되었습니다."
-				}).then(()=>{
-					location.href = document.referrer;
+				}).then(function() {
+					window.location.href = "/community/market/marketDetail?marketNo="+$("#marketNo").val();
 				});
             })
 		}

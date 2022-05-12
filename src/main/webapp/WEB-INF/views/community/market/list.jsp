@@ -120,9 +120,7 @@
 													}
 												</script>
 												<span>관심 </span><span> ${marketboard.marketLikeCount}</span>
-												<p>
-													조회수 <span> ${marketboard.marketHitCount}</span>
-												</p>
+												<p>조회수 <span> ${marketboard.marketHitCount}</span></p>
 											</div>
 											<p style="margin-bottom: 0px; font-weight: bold;">${marketboard.marketTitle}</p>
 											<p style="margin-bottom: 7px; font-weight: bold;">
