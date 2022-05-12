@@ -40,7 +40,7 @@ import com.mycompany.webapp.service.MypageService;
 
 import lombok.extern.log4j.Log4j2;
 
-@Controller
+@Controller 
 @RequestMapping("/mypage")
 @Log4j2
 public class MypageController {
@@ -59,26 +59,23 @@ public class MypageController {
 		return "/mypage/modify"; // mypage/modify로 리턴
 	}
 	
-	// 비밀번호 수정
-	@PostMapping(value="/updatepassword", produces="application/json; charset=UTF-8") // json형태로 리턴해주기 위해 produces를 설정
-	@ResponseBody // json형태로 리턴해주기 위해 ResponseBody어노테이션 작성
+	@PostMapping(value="/updatepassword", produces="application/json; charset=UTF-8")
+	@ResponseBody
 	@mypageLoginCheck
 	public String updatePassword(@RequestBody String sendData, HttpSession session, UserDto user, Model model, HttpServletRequest request) {
 		String userId = (String) session.getAttribute("sessionUserId");
 		JSONObject jjson = new JSONObject(sendData);
 		UserDto dbUser = mypageService.getUser(userId);
 		
-		// ajax의 data로 넘어온 현재 패스워드와, 새롭게 바뀔 패스워드를 pwd, newpwd로 저장
 		String pwd = jjson.getString("pwd");
 		String newpwd = jjson.getString("newPwd");
 		
 		JSONObject jsonObject = new JSONObject();
 		
-		// 패스워드 인코더 사용
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		if(passwordEncoder.matches(pwd, dbUser.getUserPassword())) { // ajax로 넘어온 비밀번호와, db에 저장되어 있는 비밀번호가 일치한다면
-			dbUser.setUserPassword(passwordEncoder.encode(newpwd)); // 새로운 비밀번호를 패스워드 인코딩하여 
-			mypageService.changePassword(dbUser); // 비밀번호를 변경한다
+		if(passwordEncoder.matches(pwd, dbUser.getUserPassword())) { 
+			dbUser.setUserPassword(passwordEncoder.encode(newpwd));  
+			mypageService.changePassword(dbUser);
 			jsonObject.put("message", "비밀번호를 변경하였습니다.");
 		} else {
 			jsonObject.put("message", "비밀번호가 일치하지 않습니다.");
@@ -344,6 +341,7 @@ public class MypageController {
 	@mypageLoginCheck
 	public String rDeleteMsg(@RequestBody String arr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
 		int cnt = mypageService.deleteMyReceiveMessage(arr);
+		mypageService.deleteMessage(arr);
 		JSONObject jsonObject = new JSONObject();
 		if(cnt > 0 ) {
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");	
@@ -359,6 +357,7 @@ public class MypageController {
 	@mypageLoginCheck
 	public String sDeleteMsg(@RequestBody String arr, HttpServletRequest request, HttpSession session, Model model) throws Exception {
 		int cnt = mypageService.deleteMySendMessage(arr);
+		mypageService.deleteMessage(arr);
 		JSONObject jsonObject = new JSONObject();
 		if(cnt > 0 ) {
 			jsonObject.put("message", cnt + "개를 삭제하였습니다");	
@@ -385,24 +384,25 @@ public class MypageController {
 		return "/mypage/withdrawal";
 	}
 	
-	// 회원 탈퇴 action
+	
 	@PostMapping(value="/userWithdrawal", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	@mypageLoginCheck
 	public String userWithdrawal(@RequestBody String sendData, UserDto user, HttpSession session, HttpServletRequest request, Model model) {
 		JSONObject jsonObject = new JSONObject();
 		JSONObject jjson = new JSONObject(sendData);
-		String userId = (String) jjson.get("userId");
 		user.setUserId((String)jjson.get("userId"));
 		user.setUserPassword((String)jjson.get("userPassword"));
 		UserDto chkPwd = mypageService.getPassword(user.getUserId());
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		
+		log.info("세션 값 : " + session.getAttribute("sessionUserId"));
 		if(passwordEncoder.matches(user.getUserPassword(), chkPwd.getUserPassword())) {
 			mypageService.userWithdrawal(user);
 			session.removeAttribute("sessionUserId");
+			log.info("세션 제거");
 			jsonObject.put("message", "회원탈퇴하셨습니다");
 			jsonObject.put("status", "success");
+			log.info("세션 값 : " + session.getAttribute("sessionUserId"));
 		} else {
 			jsonObject.put("message", "비밀번호를 확인해주세요");
 			jsonObject.put("status", "fail");

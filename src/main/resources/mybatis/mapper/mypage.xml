@@ -328,6 +328,12 @@
 			message_no = #{messageNo}
 	</update>
 	
+	<select id="deleteMessage" parameterType="Integer" statementType="CALLABLE">
+		<![CDATA[
+			CALL del_message ( p_message_no => #{messageNo} )
+		]]>
+	</select>
+	
 	<select id="selectMessageByNo" parameterType="Integer" resultMap="messageMap">
 		SELECT
 			message_no, message_title, message_content, message_date, message_sender, message_receiver, message_reply_yn

@@ -6,7 +6,6 @@
 		select * 
 		from keywords
 		where 
-			1 = 1 and
 		<trim prefix="(" suffixOverrides="or" suffix=")" >
 			<if test='keyword1 != null'>
 				keyword1 is not null or

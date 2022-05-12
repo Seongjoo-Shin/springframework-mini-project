@@ -45,7 +45,7 @@ public interface MypageDao {
 	public List<MessageDto> selectSendMessageList(PagerDto pager); // 보낸 메세지함
 	public int sendMessage(String userId); // 마이페이지 메시지 보내기
 	public MessageDto selectReceiveMessage(int messageNo); // 받은 메세지 보기
-	public int deleteMessage(int messageNo); // 메세지 삭제하기
+	public void deleteMessage(int messageNo); // 메세지 삭제하기
 	public int updateMessageStatus(int messageNo); // 회신여부 설정
 	public int selectReceiveMessageAll(String userId);
 	public int selectSendMessageAll(String userId);

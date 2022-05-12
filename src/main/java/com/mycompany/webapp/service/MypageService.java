@@ -129,6 +129,13 @@ public class MypageService {
 		}
 		return cnt;	
 	}
+	
+	public void deleteMessage(String arr) {
+		String[] delArr = arr.split(",");
+		for(String s : delArr) {
+			mypageDao.deleteMessage(Integer.parseInt(s));
+		}
+	}
 
 	public List<MessageDto> getMessageByNo(int messageNo) {
 		log.info("실행");
