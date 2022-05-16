@@ -1,4 +1,3 @@
-# springframework-mini-project
 
 <h1>START:DEN🦷</h1>
 <h3>치과 개원을 위한 A to Z 플랫폼 서비스 개발 프로젝트</h3>
